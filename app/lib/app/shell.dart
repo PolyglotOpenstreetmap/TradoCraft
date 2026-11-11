@@ -14,6 +14,9 @@ import '../l10n/l10n.dart';
 import '../shared/app_icons.dart';
 import '../shared/module_icon.dart';
 
+/// The brand label shown in the navigation (the only place the app spells its name for people).
+const brandName = 'TradoCraft';
+
 class _Dest {
   const _Dest(this.path, this.label, this.icon, this.permission, {this.unless});
   final String path;
@@ -256,7 +259,7 @@ class AppShell extends ConsumerWidget {
                               child: Column(
                                 children: [
                                   Text(
-                                    'tradocraft',
+                                    brandName,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium,
@@ -297,7 +300,7 @@ class AppShell extends ConsumerWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(me.value?.company.name ?? 'tradocraft'),
+        title: Text(me.value?.company.name ?? brandName),
         actions: [?badge, const WorkspaceMenuButton(), userMenu],
       ),
       body: Column(
