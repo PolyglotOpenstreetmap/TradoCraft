@@ -18,7 +18,12 @@ final dioProvider = Provider<Dio>((ref) {
     ),
   );
   // Tells the tutorial which calls finished; silent unless a mission is running.
-  dio.interceptors.add(ApiEventInterceptor(ref.read(apiEventBusProvider)));
+  dio.interceptors.add(
+    ApiEventInterceptor(
+      ref.read(apiEventBusProvider),
+      scope: tutorialSessionId(session),
+    ),
+  );
   return dio;
 });
 

@@ -47,6 +47,23 @@ class TutorialScope {
   int get hashCode => Object.hash(envId, kind, who);
 }
 
+/// The `sub` claim of a JWT access token (the stable user id), or null when [token] is not one.
+/// Sessions carry no user id of their own; without a readable subject the scope falls back to
+/// the company alone.
+String? tokenSubject(String token) {
+  try {
+    final parts = token.split('.');
+    if (parts.length != 3) return null;
+    final json = jsonDecode(
+      utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+    );
+    final sub = json is Map ? json['sub'] : null;
+    return sub is String && sub.isNotEmpty ? sub : null;
+  } catch (_) {
+    return null;
+  }
+}
+
 /// The environment and user the tutorial currently belongs to.
 final tutorialScopeProvider = Provider<TutorialScope>((ref) {
   final env = ref.watch(activeEnvironmentProvider);
@@ -54,7 +71,7 @@ final tutorialScopeProvider = Provider<TutorialScope>((ref) {
   final who = (s.devUser?.isNotEmpty ?? false)
       ? 'dev:${s.devUser}'
       : (s.accessToken?.isNotEmpty ?? false)
-      ? 'token:${s.companyId ?? ''}'
+      ? 'token:${tokenSubject(s.accessToken!) ?? ''}:${s.companyId ?? ''}'
       : '';
   return TutorialScope(envId: env.id, kind: env.kind, who: who);
 });
@@ -368,6 +385,11 @@ class TutorialController extends Notifier<TutorialState> {
   }
 
   void _onEvent(ApiEvent e) {
+    // Calls made as another session (an environment switch in flight) do not count.
+    if (e.scope != null &&
+        e.scope != tutorialSessionId(ref.read(sessionProvider))) {
+      return;
+    }
     final s = step;
     if (s == null || !state.running) return;
     final c = s.completion;
@@ -437,7 +459,9 @@ class TutorialController extends Notifier<TutorialState> {
   }
 
   /// Marks the running chapter as skipped and stops.
-  void skipChapter([String? id]) {
+  Future<void> skipChapter([String? id]) async {
+    await _ready;
+    if (!ref.mounted) return;
     final target = id ?? state.activeId;
     if (target == null) return;
     _gen++;

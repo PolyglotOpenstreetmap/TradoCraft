@@ -3,13 +3,24 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/session.dart';
+
 /// Request option that keeps a request (a probe) out of the event stream.
 const tutorialProbeExtra = 'tutorialProbe';
+
+/// Request option that carries the identity of the session that sent the request.
+const tutorialScopeExtra = 'tutorialScope';
+
+/// Identifies who a request was sent as (server, user, company): events of another session or
+/// environment must not finish a step of this one.
+String tutorialSessionId(Session s) =>
+    '${s.serverUrl}|${s.devUser ?? ''}|${s.companyId ?? ''}|'
+    '${(s.accessToken?.isNotEmpty ?? false) ? 'token' : ''}';
 
 /// A finished API call, as seen by the tutorial.
 class ApiEvent {
   /// Creates an event.
-  const ApiEvent(this.method, this.path, this.status, this.json);
+  const ApiEvent(this.method, this.path, this.status, this.json, {this.scope});
 
   /// The HTTP method, upper case.
   final String method;
@@ -22,6 +33,9 @@ class ApiEvent {
 
   /// The parsed JSON answer (null for an empty or non-JSON answer).
   final Object? json;
+
+  /// The [tutorialSessionId] the request was sent with (null when not stamped).
+  final String? scope;
 }
 
 /// Broadcasts [ApiEvent]s, but only while [active] (a mission is running): otherwise nothing is
@@ -54,10 +68,19 @@ final apiEventBusProvider = Provider<ApiEventBus>((ref) {
 /// Turns finished calls into [ApiEvent]s on [bus].
 class ApiEventInterceptor extends Interceptor {
   /// Creates the interceptor.
-  ApiEventInterceptor(this.bus);
+  ApiEventInterceptor(this.bus, {this.scope});
 
   /// Where events go.
   final ApiEventBus bus;
+
+  /// The [tutorialSessionId] of the client this interceptor belongs to.
+  final String? scope;
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    if (scope != null) options.extra[tutorialScopeExtra] = scope;
+    handler.next(options);
+  }
 
   void _emit(Response<dynamic> r) {
     if (!bus.active || r.requestOptions.extra[tutorialProbeExtra] == true) {
@@ -74,6 +97,7 @@ class ApiEventInterceptor extends Interceptor {
         path,
         r.statusCode ?? 0,
         data is Map || data is List ? data : null,
+        scope: r.requestOptions.extra[tutorialScopeExtra] as String?,
       ),
     );
   }

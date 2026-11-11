@@ -11,6 +11,7 @@ import 'model.dart';
 import 'strings.dart';
 import 'targets.dart';
 import '../../app/environments.dart';
+import '../../app/workspace.dart';
 
 /// Where tutorial pages live (the chapter map); the narrator card stays out of the way there.
 const tutorialRoute = '/tutorial';
@@ -110,9 +111,14 @@ class _TutorialHostState extends ConsumerState<TutorialHost> {
 
   void _located() {
     final r = widget.router;
-    if (r == null || !mounted) return;
-    final uri = r.routeInformationProvider.value.uri;
-    final loc = uri.toString();
+    if (!mounted) return;
+    final routed = r?.routeInformationProvider.value.uri.toString();
+    // A focused workspace tab shows its own location; the main area follows the router (and the
+    // chapter map, a top-level page, always counts as where the router is).
+    final tab = ref.read(workspaceProvider).activeTab;
+    final onMap = routed?.startsWith(tutorialRoute) ?? false;
+    final loc = onMap ? routed : (tab?.location ?? routed);
+    if (loc == null) return;
     // Not while the framework is building: the listener can fire from a navigation.
     scheduleMicrotask(() {
       if (mounted) ref.read(tutorialProvider.notifier).routeChanged(loc);
@@ -127,6 +133,7 @@ class _TutorialHostState extends ConsumerState<TutorialHost> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(workspaceProvider, (_, _) => _located());
     final s = ref.watch(tutorialProvider);
     final scope = ref.watch(tutorialScopeProvider);
     final onMap = s.location.startsWith(tutorialRoute);
@@ -303,8 +310,15 @@ class NarratorCard extends ConsumerWidget {
           key: ValueKey('${m.id}/${step.id}'),
           container: true,
           explicitChildNodes: true,
-          child: SizedBox(
-            width: width,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: width,
+              minWidth: width,
+              maxHeight: (MediaQuery.sizeOf(context).height * 0.55).clamp(
+                180.0,
+                double.infinity,
+              ),
+            ),
             child: Material(
               key: const ValueKey('tutorial-card'),
               elevation: 8,
@@ -320,30 +334,44 @@ class NarratorCard extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${tutorialText(l, missionKey(m, 'Title'))} · '
-                      '${l.tutStepOf(s.stepIndex + 1, m.steps.length)}',
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        color: theme.colorScheme.primary,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Semantics(
-                      header: true,
-                      liveRegion: true,
-                      child: Text(title, style: theme.textTheme.titleMedium),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(body, style: theme.textTheme.bodyMedium),
-                    if (hint != null) ...[
-                      const SizedBox(height: 6),
-                      Text(
-                        hint,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          fontStyle: FontStyle.italic,
+                    // The text scrolls when the screen is short or the text enlarged; the
+                    // buttons below it stay reachable.
+                    Flexible(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${tutorialText(l, missionKey(m, 'Title'))} · '
+                              '${l.tutStepOf(s.stepIndex + 1, m.steps.length)}',
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: theme.colorScheme.primary,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Semantics(
+                              header: true,
+                              liveRegion: true,
+                              child: Text(
+                                title,
+                                style: theme.textTheme.titleMedium,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(body, style: theme.textTheme.bodyMedium),
+                            if (hint != null) ...[
+                              const SizedBox(height: 6),
+                              Text(
+                                hint,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                     const SizedBox(height: 10),
                     Wrap(
                       spacing: 8,

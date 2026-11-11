@@ -3,18 +3,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Knows the widgets a tutorial step can point at, by id.
 class TutorialTargetRegistry {
-  final _keys = <String, GlobalKey>{};
+  final _keys = <String, List<GlobalKey>>{};
 
   /// Makes [key] the widget for [id] (the latest registration wins).
-  void register(String id, GlobalKey key) => _keys[id] = key;
-
-  /// Forgets [id] when it still belongs to [key].
-  void unregister(String id, GlobalKey key) {
-    if (_keys[id] == key) _keys.remove(id);
+  void register(String id, GlobalKey key) {
+    final list = _keys[id] ??= [];
+    list
+      ..remove(key)
+      ..add(key);
   }
 
-  /// The key registered for [id].
-  GlobalKey? operator [](String id) => _keys[id];
+  /// Forgets [key] for [id]; an earlier registration of the same id that is still mounted takes
+  /// over again.
+  void unregister(String id, GlobalKey key) {
+    final list = _keys[id];
+    if (list == null) return;
+    list.remove(key);
+    if (list.isEmpty) _keys.remove(id);
+  }
+
+  /// The newest still-mounted key registered for [id].
+  GlobalKey? operator [](String id) {
+    final list = _keys[id];
+    if (list == null) return null;
+    for (final k in list.reversed) {
+      if (k.currentContext != null) return k;
+    }
+    return list.last;
+  }
 }
 
 /// The registry of the running app.

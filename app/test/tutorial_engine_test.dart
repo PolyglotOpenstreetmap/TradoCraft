@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tradocraft_app/app/api.dart';
 import 'package:tradocraft_app/app/environments.dart';
 import 'package:tradocraft_app/app/session.dart';
+import 'package:tradocraft_app/app/workspace.dart';
 import 'package:tradocraft_app/features/field/offline/kv_store.dart';
 import 'package:tradocraft_app/features/tutorial/api_events.dart';
 import 'package:tradocraft_app/features/tutorial/chapter_map_page.dart';
@@ -121,7 +124,7 @@ void main() {
       expect(c.read(tutorialProvider).running, isTrue);
       expect(c.read(tutorialProvider).stepIndex, 2);
 
-      t.skipChapter();
+      await t.skipChapter();
       var s = c.read(tutorialProvider);
       expect(s.activeId, isNull);
       expect(s.skipped, {'demo'});
@@ -143,7 +146,7 @@ void main() {
       expect(t.isUnlocked(1), isFalse);
       expect(await t.start('other'), StartResult.locked);
       expect(await t.start('missing'), StartResult.unavailable);
-      t.skipChapter('demo');
+      await t.skipChapter('demo');
       expect(t.isUnlocked(1), isTrue);
       expect(t.currentChapter?.id, 'other');
     });
@@ -257,14 +260,118 @@ void main() {
       },
     );
 
-    test('an already satisfied location finishes a route step at once', () async {
+    test(
+      'an already satisfied location finishes a route step at once',
+      () async {
+        final http = FakeHttp({
+          'POST /api/v1/things': (b) => {
+            'id': 't7',
+            'kind': (b as Map)['kind'],
+          },
+        });
+        final c = boot(http: http);
+        final t = await started(c);
+        t.routeChanged('/things/t7');
+        t.next(); // at step b
+        await c
+            .read(dioProvider)
+            .post<Object?>('/api/v1/things', data: {'kind': 'x'});
+        // Step c (the route step) was entered with the location already showing /things/t7.
+        expect(c.read(tutorialProvider).values['thingId'], 't7');
+        expect(c.read(tutorialProvider).stepIndex, 3);
+      },
+    );
+
+    test('events sent as another session do not finish a step', () async {
       final c = boot();
       final t = await started(c);
-      t.routeChanged('/things/t7');
       t.next();
-      t.skipStep(); // step b, so the context has no id: captured by hand below
+      final bus = c.read(apiEventBusProvider);
+      bus.emit(
+        const ApiEvent('POST', '/things', 200, {
+          'id': 'x',
+          'kind': 'x',
+        }, scope: 'other|session'),
+      );
+      expect(c.read(tutorialProvider).stepIndex, 1);
+      bus.emit(
+        ApiEvent('POST', '/things', 200, const {
+          'id': 'x',
+          'kind': 'x',
+        }, scope: tutorialSessionId(c.read(sessionProvider))),
+      );
       expect(c.read(tutorialProvider).stepIndex, 2);
     });
+
+    test(
+      'the interceptor stamps requests with the session it belongs to',
+      () async {
+        final http = FakeHttp({
+          'POST /api/v1/things': (_) => {'id': 'a'},
+        });
+        final bus = ApiEventBus()..active = true;
+        final seen = <ApiEvent>[];
+        bus.stream.listen(seen.add);
+        final d = fakeDio(http)
+          ..interceptors.add(ApiEventInterceptor(bus, scope: 's1'));
+        await d.post<Object?>('/api/v1/things', data: {});
+        expect(seen.single.scope, 's1');
+        bus.dispose();
+      },
+    );
+
+    test('a token session is scoped by the token subject and the company', () {
+      String jwt(String sub) =>
+          'h.${base64Url.encode(utf8.encode(jsonEncode({'sub': sub})))}.s';
+      expect(tokenSubject(jwt('user-1')), 'user-1');
+      expect(tokenSubject('not-a-jwt'), isNull);
+      final c = ProviderContainer(
+        overrides: [
+          initialSessionProvider.overrideWithValue(
+            Session(
+              serverUrl: 'http://x',
+              accessToken: jwt('u1'),
+              companyId: 'co',
+            ),
+          ),
+          initialEnvironmentsProvider.overrideWithValue(
+            EnvironmentStore.fromSession(const Session(serverUrl: 'http://x')),
+          ),
+          environmentProbeProvider.overrideWithValue(
+            (_) async => throw Exception('x'),
+          ),
+        ],
+      );
+      addTearDown(c.dispose);
+      expect(c.read(tutorialScopeProvider).who, 'token:u1:co');
+    });
+
+    test('skipChapter waits for the stored progress to load', () async {
+      final kv = MemoryKvStore();
+      final first = await started(boot(kv: kv));
+      await first.skipChapter();
+      await pumpEventQueue();
+      final c = boot(kv: kv);
+      final t = c.read(tutorialProvider.notifier);
+      await t.skipChapter('other'); // no wait for ready by the caller
+      final s = c.read(tutorialProvider);
+      expect(s.skipped, containsAll(['demo', 'other']));
+    });
+
+    test(
+      'the registry gives back the earlier target when the newest goes away',
+      () {
+        final r = TutorialTargetRegistry();
+        final a = GlobalKey(), b = GlobalKey();
+        r.register('x', a);
+        r.register('x', b);
+        expect(r['x'], b);
+        r.unregister('x', b);
+        expect(r['x'], a);
+        r.unregister('x', a);
+        expect(r['x'], isNull);
+      },
+    );
 
     test('an action step runs its code and captures the result', () async {
       final act = Mission(
@@ -478,6 +585,49 @@ void main() {
     });
   });
 
+  group('card and location', () {
+    testWidgets(
+      'the narrator card scrolls on a short screen and keeps its buttons',
+      (tester) async {
+        tester.view.physicalSize = const Size(400, 300);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final c = boot(missions: [spot]);
+        await tester.pumpWidget(_host(c, targets: false));
+        final t = c.read(tutorialProvider.notifier);
+        await tester.runAsync(() => t.ready);
+        await tester.runAsync(() => t.start('spot'));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+        expect(tester.takeException(), isNull);
+        expect(find.byType(SingleChildScrollView), findsWidgets);
+        expect(find.byKey(const ValueKey('tutorial-pause')), findsOneWidget);
+        final card = tester.getRect(
+          find.byKey(const ValueKey('tutorial-card')),
+        );
+        expect(card.height, lessThanOrEqualTo(300));
+        await tester.pumpWidget(const SizedBox());
+      },
+    );
+
+    testWidgets('a focused workspace tab reports its own location', (
+      tester,
+    ) async {
+      final c = boot(missions: [loc]);
+      await tester.pumpWidget(_host(c, targets: false));
+      final t = c.read(tutorialProvider.notifier);
+      await tester.runAsync(() => t.ready);
+      await tester.runAsync(() => t.start('loc'));
+      await tester.pump();
+      c.read(workspaceProvider.notifier).open('/things/t1');
+      await tester.pump();
+      await tester.pump();
+      expect(c.read(tutorialProvider).location, '/things/t1');
+      expect(c.read(tutorialProvider).completed, {'loc'});
+      await tester.pumpWidget(const SizedBox());
+    });
+  });
+
   group('chapter map', () {
     testWidgets('refuses on live and offers to switch or add an environment', (
       tester,
@@ -577,6 +727,12 @@ void main() {
 }
 
 int _tapped = 0;
+
+/// A mission finished by showing /things/t1.
+const loc = Mission(
+  id: 'loc',
+  steps: [MissionStep(id: 'a', completion: OnRoute('/things/t1'))],
+);
 
 /// A one-step mission that points at 'the-button' and has a route to a far page.
 const spot = Mission(

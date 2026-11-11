@@ -166,7 +166,9 @@ class _ChapterTile extends StatelessWidget {
 
     Future<void> go(Future<StartResult> Function() action) async {
       final router = GoRouter.of(context);
-      if (await action() == StartResult.started) {
+      final result = await action();
+      if (!context.mounted) return;
+      if (result == StartResult.started) {
         if (router.canPop()) {
           router.pop();
         } else {
@@ -239,7 +241,9 @@ class _ChapterTile extends StatelessWidget {
                   if (!done && !skipped && unlocked)
                     TextButton(
                       key: ValueKey('tutorial-skip-${m.id}'),
-                      onPressed: () => controller.skipChapter(m.id),
+                      onPressed: state.loaded
+                          ? () => controller.skipChapter(m.id)
+                          : null,
                       child: Text(l.tutSkipChapter),
                     ),
                 ],

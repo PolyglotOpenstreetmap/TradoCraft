@@ -32,11 +32,11 @@ const _controller = (
 /// The code and name of the finished product of the story.
 const finishedProduct = (code: 'TUT-CART', name: 'Cart', idKey: 'cartId');
 
-Object? _itemWithCode(Object? page, String code) {
+Object? _itemWithCode(Object? page, String code, String type) {
   final items = page is Map ? page['items'] : null;
   if (items is! List) return null;
   for (final i in items) {
-    if (i is Map && i['code'] == code) return i;
+    if (i is Map && i['code'] == code && i['product_type'] == type) return i;
   }
   return null;
 }
@@ -63,13 +63,26 @@ MissionStep _createProduct(
   probe: Probe(
     '/api/v1/products',
     query: {'q': code, 'limit': 20},
-    done: (json, _) => _itemWithCode(json, code) != null,
+    done: (json, _) => _itemWithCode(json, code, type) != null,
     capture: (json, _) {
-      final p = _itemWithCode(json, code);
+      final p = _itemWithCode(json, code, type);
       return p is Map ? {idKey: '${p['id']}'} : const {};
     },
   ),
 );
+
+/// The revision of the story's product the later steps work on: its draft, else its active one,
+/// else the first (from the list of revisions).
+Map? _tutorialBom(Object? list) {
+  if (list is! List) return null;
+  final boms = list.whereType<Map>().toList();
+  for (final status in ['draft', 'active']) {
+    for (final b in boms) {
+      if (b['status'] == status) return b;
+    }
+  }
+  return boms.firstOrNull;
+}
 
 bool _bomHasLines(Object? json, MissionContext ctx) {
   final lines = json is Map ? json['lines'] : null;
@@ -124,32 +137,30 @@ final productMission = Mission(
       id: 'revision',
       targets: const ['bom-new-revision'],
       completion: const OnApi('POST', '/products/{cartId}/boms'),
+      capture: (json) => json is Map ? {'bomId': '${json['id']}'} : const {},
       probe: Probe(
         '/api/v1/products/{cartId}/boms',
-        done: (json, _) => json is List && json.isNotEmpty,
+        done: (json, _) => _tutorialBom(json) != null,
+        capture: (json, _) {
+          final b = _tutorialBom(json);
+          return b == null ? const {} : {'bomId': '${b['id']}'};
+        },
       ),
     ),
     MissionStep(
       id: 'lines',
       hasHint: true,
       targets: const ['bom-add-component'],
-      completion: const OnApi('PUT', '/boms/[^/]+', predicate: _bomHasLines),
-      probe: Probe(
-        '/api/v1/products/{cartId}/boms',
-        done: (json, _) =>
-            json is List &&
-            json.any((b) => b is Map && (b['line_count'] as num? ?? 0) >= 3),
-      ),
+      completion: const OnApi('PUT', '/boms/{bomId}', predicate: _bomHasLines),
+      probe: Probe('/api/v1/boms/{bomId}', done: _bomHasLines),
     ),
     MissionStep(
       id: 'activate',
       targets: const ['bom-activate'],
-      completion: const OnApi('POST', '/boms/[^/]+/activate'),
+      completion: const OnApi('POST', '/boms/{bomId}/activate'),
       probe: Probe(
-        '/api/v1/products/{cartId}/boms',
-        done: (json, _) =>
-            json is List &&
-            json.any((b) => b is Map && b['status'] == 'active'),
+        '/api/v1/boms/{bomId}',
+        done: (json, _) => json is Map && json['status'] == 'active',
       ),
     ),
     const MissionStep(id: 'done'),

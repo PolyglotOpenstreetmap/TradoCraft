@@ -142,7 +142,7 @@ void main() {
       final t = c.read(tutorialProvider.notifier);
       await t.ready;
       await t.start('welcome');
-      t.skipChapter();
+      await t.skipChapter();
       expect(await t.start('product'), StartResult.started);
       final dio = c.read(dioProvider);
       int step() => c.read(tutorialProvider).stepIndex;
@@ -221,6 +221,13 @@ void main() {
               _product('k1', 'TUT-CART', 'manufactured'),
             ],
           },
+          'GET /api/v1/boms/b': (_) => {
+            'id': 'b',
+            'status': 'active',
+            'lines': [
+              for (final id in ['m1', 'f1', 'c1']) {'component_product_id': id},
+            ],
+          },
           'GET /api/v1/products/k1/boms': (_) => [
             {'id': 'b', 'status': 'active', 'line_count': 3},
           ],
@@ -228,7 +235,7 @@ void main() {
         final c = _boot(http);
         final t = c.read(tutorialProvider.notifier);
         await t.ready;
-        t.skipChapter('welcome');
+        await t.skipChapter('welcome');
         await t.start('product');
         t.routeChanged('/products'); // step open
         await pumpEventQueue(times: 200);
@@ -253,6 +260,74 @@ void main() {
           c.read(tutorialProvider).completed,
           {'welcome', 'product'}.difference({'welcome'}),
         );
+      },
+    );
+  });
+
+  group('probe precision', () {
+    test(
+      'a product with the right code but another type does not count',
+      () async {
+        final http = FakeHttp({
+          'GET /api/v1/products': (_) => {
+            'total': 1,
+            'items': [_product('x1', 'TUT-MOTOR', 'manufactured')],
+          },
+        });
+        final c = _boot(http);
+        final t = c.read(tutorialProvider.notifier);
+        await t.ready;
+        await t.skipChapter('welcome');
+        await t.start('product');
+        t.routeChanged('/products');
+        await pumpEventQueue(times: 200);
+        expect(c.read(tutorialProvider).stepIndex, 1);
+        expect(c.read(tutorialProvider).values.containsKey('motorId'), isFalse);
+      },
+    );
+
+    test(
+      'the lines probe checks the lines of the story BOM, not a line count',
+      () async {
+        final http = FakeHttp({
+          'GET /api/v1/products': (_) => {'total': 0, 'items': <Object?>[]},
+          'GET /api/v1/products/k1/boms': (_) => [
+            {'id': 'other', 'status': 'active', 'line_count': 9},
+            {'id': 'b', 'status': 'draft', 'line_count': 3},
+          ],
+          'GET /api/v1/boms/b': (_) => {
+            'id': 'b',
+            'status': 'draft',
+            'lines': [
+              for (final id in ['m1', 'f1', 'zzz'])
+                {'component_product_id': id},
+            ],
+          },
+        });
+        final kv = MemoryKvStore()
+          ..data['tutorial.v1.e1.dev:a@x.test'] = jsonEncode({
+            'completed': ['welcome'],
+            'active': 'product',
+            'step': 7,
+            'values': {
+              'motorId': 'm1',
+              'frameId': 'f1',
+              'controllerId': 'c1',
+              'cartId': 'k1',
+            },
+          });
+        final c = _boot(http, kv: kv);
+        final t = c.read(tutorialProvider.notifier);
+        await t.ready;
+        await t.resume();
+        await pumpEventQueue(times: 200);
+        final s = c.read(tutorialProvider);
+        expect(
+          s.values['bomId'],
+          'b',
+          reason: 'the cart draft, not the other BOM',
+        );
+        expect(s.stepIndex, 8, reason: 'revision exists, lines are not right');
       },
     );
   });
