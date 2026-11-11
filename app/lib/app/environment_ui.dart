@@ -5,6 +5,7 @@ import '../l10n/l10n.dart';
 import 'api.dart' show errorMessage;
 import 'environments.dart';
 import 'workspace.dart';
+import '../features/tutorial/targets.dart';
 
 /// The word for a kind in the user's language.
 String environmentKindLabel(AppLocalizations l, EnvironmentKind kind) =>
@@ -49,34 +50,37 @@ class EnvironmentBanner extends ConsumerWidget {
     final l = context.l10n;
     final kind = environmentKindLabel(l, env.kind);
     final colors = environmentColors(env.kind, Theme.of(context).brightness);
-    return Semantics(
-      container: true,
-      button: true,
-      label: l.envBannerSemantics(env.name, kind),
-      onTapHint: l.envSwitchTooltip,
-      // The same action as tapping the strip, for screen readers.
-      onTap: () => showEnvironmentSwitcher(context),
-      child: ExcludeSemantics(
-        child: Material(
-          key: ValueKey('env-banner-${env.kind.name}'),
-          color: colors.background,
-          child: InkWell(
-            onTap: () => showEnvironmentSwitcher(context),
-            child: SizedBox(
-              width: double.infinity,
-              height: 26,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    '${kind.toUpperCase()} · ${env.name}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: colors.foreground,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      letterSpacing: 0.6,
+    return TutorialTarget(
+      id: 'env-banner',
+      child: Semantics(
+        container: true,
+        button: true,
+        label: l.envBannerSemantics(env.name, kind),
+        onTapHint: l.envSwitchTooltip,
+        // The same action as tapping the strip, for screen readers.
+        onTap: () => showEnvironmentSwitcher(context),
+        child: ExcludeSemantics(
+          child: Material(
+            key: ValueKey('env-banner-${env.kind.name}'),
+            color: colors.background,
+            child: InkWell(
+              onTap: () => showEnvironmentSwitcher(context),
+              child: SizedBox(
+                width: double.infinity,
+                height: 26,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      '${kind.toUpperCase()} · ${env.name}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: colors.foreground,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                        letterSpacing: 0.6,
+                      ),
                     ),
                   ),
                 ),
@@ -119,6 +123,10 @@ Future<bool> confirmLeavingTabs(BuildContext context, WidgetRef ref) async {
 /// Lists the environments to switch between, add or remove.
 Future<void> showEnvironmentSwitcher(BuildContext context) =>
     showDialog<void>(context: context, builder: (_) => const _SwitcherDialog());
+
+/// Opens the dialog that adds an environment (the server tells its kind). True when one was added.
+Future<bool?> showAddEnvironmentDialog(BuildContext context) =>
+    showDialog<bool>(context: context, builder: (_) => const _AddDialog());
 
 /// The dialog behind [showEnvironmentSwitcher]: one tile per environment plus "add".
 class _SwitcherDialog extends ConsumerWidget {

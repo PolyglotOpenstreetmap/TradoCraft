@@ -6220,4 +6220,221 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get envNotSaved =>
       'Gedaan, maar de lijst met omgevingen kon niet op dit toestel worden bewaard.';
+
+  @override
+  String get tutTitle => 'Tutorial';
+
+  @override
+  String get tutBack => 'Terug';
+
+  @override
+  String get tutNext => 'Volgende';
+
+  @override
+  String get tutSkipStep => 'Stap overslaan';
+
+  @override
+  String get tutPause => 'Pauzeren';
+
+  @override
+  String get tutResume => 'Hervatten';
+
+  @override
+  String get tutPaused => 'Tutorial gepauzeerd';
+
+  @override
+  String get tutTakeMe => 'Breng me erheen';
+
+  @override
+  String tutStepOf(int current, int total) {
+    return 'Stap $current van $total';
+  }
+
+  @override
+  String get tutOfferTitle => 'Welkom bij TradoCraft';
+
+  @override
+  String get tutOfferBody =>
+      'Dit is een tutorialomgeving. Wil je een rondleiding die je stap voor stap de app leert, met oefendata?';
+
+  @override
+  String get tutOfferStart => 'Start het tutorial';
+
+  @override
+  String get tutOfferLater => 'Niet nu';
+
+  @override
+  String get tutLiveTitle => 'Het tutorial draait niet op live data';
+
+  @override
+  String get tutLiveBody =>
+      'Het tutorial maakt records aan en draait daarom alleen in een test- of tutorialomgeving. Schakel over naar zo\'n omgeving, of voeg er een toe.';
+
+  @override
+  String get tutSwitchEnv => 'Omgeving wisselen';
+
+  @override
+  String get tutAddEnv => 'Omgeving toevoegen';
+
+  @override
+  String get tutMapIntro =>
+      'Werk de hoofdstukken in volgorde af. Je kunt een hoofdstuk altijd pauzeren, opnieuw doen of overslaan.';
+
+  @override
+  String get tutStatusDone => 'Klaar';
+
+  @override
+  String get tutStatusCurrent => 'Aan de beurt';
+
+  @override
+  String get tutStatusLocked => 'Vergrendeld';
+
+  @override
+  String get tutStatusSkipped => 'Overgeslagen';
+
+  @override
+  String get tutStatusPaused => 'Bezig';
+
+  @override
+  String get tutStart => 'Starten';
+
+  @override
+  String get tutReplay => 'Opnieuw';
+
+  @override
+  String get tutSkipChapter => 'Hoofdstuk overslaan';
+
+  @override
+  String get tutWelcomeTitle => 'Welkom';
+
+  @override
+  String get tutWelcomeSummary =>
+      'Wegwijs: de omgevingsbalk, de tabbladen en de bediening van het tutorial.';
+
+  @override
+  String get tutProductTitle => 'Je eerste product';
+
+  @override
+  String get tutProductSummary =>
+      'Pet: productbeheerder. Maak drie componenten, een eindproduct en de stuklijst ervan.';
+
+  @override
+  String get tutWelcomeBannerTitle => 'De balk bovenaan';
+
+  @override
+  String get tutWelcomeBannerBody =>
+      'Deze balk toont altijd in welke omgeving je zit: de naam en het soort. Amber betekent test, blauw tutorial en rood live data. Het tutorial draait alleen in test- en tutorialomgevingen, dus niets wat je hier doet raakt echte data.';
+
+  @override
+  String get tutWelcomeTabsTitle => 'Tabbladen en secties';
+
+  @override
+  String get tutWelcomeTabsBody =>
+      'De secties staan links (of in de balk onderaan op een telefoon). Een record openen, zoals een product of offerte, voegt een tabblad toe aan de werkruimte, zodat je meerdere records open kunt houden en erop kunt terugkomen.';
+
+  @override
+  String get tutWelcomeControlsTitle => 'Deze kaart';
+
+  @override
+  String get tutWelcomeControlsBody =>
+      'Ik ben je verteller. Met Volgende ga je verder als een stap alleen uitleg is. Stappen waarin je iets moet doen, zijn vanzelf klaar zodra je het gedaan hebt. Met Terug en Stap overslaan beweeg je vrij, en Pauzeren verbergt mij tot je op Hervatten drukt.';
+
+  @override
+  String get tutWelcomeMenuTitle => 'Waar je mij vindt';
+
+  @override
+  String get tutWelcomeMenuBody =>
+      'Open het accountmenu voor het item Tutorial. Dat opent de hoofdstukkenkaart, waar je een hoofdstuk altijd kunt hervatten, opnieuw doen of overslaan.';
+
+  @override
+  String get tutWelcomeProductsTitle => 'Laten we beginnen';
+
+  @override
+  String get tutWelcomeProductsBody =>
+      'Open de sectie Producten. Het volgende hoofdstuk begint daar.';
+
+  @override
+  String get tutProductOpenTitle => 'Producten';
+
+  @override
+  String get tutProductOpenBody =>
+      'Vandaag ben jij de productbeheerder. Alles wat het bedrijf verkoopt of bouwt is een product. Open de sectie Producten.';
+
+  @override
+  String get tutProductMotorTitle => 'Component: Motor';
+
+  @override
+  String get tutProductMotorBody =>
+      'Maak het eerste component aan. Kies Nieuw product, vul code TUT-MOTOR en naam Motor in, laat het type op Aangekocht staan en sla op.';
+
+  @override
+  String get tutProductMotorHint =>
+      'Het voorvoegsel TUT- markeert tutorialdata, zodat je die later herkent.';
+
+  @override
+  String get tutProductFrameTitle => 'Component: Frame';
+
+  @override
+  String get tutProductFrameBody =>
+      'Maak op dezelfde manier een tweede component: code TUT-FRAME, naam Frame, type Aangekocht.';
+
+  @override
+  String get tutProductControllerTitle => 'Component: Controller';
+
+  @override
+  String get tutProductControllerBody =>
+      'En een derde: code TUT-CTRL, naam Controller, type Aangekocht.';
+
+  @override
+  String get tutProductCartTitle => 'Het eindproduct';
+
+  @override
+  String get tutProductCartBody =>
+      'Nu het product dat je uit die onderdelen bouwt. Maak code TUT-CART, naam Cart aan en kies het type Eigen productie: alleen producten met eigen productie hebben een stuklijst.';
+
+  @override
+  String get tutProductOpenCartTitle => 'Open de cart';
+
+  @override
+  String get tutProductOpenCartBody =>
+      'Open het nieuwe product Cart uit de lijst om de tabbladen te zien.';
+
+  @override
+  String get tutProductBomTabTitle => 'Stuklijst';
+
+  @override
+  String get tutProductBomTabBody =>
+      'Kies het tabblad Stuklijst. Daarin staan de componenten om één stuk te bouwen. Een revisie is een concept dat je bewerkt, of de actieve die de productie gebruikt. Druk op Volgende als je er bent.';
+
+  @override
+  String get tutProductRevisionTitle => 'Een eerste revisie';
+
+  @override
+  String get tutProductRevisionBody =>
+      'Kies Nieuwe revisie om een concept te starten.';
+
+  @override
+  String get tutProductLinesTitle => 'Voeg de componenten toe';
+
+  @override
+  String get tutProductLinesBody =>
+      'Zoek elk component op en voeg het toe: Motor, Frame en Controller. Druk daarna op Concept opslaan.';
+
+  @override
+  String get tutProductLinesHint =>
+      'Typ TUT in het zoekveld om de drie componenten te vinden.';
+
+  @override
+  String get tutProductActivateTitle => 'Activeer de revisie';
+
+  @override
+  String get tutProductActivateBody =>
+      'Druk op Activeren. Vanaf nu gebruiken productie en offertes deze revisie; latere wijzigingen lopen via een nieuwe revisie.';
+
+  @override
+  String get tutProductDoneTitle => 'Goed gedaan';
+
+  @override
+  String get tutProductDoneBody =>
+      'Je hebt een eindproduct met een stuklijst van drie componenten. Latere hoofdstukken bouwen hierop voort.';
 }

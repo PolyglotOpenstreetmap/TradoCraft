@@ -2,13 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api/generated/export.dart';
+import '../features/tutorial/api_events.dart';
 import 'session.dart';
 
 export '../api/generated/export.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final session = ref.watch(sessionProvider);
-  return Dio(
+  final dio = Dio(
     BaseOptions(
       baseUrl: session.serverUrl,
       headers: session.headers,
@@ -16,6 +17,9 @@ final dioProvider = Provider<Dio>((ref) {
       receiveTimeout: const Duration(seconds: 60),
     ),
   );
+  // Tells the tutorial which calls finished; silent unless a mission is running.
+  dio.interceptors.add(ApiEventInterceptor(ref.read(apiEventBusProvider)));
+  return dio;
 });
 
 /// Typed client generated from the backend's OpenAPI document.

@@ -9,6 +9,7 @@ import 'app/profile.dart';
 import 'app/session.dart';
 import 'app/zoom.dart';
 import 'features/field/offline/kv_store.dart';
+import 'features/tutorial/overlay.dart';
 
 /// The storage of [profile]; when its file cannot be opened the session runs on in memory
 /// (like [PrefsKvStore] does) so the app still starts, only without remembering anything.
@@ -52,6 +53,7 @@ class TradocraftApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Keeps the list of environments following the session for as long as the app runs.
     ref.read(environmentsProvider);
+    final router = ref.watch(routerProvider);
     return MaterialApp.router(
       title: brandName,
       debugShowCheckedModeBanner: false,
@@ -63,8 +65,11 @@ class TradocraftApp extends ConsumerWidget {
           isDense: true,
         ),
       ),
-      builder: (context, child) => ZoomShell(child: child ?? const SizedBox()),
-      routerConfig: ref.watch(routerProvider),
+      // The tutorial's spotlight and narrator sit inside the zoom, above every page and dialog.
+      builder: (context, child) => ZoomShell(
+        child: TutorialHost(router: router, child: child ?? const SizedBox()),
+      ),
+      routerConfig: router,
       locale: ref.watch(localeProvider),
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

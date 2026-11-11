@@ -6202,4 +6202,220 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get envNotSaved =>
       'Done, but the list of environments could not be saved on this device.';
+
+  @override
+  String get tutTitle => 'Tutorial';
+
+  @override
+  String get tutBack => 'Back';
+
+  @override
+  String get tutNext => 'Next';
+
+  @override
+  String get tutSkipStep => 'Skip step';
+
+  @override
+  String get tutPause => 'Pause';
+
+  @override
+  String get tutResume => 'Resume';
+
+  @override
+  String get tutPaused => 'Tutorial paused';
+
+  @override
+  String get tutTakeMe => 'Take me there';
+
+  @override
+  String tutStepOf(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get tutOfferTitle => 'Welcome to TradoCraft';
+
+  @override
+  String get tutOfferBody =>
+      'This is a tutorial environment. Want a guided tour that teaches you the app step by step, on practice data?';
+
+  @override
+  String get tutOfferStart => 'Start the tutorial';
+
+  @override
+  String get tutOfferLater => 'Not now';
+
+  @override
+  String get tutLiveTitle => 'The tutorial does not run on live data';
+
+  @override
+  String get tutLiveBody =>
+      'The tutorial creates records, so it only runs in a test or tutorial environment. Switch to one, or add one.';
+
+  @override
+  String get tutSwitchEnv => 'Switch environment';
+
+  @override
+  String get tutAddEnv => 'Add an environment';
+
+  @override
+  String get tutMapIntro =>
+      'Work through the chapters in order. You can pause, replay or skip a chapter at any time.';
+
+  @override
+  String get tutStatusDone => 'Done';
+
+  @override
+  String get tutStatusCurrent => 'Up next';
+
+  @override
+  String get tutStatusLocked => 'Locked';
+
+  @override
+  String get tutStatusSkipped => 'Skipped';
+
+  @override
+  String get tutStatusPaused => 'In progress';
+
+  @override
+  String get tutStart => 'Start';
+
+  @override
+  String get tutReplay => 'Replay';
+
+  @override
+  String get tutSkipChapter => 'Skip chapter';
+
+  @override
+  String get tutWelcomeTitle => 'Welcome';
+
+  @override
+  String get tutWelcomeSummary =>
+      'Find your way around: the environment banner, the tabs and the tutorial controls.';
+
+  @override
+  String get tutProductTitle => 'Your first product';
+
+  @override
+  String get tutProductSummary =>
+      'Hat: product manager. Create three components, a finished product and its bill of materials.';
+
+  @override
+  String get tutWelcomeBannerTitle => 'The strip at the top';
+
+  @override
+  String get tutWelcomeBannerBody =>
+      'This strip always shows which environment you are in: its name and its kind. Amber means test, blue means tutorial and red means live data. The tutorial only runs in test and tutorial environments, so nothing you do here touches real data.';
+
+  @override
+  String get tutWelcomeTabsTitle => 'Tabs and sections';
+
+  @override
+  String get tutWelcomeTabsBody =>
+      'The sections are on the left (or in the bottom bar on a phone). Opening a record, such as a product or a quotation, adds a tab to the workspace, so you can keep several records open and come back to them.';
+
+  @override
+  String get tutWelcomeControlsTitle => 'This card';
+
+  @override
+  String get tutWelcomeControlsBody =>
+      'I am your narrator. Next moves on when a step is only an explanation. Steps that ask you to do something finish by themselves as soon as you have done it. Back and Skip step let you move around, and Pause hides me until you press Resume.';
+
+  @override
+  String get tutWelcomeMenuTitle => 'Where to find me';
+
+  @override
+  String get tutWelcomeMenuBody =>
+      'Open the account menu to find the Tutorial entry. It opens the chapter map, where you can resume, replay or skip a chapter at any time.';
+
+  @override
+  String get tutWelcomeProductsTitle => 'Let\'s start';
+
+  @override
+  String get tutWelcomeProductsBody =>
+      'Open the Products section. The next chapter starts there.';
+
+  @override
+  String get tutProductOpenTitle => 'Products';
+
+  @override
+  String get tutProductOpenBody =>
+      'Today you are the product manager. Everything the company sells or builds is a product. Open the Products section.';
+
+  @override
+  String get tutProductMotorTitle => 'Component: Motor';
+
+  @override
+  String get tutProductMotorBody =>
+      'Create the first component. Press New product, enter code TUT-MOTOR and name Motor, keep the type Purchased, and save.';
+
+  @override
+  String get tutProductMotorHint =>
+      'The TUT- prefix marks tutorial data, so you can recognise it later.';
+
+  @override
+  String get tutProductFrameTitle => 'Component: Frame';
+
+  @override
+  String get tutProductFrameBody =>
+      'Create a second component the same way: code TUT-FRAME, name Frame, type Purchased.';
+
+  @override
+  String get tutProductControllerTitle => 'Component: Controller';
+
+  @override
+  String get tutProductControllerBody =>
+      'And a third one: code TUT-CTRL, name Controller, type Purchased.';
+
+  @override
+  String get tutProductCartTitle => 'The finished product';
+
+  @override
+  String get tutProductCartBody =>
+      'Now the product you build from those parts. Create code TUT-CART, name Cart, and choose the type Manufactured: only manufactured products have a bill of materials.';
+
+  @override
+  String get tutProductOpenCartTitle => 'Open the cart';
+
+  @override
+  String get tutProductOpenCartBody =>
+      'Open the new Cart product from the list to see its tabs.';
+
+  @override
+  String get tutProductBomTabTitle => 'Bill of materials';
+
+  @override
+  String get tutProductBomTabBody =>
+      'Choose the Bill of materials tab. It lists the components needed to build one unit. A revision is a draft you edit, or the active one that production uses. Press Next when you are there.';
+
+  @override
+  String get tutProductRevisionTitle => 'A first revision';
+
+  @override
+  String get tutProductRevisionBody => 'Press New revision to start a draft.';
+
+  @override
+  String get tutProductLinesTitle => 'Add the components';
+
+  @override
+  String get tutProductLinesBody =>
+      'Search each component and add it: Motor, Frame and Controller. Then press Save draft.';
+
+  @override
+  String get tutProductLinesHint =>
+      'Type TUT in the search box to find the three components.';
+
+  @override
+  String get tutProductActivateTitle => 'Activate it';
+
+  @override
+  String get tutProductActivateBody =>
+      'Press Activate. From now on production and quotations use this revision; later changes go through a new revision.';
+
+  @override
+  String get tutProductDoneTitle => 'Well done';
+
+  @override
+  String get tutProductDoneBody =>
+      'You have a finished product with a bill of materials of three components. Later chapters build on it.';
 }

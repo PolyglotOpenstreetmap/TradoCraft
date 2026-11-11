@@ -6228,4 +6228,222 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get envNotSaved =>
       'Fait, mais la liste des environnements n\'a pas pu être enregistrée sur cet appareil.';
+
+  @override
+  String get tutTitle => 'Tutoriel';
+
+  @override
+  String get tutBack => 'Retour';
+
+  @override
+  String get tutNext => 'Suivant';
+
+  @override
+  String get tutSkipStep => 'Passer l\'étape';
+
+  @override
+  String get tutPause => 'Pause';
+
+  @override
+  String get tutResume => 'Reprendre';
+
+  @override
+  String get tutPaused => 'Tutoriel en pause';
+
+  @override
+  String get tutTakeMe => 'M\'y emmener';
+
+  @override
+  String tutStepOf(int current, int total) {
+    return 'Étape $current sur $total';
+  }
+
+  @override
+  String get tutOfferTitle => 'Bienvenue dans TradoCraft';
+
+  @override
+  String get tutOfferBody =>
+      'Ceci est un environnement de tutoriel. Souhaitez-vous une visite guidée qui vous apprend l\'application pas à pas, avec des données d\'exercice ?';
+
+  @override
+  String get tutOfferStart => 'Démarrer le tutoriel';
+
+  @override
+  String get tutOfferLater => 'Pas maintenant';
+
+  @override
+  String get tutLiveTitle =>
+      'Le tutoriel ne s\'exécute pas sur des données réelles';
+
+  @override
+  String get tutLiveBody =>
+      'Le tutoriel crée des enregistrements ; il ne s\'exécute donc que dans un environnement de test ou de tutoriel. Changez d\'environnement ou ajoutez-en un.';
+
+  @override
+  String get tutSwitchEnv => 'Changer d\'environnement';
+
+  @override
+  String get tutAddEnv => 'Ajouter un environnement';
+
+  @override
+  String get tutMapIntro =>
+      'Parcourez les chapitres dans l\'ordre. Vous pouvez à tout moment mettre un chapitre en pause, le rejouer ou le passer.';
+
+  @override
+  String get tutStatusDone => 'Terminé';
+
+  @override
+  String get tutStatusCurrent => 'À suivre';
+
+  @override
+  String get tutStatusLocked => 'Verrouillé';
+
+  @override
+  String get tutStatusSkipped => 'Passé';
+
+  @override
+  String get tutStatusPaused => 'En cours';
+
+  @override
+  String get tutStart => 'Démarrer';
+
+  @override
+  String get tutReplay => 'Rejouer';
+
+  @override
+  String get tutSkipChapter => 'Passer le chapitre';
+
+  @override
+  String get tutWelcomeTitle => 'Bienvenue';
+
+  @override
+  String get tutWelcomeSummary =>
+      'Premiers repères : la bannière d\'environnement, les onglets et les commandes du tutoriel.';
+
+  @override
+  String get tutProductTitle => 'Votre premier produit';
+
+  @override
+  String get tutProductSummary =>
+      'Casquette : responsable produit. Créez trois composants, un produit fini et sa nomenclature.';
+
+  @override
+  String get tutWelcomeBannerTitle => 'La bande en haut';
+
+  @override
+  String get tutWelcomeBannerBody =>
+      'Cette bande indique toujours dans quel environnement vous êtes : son nom et son type. Orange = test, bleu = tutoriel, rouge = données réelles. Le tutoriel ne s\'exécute que dans un environnement de test ou de tutoriel : rien de ce que vous faites ici ne touche aux données réelles.';
+
+  @override
+  String get tutWelcomeTabsTitle => 'Onglets et sections';
+
+  @override
+  String get tutWelcomeTabsBody =>
+      'Les sections se trouvent à gauche (ou dans la barre du bas sur un téléphone). Ouvrir un enregistrement, comme un produit ou un devis, ajoute un onglet à l\'espace de travail : vous pouvez garder plusieurs enregistrements ouverts.';
+
+  @override
+  String get tutWelcomeControlsTitle => 'Cette carte';
+
+  @override
+  String get tutWelcomeControlsBody =>
+      'Je suis votre narrateur. « Suivant » avance quand une étape n\'est qu\'une explication. Les étapes où vous devez agir se terminent d\'elles-mêmes dès que c\'est fait. « Retour » et « Passer l\'étape » vous laissent circuler, et « Pause » me cache jusqu\'à « Reprendre ».';
+
+  @override
+  String get tutWelcomeMenuTitle => 'Où me trouver';
+
+  @override
+  String get tutWelcomeMenuBody =>
+      'Ouvrez le menu du compte pour trouver l\'entrée Tutoriel. Elle ouvre la carte des chapitres, où vous pouvez à tout moment reprendre, rejouer ou passer un chapitre.';
+
+  @override
+  String get tutWelcomeProductsTitle => 'Commençons';
+
+  @override
+  String get tutWelcomeProductsBody =>
+      'Ouvrez la section Produits. Le chapitre suivant commence là.';
+
+  @override
+  String get tutProductOpenTitle => 'Produits';
+
+  @override
+  String get tutProductOpenBody =>
+      'Aujourd\'hui, vous êtes le responsable produit. Tout ce que l\'entreprise vend ou fabrique est un produit. Ouvrez la section Produits.';
+
+  @override
+  String get tutProductMotorTitle => 'Composant : Motor';
+
+  @override
+  String get tutProductMotorBody =>
+      'Créez le premier composant. Appuyez sur Nouveau produit, saisissez le code TUT-MOTOR et le nom Motor, gardez le type Acheté et enregistrez.';
+
+  @override
+  String get tutProductMotorHint =>
+      'Le préfixe TUT- marque les données du tutoriel, pour les reconnaître plus tard.';
+
+  @override
+  String get tutProductFrameTitle => 'Composant : Frame';
+
+  @override
+  String get tutProductFrameBody =>
+      'Créez un deuxième composant de la même façon : code TUT-FRAME, nom Frame, type Acheté.';
+
+  @override
+  String get tutProductControllerTitle => 'Composant : Controller';
+
+  @override
+  String get tutProductControllerBody =>
+      'Puis un troisième : code TUT-CTRL, nom Controller, type Acheté.';
+
+  @override
+  String get tutProductCartTitle => 'Le produit fini';
+
+  @override
+  String get tutProductCartBody =>
+      'Voici le produit que vous fabriquez avec ces pièces. Créez le code TUT-CART, le nom Cart et choisissez le type Fabriqué : seuls les produits fabriqués ont une nomenclature.';
+
+  @override
+  String get tutProductOpenCartTitle => 'Ouvrir le Cart';
+
+  @override
+  String get tutProductOpenCartBody =>
+      'Ouvrez le nouveau produit Cart dans la liste pour voir ses onglets.';
+
+  @override
+  String get tutProductBomTabTitle => 'Nomenclature';
+
+  @override
+  String get tutProductBomTabBody =>
+      'Choisissez l\'onglet Nomenclature. Il liste les composants nécessaires pour fabriquer une unité. Une révision est un brouillon que vous modifiez, ou la révision active utilisée par la production. Appuyez sur Suivant une fois sur place.';
+
+  @override
+  String get tutProductRevisionTitle => 'Une première révision';
+
+  @override
+  String get tutProductRevisionBody =>
+      'Appuyez sur Nouvelle révision pour commencer un brouillon.';
+
+  @override
+  String get tutProductLinesTitle => 'Ajoutez les composants';
+
+  @override
+  String get tutProductLinesBody =>
+      'Cherchez chaque composant et ajoutez-le : Motor, Frame et Controller. Appuyez ensuite sur Enregistrer le brouillon.';
+
+  @override
+  String get tutProductLinesHint =>
+      'Saisissez TUT dans le champ de recherche pour trouver les trois composants.';
+
+  @override
+  String get tutProductActivateTitle => 'Activez-la';
+
+  @override
+  String get tutProductActivateBody =>
+      'Appuyez sur Activer. Dès maintenant, la production et les devis utilisent cette révision ; les changements ultérieurs passent par une nouvelle révision.';
+
+  @override
+  String get tutProductDoneTitle => 'Bravo';
+
+  @override
+  String get tutProductDoneBody =>
+      'Vous avez un produit fini avec une nomenclature de trois composants. Les chapitres suivants s\'appuient dessus.';
 }
