@@ -5621,6 +5621,106 @@
         }
       }
     },
+    "/api/v1/finance/settings": {
+      "get": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Returns the match tolerances of the company.",
+        "operationId": "get_settings",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinanceSettings"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Changes the match tolerances; omitted fields keep their value.",
+        "operationId": "update_settings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFinanceSettingsInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinanceSettings"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/goods-receipts/{id}": {
       "get": {
         "tags": [
@@ -20554,6 +20654,837 @@
         }
       }
     },
+    "/api/v1/supplier-invoices": {
+      "get": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Lists supplier invoices with filters and paging.",
+        "operationId": "list_invoices",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "draft | matched | disputed | approved | paid",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          {
+            "name": "supplier_id",
+            "in": "query",
+            "description": "Only invoices of this supplier.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "purchase_order_id",
+            "in": "query",
+            "description": "Only invoices against this purchase order.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Searches the supplier's invoice number and the internal number.",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Page size (default 50, at most 200).",
+            "required": false,
+            "schema": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Rows to skip.",
+            "required": false,
+            "schema": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoicePage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Registers a draft supplier invoice, optionally prefilled from a purchase order.",
+        "operationId": "create_invoice",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewInvoiceInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/supplier-invoices/{id}": {
+      "get": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Returns a supplier invoice with its lines and the live three-way match report.",
+        "operationId": "get_invoice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Supplier invoice ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Changes a draft supplier invoice and replaces its lines.",
+        "operationId": "update_invoice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Supplier invoice ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvoiceInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Deletes a draft supplier invoice.",
+        "operationId": "delete_invoice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Supplier invoice ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/supplier-invoices/{id}/approve": {
+      "post": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Approves a matched invoice, or any draft or matched one with an override reason.",
+        "operationId": "approve_invoice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Supplier invoice ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApproveInvoiceInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/supplier-invoices/{id}/dispute": {
+      "post": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Disputes an invoice with a reason.",
+        "operationId": "dispute_invoice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Supplier invoice ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisputeInvoiceInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/supplier-invoices/{id}/mark-paid": {
+      "post": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Records that an approved invoice was paid.",
+        "operationId": "mark_paid",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Supplier invoice ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkPaidInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/supplier-invoices/{id}/reopen": {
+      "post": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Takes a disputed or matched invoice back to draft.",
+        "operationId": "reopen_invoice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Supplier invoice ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/supplier-invoices/{id}/submit-match": {
+      "post": {
+        "tags": [
+          "finance"
+        ],
+        "summary": "Re-evaluates the match: all lines ok makes the invoice matched, otherwise it stays draft.",
+        "operationId": "submit_match",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Supplier invoice ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/suppliers": {
       "get": {
         "tags": [
@@ -23318,6 +24249,19 @@
           },
           "subject": {
             "type": "string"
+          }
+        }
+      },
+      "ApproveInvoiceInput": {
+        "type": "object",
+        "description": "Payload to approve an invoice.",
+        "properties": {
+          "override_reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Required to approve an invoice whose match is not clean; recorded and audited."
           }
         }
       },
@@ -26859,6 +27803,19 @@
           }
         }
       },
+      "DisputeInvoiceInput": {
+        "type": "object",
+        "description": "Payload to dispute an invoice.",
+        "required": [
+          "reason"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Why the invoice is disputed (required)."
+          }
+        }
+      },
       "Division": {
         "type": "object",
         "required": [
@@ -27781,6 +28738,32 @@
           }
         }
       },
+      "FinanceSettings": {
+        "type": "object",
+        "description": "The company's finance settings.",
+        "required": [
+          "quantity_tolerance_pct",
+          "price_tolerance_pct"
+        ],
+        "properties": {
+          "price_tolerance_pct": {
+            "type": "string",
+            "description": "Price difference (percent of the order price) that is still a match."
+          },
+          "quantity_tolerance_pct": {
+            "type": "string",
+            "description": "Extra quantity (percent of the ordered quantity) that may be invoiced."
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the settings were last saved; `None` while the defaults apply."
+          }
+        }
+      },
       "FindingsInput": {
         "type": "object",
         "required": [
@@ -28138,6 +29121,337 @@
           "ok": {
             "type": "boolean",
             "description": "The balance table equals the sum of the ledger."
+          }
+        }
+      },
+      "InvoiceDetail": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/InvoiceSummary",
+            "description": "The header fields."
+          },
+          {
+            "type": "object",
+            "required": [
+              "lines",
+              "match_report"
+            ],
+            "properties": {
+              "lines": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/InvoiceLine"
+                },
+                "description": "The lines in order."
+              },
+              "match_report": {
+                "$ref": "#/components/schemas/MatchReport",
+                "description": "The three-way match evaluated now."
+              }
+            }
+          }
+        ],
+        "description": "An invoice with its lines and the live match report."
+      },
+      "InvoiceLine": {
+        "type": "object",
+        "description": "A supplier invoice line.",
+        "required": [
+          "id",
+          "invoice_id",
+          "line_number",
+          "description",
+          "quantity",
+          "unit_price",
+          "vat_rate",
+          "line_net",
+          "line_vat",
+          "line_gross"
+        ],
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Line id."
+          },
+          "invoice_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Invoice id."
+          },
+          "line_gross": {
+            "type": "string",
+            "description": "Net plus VAT."
+          },
+          "line_net": {
+            "type": "string",
+            "description": "Quantity times price, 2 decimals."
+          },
+          "line_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Position on the invoice, from 1."
+          },
+          "line_vat": {
+            "type": "string",
+            "description": "VAT on the net amount, 2 decimals."
+          },
+          "product_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Product, when known."
+          },
+          "purchase_order_line_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "The purchase order line this line bills; `None` for a free-text line."
+          },
+          "quantity": {
+            "type": "string",
+            "description": "Invoiced quantity."
+          },
+          "unit_price": {
+            "type": "string",
+            "description": "Unit price excluding VAT."
+          },
+          "vat_rate": {
+            "type": "string",
+            "description": "VAT rate in percent."
+          }
+        }
+      },
+      "InvoiceLineInput": {
+        "type": "object",
+        "description": "A line of an invoice being created or replaced.",
+        "required": [
+          "quantity",
+          "unit_price"
+        ],
+        "properties": {
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Description; required for a free-text line, defaults to the product name otherwise."
+          },
+          "product_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Product for a free-text line; taken from the order line otherwise."
+          },
+          "purchase_order_line_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "The purchase order line billed; requires the invoice to have a purchase order."
+          },
+          "quantity": {
+            "type": "string",
+            "description": "Invoiced quantity (greater than zero, at most 4 decimals)."
+          },
+          "unit_price": {
+            "type": "string",
+            "description": "Unit price excluding VAT (at most 4 decimals)."
+          },
+          "vat_rate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "VAT rate in percent, default 0."
+          }
+        }
+      },
+      "InvoicePage": {
+        "type": "object",
+        "description": "A page of invoices.",
+        "required": [
+          "items",
+          "total"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceSummary"
+            },
+            "description": "The invoices on this page, newest first."
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of invoices matching the filters."
+          }
+        }
+      },
+      "InvoiceSummary": {
+        "type": "object",
+        "description": "A supplier invoice header.",
+        "required": [
+          "id",
+          "company_id",
+          "number",
+          "supplier_id",
+          "supplier_name",
+          "invoice_number",
+          "invoice_date",
+          "due_date",
+          "currency",
+          "status",
+          "net_total",
+          "vat_total",
+          "gross_total",
+          "notes",
+          "dispute_reason",
+          "override_reason",
+          "created_by_user_id",
+          "payment_reference",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "approved_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When it was approved."
+          },
+          "approved_by_user_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Who approved it."
+          },
+          "company_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Owning company."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation time."
+          },
+          "created_by_user_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Who registered the invoice."
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency; equals the purchase order's currency when there is one."
+          },
+          "dispute_reason": {
+            "type": "string",
+            "description": "Why the invoice was disputed (while disputed)."
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Payment due date (default: invoice date plus the supplier's payment terms)."
+          },
+          "gross_total": {
+            "type": "string",
+            "description": "Net plus VAT."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Invoice id."
+          },
+          "invoice_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date on the invoice."
+          },
+          "invoice_number": {
+            "type": "string",
+            "description": "The supplier's own invoice number; unique per supplier."
+          },
+          "net_total": {
+            "type": "string",
+            "description": "Sum of the line net amounts."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Free notes."
+          },
+          "number": {
+            "type": "string",
+            "description": "Internal document number, e.g. `SI2027-00001`."
+          },
+          "override_reason": {
+            "type": "string",
+            "description": "Reason given when the invoice was approved against a failed match."
+          },
+          "paid_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "Payment date, once paid."
+          },
+          "payment_reference": {
+            "type": "string",
+            "description": "Bank or payment reference, once paid."
+          },
+          "purchase_order_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "The purchase order the invoice is matched against, if any."
+          },
+          "purchase_order_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Number of that purchase order, read through purchasing."
+          },
+          "status": {
+            "type": "string",
+            "description": "draft | matched | disputed | approved | paid"
+          },
+          "supplier_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Supplier (purchasing)."
+          },
+          "supplier_name": {
+            "type": "string",
+            "description": "Supplier name, read through purchasing."
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last change."
+          },
+          "vat_total": {
+            "type": "string",
+            "description": "Sum of the line VAT amounts."
           }
         }
       },
@@ -29079,6 +30393,78 @@
           }
         }
       },
+      "LineMatch": {
+        "type": "object",
+        "description": "Evaluated line: the status and the numbers behind it.",
+        "required": [
+          "invoice_line_id",
+          "status",
+          "issues",
+          "line_quantity",
+          "invoice_unit_price"
+        ],
+        "properties": {
+          "invoice_line_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The invoice line (set by the caller; nil in pure unit tests)."
+          },
+          "invoice_unit_price": {
+            "type": "string",
+            "description": "Unit price on this line."
+          },
+          "invoiced_quantity": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Quantity invoiced on the order line in total (this line and all others counted)."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineStatus"
+            },
+            "description": "Every problem found on the line; empty when ok."
+          },
+          "line_quantity": {
+            "type": "string",
+            "description": "Quantity on this line."
+          },
+          "ordered_quantity": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Ordered quantity, if the line points at an order line."
+          },
+          "po_unit_price": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unit price on the order line."
+          },
+          "price_variance_pct": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Invoice price minus order price as a percentage of the order price (a zero order price\nand a different invoice price gives 100)."
+          },
+          "received_quantity": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Received quantity, if the line points at an order line."
+          },
+          "status": {
+            "$ref": "#/components/schemas/LineStatus",
+            "description": "The first problem found (not_received, over_invoiced, price_variance), or ok."
+          }
+        }
+      },
       "LineReservation": {
         "type": "object",
         "required": [
@@ -29120,6 +30506,17 @@
             "type": "string"
           }
         }
+      },
+      "LineStatus": {
+        "type": "string",
+        "description": "Outcome for one invoice line.",
+        "enum": [
+          "ok",
+          "not_received",
+          "over_invoiced",
+          "price_variance",
+          "no_po_line"
+        ]
       },
       "Location": {
         "type": "object",
@@ -29272,6 +30669,27 @@
           }
         }
       },
+      "MarkPaidInput": {
+        "type": "object",
+        "description": "Payload to record a payment.",
+        "properties": {
+          "paid_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "Payment date, default today."
+          },
+          "payment_reference": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Bank or payment reference."
+          }
+        }
+      },
       "MarkShippingRequestedInput": {
         "type": "object",
         "required": [
@@ -29284,6 +30702,37 @@
           },
           "notes": {
             "type": "string"
+          }
+        }
+      },
+      "MatchReport": {
+        "type": "object",
+        "description": "Evaluated invoice.",
+        "required": [
+          "matched",
+          "quantity_tolerance_pct",
+          "price_tolerance_pct",
+          "lines"
+        ],
+        "properties": {
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineMatch"
+            },
+            "description": "One entry per invoice line, in line order."
+          },
+          "matched": {
+            "type": "boolean",
+            "description": "True only when there is at least one line and every line is ok."
+          },
+          "price_tolerance_pct": {
+            "type": "string",
+            "description": "Price tolerance used, percent."
+          },
+          "quantity_tolerance_pct": {
+            "type": "string",
+            "description": "Quantity tolerance used, percent."
           }
         }
       },
@@ -29709,6 +31158,73 @@
           },
           "notes": {
             "type": "string"
+          }
+        }
+      },
+      "NewInvoiceInput": {
+        "type": "object",
+        "description": "Payload to register a draft invoice.",
+        "required": [
+          "invoice_number",
+          "invoice_date"
+        ],
+        "properties": {
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Currency; defaults to the order's (or the supplier's) and must equal the order's."
+          },
+          "due_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "Due date; default invoice date plus the supplier's payment terms."
+          },
+          "invoice_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date on the invoice."
+          },
+          "invoice_number": {
+            "type": "string",
+            "description": "The supplier's invoice number."
+          },
+          "lines": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLineInput"
+            },
+            "description": "Lines; optional when a purchase order is given."
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Free notes."
+          },
+          "purchase_order_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Purchase order to match against. Without `lines` the lines are prefilled from what was\nreceived and not yet invoiced."
+          },
+          "supplier_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Supplier; may be left out when a purchase order is given."
           }
         }
       },
@@ -39868,6 +41384,72 @@
           }
         }
       },
+      "UpdateFinanceSettingsInput": {
+        "type": "object",
+        "description": "Payload to change the settings; omitted fields keep their value.",
+        "properties": {
+          "price_tolerance_pct": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "New price tolerance in percent (0 to 100)."
+          },
+          "quantity_tolerance_pct": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "New quantity tolerance in percent (0 to 100)."
+          }
+        }
+      },
+      "UpdateInvoiceInput": {
+        "type": "object",
+        "description": "Payload to change a draft invoice; omitted fields keep their value.",
+        "properties": {
+          "due_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "New due date."
+          },
+          "invoice_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "New invoice date."
+          },
+          "invoice_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "New supplier invoice number."
+          },
+          "lines": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLineInput"
+            },
+            "description": "Replaces all lines when present."
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "New notes."
+          }
+        }
+      },
       "UpdateProductionInput": {
         "type": "object",
         "properties": {
@@ -40632,6 +42214,10 @@
     {
       "name": "purchasing",
       "description": "Suppliers, price lists, purchase orders and goods receipts"
+    },
+    {
+      "name": "finance",
+      "description": "Supplier invoices (AP register), the three-way match, approval and payment status"
     },
     {
       "name": "delivery",

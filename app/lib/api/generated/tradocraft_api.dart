@@ -13,6 +13,7 @@ import 'clients/reports_client.dart';
 import 'clients/delivery_client.dart';
 import 'clients/repairs_client.dart';
 import 'clients/field_client.dart';
+import 'clients/finance_client.dart';
 import 'clients/purchasing_client.dart';
 import 'clients/inventory_client.dart';
 import 'clients/kb_client.dart';
@@ -46,6 +47,7 @@ class TradocraftApi {
   DeliveryClient? _delivery;
   RepairsClient? _repairs;
   FieldClient? _field;
+  FinanceClient? _finance;
   PurchasingClient? _purchasing;
   InventoryClient? _inventory;
   KbClient? _kb;
@@ -72,6 +74,8 @@ class TradocraftApi {
   RepairsClient get repairs => _repairs ??= RepairsClient(_dio, baseUrl: _baseUrl);
 
   FieldClient get field => _field ??= FieldClient(_dio, baseUrl: _baseUrl);
+
+  FinanceClient get finance => _finance ??= FinanceClient(_dio, baseUrl: _baseUrl);
 
   PurchasingClient get purchasing => _purchasing ??= PurchasingClient(_dio, baseUrl: _baseUrl);
 
