@@ -70,6 +70,14 @@ document templates (see `.env.example`). The seed runs only once, on an empty da
 it to the `api` service's `environment` and mount the directory into the container (a `volumes`
 entry), or use the setup without Docker.
 
+Environments ([ADR 0043](docs/adr/0043-environments.md)). Each environment is its own database
+and its own API instance. `APP_ENV_KIND` (`live`, the default, `test` or `tutorial`; anything
+else stops the API at start-up) and `APP_ENV_NAME` (default: the database name) say which one
+this is. `GET /api/v1/meta/environment` returns `{name, kind, db_name, version}` without signing
+in (never the host, user or password). The app keeps a list of environments, switches between
+them from the account menu or the login page, and always shows the active one in a banner: red
+for live, amber for test, blue for tutorial.
+
 Worker (helpdesk e-mail). By default outgoing mail is written to `./outbox` as `.eml` files;
 set `MAIL_TRANSPORT=smtp` and `SMTP_*`, and `IMAP_*` to fetch incoming mail (see `.env.example`):
 

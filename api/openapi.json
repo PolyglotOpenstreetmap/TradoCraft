@@ -9632,6 +9632,29 @@
         }
       }
     },
+    "/api/v1/meta/environment": {
+      "get": {
+        "tags": [
+          "core"
+        ],
+        "operationId": "get_environment",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnvironmentInfo"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {}
+        ]
+      }
+    },
     "/api/v1/opportunities": {
       "get": {
         "tags": [
@@ -27080,6 +27103,42 @@
           "version": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "EnvKind": {
+        "type": "string",
+        "description": "What an environment is for. Everything that reaches the outside world (e-mail, webhooks) may\nonly run for [`EnvKind::Live`].",
+        "enum": [
+          "live",
+          "test",
+          "tutorial"
+        ]
+      },
+      "EnvironmentInfo": {
+        "type": "object",
+        "description": "The environment this API instance serves.",
+        "required": [
+          "name",
+          "kind",
+          "db_name",
+          "version"
+        ],
+        "properties": {
+          "db_name": {
+            "type": "string",
+            "description": "Name of the database only; never host, user or password."
+          },
+          "kind": {
+            "$ref": "#/components/schemas/EnvKind"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name (`APP_ENV_NAME`, default: the database name)."
+          },
+          "version": {
+            "type": "string",
+            "description": "Version of the API."
           }
         }
       },

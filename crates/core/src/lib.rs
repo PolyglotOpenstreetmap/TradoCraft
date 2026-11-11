@@ -5,6 +5,7 @@ pub mod audit;
 pub mod auth;
 pub mod company;
 pub mod csv_io;
+pub mod environment;
 pub mod error;
 pub mod files;
 pub mod mail;

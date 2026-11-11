@@ -9,6 +9,7 @@ import '../models/admin_user.dart';
 import '../models/admin_user_create.dart';
 import '../models/admin_user_update.dart';
 import '../models/company_user.dart';
+import '../models/environment_info.dart';
 import '../models/me.dart';
 import '../models/module_info.dart';
 import '../models/modules_input.dart';
@@ -61,6 +62,9 @@ abstract class CoreClient {
 
   @GET('/api/v1/me')
   Future<Me> me();
+
+  @GET('/api/v1/meta/environment')
+  Future<EnvironmentInfo> getEnvironment();
 
   /// The roles that exist, with what each grants. Drives the role pickers of the user admin.
   @GET('/api/v1/roles')
