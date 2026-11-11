@@ -3974,6 +3974,42 @@ class AppLocalizationsNl extends AppLocalizations {
   String get modulesSaved => 'Modules opgeslagen';
 
   @override
+  String moduleAlsoRequires(String modules) {
+    return 'Heeft ook $modules nodig';
+  }
+
+  @override
+  String moduleAlsoSwitchedOff(String modules) {
+    return 'Zet ook uit: $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOn(String modules) {
+    return 'Zet ook aan: $modules';
+  }
+
+  @override
+  String moduleExpand(String module) {
+    return '$module uitklappen';
+  }
+
+  @override
+  String moduleCollapse(String module) {
+    return '$module inklappen';
+  }
+
+  @override
+  String get moduleOn => 'Aan';
+
+  @override
+  String get moduleOff => 'Uit';
+
+  @override
+  String moduleLevel(int level) {
+    return 'Niveau $level';
+  }
+
+  @override
   String get userRoleAdmin => 'Beheerder';
 
   @override
