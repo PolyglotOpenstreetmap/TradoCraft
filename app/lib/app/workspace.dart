@@ -334,6 +334,15 @@ class TabScope extends InheritedWidget {
   bool updateShouldNotify(TabScope old) => active != old.active;
 }
 
+/// Detail prefixes whose section list lives under another path (`/suppliers/..` is in Purchasing).
+const _sectionOfPrefix = {'suppliers': 'purchasing'};
+
+/// The section list a detail [location] belongs to, e.g. `/orders/x` -> `/orders`.
+String sectionOfDetail(String location) {
+  final first = Uri.parse(location).pathSegments.first;
+  return '/${_sectionOfPrefix[first] ?? first}';
+}
+
 /// The page that a detail location shows in the main area's router: it hands the location to
 /// the workspace (open or focus its tab) and removes itself again. That keeps every
 /// `context.push('/orders/..')` and `context.go('/helpdesk/..')` of the lists working unchanged.
@@ -358,11 +367,7 @@ class _DetailPortalState extends ConsumerState<DetailPortal> {
         router.pop();
       } else {
         final home = n.homeLocation;
-        router.go(
-          home.isNotEmpty
-              ? home
-              : '/${Uri.parse(widget.location).pathSegments.first}',
-        );
+        router.go(home.isNotEmpty ? home : sectionOfDetail(widget.location));
       }
     });
   }

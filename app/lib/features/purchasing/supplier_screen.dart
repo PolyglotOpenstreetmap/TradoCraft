@@ -213,6 +213,7 @@ class _SupplierScreenState extends ConsumerState<SupplierScreen> {
           SupplierFields(
             draft: _draft!,
             showActive: true,
+            enabled: !_busy,
             onActiveChanged: (v) {
               setState(() => _draft!.active = v);
               TabScope.reportDirty(context, true);

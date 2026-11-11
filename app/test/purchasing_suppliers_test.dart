@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -432,5 +434,102 @@ void main() {
       ),
       'Acme Motors',
     );
+  });
+
+  testWidgets('the purchasing page shows a /me error with retry', (
+    tester,
+  ) async {
+    var fail = true;
+    final http = FakeHttp({
+      'GET /api/v1/me': (_) => fail
+          ? const FakeStatus(500, {'error': 'x', 'message': 'Me failed'})
+          : meJson(['purchasing.read']),
+      'GET /api/v1/suppliers': (_) => [_supplier()],
+    });
+    await _app(tester, http, initial: '/purchasing');
+    expect(find.text('Me failed'), findsOneWidget);
+    fail = false;
+    await tester.tap(find.byKey(const ValueKey('purchasing-retry')));
+    await tester.pumpAndSettle();
+    expect(find.text('Acme Motors'), findsOneWidget);
+  });
+
+  testWidgets('inputs are disabled while the create request is pending', (
+    tester,
+  ) async {
+    final gate = Completer<void>();
+    final http = FakeHttp({
+      'GET /api/v1/me': (_) => meJson(['purchasing.read', 'purchasing.write']),
+      'GET /api/v1/suppliers': (_) => <Object?>[],
+      'POST /api/v1/suppliers': (_) =>
+          const FakeStatus(409, {'error': 'c', 'message': 'Code in use'}),
+    });
+    await _app(tester, http, initial: '/purchasing');
+    await tester.tap(find.text('New supplier'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('supplier-name')), 'X');
+    await tester.tap(find.byKey(const ValueKey('supplier-save')));
+    await tester.pump();
+    final field = tester.widget<TextField>(
+      find.byKey(const ValueKey('supplier-name')),
+    );
+    expect(field.enabled, isFalse);
+    gate.complete();
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<TextField>(find.byKey(const ValueKey('supplier-name')))
+          .enabled,
+      isTrue,
+    );
+  });
+
+  testWidgets('editing the product text drops the selected product', (
+    tester,
+  ) async {
+    final http = FakeHttp({
+      'GET /api/v1/me': (_) => meJson(['purchasing.read', 'purchasing.write']),
+      'GET /api/v1/suppliers/s1': (_) => _supplier(),
+      'GET /api/v1/suppliers/s1/products': (_) => <Object?>[],
+      'GET /api/v1/products': (_) => {
+        'total': 1,
+        'items': [
+          {
+            'id': 'p2',
+            'code': 'GBX-2',
+            'name': 'Gearbox',
+            'description': '',
+            'active': true,
+            'pricing_type': 'fixed',
+            'product_type': 'purchased',
+            'tracking': 'none',
+            'unit': 'pcs',
+            'vat_rate': '21',
+          },
+        ],
+      },
+    });
+    await _app(tester, http, initial: '/suppliers/s1');
+    await tester.tap(find.byKey(const ValueKey('price-add')));
+    await tester.pumpAndSettle();
+    final input = find.descendant(
+      of: find.byKey(const ValueKey('price-product')),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(input, 'gear');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('GBX-2 · Gearbox').last);
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('price-price')), '5');
+    await tester.enterText(input, 'something else');
+    await tester.tap(find.byKey(const ValueKey('price-save')));
+    await tester.pumpAndSettle();
+    expect(find.text('Choose a product.'), findsOneWidget);
+    expect(http.requests.where((r) => r.startsWith('POST')), isEmpty);
+  });
+
+  test('a supplier detail falls back to the purchasing section', () {
+    expect(sectionOfDetail('/suppliers/s1'), '/purchasing');
+    expect(sectionOfDetail('/orders/o1'), '/orders');
   });
 }

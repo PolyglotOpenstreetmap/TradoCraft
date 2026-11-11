@@ -53,8 +53,26 @@ class _PurchasingPageState extends ConsumerState<PurchasingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final perms = ref.watch(meProvider).value?.permissions;
-    if (perms == null) return const Center(child: CircularProgressIndicator());
+    final me = ref.watch(meProvider);
+    final perms = me.value?.permissions;
+    if (perms == null) {
+      if (me.hasError) {
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(errorMessage(me.error!)),
+              TextButton(
+                key: const ValueKey('purchasing-retry'),
+                onPressed: () => ref.invalidate(meProvider),
+                child: Text(context.l10n.retry),
+              ),
+            ],
+          ),
+        );
+      }
+      return const Center(child: CircularProgressIndicator());
+    }
     final segments = [
       for (final s in purchasingSegments)
         if (perms.contains(s.permission)) s,

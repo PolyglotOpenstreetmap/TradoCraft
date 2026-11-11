@@ -135,6 +135,7 @@ class SupplierFields extends StatelessWidget {
     required this.draft,
     this.showActive = false,
     this.onActiveChanged,
+    this.enabled = true,
   });
 
   /// The draft being edited.
@@ -145,6 +146,9 @@ class SupplierFields extends StatelessWidget {
 
   /// Called when the active switch is toggled.
   final ValueChanged<bool>? onActiveChanged;
+
+  /// False while a request is pending: all inputs are disabled.
+  final bool enabled;
 
   Widget _field(
     String key,
@@ -160,6 +164,7 @@ class SupplierFields extends StatelessWidget {
       controller: c,
       maxLines: maxLines,
       keyboardType: type,
+      enabled: enabled,
       decoration: InputDecoration(labelText: label),
     ),
   );
@@ -195,7 +200,7 @@ class SupplierFields extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               title: Text(l.active),
               value: draft.active,
-              onChanged: onActiveChanged,
+              onChanged: enabled ? onActiveChanged : null,
             ),
           ),
       ],
@@ -277,7 +282,7 @@ class _NewSupplierDialogState extends ConsumerState<_NewSupplierDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SupplierFields(draft: _draft),
+              SupplierFields(draft: _draft, enabled: !_busy),
               if (_error != null) ...[
                 const SizedBox(height: 12),
                 Text(

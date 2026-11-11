@@ -47,6 +47,7 @@ class _PriceDialogState extends ConsumerState<_PriceDialog> {
   );
   late bool _preferred = widget.existing?.isPreferred ?? false;
   String? _productId;
+  String? _productText;
   String? _error;
   bool _busy = false;
 
@@ -156,7 +157,13 @@ class _PriceDialogState extends ConsumerState<_PriceDialog> {
                               .products
                               .listProducts(q: q, limit: 20))
                           .items,
-                  onSelected: (p) => _productId = p.id,
+                  onSelected: (p) {
+                    _productId = p.id;
+                    _productText = '${p.code} · ${p.name}';
+                  },
+                  onTextChanged: (t) {
+                    if (t != _productText) _productId = null;
+                  },
                 ),
               const SizedBox(height: 12),
               Wrap(
