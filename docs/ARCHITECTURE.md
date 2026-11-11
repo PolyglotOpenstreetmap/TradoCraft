@@ -49,7 +49,7 @@ PostgreSQL — one database, one schema per module
 | documents | slice | PDF rendering (Typst) |
 | engineering | slice | BOM revisions (multi-level via subassemblies), explosion, serial units and as-built genealogy ([ADR 0011](adr/0011-bom-revisions-and-serial-genealogy.md)); routings planned |
 | configurator | slice | admin-defined product configurators: models with revisioned JSON definitions (project, group and item fields, lookup tables, computed values, output rules, validations) in a safe formula language, a pure evaluator with traces and pinned overrides, saved configurations that become quotations through the sales import ([ADR 0034](adr/0034-configurators.md)); runner and builder screens planned |
-| purchasing | planned | suppliers, purchase orders, receipts |
+| purchasing | slice | suppliers and their price lists, purchase orders (draft, approved, sent), goods receipts that post stock moves and serial units ([ADR 0031](adr/0031-purchasing.md)); PO PDF and e-mail, approval limits and MRP proposals planned |
 | delivery | slice | delivery notes for confirmed orders: planned date, picking from the stock reservations, shipping through the stock ledger (order `partially_shipped` / `shipped`), carrier and tracking reference, PDF in five languages; a per-company policy for planning on a day the customer is closed (warn, override with a reason, or block) ([ADR 0035](adr/0035-delivery.md)) |
 | inventory | slice | warehouses and locations (incl. service vans), units of measure, lot and serial tracking, an append-only stock move ledger with a balance projection, transfers, adjustments and counts, reservations for confirmed order lines and availability (ATP) on the order ([ADR 0019](adr/0019-inventory-stock-ledger.md)); other modules post moves through `inventory::post_move`; purchasing receipts, valuation and MRP planned; delivery posts the shipment moves (see delivery) |
 | production | slice | divisions and production orders built from the active BOM (revision frozen at release), released by a planner for an order line or for stock; components reserved at release and backflushed at completion with actual quantities and scrap; output into stock with lots, or serial units with the as-built genealogy; the sales order follows (`in_planning` → `planned` → `in_production` → `ready_for_shipping`) with a promised date ([ADR 0036](adr/0036-production.md)); work centres, routings and MRP planned |
@@ -60,7 +60,7 @@ PostgreSQL — one database, one schema per module
 | field service | slice | jobs at customer sites: address and navigation, instructions, task checklist, work logs, photos; technicians see only their own jobs ([ADR 0015](adr/0015-repairs-field-service-and-photos.md)); customer signature, parts used, equipment with warranty, service report PDF in five languages and maintenance contracts that generate planned jobs ([ADR 0020](adr/0020-field-service-reports-contracts.md)); offline queue and planning board planned |
 | kb | slice | knowledge base: categories and articles in 5 languages with Markdown, full-text search per language, versions, tags and related articles, images, suggestions on tickets, helpful votes, reading for staff, portal contacts and the public ([ADR 0018](adr/0018-knowledge-base.md)); attachments other than images, comments, analytics, semantic search, translation workflow and SEO export planned |
 | portal | slice | customer portal: passwordless login for contacts, their tickets and profile; Flutter web entry point ([ADR 0014](adr/0014-contacts-calls-and-customer-portal.md)) |
-| finance | planned | invoices, credit notes, Peppol via access point, accounting integration |
+| finance | slice | supplier invoices as an accounts-payable register only (no general ledger): a three-way match of purchase order, goods receipt and invoice with per-company tolerances, approval (with an audited override), dispute and paid status ([ADR 0046](adr/0046-supplier-invoices-and-three-way-match.md)); customer invoices, credit notes, Peppol via access point and the accounting integration planned ([ADR 0008](adr/0008-accounting-stays-external.md)) |
 
 ## Conventions
 
@@ -79,7 +79,7 @@ PostgreSQL — one database, one schema per module
 3. **Manufacturing** — MRP for MTS and MTO, production orders, labour, quality.
 4. **Service** — installed assets, repairs, field service planning, mobile app with offline sync.
 5. **Helpdesk & portal** — tickets from e-mail, prepared answers, orders, contacts, phone calls and a ticket portal (done); SLA, teams, attachments, tags, merge, time entries and satisfaction surveys (done, ADR 0017); business hours, automation rules, ticket split and reporting (done, ADR 0021); knowledge base with portal help and ticket deflection (done, ADR 0018; remaining: attachments other than images, comments and ratings text, analytics, AI/semantic search, translation workflow, SEO export); next: e-mail actions in rules, scheduled report mails, quotations in the portal.
-6. **Finance** — invoicing, Peppol, payments, accounting integration.
+6. **Finance** — supplier invoices and the three-way match (AP register, done); next: customer invoicing, Peppol, payment export, accounting integration.
 
 Each release runs alongside the CRM and the accounting package, with one system clearly owning each kind of record
 during the transition.

@@ -20,6 +20,7 @@ Module overview: [ARCHITECTURE.md](ARCHITECTURE.md).
 | Environment awareness (`/meta/environment`, environment list, banner and switcher in the app) | Done, [ADR 0043](adr/0043-environments.md); clone script, bootstrap wizard and outbound-side-effect switch-off follow |
 | B1 Inventory foundation | Done, [ADR 0019](adr/0019-inventory-stock-ledger.md) |
 | B2 Purchasing | In progress, [ADR 0031](adr/0031-purchasing.md) |
+| B2b Supplier invoices and three-way match (AP register, no ledger) | Backend done, [ADR 0046](adr/0046-supplier-invoices-and-three-way-match.md); Flutter screens follow |
 | B3 Delivery | Done, [ADR 0035](adr/0035-delivery.md) |
 | C1a Production orders | Done, [ADR 0036](adr/0036-production.md) |
 | C1b Work centres, routings, operations | Open (needs C1a) |
@@ -69,7 +70,7 @@ Remaining knowledge base gaps (ADR 0018): non-image attachments, analytics, sema
 **B2 Purchasing** (large)
 - Crate `purchasing`: suppliers, supplier price lists, product codes, MOQ and lead times;
   RFQ -> PO -> goods receipt; a receipt creates stock moves and serial units ([ADR 0011](adr/0011-bom-revisions-and-serial-genealogy.md)).
-- PO PDF and mail to the supplier through the outbox; approval limits; vendor bill matching (two-way first).
+- PO PDF and mail to the supplier through the outbox; approval limits; vendor bill matching: see B2b for the three-way match.
 - Numbering through `core::numbering::next_number` (new codes PO, GR). Export of bills and valuation to the accounting package later.
 
 **B3 Delivery** (small-medium, done), [ADR 0035](adr/0035-delivery.md)
