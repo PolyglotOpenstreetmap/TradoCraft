@@ -7,6 +7,7 @@ import '../../shared/app_icons.dart';
 
 import '../../l10n/l10n.dart';
 import 'modules_page.dart';
+import 'price_zones_page.dart';
 import 'users_page.dart';
 
 /// User and module administration: one destination with a switch between the two tables.
@@ -18,11 +19,19 @@ class AdminPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPageState extends ConsumerState<AdminPage> {
-  bool _users = true;
+  String? _tab;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    // User administration needs users.admin; price zones are open to prices.write.
+    final isAdmin = can(ref, 'users.admin');
+    final tabs = [
+      if (isAdmin) 'users',
+      if (isAdmin) 'modules',
+      if (can(ref, 'prices.write')) 'zones',
+    ];
+    final tab = tabs.contains(_tab) ? _tab! : (tabs.isEmpty ? '' : tabs.first);
     return Column(
       children: [
         Padding(
@@ -34,15 +43,23 @@ class _AdminPageState extends ConsumerState<AdminPage> {
               runSpacing: 8,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                SegmentedButton<bool>(
-                  showSelectedIcon: false,
-                  segments: [
-                    ButtonSegment(value: true, label: Text(l.adminUsers)),
-                    ButtonSegment(value: false, label: Text(l.adminModules)),
-                  ],
-                  selected: {_users},
-                  onSelectionChanged: (s) => setState(() => _users = s.first),
-                ),
+                if (tabs.length > 1)
+                  SegmentedButton<String>(
+                    showSelectedIcon: false,
+                    segments: [
+                      for (final t in tabs)
+                        ButtonSegment(
+                          value: t,
+                          label: Text(switch (t) {
+                            'users' => l.adminUsers,
+                            'modules' => l.adminModules,
+                            _ => l.adminPriceZones,
+                          }),
+                        ),
+                    ],
+                    selected: {tab},
+                    onSelectionChanged: (s) => setState(() => _tab = s.first),
+                  ),
                 // The configurator builder lives with the configurators; designers start here too.
                 if (can(ref, 'configurator.design'))
                   OutlinedButton.icon(
@@ -55,7 +72,14 @@ class _AdminPageState extends ConsumerState<AdminPage> {
             ),
           ),
         ),
-        Expanded(child: _users ? const UsersPage() : const ModulesPage()),
+        Expanded(
+          child: switch (tab) {
+            'modules' => const ModulesPage(),
+            'zones' => const PriceZonesPage(),
+            'users' => const UsersPage(),
+            _ => const SizedBox.shrink(),
+          },
+        ),
       ],
     );
   }

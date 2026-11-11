@@ -1972,5 +1972,14 @@
   "crRelThisYear": "Dit jaar",
   "crRelLastYear": "Vorig jaar",
   "crRelLastNDays": "Laatste N dagen",
-  "crRelNextNDays": "Komende N dagen"
+  "crRelNextNDays": "Komende N dagen",
+  "adminPriceZones": "Prijszones",
+  "newPriceZone": "Nieuwe prijszone",
+  "editPriceZone": "Prijszone bewerken",
+  "sortOrder": "Sorteervolgorde",
+  "noPriceZones": "Nog geen prijszones.",
+  "priceZoneDeleted": "Prijszone verwijderd",
+  "delete": "Verwijderen",
+  "deletePriceZoneConfirm": "Prijszone {code} verwijderen? Dit wordt geweigerd als prijzen of klanten ze gebruiken.",
+  "sortOrderInvalid": "De sorteervolgorde moet een geheel getal zijn."
 }

@@ -3216,5 +3216,21 @@
   "crRelThisYear": "This year",
   "crRelLastYear": "Last year",
   "crRelLastNDays": "Last N days",
-  "crRelNextNDays": "Next N days"
+  "crRelNextNDays": "Next N days",
+  "adminPriceZones": "Price zones",
+  "newPriceZone": "New price zone",
+  "editPriceZone": "Edit price zone",
+  "sortOrder": "Sort order",
+  "noPriceZones": "No price zones yet.",
+  "priceZoneDeleted": "Price zone deleted",
+  "delete": "Delete",
+  "deletePriceZoneConfirm": "Delete price zone {code}? This is refused when prices or customers use it.",
+  "@deletePriceZoneConfirm": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "sortOrderInvalid": "Sort order must be a whole number."
 }

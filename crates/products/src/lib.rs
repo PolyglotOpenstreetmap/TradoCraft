@@ -701,6 +701,183 @@ async fn list_price_zones(
     ))
 }
 
+/// Create/update body of a price zone.
+#[derive(Debug, Clone, Deserialize, ToSchema)]
+pub struct PriceZoneInput {
+    pub code: String,
+    pub name: String,
+    #[serde(default)]
+    pub sort_order: i32,
+}
+
+impl PriceZoneInput {
+    /// Trims the fields and rejects a blank or too long (more than 32 characters) code and a blank name.
+    fn validate(&mut self) -> AppResult<()> {
+        self.code = self.code.trim().to_string();
+        self.name = self.name.trim().to_string();
+        if self.code.is_empty() || self.code.chars().count() > 32 {
+            return Err(AppError::Validation(
+                "code is required (at most 32 characters)".into(),
+            ));
+        }
+        if self.name.is_empty() {
+            return Err(AppError::Validation("name is required".into()));
+        }
+        Ok(())
+    }
+}
+
+/// The 409 answered when a zone code is already used in the company.
+fn zone_code_taken() -> AppError {
+    AppError::Conflict("a price zone with this code already exists".into())
+}
+
+/// Creates a price zone in the active company.
+#[utoipa::path(post, path = "/price-zones", tag = "products", request_body = PriceZoneInput,
+    responses((status = 201, body = PriceZone), (status = 409, body = tradocraft_core::error::ErrorBody)))]
+async fn create_price_zone(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Json(mut input): Json<PriceZoneInput>,
+) -> AppResult<(StatusCode, Json<PriceZone>)> {
+    user.require(Permission::PricesWrite)?;
+    input.validate()?;
+    let id = new_id();
+    let mut tx = state.db.begin().await?;
+    let zone: PriceZone = sqlx::query_as(
+        "INSERT INTO pricing.price_zones (id, company_id, code, name, sort_order)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (company_id, code) DO NOTHING
+         RETURNING id, code, name, sort_order",
+    )
+    .bind(id)
+    .bind(user.company_id)
+    .bind(&input.code)
+    .bind(&input.name)
+    .bind(input.sort_order)
+    .fetch_optional(&mut *tx)
+    .await?
+    .ok_or_else(zone_code_taken)?;
+    audit::record(
+        &mut tx,
+        &user,
+        "price_zone",
+        id,
+        "created",
+        serde_json::json!({ "code": input.code }),
+    )
+    .await?;
+    tx.commit().await?;
+    Ok((StatusCode::CREATED, Json(zone)))
+}
+
+/// Changes the code, name or sort order of a price zone.
+#[utoipa::path(put, path = "/price-zones/{id}", tag = "products", params(("id" = Uuid, Path)),
+    request_body = PriceZoneInput,
+    responses((status = 200, body = PriceZone), (status = 409, body = tradocraft_core::error::ErrorBody)))]
+async fn update_price_zone(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+    Json(mut input): Json<PriceZoneInput>,
+) -> AppResult<Json<PriceZone>> {
+    user.require(Permission::PricesWrite)?;
+    input.validate()?;
+    let mut tx = state.db.begin().await?;
+    // The zone must belong to the company before a code conflict is reported.
+    sqlx::query_scalar::<_, Uuid>(
+        "SELECT id FROM pricing.price_zones WHERE id = $1 AND company_id = $2 FOR UPDATE",
+    )
+    .bind(id)
+    .bind(user.company_id)
+    .fetch_optional(&mut *tx)
+    .await?
+    .ok_or(AppError::NotFound("price zone"))?;
+    let clash: bool = sqlx::query_scalar(
+        "SELECT EXISTS (SELECT 1 FROM pricing.price_zones WHERE company_id = $1 AND code = $2 AND id <> $3)",
+    )
+    .bind(user.company_id)
+    .bind(&input.code)
+    .bind(id)
+    .fetch_one(&mut *tx)
+    .await?;
+    if clash {
+        return Err(zone_code_taken());
+    }
+    let zone: PriceZone = sqlx::query_as(
+        "UPDATE pricing.price_zones SET code = $3, name = $4, sort_order = $5
+         WHERE id = $1 AND company_id = $2
+         RETURNING id, code, name, sort_order",
+    )
+    .bind(id)
+    .bind(user.company_id)
+    .bind(&input.code)
+    .bind(&input.name)
+    .bind(input.sort_order)
+    .fetch_optional(&mut *tx)
+    .await?
+    .ok_or(AppError::NotFound("price zone"))?;
+    audit::record(
+        &mut tx,
+        &user,
+        "price_zone",
+        id,
+        "updated",
+        serde_json::json!({ "code": input.code }),
+    )
+    .await?;
+    tx.commit().await?;
+    Ok(Json(zone))
+}
+
+/// Deletes a price zone that nothing refers to: refused (409) while zone prices or customer terms use it.
+#[utoipa::path(delete, path = "/price-zones/{id}", tag = "products", params(("id" = Uuid, Path)),
+    responses((status = 204), (status = 404, body = tradocraft_core::error::ErrorBody),
+        (status = 409, body = tradocraft_core::error::ErrorBody)))]
+async fn delete_price_zone(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+) -> AppResult<StatusCode> {
+    user.require(Permission::PricesWrite)?;
+    let mut tx = state.db.begin().await?;
+    let code: String = sqlx::query_scalar(
+        "SELECT code FROM pricing.price_zones WHERE id = $1 AND company_id = $2 FOR UPDATE",
+    )
+    .bind(id)
+    .bind(user.company_id)
+    .fetch_optional(&mut *tx)
+    .await?
+    .ok_or(AppError::NotFound("price zone"))?;
+    let (prices, terms): (i64, i64) = sqlx::query_as(
+        "SELECT (SELECT count(*) FROM pricing.zone_prices WHERE zone_id = $1),
+                (SELECT count(*) FROM crm.customer_terms WHERE price_zone_id = $1)",
+    )
+    .bind(id)
+    .fetch_one(&mut *tx)
+    .await?;
+    if prices > 0 || terms > 0 {
+        return Err(AppError::Conflict(format!(
+            "price zone {code} is in use ({prices} zone prices, {terms} customers) and cannot be deleted"
+        )));
+    }
+    sqlx::query("DELETE FROM pricing.price_zones WHERE id = $1")
+        .bind(id)
+        .execute(&mut *tx)
+        .await?;
+    audit::record(
+        &mut tx,
+        &user,
+        "price_zone",
+        id,
+        "deleted",
+        serde_json::json!({ "code": code }),
+    )
+    .await?;
+    tx.commit().await?;
+    Ok(StatusCode::NO_CONTENT)
+}
+
 const SELECT_ZONE_PRICES: &str =
     "SELECT p.id, p.zone_id, z.code AS zone_code, p.unit_price, p.valid_from
      FROM pricing.zone_prices p JOIN pricing.price_zones z ON z.id = p.zone_id
@@ -792,7 +969,8 @@ pub fn router() -> OpenApiRouter<AppState> {
         .routes(routes!(list_products, create_product))
         .routes(routes!(get_product_handler, update_product))
         .routes(routes!(list_product_prices, add_product_price))
-        .routes(routes!(list_price_zones))
+        .routes(routes!(list_price_zones, create_price_zone))
+        .routes(routes!(update_price_zone, delete_price_zone))
         .merge(families::router())
         .merge(packaging::router())
         .merge(power::router())

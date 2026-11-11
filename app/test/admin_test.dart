@@ -343,6 +343,14 @@ void main() {
       expect(find.text('ADMIN'), findsOneWidget);
     });
 
+    testWidgets('prices.write alone reaches the Administration destination', (
+      tester,
+    ) async {
+      await shell(tester, ['prices.write']);
+      expect(find.text('Administration'), findsOneWidget);
+      expect(find.text('ADMIN'), findsOneWidget);
+    });
+
     testWidgets('without users.admin it disappears and the redirect works', (
       tester,
     ) async {
@@ -350,6 +358,20 @@ void main() {
       expect(find.text('Administration'), findsNothing);
       expect(find.text('QUOTES'), findsOneWidget);
     });
+  });
+
+  testWidgets('prices.write without users.admin sees only the price zones', (
+    tester,
+  ) async {
+    final http = FakeHttp({
+      'GET /api/v1/me': (_) => meJson(['prices.write']),
+      'GET /api/v1/price-zones': (_) => [],
+    });
+    await _pump(tester, http, const AdminPage());
+    expect(find.text('Users'), findsNothing);
+    expect(find.text('Modules'), findsNothing);
+    expect(find.text('Price zones'), findsOneWidget);
+    expect(http.requests, isNot(contains('GET /api/v1/admin/users')));
   });
 
   testWidgets('can() follows the permissions of /me', (tester) async {
