@@ -19,11 +19,19 @@ class AdminPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPageState extends ConsumerState<AdminPage> {
-  String _tab = 'users';
+  String? _tab;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    // User administration needs users.admin; price zones are open to prices.write.
+    final isAdmin = can(ref, 'users.admin');
+    final tabs = [
+      if (isAdmin) 'users',
+      if (isAdmin) 'modules',
+      if (can(ref, 'prices.write')) 'zones',
+    ];
+    final tab = tabs.contains(_tab) ? _tab! : (tabs.isEmpty ? '' : tabs.first);
     return Column(
       children: [
         Padding(
@@ -35,22 +43,23 @@ class _AdminPageState extends ConsumerState<AdminPage> {
               runSpacing: 8,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                SegmentedButton<String>(
-                  showSelectedIcon: false,
-                  segments: [
-                    ButtonSegment(value: 'users', label: Text(l.adminUsers)),
-                    ButtonSegment(
-                      value: 'modules',
-                      label: Text(l.adminModules),
-                    ),
-                    ButtonSegment(
-                      value: 'zones',
-                      label: Text(l.adminPriceZones),
-                    ),
-                  ],
-                  selected: {_tab},
-                  onSelectionChanged: (s) => setState(() => _tab = s.first),
-                ),
+                if (tabs.length > 1)
+                  SegmentedButton<String>(
+                    showSelectedIcon: false,
+                    segments: [
+                      for (final t in tabs)
+                        ButtonSegment(
+                          value: t,
+                          label: Text(switch (t) {
+                            'users' => l.adminUsers,
+                            'modules' => l.adminModules,
+                            _ => l.adminPriceZones,
+                          }),
+                        ),
+                    ],
+                    selected: {tab},
+                    onSelectionChanged: (s) => setState(() => _tab = s.first),
+                  ),
                 // The configurator builder lives with the configurators; designers start here too.
                 if (can(ref, 'configurator.design'))
                   OutlinedButton.icon(
@@ -64,10 +73,11 @@ class _AdminPageState extends ConsumerState<AdminPage> {
           ),
         ),
         Expanded(
-          child: switch (_tab) {
+          child: switch (tab) {
             'modules' => const ModulesPage(),
             'zones' => const PriceZonesPage(),
-            _ => const UsersPage(),
+            'users' => const UsersPage(),
+            _ => const SizedBox.shrink(),
           },
         ),
       ],

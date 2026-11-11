@@ -3231,5 +3231,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "sortOrderInvalid": "Sort order must be a whole number."
 }

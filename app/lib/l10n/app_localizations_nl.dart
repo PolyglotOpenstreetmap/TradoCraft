@@ -6127,4 +6127,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String deletePriceZoneConfirm(String code) {
     return 'Prijszone $code verwijderen? Dit wordt geweigerd als prijzen of klanten ze gebruiken.';
   }
+
+  @override
+  String get sortOrderInvalid =>
+      'De sorteervolgorde moet een geheel getal zijn.';
 }

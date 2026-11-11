@@ -229,3 +229,55 @@ async fn zones_of_another_company_are_invisible_and_untouchable(db: PgPool) {
     .await;
     assert_eq!(status, StatusCode::CREATED);
 }
+
+#[sqlx::test(migrator = "tradocraft_api::MIGRATOR")]
+async fn code_length_counts_characters_not_bytes(db: PgPool) {
+    let app = setup(db).await;
+    // 32 two-byte characters are allowed, 33 are not.
+    let (status, _) = call(
+        &app,
+        ADMIN,
+        Method::POST,
+        "/api/v1/price-zones",
+        Some(json!({ "code": "é".repeat(32), "name": "Long" })),
+    )
+    .await;
+    assert_eq!(status, StatusCode::CREATED);
+    let (status, _) = call(
+        &app,
+        ADMIN,
+        Method::POST,
+        "/api/v1/price-zones",
+        Some(json!({ "code": "é".repeat(33), "name": "Too long" })),
+    )
+    .await;
+    assert_eq!(status, StatusCode::UNPROCESSABLE_ENTITY);
+}
+
+#[sqlx::test(migrator = "tradocraft_api::MIGRATOR")]
+async fn updating_another_companys_zone_is_not_found_even_when_the_code_clashes(db: PgPool) {
+    let app = setup(db.clone()).await;
+    let other = "00000000-0000-7000-8000-0000000fff01";
+    let zone = "00000000-0000-7000-8000-0000000fff02";
+    sqlx::query("INSERT INTO core.companies (id, name) VALUES ($1::uuid, 'Other BV')")
+        .bind(other)
+        .execute(&db)
+        .await
+        .unwrap();
+    sqlx::query("INSERT INTO pricing.price_zones (id, company_id, code, name) VALUES ($1::uuid, $2::uuid, 'ZO', 'Theirs')")
+        .bind(zone)
+        .bind(other)
+        .execute(&db)
+        .await
+        .unwrap();
+    // Z2 exists in the admin's company: the clash must not leak through a 409.
+    let (status, _) = call(
+        &app,
+        ADMIN,
+        Method::PUT,
+        &format!("/api/v1/price-zones/{zone}"),
+        Some(json!({ "code": "Z2", "name": "Mine now" })),
+    )
+    .await;
+    assert_eq!(status, StatusCode::NOT_FOUND);
+}

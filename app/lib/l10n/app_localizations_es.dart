@@ -6127,4 +6127,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String deletePriceZoneConfirm(String code) {
     return '¿Eliminar la zona de precio $code? Se rechaza si hay precios o clientes que la usan.';
   }
+
+  @override
+  String get sortOrderInvalid => 'El orden debe ser un número entero.';
 }

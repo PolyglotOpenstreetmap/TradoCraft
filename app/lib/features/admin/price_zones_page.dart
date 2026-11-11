@@ -9,6 +9,7 @@ import '../../shared/actions.dart';
 class PriceZonesPage extends ConsumerWidget {
   const PriceZonesPage({super.key});
 
+  /// Opens the create/edit dialog and refreshes the list when something was saved.
   Future<void> _edit(
     BuildContext context,
     WidgetRef ref, [
@@ -18,9 +19,10 @@ class PriceZonesPage extends ConsumerWidget {
       context: context,
       builder: (_) => PriceZoneDialog(zone: z),
     );
-    if (saved == true) ref.invalidate(priceZonesProvider);
+    if (saved == true && context.mounted) ref.invalidate(priceZonesProvider);
   }
 
+  /// Asks for confirmation, deletes the zone (the server refuses a zone in use) and refreshes.
   Future<void> _delete(BuildContext context, WidgetRef ref, PriceZone z) async {
     final l = context.l10n;
     final sure = await showDialog<bool>(
@@ -47,7 +49,7 @@ class PriceZonesPage extends ConsumerWidget {
       () => ref.read(apiProvider).products.deletePriceZone(id: z.id),
       success: l.priceZoneDeleted,
     );
-    if (ok) ref.invalidate(priceZonesProvider);
+    if (ok && context.mounted) ref.invalidate(priceZonesProvider);
   }
 
   @override
@@ -78,7 +80,16 @@ class PriceZonesPage extends ConsumerWidget {
         const SizedBox(height: 8),
         zones.when(
           loading: () => const LinearProgressIndicator(),
-          error: (e, _) => Text(errorMessage(e)),
+          error: (e, _) => Row(
+            children: [
+              Expanded(child: Text(errorMessage(e))),
+              TextButton(
+                key: const ValueKey('zone-retry'),
+                onPressed: () => ref.invalidate(priceZonesProvider),
+                child: Text(l.retry),
+              ),
+            ],
+          ),
           data: (list) => list.isEmpty
               ? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -119,6 +130,7 @@ class PriceZonesPage extends ConsumerWidget {
   }
 }
 
+/// Create ([zone] null) or edit dialog of a price zone; pops true when saved.
 class PriceZoneDialog extends ConsumerStatefulWidget {
   const PriceZoneDialog({super.key, this.zone});
   final PriceZone? zone;
@@ -144,10 +156,16 @@ class _PriceZoneDialogState extends ConsumerState<PriceZoneDialog> {
     super.dispose();
   }
 
+  /// Validates the form and saves it; the dialog stays open on invalid input or a server error.
   Future<void> _save() async {
     final l = context.l10n;
     if (_code.text.trim().isEmpty || _name.text.trim().isEmpty) {
       setState(() => _error = l.codeNameRequired);
+      return;
+    }
+    final sort = int.tryParse(_sort.text.trim());
+    if (sort == null) {
+      setState(() => _error = l.sortOrderInvalid);
       return;
     }
     setState(() {
@@ -157,7 +175,7 @@ class _PriceZoneDialogState extends ConsumerState<PriceZoneDialog> {
     final body = PriceZoneInput(
       code: _code.text.trim(),
       name: _name.text.trim(),
-      sortOrder: int.tryParse(_sort.text.trim()) ?? 0,
+      sortOrder: sort,
     );
     final products = ref.read(apiProvider).products;
     final z = widget.zone;

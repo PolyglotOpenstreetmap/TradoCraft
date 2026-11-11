@@ -711,10 +711,11 @@ pub struct PriceZoneInput {
 }
 
 impl PriceZoneInput {
+    /// Trims the fields and rejects a blank or too long (more than 32 characters) code and a blank name.
     fn validate(&mut self) -> AppResult<()> {
         self.code = self.code.trim().to_string();
         self.name = self.name.trim().to_string();
-        if self.code.is_empty() || self.code.len() > 32 {
+        if self.code.is_empty() || self.code.chars().count() > 32 {
             return Err(AppError::Validation(
                 "code is required (at most 32 characters)".into(),
             ));
@@ -726,6 +727,7 @@ impl PriceZoneInput {
     }
 }
 
+/// The 409 answered when a zone code is already used in the company.
 fn zone_code_taken() -> AppError {
     AppError::Conflict("a price zone with this code already exists".into())
 }
@@ -782,6 +784,15 @@ async fn update_price_zone(
     user.require(Permission::PricesWrite)?;
     input.validate()?;
     let mut tx = state.db.begin().await?;
+    // The zone must belong to the company before a code conflict is reported.
+    sqlx::query_scalar::<_, Uuid>(
+        "SELECT id FROM pricing.price_zones WHERE id = $1 AND company_id = $2 FOR UPDATE",
+    )
+    .bind(id)
+    .bind(user.company_id)
+    .fetch_optional(&mut *tx)
+    .await?
+    .ok_or(AppError::NotFound("price zone"))?;
     let clash: bool = sqlx::query_scalar(
         "SELECT EXISTS (SELECT 1 FROM pricing.price_zones WHERE company_id = $1 AND code = $2 AND id <> $3)",
     )

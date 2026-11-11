@@ -6141,4 +6141,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String deletePriceZoneConfirm(String code) {
     return 'Preiszone $code löschen? Abgelehnt, wenn Preise oder Kunden sie verwenden.';
   }
+
+  @override
+  String get sortOrderInvalid =>
+      'Die Sortierreihenfolge muss eine ganze Zahl sein.';
 }

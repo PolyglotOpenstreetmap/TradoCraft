@@ -1980,5 +1980,6 @@
   "noPriceZones": "Nog geen prijszones.",
   "priceZoneDeleted": "Prijszone verwijderd",
   "delete": "Verwijderen",
-  "deletePriceZoneConfirm": "Prijszone {code} verwijderen? Dit wordt geweigerd als prijzen of klanten ze gebruiken."
+  "deletePriceZoneConfirm": "Prijszone {code} verwijderen? Dit wordt geweigerd als prijzen of klanten ze gebruiken.",
+  "sortOrderInvalid": "De sorteervolgorde moet een geheel getal zijn."
 }

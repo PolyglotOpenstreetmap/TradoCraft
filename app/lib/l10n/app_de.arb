@@ -1980,5 +1980,6 @@
   "noPriceZones": "Noch keine Preiszonen.",
   "priceZoneDeleted": "Preiszone gelöscht",
   "delete": "Löschen",
-  "deletePriceZoneConfirm": "Preiszone {code} löschen? Abgelehnt, wenn Preise oder Kunden sie verwenden."
+  "deletePriceZoneConfirm": "Preiszone {code} löschen? Abgelehnt, wenn Preise oder Kunden sie verwenden.",
+  "sortOrderInvalid": "Die Sortierreihenfolge muss eine ganze Zahl sein."
 }

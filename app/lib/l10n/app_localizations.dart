@@ -11087,6 +11087,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete price zone {code}? This is refused when prices or customers use it.'**
   String deletePriceZoneConfirm(String code);
+
+  /// No description provided for @sortOrderInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort order must be a whole number.'**
+  String get sortOrderInvalid;
 }
 
 class _AppLocalizationsDelegate

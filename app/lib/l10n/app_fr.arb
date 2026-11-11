@@ -1980,5 +1980,6 @@
   "noPriceZones": "Aucune zone de prix.",
   "priceZoneDeleted": "Zone de prix supprimée",
   "delete": "Supprimer",
-  "deletePriceZoneConfirm": "Supprimer la zone de prix {code} ? Refusé si des prix ou des clients l'utilisent."
+  "deletePriceZoneConfirm": "Supprimer la zone de prix {code} ? Refusé si des prix ou des clients l'utilisent.",
+  "sortOrderInvalid": "L'ordre de tri doit être un nombre entier."
 }
