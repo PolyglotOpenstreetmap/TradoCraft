@@ -6417,4 +6417,77 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tabPurchaseOrder => 'Commande d\'achat';
+
+  @override
+  String get purchReceiveGoods => 'Réceptionner les marchandises';
+
+  @override
+  String purchReceiveTitle(String number) {
+    return 'Réceptionner les marchandises de $number';
+  }
+
+  @override
+  String get purchReceiveDestination => 'Emplacement de destination';
+
+  @override
+  String get purchReceiveQty => 'Quantité à réceptionner';
+
+  @override
+  String purchReceiveRemaining(String qty) {
+    return 'Restant : $qty';
+  }
+
+  @override
+  String get purchReceiveSerialsHelp => 'Un numéro de série par ligne';
+
+  @override
+  String get purchDeliveryNote => 'Bon de livraison du fournisseur';
+
+  @override
+  String purchReceiveQtyInvalid(String product, String max) {
+    return '$product : saisissez une quantité entre 0 et $max.';
+  }
+
+  @override
+  String purchReceiveLotNeeded(String product) {
+    return '$product : saisissez un numéro de lot.';
+  }
+
+  @override
+  String purchReceiveSerialWhole(String product) {
+    return '$product : la quantité doit être un nombre entier.';
+  }
+
+  @override
+  String purchReceiveSerialCount(String product, int count) {
+    return '$product : saisissez exactement $count numéros de série différents.';
+  }
+
+  @override
+  String get purchReceiveNothing =>
+      'Saisissez une quantité pour au moins une ligne.';
+
+  @override
+  String get purchReceiveLocationNeeded =>
+      'Choisissez un emplacement de destination.';
+
+  @override
+  String purchReceiptBooked(String number) {
+    return 'Réception $number enregistrée.';
+  }
+
+  @override
+  String get purchOpenReceipt => 'Ouvrir la réception';
+
+  @override
+  String get purchReceipts => 'Réceptions de marchandises';
+
+  @override
+  String get purchReceivedDate => 'Reçu le';
+
+  @override
+  String get purchOpenOrder => 'Commande d\'achat';
+
+  @override
+  String get tabGoodsReceipt => 'Réception';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/api.dart';
 import '../../app/workspace.dart' show TabScope;
@@ -9,13 +10,14 @@ import '../../shared/app_icons.dart';
 import '../../shared/format.dart';
 import 'po_form.dart';
 import 'po_lines.dart';
+import 'receive_dialog.dart';
 
 /// A purchase order in a workspace tab: header, lines with received quantities, and the actions
 /// the status and the user's rights allow. Drafts are editable.
 ///
-/// Goods receipt (the next step) plugs in here: the lines table already shows the received
-/// quantity per line, and a "receive goods" action belongs next to the status actions in
-/// [_PurchaseOrderScreenState._actions] for `approved`, `sent` and `partially_received` orders.
+/// Goods are received from here: the "receive goods" action opens [ReceiveGoodsDialog] for
+/// `approved`, `sent` and `partially_received` orders, and the booked receipts are listed below
+/// the lines.
 class PurchaseOrderScreen extends ConsumerStatefulWidget {
   /// Shows the purchase order with [id].
   const PurchaseOrderScreen({super.key, required this.id});
@@ -33,6 +35,7 @@ class _PurchaseOrderScreenState extends ConsumerState<PurchaseOrderScreen> {
   String? _error;
   bool _loading = true;
   bool _busy = false;
+  List<GoodsReceiptSummary> _receipts = const [];
 
   // Draft editing state; non-null `_lines` means the form is open.
   List<PoLineDraft>? _lines;
@@ -66,11 +69,45 @@ class _PurchaseOrderScreenState extends ConsumerState<PurchaseOrderScreen> {
       final po = await _api.getOrder(id: widget.id);
       if (!mounted) return;
       _applyLoaded(po);
+      await _loadReceipts();
     } catch (e) {
       if (mounted) setState(() => _error = errorMessage(e));
     } finally {
       if (mounted) setState(() => _loading = false);
     }
+  }
+
+  /// Loads the receipts booked against this order; a failure just leaves the list empty.
+  Future<void> _loadReceipts() async {
+    try {
+      final list = await _api.listOrderReceipts(id: widget.id);
+      if (mounted) setState(() => _receipts = list);
+    } catch (_) {
+      // The list is supplementary; the order itself is still usable.
+    }
+  }
+
+  /// Opens the receive dialog; on success refreshes the order and offers to open the receipt.
+  Future<void> _receive() async {
+    final po = _po!;
+    final gr = await showDialog<GoodsReceiptDetail>(
+      context: context,
+      builder: (_) => ReceiveGoodsDialog(po: po),
+    );
+    if (gr == null || !mounted) return;
+    final l = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    final router = GoRouter.of(context);
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(l.purchReceiptBooked(gr.number)),
+        action: SnackBarAction(
+          label: l.purchOpenReceipt,
+          onPressed: () => router.push('/goods-receipts/${gr.id}'),
+        ),
+      ),
+    );
+    await _load();
   }
 
   void _applyLoaded(PurchaseOrderDetail po) {
@@ -183,7 +220,7 @@ class _PurchaseOrderScreenState extends ConsumerState<PurchaseOrderScreen> {
     await _transition(() => _api.cancelOrder(id: widget.id));
   }
 
-  /// The status actions available to the user; goods receipt joins them in the next step.
+  /// The status and receiving actions available to the user.
   List<Widget> _actions(PurchaseOrderDetail s) {
     final l = context.l10n;
     final canWrite = can(ref, 'purchasing.write');
@@ -211,6 +248,13 @@ class _PurchaseOrderScreenState extends ConsumerState<PurchaseOrderScreen> {
               ? null
               : () => _transition(() => _api.sendOrder(id: widget.id)),
           child: Text(l.send),
+        ),
+      if (const {'approved', 'sent', 'partially_received'}.contains(s.status) &&
+          can(ref, 'purchasing.receipt'))
+        FilledButton(
+          key: const ValueKey('po-receive'),
+          onPressed: _busy ? null : _receive,
+          child: Text(l.purchReceiveGoods),
         ),
       if (const {'draft', 'approved', 'sent'}.contains(s.status) && canWrite)
         TextButton(
@@ -319,6 +363,17 @@ class _PurchaseOrderScreenState extends ConsumerState<PurchaseOrderScreen> {
           ),
         ] else
           _LinesTable(lines: po.lines, currency: s.currency),
+        if (!editing && _receipts.isNotEmpty) ...[
+          const Divider(height: 32),
+          Text(l.purchReceipts, style: Theme.of(context).textTheme.titleLarge),
+          for (final r in _receipts)
+            ListTile(
+              key: ValueKey('po-receipt-${r.id}'),
+              title: Text(r.number),
+              subtitle: Text(date(r.receivedDate.toLocal())),
+              onTap: () => context.push('/goods-receipts/${r.id}'),
+            ),
+        ],
       ],
     );
   }

@@ -662,6 +662,7 @@ String tabLabel(AppLocalizations l, WorkTab tab) {
     'delivery' => l.tabDeliveryNote,
     'suppliers' => l.tabSupplier,
     'purchase-orders' => l.tabPurchaseOrder,
+    'goods-receipts' => l.tabGoodsReceipt,
     _ => '',
   };
   return last == 'new' ? kind : '$kind $short'.trim();

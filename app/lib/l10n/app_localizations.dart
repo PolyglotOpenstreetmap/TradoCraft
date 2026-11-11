@@ -11579,6 +11579,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Purchase order'**
   String get tabPurchaseOrder;
+
+  /// No description provided for @purchReceiveGoods.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive goods'**
+  String get purchReceiveGoods;
+
+  /// No description provided for @purchReceiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive goods for {number}'**
+  String purchReceiveTitle(String number);
+
+  /// No description provided for @purchReceiveDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination location'**
+  String get purchReceiveDestination;
+
+  /// No description provided for @purchReceiveQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity to receive'**
+  String get purchReceiveQty;
+
+  /// No description provided for @purchReceiveRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining: {qty}'**
+  String purchReceiveRemaining(String qty);
+
+  /// No description provided for @purchReceiveSerialsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'One serial number per line'**
+  String get purchReceiveSerialsHelp;
+
+  /// No description provided for @purchDeliveryNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier delivery note'**
+  String get purchDeliveryNote;
+
+  /// No description provided for @purchReceiveQtyInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'{product}: enter a quantity between 0 and {max}.'**
+  String purchReceiveQtyInvalid(String product, String max);
+
+  /// No description provided for @purchReceiveLotNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'{product}: enter a lot number.'**
+  String purchReceiveLotNeeded(String product);
+
+  /// No description provided for @purchReceiveSerialWhole.
+  ///
+  /// In en, this message translates to:
+  /// **'{product}: the quantity must be a whole number.'**
+  String purchReceiveSerialWhole(String product);
+
+  /// No description provided for @purchReceiveSerialCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{product}: enter exactly {count} different serial numbers.'**
+  String purchReceiveSerialCount(String product, int count);
+
+  /// No description provided for @purchReceiveNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a quantity for at least one line.'**
+  String get purchReceiveNothing;
+
+  /// No description provided for @purchReceiveLocationNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a destination location.'**
+  String get purchReceiveLocationNeeded;
+
+  /// No description provided for @purchReceiptBooked.
+  ///
+  /// In en, this message translates to:
+  /// **'Goods receipt {number} booked.'**
+  String purchReceiptBooked(String number);
+
+  /// No description provided for @purchOpenReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Open receipt'**
+  String get purchOpenReceipt;
+
+  /// No description provided for @purchReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Goods receipts'**
+  String get purchReceipts;
+
+  /// No description provided for @purchReceivedDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get purchReceivedDate;
+
+  /// No description provided for @purchOpenOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get purchOpenOrder;
+
+  /// No description provided for @tabGoodsReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Goods receipt'**
+  String get tabGoodsReceipt;
 }
 
 class _AppLocalizationsDelegate

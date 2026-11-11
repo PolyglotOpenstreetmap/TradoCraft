@@ -6411,4 +6411,76 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tabPurchaseOrder => 'Inkooporder';
+
+  @override
+  String get purchReceiveGoods => 'Goederen ontvangen';
+
+  @override
+  String purchReceiveTitle(String number) {
+    return 'Goederen ontvangen voor $number';
+  }
+
+  @override
+  String get purchReceiveDestination => 'Bestemmingslocatie';
+
+  @override
+  String get purchReceiveQty => 'Te ontvangen aantal';
+
+  @override
+  String purchReceiveRemaining(String qty) {
+    return 'Resterend: $qty';
+  }
+
+  @override
+  String get purchReceiveSerialsHelp => 'Eén serienummer per regel';
+
+  @override
+  String get purchDeliveryNote => 'Leveringsbon leverancier';
+
+  @override
+  String purchReceiveQtyInvalid(String product, String max) {
+    return '$product: voer een aantal in tussen 0 en $max.';
+  }
+
+  @override
+  String purchReceiveLotNeeded(String product) {
+    return '$product: voer een lotnummer in.';
+  }
+
+  @override
+  String purchReceiveSerialWhole(String product) {
+    return '$product: het aantal moet een geheel getal zijn.';
+  }
+
+  @override
+  String purchReceiveSerialCount(String product, int count) {
+    return '$product: voer precies $count verschillende serienummers in.';
+  }
+
+  @override
+  String get purchReceiveNothing =>
+      'Voer een aantal in voor minstens één regel.';
+
+  @override
+  String get purchReceiveLocationNeeded => 'Kies een bestemmingslocatie.';
+
+  @override
+  String purchReceiptBooked(String number) {
+    return 'Goederenontvangst $number geboekt.';
+  }
+
+  @override
+  String get purchOpenReceipt => 'Ontvangst openen';
+
+  @override
+  String get purchReceipts => 'Goederenontvangsten';
+
+  @override
+  String get purchReceivedDate => 'Ontvangen';
+
+  @override
+  String get purchOpenOrder => 'Inkooporder';
+
+  @override
+  String get tabGoodsReceipt => 'Goederenontvangst';
 }

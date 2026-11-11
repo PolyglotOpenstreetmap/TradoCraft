@@ -155,7 +155,7 @@ final _allDestinations = [
     (l) => l.purchasing,
     AppIcons.shoppingCart,
     'purchasing.read',
-    alsoPaths: ['/suppliers', '/purchase-orders'],
+    alsoPaths: ['/suppliers', '/purchase-orders', '/goods-receipts'],
   ),
   _Dest('/reports', (l) => l.crTitle, AppIcons.tableChart, 'reports.read'),
   _Dest(
