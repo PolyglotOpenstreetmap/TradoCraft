@@ -33,6 +33,13 @@ async fn main() -> anyhow::Result<()> {
     let environment = tradocraft_core::environment::EnvironmentConfig::from_env()
         .map_err(|e| anyhow::anyhow!(e))?;
 
+    // The API only queues e-mail (the worker sends it) and never polls a mailbox; the banner makes
+    // the policy visible for this instance too (ADR 0048).
+    let requested_transport = env("MAIL_TRANSPORT").unwrap_or_else(|| "files".into());
+    environment
+        .outbound_policy(&requested_transport)
+        .log_warnings(&requested_transport);
+
     let database_url = env("DATABASE_URL").context("DATABASE_URL is required")?;
     let db = PgPoolOptions::new()
         .max_connections(20)
