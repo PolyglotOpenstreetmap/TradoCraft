@@ -1,0 +1,387 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../l10n/l10n.dart';
+import 'api.dart' show errorMessage;
+import 'environments.dart';
+
+/// The word for a kind in the user's language.
+String environmentKindLabel(AppLocalizations l, EnvironmentKind kind) =>
+    switch (kind) {
+      EnvironmentKind.live => l.envLive,
+      EnvironmentKind.test => l.envTest,
+      EnvironmentKind.tutorial => l.envTutorial,
+    };
+
+/// Background and text colour of a kind: red for live, amber for test, blue for tutorial.
+/// Dark mode uses deeper shades so the strip does not glare; text contrast stays above 4.5:1.
+({Color background, Color foreground}) environmentColors(
+  EnvironmentKind kind,
+  Brightness brightness,
+) {
+  final dark = brightness == Brightness.dark;
+  return switch (kind) {
+    EnvironmentKind.live => (
+      background: dark ? const Color(0xFF8C1D18) : const Color(0xFFB3261E),
+      foreground: Colors.white,
+    ),
+    EnvironmentKind.test => (
+      background: dark ? const Color(0xFFC79100) : const Color(0xFFFFB300),
+      foreground: Colors.black,
+    ),
+    EnvironmentKind.tutorial => (
+      background: dark ? const Color(0xFF0D47A1) : const Color(0xFF1565C0),
+      foreground: Colors.white,
+    ),
+  };
+}
+
+/// A slim strip across the top of the app that always says which environment is in use: the name
+/// and the kind written out (the colour is a second signal, not the only one). Tapping it opens
+/// the environment switcher.
+class EnvironmentBanner extends ConsumerWidget {
+  const EnvironmentBanner({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final env = ref.watch(activeEnvironmentProvider);
+    final l = context.l10n;
+    final kind = environmentKindLabel(l, env.kind);
+    final colors = environmentColors(env.kind, Theme.of(context).brightness);
+    return Semantics(
+      container: true,
+      button: true,
+      label: l.envBannerSemantics(env.name, kind),
+      onTapHint: l.envSwitchTooltip,
+      child: ExcludeSemantics(
+        child: Material(
+          key: ValueKey('env-banner-${env.kind.name}'),
+          color: colors.background,
+          child: InkWell(
+            onTap: () => showEnvironmentSwitcher(context),
+            child: SizedBox(
+              width: double.infinity,
+              height: 26,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    '${kind.toUpperCase()} · ${env.name}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: colors.foreground,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Lists the environments to switch between, add or remove.
+Future<void> showEnvironmentSwitcher(BuildContext context) =>
+    showDialog<void>(context: context, builder: (_) => const _SwitcherDialog());
+
+class _SwitcherDialog extends ConsumerWidget {
+  const _SwitcherDialog();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final state = ref.watch(environmentsProvider);
+    final notifier = ref.read(environmentsProvider.notifier);
+    final theme = Theme.of(context);
+    return AlertDialog(
+      title: Text(l.envSwitcherTitle),
+      content: SizedBox(
+        width: 440,
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            for (final e in state.items)
+              _EnvTile(
+                env: e,
+                active: e.id == state.activeId,
+                onSwitch: () async {
+                  Navigator.pop(context);
+                  await notifier.switchTo(e.id);
+                },
+                onRemove: () async {
+                  final ok = await showDialog<bool>(
+                    context: context,
+                    builder: (c) => AlertDialog(
+                      title: Text(c.l10n.envRemoveTitle),
+                      content: Text(c.l10n.envRemoveBody(e.name)),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(c, false),
+                          child: Text(c.l10n.cancel),
+                        ),
+                        FilledButton(
+                          key: const ValueKey('env-remove-confirm'),
+                          onPressed: () => Navigator.pop(c, true),
+                          child: Text(c.l10n.envRemove),
+                        ),
+                      ],
+                    ),
+                  );
+                  if (ok == true) await notifier.remove(e.id);
+                },
+              ),
+            const Divider(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                key: const ValueKey('env-add'),
+                icon: const Icon(Icons.add),
+                label: Text(l.envAdd),
+                onPressed: () async {
+                  final added = await showDialog<bool>(
+                    context: context,
+                    builder: (_) => const _AddDialog(),
+                  );
+                  if (added == true && context.mounted) Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(MaterialLocalizations.of(context).closeButtonLabel),
+        ),
+      ],
+      surfaceTintColor: theme.colorScheme.surfaceTint,
+    );
+  }
+}
+
+class _EnvTile extends StatelessWidget {
+  const _EnvTile({
+    required this.env,
+    required this.active,
+    required this.onSwitch,
+    required this.onRemove,
+  });
+
+  final AppEnvironment env;
+  final bool active;
+  final VoidCallback onSwitch;
+  final VoidCallback onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final colors = environmentColors(env.kind, Theme.of(context).brightness);
+    final kind = environmentKindLabel(l, env.kind);
+    return ListTile(
+      key: ValueKey('env-tile-${env.id}'),
+      selected: active,
+      leading: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+        decoration: BoxDecoration(
+          color: colors.background,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          kind,
+          style: TextStyle(
+            color: colors.foreground,
+            fontSize: 11,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+      title: Text(env.name),
+      subtitle: Text(
+        env.serverUrl,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      trailing: active
+          ? Chip(label: Text(l.envActive))
+          : IconButton(
+              key: ValueKey('env-remove-${env.id}'),
+              tooltip: l.envRemove,
+              icon: const Icon(Icons.delete_outline),
+              onPressed: onRemove,
+            ),
+      onTap: active ? null : onSwitch,
+    );
+  }
+}
+
+class _AddDialog extends ConsumerStatefulWidget {
+  const _AddDialog();
+
+  @override
+  ConsumerState<_AddDialog> createState() => _AddDialogState();
+}
+
+class _AddDialogState extends ConsumerState<_AddDialog> {
+  final _name = TextEditingController();
+  final _url = TextEditingController();
+  EnvironmentProbe? _probe;
+  String? _checkedUrl;
+  String? _error;
+  bool _busy = false;
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _url.dispose();
+    super.dispose();
+  }
+
+  Future<void> _check() async {
+    final l = context.l10n;
+    final url = normalizeServerUrl(_url.text);
+    if (url == null) {
+      setState(() {
+        _probe = null;
+        _error = l.envInvalidUrl;
+      });
+      return;
+    }
+    if (ref.read(environmentsProvider).items.any((e) => e.serverUrl == url)) {
+      setState(() {
+        _probe = null;
+        _error = l.envAlreadyListed;
+      });
+      return;
+    }
+    setState(() {
+      _busy = true;
+      _error = null;
+      _probe = null;
+    });
+    try {
+      final info = await ref.read(environmentProbeProvider)(url);
+      if (!mounted) return;
+      setState(() {
+        _probe = info;
+        _checkedUrl = url;
+        if (_name.text.trim().isEmpty) _name.text = info.name;
+      });
+    } catch (e) {
+      if (mounted) setState(() => _error = l.envUnreachable(errorMessage(e)));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _add() async {
+    final probe = _probe;
+    final url = _checkedUrl;
+    if (probe == null || url == null) return;
+    final name = _name.text.trim().isEmpty ? probe.name : _name.text.trim();
+    // The kind is the server's word, never the user's.
+    final ok = await ref
+        .read(environmentsProvider.notifier)
+        .add(name: name, serverUrl: url, kind: probe.kind);
+    if (!mounted) return;
+    if (ok) {
+      Navigator.pop(context, true);
+    } else {
+      setState(() => _error = context.l10n.envAlreadyListed);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final probe = _probe;
+    return AlertDialog(
+      title: Text(l.envAdd),
+      content: SizedBox(
+        width: 400,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              key: const ValueKey('env-url'),
+              controller: _url,
+              keyboardType: TextInputType.url,
+              decoration: InputDecoration(labelText: l.envServerUrl),
+              // Another address means the last check no longer applies.
+              onChanged: (_) {
+                if (_probe != null) setState(() => _probe = null);
+              },
+              onSubmitted: (_) => _check(),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              key: const ValueKey('env-name'),
+              controller: _name,
+              decoration: InputDecoration(labelText: l.envName),
+            ),
+            const SizedBox(height: 12),
+            if (probe != null)
+              Row(
+                children: [
+                  Chip(
+                    key: const ValueKey('env-detected-kind'),
+                    backgroundColor: environmentColors(
+                      probe.kind,
+                      Theme.of(context).brightness,
+                    ).background,
+                    label: Text(
+                      environmentKindLabel(l, probe.kind),
+                      style: TextStyle(
+                        color: environmentColors(
+                          probe.kind,
+                          Theme.of(context).brightness,
+                        ).foreground,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      l.envDetected(
+                        environmentKindLabel(l, probe.kind),
+                        probe.dbName,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            if (_error != null)
+              Text(
+                _error!,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(l.cancel),
+        ),
+        OutlinedButton(
+          key: const ValueKey('env-check'),
+          onPressed: _busy ? null : _check,
+          child: Text(l.envCheck),
+        ),
+        FilledButton(
+          key: const ValueKey('env-add-confirm'),
+          onPressed: probe == null || _busy ? null : _add,
+          child: Text(l.envAdd),
+        ),
+      ],
+    );
+  }
+}

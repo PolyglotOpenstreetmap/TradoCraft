@@ -6101,4 +6101,75 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get crRelNextNDays => 'Komende N dagen';
+
+  @override
+  String get envLive => 'Live';
+
+  @override
+  String get envTest => 'Test';
+
+  @override
+  String get envTutorial => 'Tutorial';
+
+  @override
+  String envBannerSemantics(String name, String kind) {
+    return 'Omgeving $name, $kind';
+  }
+
+  @override
+  String get envSwitcherTitle => 'Omgevingen';
+
+  @override
+  String envSwitchMenu(String name) {
+    return 'Omgeving: $name';
+  }
+
+  @override
+  String get envSwitchTooltip => 'Omgeving wisselen';
+
+  @override
+  String get envActive => 'Actief';
+
+  @override
+  String get envAdd => 'Omgeving toevoegen';
+
+  @override
+  String get envName => 'Naam';
+
+  @override
+  String get envServerUrl => 'Serveradres';
+
+  @override
+  String get envCheck => 'Server controleren';
+
+  @override
+  String envDetected(String kind, String db) {
+    return 'De server meldt: $kind-omgeving, database $db';
+  }
+
+  @override
+  String get envInvalidUrl =>
+      'Geef een volledig adres, zoals https://erp.example.com';
+
+  @override
+  String get envAlreadyListed => 'Deze server staat al in de lijst.';
+
+  @override
+  String envUnreachable(String error) {
+    return 'De omgeving van deze server kon niet worden gelezen: $error';
+  }
+
+  @override
+  String get envRemove => 'Verwijderen';
+
+  @override
+  String get envRemoveTitle => 'Omgeving verwijderen?';
+
+  @override
+  String envRemoveBody(String name) {
+    return '$name wordt van dit toestel verwijderd, samen met de bewaarde aanmelding. Op de server verandert niets.';
+  }
+
+  @override
+  String get envCannotRemoveActive => 'Wissel eerst naar een andere omgeving';
 }

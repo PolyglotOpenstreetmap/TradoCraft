@@ -180,6 +180,12 @@ class WorkspaceNotifier extends Notifier<WorkspaceState> {
     _set(WorkspaceState(tabs: tabs, active: active));
   }
 
+  /// Closes every tab without asking (switching environment: the tabs belong to the old one).
+  void closeAll() {
+    _dirty.clear();
+    _set(const WorkspaceState());
+  }
+
   /// Sets the label title the screen of tab [id] reported.
   void setTitle(int id, String title) {
     final i = state.tabs.indexWhere((t) => t.id == id);

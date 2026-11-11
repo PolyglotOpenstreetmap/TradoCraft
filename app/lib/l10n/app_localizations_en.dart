@@ -6084,4 +6084,75 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get crRelNextNDays => 'Next N days';
+
+  @override
+  String get envLive => 'Live';
+
+  @override
+  String get envTest => 'Test';
+
+  @override
+  String get envTutorial => 'Tutorial';
+
+  @override
+  String envBannerSemantics(String name, String kind) {
+    return 'Environment $name, $kind';
+  }
+
+  @override
+  String get envSwitcherTitle => 'Environments';
+
+  @override
+  String envSwitchMenu(String name) {
+    return 'Environment: $name';
+  }
+
+  @override
+  String get envSwitchTooltip => 'Switch environment';
+
+  @override
+  String get envActive => 'Active';
+
+  @override
+  String get envAdd => 'Add environment';
+
+  @override
+  String get envName => 'Name';
+
+  @override
+  String get envServerUrl => 'Server address';
+
+  @override
+  String get envCheck => 'Check server';
+
+  @override
+  String envDetected(String kind, String db) {
+    return 'Server says: $kind environment, database $db';
+  }
+
+  @override
+  String get envInvalidUrl =>
+      'Enter a full address such as https://erp.example.com';
+
+  @override
+  String get envAlreadyListed => 'This server is already in the list.';
+
+  @override
+  String envUnreachable(String error) {
+    return 'Could not read the environment from this server: $error';
+  }
+
+  @override
+  String get envRemove => 'Remove';
+
+  @override
+  String get envRemoveTitle => 'Remove environment?';
+
+  @override
+  String envRemoveBody(String name) {
+    return '$name is removed from this device, with its saved sign-in. Nothing changes on the server.';
+  }
+
+  @override
+  String get envCannotRemoveActive => 'Switch to another environment first';
 }

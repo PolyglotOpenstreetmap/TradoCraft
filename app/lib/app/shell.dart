@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import 'api.dart';
 import 'detail_routes.dart';
+import 'environment_ui.dart';
+import 'environments.dart';
 import 'profile.dart';
 import 'profile_badge.dart';
 import 'session.dart';
@@ -174,6 +176,7 @@ class AppShell extends ConsumerWidget {
     }
 
     final profile = ref.watch(profileProvider);
+    final activeEnv = ref.watch(activeEnvironmentProvider);
     final badge = profile == null
         ? null
         : ProfileBadge(profile: profile, roles: me.value?.roles ?? const []);
@@ -195,6 +198,11 @@ class AppShell extends ConsumerWidget {
           ),
         ),
         const PopupMenuDivider(),
+        PopupMenuItem(
+          value: 'env',
+          child: Text(context.l10n.envSwitchMenu(activeEnv.name)),
+        ),
+        const PopupMenuDivider(),
         PopupMenuItem(enabled: false, child: Text(context.l10n.appLanguage)),
         CheckedPopupMenuItem(
           value: 'lang:',
@@ -212,6 +220,7 @@ class AppShell extends ConsumerWidget {
       ],
       onSelected: (v) {
         if (v == 'signout') ref.read(sessionProvider.notifier).signOut();
+        if (v == 'env') showEnvironmentSwitcher(context);
         if (v.startsWith('lang:')) {
           final code = v.substring(5);
           ref
@@ -223,54 +232,65 @@ class AppShell extends ConsumerWidget {
 
     if (wide) {
       return Scaffold(
-        body: Row(
+        body: Column(
           children: [
-            // Many destinations do not fit a short window: scroll, but keep the user menu at the
-            // bottom when there is room to spare.
-            LayoutBuilder(
-              builder: (context, constraints) => SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: NavigationRail(
-                      selectedIndex: index,
-                      onDestinationSelected: go,
-                      labelType: NavigationRailLabelType.all,
-                      leading: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Column(
-                          children: [
-                            Text(
-                              'tradocraft',
-                              style: Theme.of(context).textTheme.titleMedium,
+            const EnvironmentBanner(),
+            Expanded(
+              child: Row(
+                children: [
+                  // Many destinations do not fit a short window: scroll, but keep the user menu at the
+                  // bottom when there is room to spare.
+                  LayoutBuilder(
+                    builder: (context, constraints) => SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
+                        child: IntrinsicHeight(
+                          child: NavigationRail(
+                            selectedIndex: index,
+                            onDestinationSelected: go,
+                            labelType: NavigationRailLabelType.all,
+                            leading: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'tradocraft',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium,
+                                  ),
+                                  if (badge != null) ...[
+                                    const SizedBox(height: 6),
+                                    badge,
+                                  ],
+                                ],
+                              ),
                             ),
-                            if (badge != null) ...[
-                              const SizedBox(height: 6),
-                              badge,
+                            trailing: Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: userMenu,
+                              ),
+                            ),
+                            destinations: [
+                              for (final d in destinations)
+                                NavigationRailDestination(
+                                  icon: _destIcon(d),
+                                  label: Text(d.label(context.l10n)),
+                                ),
                             ],
-                          ],
-                        ),
-                      ),
-                      trailing: Expanded(
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: userMenu,
-                        ),
-                      ),
-                      destinations: [
-                        for (final d in destinations)
-                          NavigationRailDestination(
-                            icon: _destIcon(d),
-                            label: Text(d.label(context.l10n)),
                           ),
-                      ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  const VerticalDivider(width: 1),
+                  Expanded(child: WorkspaceBody(home: child, wide: true)),
+                ],
               ),
             ),
-            const VerticalDivider(width: 1),
-            Expanded(child: WorkspaceBody(home: child, wide: true)),
           ],
         ),
       );
@@ -280,7 +300,12 @@ class AppShell extends ConsumerWidget {
         title: Text(me.value?.company.name ?? 'tradocraft'),
         actions: [?badge, const WorkspaceMenuButton(), userMenu],
       ),
-      body: WorkspaceBody(home: child, wide: false),
+      body: Column(
+        children: [
+          const EnvironmentBanner(),
+          Expanded(child: WorkspaceBody(home: child, wide: false)),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         onDestinationSelected: go,

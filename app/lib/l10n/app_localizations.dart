@@ -11039,6 +11039,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next N days'**
   String get crRelNextNDays;
+
+  /// No description provided for @envLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get envLive;
+
+  /// No description provided for @envTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Test'**
+  String get envTest;
+
+  /// No description provided for @envTutorial.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorial'**
+  String get envTutorial;
+
+  /// No description provided for @envBannerSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment {name}, {kind}'**
+  String envBannerSemantics(String name, String kind);
+
+  /// No description provided for @envSwitcherTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Environments'**
+  String get envSwitcherTitle;
+
+  /// No description provided for @envSwitchMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment: {name}'**
+  String envSwitchMenu(String name);
+
+  /// No description provided for @envSwitchTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch environment'**
+  String get envSwitchTooltip;
+
+  /// No description provided for @envActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get envActive;
+
+  /// No description provided for @envAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add environment'**
+  String get envAdd;
+
+  /// No description provided for @envName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get envName;
+
+  /// No description provided for @envServerUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Server address'**
+  String get envServerUrl;
+
+  /// No description provided for @envCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check server'**
+  String get envCheck;
+
+  /// No description provided for @envDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Server says: {kind} environment, database {db}'**
+  String envDetected(String kind, String db);
+
+  /// No description provided for @envInvalidUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a full address such as https://erp.example.com'**
+  String get envInvalidUrl;
+
+  /// No description provided for @envAlreadyListed.
+  ///
+  /// In en, this message translates to:
+  /// **'This server is already in the list.'**
+  String get envAlreadyListed;
+
+  /// No description provided for @envUnreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read the environment from this server: {error}'**
+  String envUnreachable(String error);
+
+  /// No description provided for @envRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get envRemove;
+
+  /// No description provided for @envRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove environment?'**
+  String get envRemoveTitle;
+
+  /// No description provided for @envRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is removed from this device, with its saved sign-in. Nothing changes on the server.'**
+  String envRemoveBody(String name);
+
+  /// No description provided for @envCannotRemoveActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to another environment first'**
+  String get envCannotRemoveActive;
 }
 
 class _AppLocalizationsDelegate
