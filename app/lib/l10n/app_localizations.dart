@@ -11232,6 +11232,390 @@ abstract class AppLocalizations {
   /// **'Done, but the list of environments could not be saved on this device.'**
   String get envNotSaved;
 
+  /// No description provided for @tutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorial'**
+  String get tutTitle;
+
+  /// No description provided for @tutBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get tutBack;
+
+  /// No description provided for @tutNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get tutNext;
+
+  /// No description provided for @tutSkipStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip step'**
+  String get tutSkipStep;
+
+  /// No description provided for @tutPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get tutPause;
+
+  /// No description provided for @tutResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get tutResume;
+
+  /// No description provided for @tutPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorial paused'**
+  String get tutPaused;
+
+  /// No description provided for @tutTakeMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Take me there'**
+  String get tutTakeMe;
+
+  /// No description provided for @tutStepOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String tutStepOf(int current, int total);
+
+  /// No description provided for @tutOfferTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to TradoCraft'**
+  String get tutOfferTitle;
+
+  /// No description provided for @tutOfferBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a tutorial environment. Want a guided tour that teaches you the app step by step, on practice data?'**
+  String get tutOfferBody;
+
+  /// No description provided for @tutOfferStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the tutorial'**
+  String get tutOfferStart;
+
+  /// No description provided for @tutOfferLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get tutOfferLater;
+
+  /// No description provided for @tutLiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The tutorial does not run on live data'**
+  String get tutLiveTitle;
+
+  /// No description provided for @tutLiveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The tutorial creates records, so it only runs in a test or tutorial environment. Switch to one, or add one.'**
+  String get tutLiveBody;
+
+  /// No description provided for @tutSwitchEnv.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch environment'**
+  String get tutSwitchEnv;
+
+  /// No description provided for @tutAddEnv.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an environment'**
+  String get tutAddEnv;
+
+  /// No description provided for @tutMapIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Work through the chapters in order. You can pause, replay or skip a chapter at any time.'**
+  String get tutMapIntro;
+
+  /// No description provided for @tutStatusDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get tutStatusDone;
+
+  /// No description provided for @tutStatusCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Up next'**
+  String get tutStatusCurrent;
+
+  /// No description provided for @tutStatusLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get tutStatusLocked;
+
+  /// No description provided for @tutStatusSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get tutStatusSkipped;
+
+  /// No description provided for @tutStatusPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get tutStatusPaused;
+
+  /// No description provided for @tutStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get tutStart;
+
+  /// No description provided for @tutReplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay'**
+  String get tutReplay;
+
+  /// No description provided for @tutSkipChapter.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip chapter'**
+  String get tutSkipChapter;
+
+  /// No description provided for @tutWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get tutWelcomeTitle;
+
+  /// No description provided for @tutWelcomeSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Find your way around: the environment banner, the tabs and the tutorial controls.'**
+  String get tutWelcomeSummary;
+
+  /// No description provided for @tutProductTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first product'**
+  String get tutProductTitle;
+
+  /// No description provided for @tutProductSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Hat: product manager. Create three components, a finished product and its bill of materials.'**
+  String get tutProductSummary;
+
+  /// No description provided for @tutWelcomeBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The strip at the top'**
+  String get tutWelcomeBannerTitle;
+
+  /// No description provided for @tutWelcomeBannerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This strip always shows which environment you are in: its name and its kind. Amber means test, blue means tutorial and red means live data. The tutorial only runs in test and tutorial environments, so nothing you do here touches real data.'**
+  String get tutWelcomeBannerBody;
+
+  /// No description provided for @tutWelcomeTabsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tabs and sections'**
+  String get tutWelcomeTabsTitle;
+
+  /// No description provided for @tutWelcomeTabsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The sections are on the left (or in the bottom bar on a phone). Opening a record, such as a product or a quotation, adds a tab to the workspace, so you can keep several records open and come back to them.'**
+  String get tutWelcomeTabsBody;
+
+  /// No description provided for @tutWelcomeControlsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This card'**
+  String get tutWelcomeControlsTitle;
+
+  /// No description provided for @tutWelcomeControlsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'I am your narrator. Next moves on when a step is only an explanation. Steps that ask you to do something finish by themselves as soon as you have done it. Back and Skip step let you move around, and Pause hides me until you press Resume.'**
+  String get tutWelcomeControlsBody;
+
+  /// No description provided for @tutWelcomeMenuTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where to find me'**
+  String get tutWelcomeMenuTitle;
+
+  /// No description provided for @tutWelcomeMenuBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the account menu to find the Tutorial entry. It opens the chapter map, where you can resume, replay or skip a chapter at any time.'**
+  String get tutWelcomeMenuBody;
+
+  /// No description provided for @tutWelcomeProductsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s start'**
+  String get tutWelcomeProductsTitle;
+
+  /// No description provided for @tutWelcomeProductsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the Products section. The next chapter starts there.'**
+  String get tutWelcomeProductsBody;
+
+  /// No description provided for @tutProductOpenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get tutProductOpenTitle;
+
+  /// No description provided for @tutProductOpenBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Today you are the product manager. Everything the company sells or builds is a product. Open the Products section.'**
+  String get tutProductOpenBody;
+
+  /// No description provided for @tutProductMotorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Component: Motor'**
+  String get tutProductMotorTitle;
+
+  /// No description provided for @tutProductMotorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Create the first component. Press New product, enter code TUT-MOTOR and name Motor, keep the type Purchased, and save.'**
+  String get tutProductMotorBody;
+
+  /// No description provided for @tutProductMotorHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The TUT- prefix marks tutorial data, so you can recognise it later.'**
+  String get tutProductMotorHint;
+
+  /// No description provided for @tutProductFrameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Component: Frame'**
+  String get tutProductFrameTitle;
+
+  /// No description provided for @tutProductFrameBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a second component the same way: code TUT-FRAME, name Frame, type Purchased.'**
+  String get tutProductFrameBody;
+
+  /// No description provided for @tutProductControllerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Component: Controller'**
+  String get tutProductControllerTitle;
+
+  /// No description provided for @tutProductControllerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'And a third one: code TUT-CTRL, name Controller, type Purchased.'**
+  String get tutProductControllerBody;
+
+  /// No description provided for @tutProductCartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The finished product'**
+  String get tutProductCartTitle;
+
+  /// No description provided for @tutProductCartBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Now the product you build from those parts. Create code TUT-CART, name Cart, and choose the type Manufactured: only manufactured products have a bill of materials.'**
+  String get tutProductCartBody;
+
+  /// No description provided for @tutProductOpenCartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the cart'**
+  String get tutProductOpenCartTitle;
+
+  /// No description provided for @tutProductOpenCartBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the new Cart product from the list to see its tabs.'**
+  String get tutProductOpenCartBody;
+
+  /// No description provided for @tutProductBomTabTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill of materials'**
+  String get tutProductBomTabTitle;
+
+  /// No description provided for @tutProductBomTabBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the Bill of materials tab. It lists the components needed to build one unit. A revision is a draft you edit, or the active one that production uses. Press Next when you are there.'**
+  String get tutProductBomTabBody;
+
+  /// No description provided for @tutProductRevisionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A first revision'**
+  String get tutProductRevisionTitle;
+
+  /// No description provided for @tutProductRevisionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Press New revision to start a draft.'**
+  String get tutProductRevisionBody;
+
+  /// No description provided for @tutProductLinesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the components'**
+  String get tutProductLinesTitle;
+
+  /// No description provided for @tutProductLinesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Search each component and add it: Motor, Frame and Controller. Then press Save draft.'**
+  String get tutProductLinesBody;
+
+  /// No description provided for @tutProductLinesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type TUT in the search box to find the three components.'**
+  String get tutProductLinesHint;
+
+  /// No description provided for @tutProductActivateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate it'**
+  String get tutProductActivateTitle;
+
+  /// No description provided for @tutProductActivateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Press Activate. From now on production and quotations use this revision; later changes go through a new revision.'**
+  String get tutProductActivateBody;
+
+  /// No description provided for @tutProductDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Well done'**
+  String get tutProductDoneTitle;
+
+  /// No description provided for @tutProductDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have a finished product with a bill of materials of three components. Later chapters build on it.'**
+  String get tutProductDoneBody;
+
   /// No description provided for @purchasing.
   ///
   /// In en, this message translates to:
@@ -11939,6 +12323,384 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Later'**
   String get setupLater;
+
+  /// No description provided for @finMatchColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get finMatchColumn;
+
+  /// No description provided for @finance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get finance;
+
+  /// No description provided for @finSupplierInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier invoices'**
+  String get finSupplierInvoices;
+
+  /// No description provided for @finSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get finSettings;
+
+  /// No description provided for @tabSupplierInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier invoice'**
+  String get tabSupplierInvoice;
+
+  /// No description provided for @finNewInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'New supplier invoice'**
+  String get finNewInvoice;
+
+  /// No description provided for @finNoInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier invoices found.'**
+  String get finNoInvoices;
+
+  /// No description provided for @finInvoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice number'**
+  String get finInvoiceNumber;
+
+  /// No description provided for @finInternalNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal number'**
+  String get finInternalNumber;
+
+  /// No description provided for @finInvoiceDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice date'**
+  String get finInvoiceDate;
+
+  /// No description provided for @finDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get finDueDate;
+
+  /// No description provided for @finStatusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'draft'**
+  String get finStatusDraft;
+
+  /// No description provided for @finStatusMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'matched'**
+  String get finStatusMatched;
+
+  /// No description provided for @finStatusDisputed.
+  ///
+  /// In en, this message translates to:
+  /// **'disputed'**
+  String get finStatusDisputed;
+
+  /// No description provided for @finStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'approved'**
+  String get finStatusApproved;
+
+  /// No description provided for @finStatusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'paid'**
+  String get finStatusPaid;
+
+  /// No description provided for @finMatchOk.
+  ///
+  /// In en, this message translates to:
+  /// **'ok'**
+  String get finMatchOk;
+
+  /// No description provided for @finMatchNotReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'not received'**
+  String get finMatchNotReceived;
+
+  /// No description provided for @finMatchOverInvoiced.
+  ///
+  /// In en, this message translates to:
+  /// **'over invoiced'**
+  String get finMatchOverInvoiced;
+
+  /// No description provided for @finMatchPriceVariance.
+  ///
+  /// In en, this message translates to:
+  /// **'price variance'**
+  String get finMatchPriceVariance;
+
+  /// No description provided for @finMatchNoPoLine.
+  ///
+  /// In en, this message translates to:
+  /// **'no order line'**
+  String get finMatchNoPoLine;
+
+  /// No description provided for @finOrderOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order (optional)'**
+  String get finOrderOptional;
+
+  /// No description provided for @finNoOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase order'**
+  String get finNoOrder;
+
+  /// No description provided for @finOrderPrefillHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The lines are filled from the goods received and not yet invoiced.'**
+  String get finOrderPrefillHint;
+
+  /// No description provided for @finNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice number is required (at most 64 characters).'**
+  String get finNumberRequired;
+
+  /// No description provided for @finLineDescriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A free-text line needs a description.'**
+  String get finLineDescriptionRequired;
+
+  /// No description provided for @finVatInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate must be between 0 and 100 with at most 2 decimals.'**
+  String get finVatInvalid;
+
+  /// No description provided for @finOrdered.
+  ///
+  /// In en, this message translates to:
+  /// **'Ordered'**
+  String get finOrdered;
+
+  /// No description provided for @finInvoiced.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced'**
+  String get finInvoiced;
+
+  /// No description provided for @finOrderPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Order price'**
+  String get finOrderPrice;
+
+  /// No description provided for @finInvoicePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice price'**
+  String get finInvoicePrice;
+
+  /// No description provided for @finVariance.
+  ///
+  /// In en, this message translates to:
+  /// **'Variance'**
+  String get finVariance;
+
+  /// No description provided for @finMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice matches the order and the receipts.'**
+  String get finMatches;
+
+  /// No description provided for @finNotMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice does not match the order and the receipts.'**
+  String get finNotMatches;
+
+  /// No description provided for @finTolerances.
+  ///
+  /// In en, this message translates to:
+  /// **'Tolerances: quantity {qty} %, price {price} %'**
+  String finTolerances(String qty, String price);
+
+  /// No description provided for @finSubmitMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Check match'**
+  String get finSubmitMatch;
+
+  /// No description provided for @finApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get finApprove;
+
+  /// No description provided for @finOverrideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve despite mismatch'**
+  String get finOverrideTitle;
+
+  /// No description provided for @finOverrideHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice does not match. Give the reason for approving it anyway; it is stored with the approval.'**
+  String get finOverrideHelp;
+
+  /// No description provided for @finOverrideReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Override reason'**
+  String get finOverrideReason;
+
+  /// No description provided for @finReasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A reason is required.'**
+  String get finReasonRequired;
+
+  /// No description provided for @finDispute.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute'**
+  String get finDispute;
+
+  /// No description provided for @finDisputeReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute reason'**
+  String get finDisputeReason;
+
+  /// No description provided for @finReopen.
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen'**
+  String get finReopen;
+
+  /// No description provided for @finMarkPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as paid'**
+  String get finMarkPaid;
+
+  /// No description provided for @finPaymentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment date'**
+  String get finPaymentDate;
+
+  /// No description provided for @finPaymentReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reference'**
+  String get finPaymentReference;
+
+  /// No description provided for @finDeleteDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get finDeleteDraft;
+
+  /// No description provided for @finDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete invoice {number}? This cannot be undone.'**
+  String finDeleteConfirm(String number);
+
+  /// No description provided for @finNetTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get finNetTotal;
+
+  /// No description provided for @finGrossTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total incl. VAT'**
+  String get finGrossTotal;
+
+  /// No description provided for @finDisputeReasonShown.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute reason'**
+  String get finDisputeReasonShown;
+
+  /// No description provided for @finOverrideShown.
+  ///
+  /// In en, this message translates to:
+  /// **'Override reason'**
+  String get finOverrideShown;
+
+  /// No description provided for @finPaidOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on'**
+  String get finPaidOn;
+
+  /// No description provided for @finPurchaseOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get finPurchaseOrder;
+
+  /// No description provided for @finQuantityTolerance.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity tolerance (%)'**
+  String get finQuantityTolerance;
+
+  /// No description provided for @finPriceTolerance.
+  ///
+  /// In en, this message translates to:
+  /// **'Price tolerance (%)'**
+  String get finPriceTolerance;
+
+  /// No description provided for @finToleranceInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a percentage between 0 and 100.'**
+  String get finToleranceInvalid;
+
+  /// No description provided for @finSettingsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings saved.'**
+  String get finSettingsSaved;
+
+  /// No description provided for @finSettingsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Largest accepted difference between the order and the invoice before a line counts as a mismatch.'**
+  String get finSettingsHelp;
+
+  /// No description provided for @finCreateInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Create supplier invoice'**
+  String get finCreateInvoice;
+
+  /// No description provided for @userRoleFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get userRoleFinance;
+
+  /// No description provided for @moduleFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get moduleFinance;
 }
 
 class _AppLocalizationsDelegate

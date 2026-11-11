@@ -60,7 +60,7 @@ PostgreSQL — one database, one schema per module
 | field service | slice | jobs at customer sites: address and navigation, instructions, task checklist, work logs, photos; technicians see only their own jobs ([ADR 0015](adr/0015-repairs-field-service-and-photos.md)); customer signature, parts used, equipment with warranty, service report PDF in five languages and maintenance contracts that generate planned jobs ([ADR 0020](adr/0020-field-service-reports-contracts.md)); offline queue and planning board planned |
 | kb | slice | knowledge base: categories and articles in 5 languages with Markdown, full-text search per language, versions, tags and related articles, images, suggestions on tickets, helpful votes, reading for staff, portal contacts and the public ([ADR 0018](adr/0018-knowledge-base.md)); attachments other than images, comments, analytics, semantic search, translation workflow and SEO export planned |
 | portal | slice | customer portal: passwordless login for contacts, their tickets and profile; Flutter web entry point ([ADR 0014](adr/0014-contacts-calls-and-customer-portal.md)) |
-| finance | planned | invoices, credit notes, Peppol via access point, accounting integration |
+| finance | slice | supplier invoices as an accounts-payable register only (no general ledger): a three-way match of purchase order, goods receipt and invoice with per-company tolerances, approval (with an audited override), dispute and paid status ([ADR 0046](adr/0046-supplier-invoices-and-three-way-match.md)); permissions `finance.read/write/approve`; the app has a Finance section with the supplier invoice list, create dialog, detail tab (match report per line, approve with override reason, dispute, mark paid) and the tolerance settings, plus a "Create supplier invoice" shortcut on received purchase orders; customer invoices, credit notes, Peppol via access point and the accounting integration planned ([ADR 0008](adr/0008-accounting-stays-external.md)) |
 
 ## Conventions
 
@@ -79,7 +79,7 @@ PostgreSQL — one database, one schema per module
 3. **Manufacturing** — MRP for MTS and MTO, production orders, labour, quality.
 4. **Service** — installed assets, repairs, field service planning, mobile app with offline sync.
 5. **Helpdesk & portal** — tickets from e-mail, prepared answers, orders, contacts, phone calls and a ticket portal (done); SLA, teams, attachments, tags, merge, time entries and satisfaction surveys (done, ADR 0017); business hours, automation rules, ticket split and reporting (done, ADR 0021); knowledge base with portal help and ticket deflection (done, ADR 0018; remaining: attachments other than images, comments and ratings text, analytics, AI/semantic search, translation workflow, SEO export); next: e-mail actions in rules, scheduled report mails, quotations in the portal.
-6. **Finance** — invoicing, Peppol, payments, accounting integration.
+6. **Finance** — supplier invoices and the three-way match (AP register, done); next: customer invoicing, Peppol, payment export, accounting integration.
 
 Each release runs alongside the CRM and the accounting package, with one system clearly owning each kind of record
 during the transition.

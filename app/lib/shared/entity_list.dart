@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../app/api.dart';
 import '../app/workspace.dart' show OpenInTab;
 import '../l10n/l10n.dart';
+import '../features/tutorial/targets.dart';
 import 'app_icons.dart';
 
 /// Column of a generic entity list.
@@ -45,6 +46,7 @@ class EntityList<T> extends StatefulWidget {
     this.locationOf,
     this.onCreate,
     this.createLabel,
+    this.createTargetId,
     this.filters,
     this.moreFilters,
     this.actions = const [],
@@ -61,6 +63,9 @@ class EntityList<T> extends StatefulWidget {
   final String? Function(T item)? locationOf;
   final Future<bool?> Function()? onCreate;
   final String? createLabel;
+
+  /// Tutorial target id of the create button (null: not a tutorial target).
+  final String? createTargetId;
   final Widget? filters;
 
   /// More filters, on a line of their own under the search box (for lists with many).
@@ -136,6 +141,16 @@ class EntityListState<T> extends State<EntityList<T>> {
     _debounce = Timer(const Duration(milliseconds: 300), reload);
   }
 
+  Widget _createButton(BuildContext context) {
+    final button = FilledButton.icon(
+      onPressed: () => _after(widget.onCreate!()),
+      icon: const Icon(AppIcons.add),
+      label: Text(widget.createLabel ?? context.l10n.newItem),
+    );
+    final id = widget.createTargetId;
+    return id == null ? button : TutorialTarget(id: id, child: button);
+  }
+
   Future<void> _after(Future<bool?>? action) async {
     if (action != null && await action == true) await reload();
   }
@@ -155,12 +170,7 @@ class EntityListState<T> extends State<EntityList<T>> {
               const Spacer(),
               for (final a in widget.actions)
                 Padding(padding: const EdgeInsets.only(right: 8), child: a),
-              if (widget.onCreate != null)
-                FilledButton.icon(
-                  onPressed: () => _after(widget.onCreate!()),
-                  icon: const Icon(AppIcons.add),
-                  label: Text(widget.createLabel ?? context.l10n.newItem),
-                ),
+              if (widget.onCreate != null) _createButton(context),
             ],
           ),
           const SizedBox(height: 12),

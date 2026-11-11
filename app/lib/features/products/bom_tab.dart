@@ -7,6 +7,7 @@ import '../../shared/format.dart';
 import '../../shared/search_picker.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/app_icons.dart';
+import '../tutorial/targets.dart';
 
 /// An editable line of a draft BOM.
 class _EditLine {
@@ -210,10 +211,13 @@ class _BomTabState extends ConsumerState<BomTab> {
                 onChanged: (id) => id == null ? null : _select(id),
               ),
             if (canWrite && !hasDraft)
-              OutlinedButton.icon(
-                onPressed: _newRevision,
-                icon: const Icon(AppIcons.add),
-                label: Text(context.l10n.newRevision),
+              TutorialTarget(
+                id: 'bom-new-revision',
+                child: OutlinedButton.icon(
+                  onPressed: _newRevision,
+                  icon: const Icon(AppIcons.add),
+                  label: Text(context.l10n.newRevision),
+                ),
               ),
             if (canWrite && _isDraft) ...[
               OutlinedButton.icon(
@@ -221,10 +225,13 @@ class _BomTabState extends ConsumerState<BomTab> {
                 icon: const Icon(AppIcons.save),
                 label: Text(context.l10n.saveDraft),
               ),
-              FilledButton.icon(
-                onPressed: _activate,
-                icon: const Icon(AppIcons.check),
-                label: Text(context.l10n.activate),
+              TutorialTarget(
+                id: 'bom-activate',
+                child: FilledButton.icon(
+                  onPressed: _activate,
+                  icon: const Icon(AppIcons.check),
+                  label: Text(context.l10n.activate),
+                ),
               ),
             ],
           ],
@@ -246,29 +253,32 @@ class _BomTabState extends ConsumerState<BomTab> {
               alignment: Alignment.centerLeft,
               child: SizedBox(
                 width: 420,
-                child: SearchPicker<Product>(
-                  label: context.l10n.addComponent,
-                  clearOnSelect: true,
-                  display: (p) => '${p.code} · ${p.name}',
-                  search: (q) async =>
-                      (await _api.products.listProducts(
-                            q: q,
-                            active: true,
-                            limit: 20,
-                          )).items
-                          .where(
-                            (p) =>
-                                p.id != widget.product.id &&
-                                p.productType != 'service',
-                          )
-                          .toList(),
-                  onSelected: (p) => setState(
-                    () => _lines.add(
-                      _EditLine(
-                        productId: p.id,
-                        code: p.code,
-                        name: p.name,
-                        unit: p.unit,
+                child: TutorialTarget(
+                  id: 'bom-add-component',
+                  child: SearchPicker<Product>(
+                    label: context.l10n.addComponent,
+                    clearOnSelect: true,
+                    display: (p) => '${p.code} · ${p.name}',
+                    search: (q) async =>
+                        (await _api.products.listProducts(
+                              q: q,
+                              active: true,
+                              limit: 20,
+                            )).items
+                            .where(
+                              (p) =>
+                                  p.id != widget.product.id &&
+                                  p.productType != 'service',
+                            )
+                            .toList(),
+                    onSelected: (p) => setState(
+                      () => _lines.add(
+                        _EditLine(
+                          productId: p.id,
+                          code: p.code,
+                          name: p.name,
+                          unit: p.unit,
+                        ),
                       ),
                     ),
                   ),

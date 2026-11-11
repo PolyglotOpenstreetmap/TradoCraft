@@ -38,12 +38,14 @@ import '../features/login/login_page.dart';
 import '../features/setup/setup_page.dart';
 import '../features/opportunities/opportunities_page.dart';
 import '../features/products/products_page.dart';
+import '../features/finance/finance_page.dart';
 import '../features/purchasing/purchasing_page.dart';
 import '../features/packages/intake_page.dart';
 import '../features/packages/receiving_page.dart';
 import '../features/repairs/departments_page.dart';
 import '../features/repairs/repairs_page.dart';
 import '../features/quotations/quotations_page.dart';
+import '../features/tutorial/chapter_map_page.dart';
 import 'session.dart';
 import '../features/field/offline/offline_ui.dart' show OfflineSyncHost;
 import 'shell.dart';
@@ -72,6 +74,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, state) =>
             SetupPage(server: state.uri.queryParameters['server']),
       ),
+      GoRoute(path: '/tutorial', builder: (_, _) => const TutorialMapPage()),
       ShellRoute(
         builder: (context, state, child) => OfflineSyncHost(
           child: AppShell(location: state.matchedLocation, child: child),
@@ -264,6 +267,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/purchasing',
             builder: (_, _) => const PurchasingPage(),
+          ),
+          GoRoute(path: '/finance', builder: (_, _) => const FinancePage()),
+          GoRoute(
+            path: '/supplier-invoices/:id',
+            builder: (_, s) => DetailPortal(location: s.uri.toString()),
           ),
           GoRoute(
             path: '/purchase-orders/:id',

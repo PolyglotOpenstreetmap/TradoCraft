@@ -128,6 +128,7 @@ class _ProductsPageState extends ConsumerState<ProductsPage> {
         ),
       ],
       createLabel: context.l10n.newProduct,
+      createTargetId: 'products-create',
       onCreate: canWrite
           ? () async => await showProductForm(context) != null
           : null,

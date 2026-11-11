@@ -6221,6 +6221,223 @@ class AppLocalizationsEs extends AppLocalizations {
       'Hecho, pero la lista de entornos no se pudo guardar en este dispositivo.';
 
   @override
+  String get tutTitle => 'Tutorial';
+
+  @override
+  String get tutBack => 'Atrás';
+
+  @override
+  String get tutNext => 'Siguiente';
+
+  @override
+  String get tutSkipStep => 'Omitir paso';
+
+  @override
+  String get tutPause => 'Pausar';
+
+  @override
+  String get tutResume => 'Reanudar';
+
+  @override
+  String get tutPaused => 'Tutorial en pausa';
+
+  @override
+  String get tutTakeMe => 'Llévame allí';
+
+  @override
+  String tutStepOf(int current, int total) {
+    return 'Paso $current de $total';
+  }
+
+  @override
+  String get tutOfferTitle => 'Bienvenido a TradoCraft';
+
+  @override
+  String get tutOfferBody =>
+      'Este es un entorno de tutorial. ¿Quieres un recorrido guiado que te enseñe la aplicación paso a paso, con datos de práctica?';
+
+  @override
+  String get tutOfferStart => 'Iniciar el tutorial';
+
+  @override
+  String get tutOfferLater => 'Ahora no';
+
+  @override
+  String get tutLiveTitle => 'El tutorial no se ejecuta con datos reales';
+
+  @override
+  String get tutLiveBody =>
+      'El tutorial crea registros, así que solo se ejecuta en un entorno de prueba o de tutorial. Cambia a uno o añade uno.';
+
+  @override
+  String get tutSwitchEnv => 'Cambiar de entorno';
+
+  @override
+  String get tutAddEnv => 'Añadir un entorno';
+
+  @override
+  String get tutMapIntro =>
+      'Recorre los capítulos en orden. Puedes pausar, repetir u omitir un capítulo en cualquier momento.';
+
+  @override
+  String get tutStatusDone => 'Hecho';
+
+  @override
+  String get tutStatusCurrent => 'Siguiente';
+
+  @override
+  String get tutStatusLocked => 'Bloqueado';
+
+  @override
+  String get tutStatusSkipped => 'Omitido';
+
+  @override
+  String get tutStatusPaused => 'En curso';
+
+  @override
+  String get tutStart => 'Iniciar';
+
+  @override
+  String get tutReplay => 'Repetir';
+
+  @override
+  String get tutSkipChapter => 'Omitir capítulo';
+
+  @override
+  String get tutWelcomeTitle => 'Bienvenida';
+
+  @override
+  String get tutWelcomeSummary =>
+      'Orientación: la banda del entorno, las pestañas y los controles del tutorial.';
+
+  @override
+  String get tutProductTitle => 'Tu primer producto';
+
+  @override
+  String get tutProductSummary =>
+      'Sombrero: responsable de producto. Crea tres componentes, un producto terminado y su lista de materiales.';
+
+  @override
+  String get tutWelcomeBannerTitle => 'La banda superior';
+
+  @override
+  String get tutWelcomeBannerBody =>
+      'Esta banda muestra siempre en qué entorno estás: su nombre y su tipo. Ámbar es prueba, azul es tutorial y rojo son datos reales. El tutorial solo se ejecuta en entornos de prueba y de tutorial, así que nada de lo que hagas aquí toca datos reales.';
+
+  @override
+  String get tutWelcomeTabsTitle => 'Pestañas y secciones';
+
+  @override
+  String get tutWelcomeTabsBody =>
+      'Las secciones están a la izquierda (o en la barra inferior en un teléfono). Al abrir un registro, como un producto o un presupuesto, se añade una pestaña al espacio de trabajo, así puedes mantener varios registros abiertos.';
+
+  @override
+  String get tutWelcomeControlsTitle => 'Esta tarjeta';
+
+  @override
+  String get tutWelcomeControlsBody =>
+      'Soy tu narrador. «Siguiente» avanza cuando un paso es solo una explicación. Los pasos en los que debes hacer algo terminan solos en cuanto lo haces. «Atrás» y «Omitir paso» te dejan moverte, y «Pausar» me oculta hasta que pulses «Reanudar».';
+
+  @override
+  String get tutWelcomeMenuTitle => 'Dónde encontrarme';
+
+  @override
+  String get tutWelcomeMenuBody =>
+      'Abre el menú de la cuenta para encontrar la entrada Tutorial. Abre el mapa de capítulos, donde puedes reanudar, repetir u omitir un capítulo en cualquier momento.';
+
+  @override
+  String get tutWelcomeProductsTitle => 'Empecemos';
+
+  @override
+  String get tutWelcomeProductsBody =>
+      'Abre la sección Productos. El siguiente capítulo empieza allí.';
+
+  @override
+  String get tutProductOpenTitle => 'Productos';
+
+  @override
+  String get tutProductOpenBody =>
+      'Hoy eres el responsable de producto. Todo lo que la empresa vende o fabrica es un producto. Abre la sección Productos.';
+
+  @override
+  String get tutProductMotorTitle => 'Componente: Motor';
+
+  @override
+  String get tutProductMotorBody =>
+      'Crea el primer componente. Pulsa Nuevo producto, escribe el código TUT-MOTOR y el nombre Motor, deja el tipo Comprado y guarda.';
+
+  @override
+  String get tutProductMotorHint =>
+      'El prefijo TUT- marca los datos del tutorial, para reconocerlos más tarde.';
+
+  @override
+  String get tutProductFrameTitle => 'Componente: Frame';
+
+  @override
+  String get tutProductFrameBody =>
+      'Crea un segundo componente del mismo modo: código TUT-FRAME, nombre Frame, tipo Comprado.';
+
+  @override
+  String get tutProductControllerTitle => 'Componente: Controller';
+
+  @override
+  String get tutProductControllerBody =>
+      'Y un tercero: código TUT-CTRL, nombre Controller, tipo Comprado.';
+
+  @override
+  String get tutProductCartTitle => 'El producto terminado';
+
+  @override
+  String get tutProductCartBody =>
+      'Ahora el producto que fabricas con esas piezas. Crea el código TUT-CART, el nombre Cart y elige el tipo Fabricado: solo los productos fabricados tienen lista de materiales.';
+
+  @override
+  String get tutProductOpenCartTitle => 'Abre el Cart';
+
+  @override
+  String get tutProductOpenCartBody =>
+      'Abre el nuevo producto Cart de la lista para ver sus pestañas.';
+
+  @override
+  String get tutProductBomTabTitle => 'Lista de materiales';
+
+  @override
+  String get tutProductBomTabBody =>
+      'Elige la pestaña Lista de materiales. Enumera los componentes necesarios para fabricar una unidad. Una revisión es un borrador que editas, o la activa que usa producción. Pulsa Siguiente cuando estés allí.';
+
+  @override
+  String get tutProductRevisionTitle => 'Una primera revisión';
+
+  @override
+  String get tutProductRevisionBody =>
+      'Pulsa Nueva revisión para empezar un borrador.';
+
+  @override
+  String get tutProductLinesTitle => 'Añade los componentes';
+
+  @override
+  String get tutProductLinesBody =>
+      'Busca cada componente y añádelo: Motor, Frame y Controller. Después pulsa Guardar borrador.';
+
+  @override
+  String get tutProductLinesHint =>
+      'Escribe TUT en el cuadro de búsqueda para encontrar los tres componentes.';
+
+  @override
+  String get tutProductActivateTitle => 'Actívala';
+
+  @override
+  String get tutProductActivateBody =>
+      'Pulsa Activar. Desde ahora producción y presupuestos usan esta revisión; los cambios posteriores pasan por una nueva revisión.';
+
+  @override
+  String get tutProductDoneTitle => 'Bien hecho';
+
+  @override
+  String get tutProductDoneBody =>
+      'Tienes un producto terminado con una lista de materiales de tres componentes. Los capítulos siguientes se basan en él.';
+
+  @override
   String get purchasing => 'Compras';
 
   @override
@@ -6618,4 +6835,205 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupLater => 'Más tarde';
+
+  @override
+  String get finMatchColumn => 'Conciliación';
+
+  @override
+  String get finance => 'Finanzas';
+
+  @override
+  String get finSupplierInvoices => 'Facturas de proveedor';
+
+  @override
+  String get finSettings => 'Ajustes';
+
+  @override
+  String get tabSupplierInvoice => 'Factura de proveedor';
+
+  @override
+  String get finNewInvoice => 'Nueva factura de proveedor';
+
+  @override
+  String get finNoInvoices => 'No se encontraron facturas de proveedor.';
+
+  @override
+  String get finInvoiceNumber => 'Número de factura';
+
+  @override
+  String get finInternalNumber => 'Número interno';
+
+  @override
+  String get finInvoiceDate => 'Fecha de factura';
+
+  @override
+  String get finDueDate => 'Fecha de vencimiento';
+
+  @override
+  String get finStatusDraft => 'borrador';
+
+  @override
+  String get finStatusMatched => 'conciliada';
+
+  @override
+  String get finStatusDisputed => 'en disputa';
+
+  @override
+  String get finStatusApproved => 'aprobada';
+
+  @override
+  String get finStatusPaid => 'pagada';
+
+  @override
+  String get finMatchOk => 'correcto';
+
+  @override
+  String get finMatchNotReceived => 'no recibido';
+
+  @override
+  String get finMatchOverInvoiced => 'sobrefacturado';
+
+  @override
+  String get finMatchPriceVariance => 'diferencia de precio';
+
+  @override
+  String get finMatchNoPoLine => 'sin línea de pedido';
+
+  @override
+  String get finOrderOptional => 'Pedido de compra (opcional)';
+
+  @override
+  String get finNoOrder => 'Sin pedido de compra';
+
+  @override
+  String get finOrderPrefillHint =>
+      'Las líneas se rellenan con la mercancía recibida y aún no facturada.';
+
+  @override
+  String get finNumberRequired =>
+      'El número de factura es obligatorio (máximo 64 caracteres).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'Una línea de texto libre necesita una descripción.';
+
+  @override
+  String get finVatInvalid =>
+      'El tipo de IVA debe estar entre 0 y 100, con 2 decimales como máximo.';
+
+  @override
+  String get finOrdered => 'Pedido';
+
+  @override
+  String get finInvoiced => 'Facturado';
+
+  @override
+  String get finOrderPrice => 'Precio de pedido';
+
+  @override
+  String get finInvoicePrice => 'Precio facturado';
+
+  @override
+  String get finVariance => 'Diferencia';
+
+  @override
+  String get finMatches =>
+      'La factura coincide con el pedido y las recepciones.';
+
+  @override
+  String get finNotMatches =>
+      'La factura no coincide con el pedido y las recepciones.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Tolerancias: cantidad $qty %, precio $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Comprobar conciliación';
+
+  @override
+  String get finApprove => 'Aprobar';
+
+  @override
+  String get finOverrideTitle => 'Aprobar pese a la diferencia';
+
+  @override
+  String get finOverrideHelp =>
+      'La factura no coincide. Indique el motivo para aprobarla igualmente; se guarda con la aprobación.';
+
+  @override
+  String get finOverrideReason => 'Motivo de la excepción';
+
+  @override
+  String get finReasonRequired => 'El motivo es obligatorio.';
+
+  @override
+  String get finDispute => 'Disputar';
+
+  @override
+  String get finDisputeReason => 'Motivo de la disputa';
+
+  @override
+  String get finReopen => 'Reabrir';
+
+  @override
+  String get finMarkPaid => 'Marcar como pagada';
+
+  @override
+  String get finPaymentDate => 'Fecha de pago';
+
+  @override
+  String get finPaymentReference => 'Referencia de pago';
+
+  @override
+  String get finDeleteDraft => 'Eliminar borrador';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return '¿Eliminar la factura $number? No se puede deshacer.';
+  }
+
+  @override
+  String get finNetTotal => 'Neto';
+
+  @override
+  String get finGrossTotal => 'Total con IVA';
+
+  @override
+  String get finDisputeReasonShown => 'Motivo de la disputa';
+
+  @override
+  String get finOverrideShown => 'Motivo de la excepción';
+
+  @override
+  String get finPaidOn => 'Pagada el';
+
+  @override
+  String get finPurchaseOrder => 'Pedido de compra';
+
+  @override
+  String get finQuantityTolerance => 'Tolerancia de cantidad (%)';
+
+  @override
+  String get finPriceTolerance => 'Tolerancia de precio (%)';
+
+  @override
+  String get finToleranceInvalid => 'Introduzca un porcentaje entre 0 y 100.';
+
+  @override
+  String get finSettingsSaved => 'Ajustes guardados.';
+
+  @override
+  String get finSettingsHelp =>
+      'Diferencia máxima aceptada entre el pedido y la factura antes de que una línea cuente como diferencia.';
+
+  @override
+  String get finCreateInvoice => 'Crear factura de proveedor';
+
+  @override
+  String get userRoleFinance => 'Finanzas';
+
+  @override
+  String get moduleFinance => 'Finanzas';
 }

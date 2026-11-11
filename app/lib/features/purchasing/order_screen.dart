@@ -8,6 +8,7 @@ import '../../l10n/l10n.dart';
 import '../../shared/actions.dart';
 import '../../shared/app_icons.dart';
 import '../../shared/format.dart';
+import '../finance/invoice_form.dart';
 import 'po_form.dart';
 import 'po_lines.dart';
 import 'receive_dialog.dart';
@@ -108,6 +109,21 @@ class _PurchaseOrderScreenState extends ConsumerState<PurchaseOrderScreen> {
       ),
     );
     await _load();
+  }
+
+  /// Opens the new supplier invoice dialog for this order and shows the created invoice.
+  Future<void> _createInvoice() async {
+    final po = _po!;
+    final created = await showNewInvoiceDialog(
+      context,
+      supplierId: po.supplierId,
+      supplierName: po.supplierName,
+      orderId: po.id,
+      orderNumber: po.number,
+    );
+    if (created != null && mounted) {
+      context.push('/supplier-invoices/${created.id}');
+    }
   }
 
   void _applyLoaded(PurchaseOrderDetail po) {
@@ -255,6 +271,13 @@ class _PurchaseOrderScreenState extends ConsumerState<PurchaseOrderScreen> {
           key: const ValueKey('po-receive'),
           onPressed: _busy ? null : _receive,
           child: Text(l.purchReceiveGoods),
+        ),
+      if (const {'partially_received', 'received'}.contains(s.status) &&
+          can(ref, 'finance.write'))
+        OutlinedButton(
+          key: const ValueKey('po-create-invoice'),
+          onPressed: _busy ? null : _createInvoice,
+          child: Text(l.finCreateInvoice),
         ),
       if (const {'draft', 'approved', 'sent'}.contains(s.status) && canWrite)
         TextButton(

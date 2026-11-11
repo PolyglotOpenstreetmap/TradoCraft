@@ -6237,6 +6237,223 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erledigt, aber die Liste der Umgebungen konnte auf diesem Gerät nicht gespeichert werden.';
 
   @override
+  String get tutTitle => 'Tutorial';
+
+  @override
+  String get tutBack => 'Zurück';
+
+  @override
+  String get tutNext => 'Weiter';
+
+  @override
+  String get tutSkipStep => 'Schritt überspringen';
+
+  @override
+  String get tutPause => 'Pausieren';
+
+  @override
+  String get tutResume => 'Fortsetzen';
+
+  @override
+  String get tutPaused => 'Tutorial pausiert';
+
+  @override
+  String get tutTakeMe => 'Dorthin gehen';
+
+  @override
+  String tutStepOf(int current, int total) {
+    return 'Schritt $current von $total';
+  }
+
+  @override
+  String get tutOfferTitle => 'Willkommen bei TradoCraft';
+
+  @override
+  String get tutOfferBody =>
+      'Dies ist eine Tutorial-Umgebung. Möchten Sie eine geführte Tour, die Ihnen die App Schritt für Schritt mit Übungsdaten zeigt?';
+
+  @override
+  String get tutOfferStart => 'Tutorial starten';
+
+  @override
+  String get tutOfferLater => 'Nicht jetzt';
+
+  @override
+  String get tutLiveTitle => 'Das Tutorial läuft nicht mit Live-Daten';
+
+  @override
+  String get tutLiveBody =>
+      'Das Tutorial legt Datensätze an und läuft daher nur in einer Test- oder Tutorial-Umgebung. Wechseln Sie in eine solche oder fügen Sie eine hinzu.';
+
+  @override
+  String get tutSwitchEnv => 'Umgebung wechseln';
+
+  @override
+  String get tutAddEnv => 'Umgebung hinzufügen';
+
+  @override
+  String get tutMapIntro =>
+      'Arbeiten Sie die Kapitel der Reihe nach durch. Sie können ein Kapitel jederzeit pausieren, wiederholen oder überspringen.';
+
+  @override
+  String get tutStatusDone => 'Erledigt';
+
+  @override
+  String get tutStatusCurrent => 'Als Nächstes';
+
+  @override
+  String get tutStatusLocked => 'Gesperrt';
+
+  @override
+  String get tutStatusSkipped => 'Übersprungen';
+
+  @override
+  String get tutStatusPaused => 'In Arbeit';
+
+  @override
+  String get tutStart => 'Starten';
+
+  @override
+  String get tutReplay => 'Wiederholen';
+
+  @override
+  String get tutSkipChapter => 'Kapitel überspringen';
+
+  @override
+  String get tutWelcomeTitle => 'Willkommen';
+
+  @override
+  String get tutWelcomeSummary =>
+      'Orientierung: das Umgebungsband, die Tabs und die Tutorial-Steuerung.';
+
+  @override
+  String get tutProductTitle => 'Ihr erstes Produkt';
+
+  @override
+  String get tutProductSummary =>
+      'Rolle: Produktmanager. Legen Sie drei Komponenten, ein Fertigprodukt und seine Stückliste an.';
+
+  @override
+  String get tutWelcomeBannerTitle => 'Das Band oben';
+
+  @override
+  String get tutWelcomeBannerBody =>
+      'Dieses Band zeigt immer, in welcher Umgebung Sie sind: Name und Art. Gelb steht für Test, Blau für Tutorial und Rot für Live-Daten. Das Tutorial läuft nur in Test- und Tutorial-Umgebungen, nichts davon berührt echte Daten.';
+
+  @override
+  String get tutWelcomeTabsTitle => 'Tabs und Bereiche';
+
+  @override
+  String get tutWelcomeTabsBody =>
+      'Die Bereiche stehen links (auf dem Telefon in der unteren Leiste). Wenn Sie einen Datensatz öffnen, etwa ein Produkt oder ein Angebot, kommt ein Tab im Arbeitsbereich hinzu, so können Sie mehrere Datensätze offen halten.';
+
+  @override
+  String get tutWelcomeControlsTitle => 'Diese Karte';
+
+  @override
+  String get tutWelcomeControlsBody =>
+      'Ich bin Ihr Erzähler. „Weiter“ geht weiter, wenn ein Schritt nur eine Erklärung ist. Schritte, in denen Sie etwas tun sollen, sind von selbst erledigt, sobald Sie es getan haben. Mit „Zurück“ und „Schritt überspringen“ bewegen Sie sich frei, „Pausieren“ blendet mich bis „Fortsetzen“ aus.';
+
+  @override
+  String get tutWelcomeMenuTitle => 'Wo Sie mich finden';
+
+  @override
+  String get tutWelcomeMenuBody =>
+      'Öffnen Sie das Kontomenü, dort finden Sie den Eintrag Tutorial. Er öffnet die Kapitelübersicht, in der Sie ein Kapitel jederzeit fortsetzen, wiederholen oder überspringen können.';
+
+  @override
+  String get tutWelcomeProductsTitle => 'Fangen wir an';
+
+  @override
+  String get tutWelcomeProductsBody =>
+      'Öffnen Sie den Bereich Produkte. Das nächste Kapitel beginnt dort.';
+
+  @override
+  String get tutProductOpenTitle => 'Produkte';
+
+  @override
+  String get tutProductOpenBody =>
+      'Heute sind Sie der Produktmanager. Alles, was die Firma verkauft oder baut, ist ein Produkt. Öffnen Sie den Bereich Produkte.';
+
+  @override
+  String get tutProductMotorTitle => 'Komponente: Motor';
+
+  @override
+  String get tutProductMotorBody =>
+      'Legen Sie die erste Komponente an. Wählen Sie Neues Produkt, geben Sie Code TUT-MOTOR und Name Motor ein, lassen Sie den Typ auf Gekauft und speichern Sie.';
+
+  @override
+  String get tutProductMotorHint =>
+      'Das Präfix TUT- kennzeichnet Tutorial-Daten, damit Sie sie später erkennen.';
+
+  @override
+  String get tutProductFrameTitle => 'Komponente: Frame';
+
+  @override
+  String get tutProductFrameBody =>
+      'Legen Sie auf die gleiche Weise eine zweite Komponente an: Code TUT-FRAME, Name Frame, Typ Gekauft.';
+
+  @override
+  String get tutProductControllerTitle => 'Komponente: Controller';
+
+  @override
+  String get tutProductControllerBody =>
+      'Und eine dritte: Code TUT-CTRL, Name Controller, Typ Gekauft.';
+
+  @override
+  String get tutProductCartTitle => 'Das Fertigprodukt';
+
+  @override
+  String get tutProductCartBody =>
+      'Nun das Produkt, das Sie aus diesen Teilen bauen. Legen Sie Code TUT-CART, Name Cart an und wählen Sie den Typ Eigenfertigung: nur selbst gefertigte Produkte haben eine Stückliste.';
+
+  @override
+  String get tutProductOpenCartTitle => 'Cart öffnen';
+
+  @override
+  String get tutProductOpenCartBody =>
+      'Öffnen Sie das neue Produkt Cart aus der Liste, um seine Tabs zu sehen.';
+
+  @override
+  String get tutProductBomTabTitle => 'Stückliste';
+
+  @override
+  String get tutProductBomTabBody =>
+      'Wählen Sie den Tab Stückliste. Er listet die Komponenten, die für eine Einheit nötig sind. Eine Revision ist ein Entwurf, den Sie bearbeiten, oder die aktive, die die Fertigung verwendet. Drücken Sie Weiter, wenn Sie dort sind.';
+
+  @override
+  String get tutProductRevisionTitle => 'Eine erste Revision';
+
+  @override
+  String get tutProductRevisionBody =>
+      'Wählen Sie Neue Revision, um einen Entwurf zu beginnen.';
+
+  @override
+  String get tutProductLinesTitle => 'Komponenten hinzufügen';
+
+  @override
+  String get tutProductLinesBody =>
+      'Suchen Sie jede Komponente und fügen Sie sie hinzu: Motor, Frame und Controller. Drücken Sie dann Entwurf speichern.';
+
+  @override
+  String get tutProductLinesHint =>
+      'Geben Sie TUT ins Suchfeld ein, um die drei Komponenten zu finden.';
+
+  @override
+  String get tutProductActivateTitle => 'Aktivieren';
+
+  @override
+  String get tutProductActivateBody =>
+      'Drücken Sie Aktivieren. Ab jetzt verwenden Fertigung und Angebote diese Revision; spätere Änderungen laufen über eine neue Revision.';
+
+  @override
+  String get tutProductDoneTitle => 'Gut gemacht';
+
+  @override
+  String get tutProductDoneBody =>
+      'Sie haben ein Fertigprodukt mit einer Stückliste aus drei Komponenten. Spätere Kapitel bauen darauf auf.';
+
+  @override
   String get purchasing => 'Einkauf';
 
   @override
@@ -6635,4 +6852,206 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupLater => 'Später';
+
+  @override
+  String get finMatchColumn => 'Abgleich';
+
+  @override
+  String get finance => 'Finanzen';
+
+  @override
+  String get finSupplierInvoices => 'Eingangsrechnungen';
+
+  @override
+  String get finSettings => 'Einstellungen';
+
+  @override
+  String get tabSupplierInvoice => 'Eingangsrechnung';
+
+  @override
+  String get finNewInvoice => 'Neue Eingangsrechnung';
+
+  @override
+  String get finNoInvoices => 'Keine Eingangsrechnungen gefunden.';
+
+  @override
+  String get finInvoiceNumber => 'Rechnungsnummer';
+
+  @override
+  String get finInternalNumber => 'Interne Nummer';
+
+  @override
+  String get finInvoiceDate => 'Rechnungsdatum';
+
+  @override
+  String get finDueDate => 'Fälligkeitsdatum';
+
+  @override
+  String get finStatusDraft => 'Entwurf';
+
+  @override
+  String get finStatusMatched => 'abgeglichen';
+
+  @override
+  String get finStatusDisputed => 'beanstandet';
+
+  @override
+  String get finStatusApproved => 'freigegeben';
+
+  @override
+  String get finStatusPaid => 'bezahlt';
+
+  @override
+  String get finMatchOk => 'in Ordnung';
+
+  @override
+  String get finMatchNotReceived => 'nicht erhalten';
+
+  @override
+  String get finMatchOverInvoiced => 'überfakturiert';
+
+  @override
+  String get finMatchPriceVariance => 'Preisabweichung';
+
+  @override
+  String get finMatchNoPoLine => 'keine Bestellposition';
+
+  @override
+  String get finOrderOptional => 'Bestellung (optional)';
+
+  @override
+  String get finNoOrder => 'Keine Bestellung';
+
+  @override
+  String get finOrderPrefillHint =>
+      'Die Positionen werden aus dem erhaltenen, noch nicht berechneten Wareneingang übernommen.';
+
+  @override
+  String get finNumberRequired =>
+      'Die Rechnungsnummer ist erforderlich (höchstens 64 Zeichen).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'Eine Freitextposition braucht eine Beschreibung.';
+
+  @override
+  String get finVatInvalid =>
+      'Der MwSt-Satz muss zwischen 0 und 100 liegen, mit höchstens 2 Dezimalstellen.';
+
+  @override
+  String get finOrdered => 'Bestellt';
+
+  @override
+  String get finInvoiced => 'Berechnet';
+
+  @override
+  String get finOrderPrice => 'Bestellpreis';
+
+  @override
+  String get finInvoicePrice => 'Rechnungspreis';
+
+  @override
+  String get finVariance => 'Abweichung';
+
+  @override
+  String get finMatches =>
+      'Die Rechnung stimmt mit Bestellung und Wareneingängen überein.';
+
+  @override
+  String get finNotMatches =>
+      'Die Rechnung stimmt nicht mit Bestellung und Wareneingängen überein.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Toleranzen: Menge $qty %, Preis $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Abgleich prüfen';
+
+  @override
+  String get finApprove => 'Freigeben';
+
+  @override
+  String get finOverrideTitle => 'Trotz Abweichung freigeben';
+
+  @override
+  String get finOverrideHelp =>
+      'Die Rechnung stimmt nicht überein. Geben Sie den Grund für die Freigabe an; er wird mit der Freigabe gespeichert.';
+
+  @override
+  String get finOverrideReason => 'Grund der Ausnahme';
+
+  @override
+  String get finReasonRequired => 'Ein Grund ist erforderlich.';
+
+  @override
+  String get finDispute => 'Beanstanden';
+
+  @override
+  String get finDisputeReason => 'Grund der Beanstandung';
+
+  @override
+  String get finReopen => 'Wieder öffnen';
+
+  @override
+  String get finMarkPaid => 'Als bezahlt markieren';
+
+  @override
+  String get finPaymentDate => 'Zahlungsdatum';
+
+  @override
+  String get finPaymentReference => 'Zahlungsreferenz';
+
+  @override
+  String get finDeleteDraft => 'Entwurf löschen';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return 'Rechnung $number löschen? Das kann nicht rückgängig gemacht werden.';
+  }
+
+  @override
+  String get finNetTotal => 'Netto';
+
+  @override
+  String get finGrossTotal => 'Gesamt inkl. MwSt';
+
+  @override
+  String get finDisputeReasonShown => 'Grund der Beanstandung';
+
+  @override
+  String get finOverrideShown => 'Grund der Ausnahme';
+
+  @override
+  String get finPaidOn => 'Bezahlt am';
+
+  @override
+  String get finPurchaseOrder => 'Bestellung';
+
+  @override
+  String get finQuantityTolerance => 'Mengentoleranz (%)';
+
+  @override
+  String get finPriceTolerance => 'Preistoleranz (%)';
+
+  @override
+  String get finToleranceInvalid =>
+      'Geben Sie einen Prozentsatz zwischen 0 und 100 ein.';
+
+  @override
+  String get finSettingsSaved => 'Einstellungen gespeichert.';
+
+  @override
+  String get finSettingsHelp =>
+      'Größte akzeptierte Abweichung zwischen Bestellung und Rechnung, bevor eine Position als Abweichung gilt.';
+
+  @override
+  String get finCreateInvoice => 'Eingangsrechnung anlegen';
+
+  @override
+  String get userRoleFinance => 'Finanzen';
+
+  @override
+  String get moduleFinance => 'Finanzen';
 }

@@ -11,6 +11,7 @@ import 'profile.dart';
 import 'profile_badge.dart';
 import 'session.dart';
 import 'workspace.dart';
+import '../features/tutorial/targets.dart';
 import '../l10n/l10n.dart';
 import '../shared/app_icons.dart';
 import '../shared/module_icon.dart';
@@ -74,6 +75,7 @@ const _sectionArt = {
   '/customers': 'customers',
   '/products': 'product',
   '/purchasing': 'purchasing',
+  '/finance': 'finance',
   '/admin': 'admin',
 };
 
@@ -157,6 +159,13 @@ final _allDestinations = [
     'purchasing.read',
     alsoPaths: ['/suppliers', '/purchase-orders', '/goods-receipts'],
   ),
+  _Dest(
+    '/finance',
+    (l) => l.finance,
+    AppIcons.accountBalance,
+    'finance.read',
+    alsoPaths: ['/supplier-invoices'],
+  ),
   _Dest('/reports', (l) => l.crTitle, AppIcons.tableChart, 'reports.read'),
   _Dest(
     '/admin',
@@ -222,7 +231,7 @@ class AppShell extends ConsumerWidget {
         ? null
         : ProfileBadge(profile: profile, roles: me.value?.roles ?? const []);
 
-    final userMenu = PopupMenuButton<String>(
+    final userMenuButton = PopupMenuButton<String>(
       tooltip: context.l10n.account,
       icon: const Icon(AppIcons.accountCircle),
       itemBuilder: (_) => [
@@ -239,6 +248,7 @@ class AppShell extends ConsumerWidget {
           ),
         ),
         const PopupMenuDivider(),
+        PopupMenuItem(value: 'tutorial', child: Text(context.l10n.tutTitle)),
         PopupMenuItem(
           value: 'env',
           child: Text(context.l10n.envSwitchMenu(activeEnv.name)),
@@ -262,6 +272,7 @@ class AppShell extends ConsumerWidget {
       onSelected: (v) {
         if (v == 'signout') ref.read(sessionProvider.notifier).signOut();
         if (v == 'env') showEnvironmentSwitcher(context);
+        if (v == 'tutorial') context.push('/tutorial');
         if (v.startsWith('lang:')) {
           final code = v.substring(5);
           ref
@@ -270,6 +281,8 @@ class AppShell extends ConsumerWidget {
         }
       },
     );
+
+    final userMenu = TutorialTarget(id: 'user-menu', child: userMenuButton);
 
     if (wide) {
       return Scaffold(
