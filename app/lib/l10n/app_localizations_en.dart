@@ -3963,6 +3963,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modulesSaved => 'Modules saved';
 
   @override
+  String moduleAlsoRequires(String modules) {
+    return 'Also needs $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOff(String modules) {
+    return 'Also switches off: $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOn(String modules) {
+    return 'Also switches on: $modules';
+  }
+
+  @override
+  String moduleExpand(String module) {
+    return 'Expand $module';
+  }
+
+  @override
+  String moduleCollapse(String module) {
+    return 'Collapse $module';
+  }
+
+  @override
+  String get moduleOn => 'On';
+
+  @override
+  String get moduleOff => 'Off';
+
+  @override
+  String moduleLevel(int level) {
+    return 'Level $level';
+  }
+
+  @override
   String get userRoleAdmin => 'Administrator';
 
   @override
