@@ -6101,4 +6101,30 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get crRelNextNDays => 'Próximos N días';
+
+  @override
+  String get adminPriceZones => 'Zonas de precio';
+
+  @override
+  String get newPriceZone => 'Nueva zona de precio';
+
+  @override
+  String get editPriceZone => 'Editar zona de precio';
+
+  @override
+  String get sortOrder => 'Orden';
+
+  @override
+  String get noPriceZones => 'Aún no hay zonas de precio.';
+
+  @override
+  String get priceZoneDeleted => 'Zona de precio eliminada';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String deletePriceZoneConfirm(String code) {
+    return '¿Eliminar la zona de precio $code? Se rechaza si hay precios o clientes que la usan.';
+  }
 }

@@ -7,6 +7,7 @@ import '../../shared/app_icons.dart';
 
 import '../../l10n/l10n.dart';
 import 'modules_page.dart';
+import 'price_zones_page.dart';
 import 'users_page.dart';
 
 /// User and module administration: one destination with a switch between the two tables.
@@ -18,7 +19,7 @@ class AdminPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPageState extends ConsumerState<AdminPage> {
-  bool _users = true;
+  String _tab = 'users';
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +35,21 @@ class _AdminPageState extends ConsumerState<AdminPage> {
               runSpacing: 8,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                SegmentedButton<bool>(
+                SegmentedButton<String>(
                   showSelectedIcon: false,
                   segments: [
-                    ButtonSegment(value: true, label: Text(l.adminUsers)),
-                    ButtonSegment(value: false, label: Text(l.adminModules)),
+                    ButtonSegment(value: 'users', label: Text(l.adminUsers)),
+                    ButtonSegment(
+                      value: 'modules',
+                      label: Text(l.adminModules),
+                    ),
+                    ButtonSegment(
+                      value: 'zones',
+                      label: Text(l.adminPriceZones),
+                    ),
                   ],
-                  selected: {_users},
-                  onSelectionChanged: (s) => setState(() => _users = s.first),
+                  selected: {_tab},
+                  onSelectionChanged: (s) => setState(() => _tab = s.first),
                 ),
                 // The configurator builder lives with the configurators; designers start here too.
                 if (can(ref, 'configurator.design'))
@@ -55,7 +63,13 @@ class _AdminPageState extends ConsumerState<AdminPage> {
             ),
           ),
         ),
-        Expanded(child: _users ? const UsersPage() : const ModulesPage()),
+        Expanded(
+          child: switch (_tab) {
+            'modules' => const ModulesPage(),
+            'zones' => const PriceZonesPage(),
+            _ => const UsersPage(),
+          },
+        ),
       ],
     );
   }

@@ -1972,5 +1972,13 @@
   "crRelThisYear": "Este año",
   "crRelLastYear": "Año pasado",
   "crRelLastNDays": "Últimos N días",
-  "crRelNextNDays": "Próximos N días"
+  "crRelNextNDays": "Próximos N días",
+  "adminPriceZones": "Zonas de precio",
+  "newPriceZone": "Nueva zona de precio",
+  "editPriceZone": "Editar zona de precio",
+  "sortOrder": "Orden",
+  "noPriceZones": "Aún no hay zonas de precio.",
+  "priceZoneDeleted": "Zona de precio eliminada",
+  "delete": "Eliminar",
+  "deletePriceZoneConfirm": "¿Eliminar la zona de precio {code}? Se rechaza si hay precios o clientes que la usan."
 }

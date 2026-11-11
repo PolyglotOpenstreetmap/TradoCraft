@@ -11039,6 +11039,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next N days'**
   String get crRelNextNDays;
+
+  /// No description provided for @adminPriceZones.
+  ///
+  /// In en, this message translates to:
+  /// **'Price zones'**
+  String get adminPriceZones;
+
+  /// No description provided for @newPriceZone.
+  ///
+  /// In en, this message translates to:
+  /// **'New price zone'**
+  String get newPriceZone;
+
+  /// No description provided for @editPriceZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit price zone'**
+  String get editPriceZone;
+
+  /// No description provided for @sortOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort order'**
+  String get sortOrder;
+
+  /// No description provided for @noPriceZones.
+  ///
+  /// In en, this message translates to:
+  /// **'No price zones yet.'**
+  String get noPriceZones;
+
+  /// No description provided for @priceZoneDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Price zone deleted'**
+  String get priceZoneDeleted;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @deletePriceZoneConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete price zone {code}? This is refused when prices or customers use it.'**
+  String deletePriceZoneConfirm(String code);
 }
 
 class _AppLocalizationsDelegate
