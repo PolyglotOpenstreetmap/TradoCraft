@@ -33,6 +33,10 @@ services:
       # unknown value stops the API); the name defaults to the database name.
       APP_ENV_KIND: live
       # APP_ENV_NAME: Acme production
+      # First run without the demo seed (set SEED_DEV_DATA to "false"): the app's setup wizard
+      # creates the company (ADR 0047). Outside AUTH_MODE=dev the endpoint is disabled unless this
+      # secret is set (e.g. `openssl rand -hex 24`); in dev mode it is optional.
+      # BOOTSTRAP_TOKEN: change-me
       RUST_LOG: info
     ports:
       - "127.0.0.1:8080:8080"   # loopback only: dev auth trusts X-Dev-User
