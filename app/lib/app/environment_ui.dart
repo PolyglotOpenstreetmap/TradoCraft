@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/l10n.dart';
 import 'api.dart' show errorMessage;
 import 'environments.dart';
+import 'workspace.dart';
 
 /// The word for a kind in the user's language.
 String environmentKindLabel(AppLocalizations l, EnvironmentKind kind) =>
@@ -86,6 +87,33 @@ class EnvironmentBanner extends ConsumerWidget {
   }
 }
 
+/// Before an environment switch closes every tab: true when nothing would be lost, or when the
+/// user agreed to discard the unsaved edits of the tabs that have some.
+Future<bool> confirmLeavingTabs(BuildContext context, WidgetRef ref) async {
+  final count = ref.read(workspaceProvider.notifier).dirtyCount;
+  if (count == 0) return true;
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (c) => AlertDialog(
+      title: Text(c.l10n.unsavedChangesTitle),
+      content: Text(c.l10n.envUnsavedBody(count)),
+      actions: [
+        TextButton(
+          key: const ValueKey('env-unsaved-cancel'),
+          onPressed: () => Navigator.pop(c, false),
+          child: Text(c.l10n.cancel),
+        ),
+        FilledButton(
+          key: const ValueKey('env-unsaved-discard'),
+          onPressed: () => Navigator.pop(c, true),
+          child: Text(c.l10n.envDiscardAndSwitch),
+        ),
+      ],
+    ),
+  );
+  return ok == true;
+}
+
 /// Lists the environments to switch between, add or remove.
 Future<void> showEnvironmentSwitcher(BuildContext context) =>
     showDialog<void>(context: context, builder: (_) => const _SwitcherDialog());
@@ -111,6 +139,8 @@ class _SwitcherDialog extends ConsumerWidget {
                 env: e,
                 active: e.id == state.activeId,
                 onSwitch: () async {
+                  if (!await confirmLeavingTabs(context, ref)) return;
+                  if (!context.mounted) return;
                   Navigator.pop(context);
                   await notifier.switchTo(e.id);
                 },
@@ -285,6 +315,8 @@ class _AddDialogState extends ConsumerState<_AddDialog> {
     final url = _checkedUrl;
     if (probe == null || url == null) return;
     final name = _name.text.trim().isEmpty ? probe.name : _name.text.trim();
+    // Adding switches at once, so it asks about unsaved tabs like a switch does.
+    if (!await confirmLeavingTabs(context, ref)) return;
     // The kind is the server's word, never the user's.
     final ok = await ref
         .read(environmentsProvider.notifier)

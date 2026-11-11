@@ -6187,4 +6187,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get envCannotRemoveActive =>
       'Wechseln Sie zuerst zu einer anderen Umgebung';
+
+  @override
+  String envUnsavedBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count offene Tabs haben nicht gespeicherte Änderungen',
+      one: '1 offener Tab hat nicht gespeicherte Änderungen',
+    );
+    return '$_temp0. Beim Wechsel der Umgebung werden alle Tabs geschlossen und diese Änderungen verworfen.';
+  }
+
+  @override
+  String get envDiscardAndSwitch => 'Verwerfen und wechseln';
 }

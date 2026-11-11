@@ -11159,6 +11159,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch to another environment first'**
   String get envCannotRemoveActive;
+
+  /// No description provided for @envUnsavedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 open tab has unsaved changes} other{{count} open tabs have unsaved changes}}. Switching environment closes all tabs and discards them.'**
+  String envUnsavedBody(int count);
+
+  /// No description provided for @envDiscardAndSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard and switch'**
+  String get envDiscardAndSwitch;
 }
 
 class _AppLocalizationsDelegate

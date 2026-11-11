@@ -6155,4 +6155,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get envCannotRemoveActive => 'Switch to another environment first';
+
+  @override
+  String envUnsavedBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count open tabs have unsaved changes',
+      one: '1 open tab has unsaved changes',
+    );
+    return '$_temp0. Switching environment closes all tabs and discards them.';
+  }
+
+  @override
+  String get envDiscardAndSwitch => 'Discard and switch';
 }

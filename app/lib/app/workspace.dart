@@ -211,6 +211,10 @@ class WorkspaceNotifier extends Notifier<WorkspaceState> {
   /// Whether tab [id] currently holds unsaved edits.
   bool isDirty(int id) => _dirty[id]?.value ?? false;
 
+  /// How many open tabs hold unsaved edits.
+  int get dirtyCount =>
+      state.tabs.where((t) => _dirty[t.id]?.value ?? false).length;
+
   /// A ctrl-click on a list row is about to open that row: open it in the background.
   void backgroundNextOpen() {
     _backgroundNext = true;

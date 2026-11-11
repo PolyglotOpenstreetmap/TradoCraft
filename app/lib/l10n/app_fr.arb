@@ -1997,5 +1997,8 @@
   "envRemoveTitle": "Retirer l'environnement ?",
   "envRemoveBody": "{name} est retiré de cet appareil, avec sa connexion enregistrée. Rien ne change sur le serveur.",
   "@envRemoveBody": {"placeholders": {"name": {"type": "String"}}},
-  "envCannotRemoveActive": "Passez d'abord à un autre environnement"
+  "envCannotRemoveActive": "Passez d'abord à un autre environnement",
+  "envUnsavedBody": "{count, plural, =1{1 onglet ouvert contient des modifications non enregistrées} other{{count} onglets ouverts contiennent des modifications non enregistrées}}. Changer d'environnement ferme tous les onglets et abandonne ces modifications.",
+  "@envUnsavedBody": {"placeholders": {"count": {"type": "int"}}},
+  "envDiscardAndSwitch": "Abandonner et changer"
 }

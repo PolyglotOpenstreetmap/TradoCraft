@@ -6180,4 +6180,19 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get envCannotRemoveActive =>
       'Passez d\'abord à un autre environnement';
+
+  @override
+  String envUnsavedBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count onglets ouverts contiennent des modifications non enregistrées',
+      one: '1 onglet ouvert contient des modifications non enregistrées',
+    );
+    return '$_temp0. Changer d\'environnement ferme tous les onglets et abandonne ces modifications.';
+  }
+
+  @override
+  String get envDiscardAndSwitch => 'Abandonner et changer';
 }

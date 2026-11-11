@@ -6172,4 +6172,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get envCannotRemoveActive => 'Cambie primero a otro entorno';
+
+  @override
+  String envUnsavedBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pestañas abiertas tienen cambios sin guardar',
+      one: '1 pestaña abierta tiene cambios sin guardar',
+    );
+    return '$_temp0. Al cambiar de entorno se cierran todas las pestañas y se descartan esos cambios.';
+  }
+
+  @override
+  String get envDiscardAndSwitch => 'Descartar y cambiar';
 }

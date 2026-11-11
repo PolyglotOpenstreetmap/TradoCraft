@@ -3241,5 +3241,8 @@
   "envRemoveTitle": "Remove environment?",
   "envRemoveBody": "{name} is removed from this device, with its saved sign-in. Nothing changes on the server.",
   "@envRemoveBody": {"placeholders": {"name": {"type": "String"}}},
-  "envCannotRemoveActive": "Switch to another environment first"
+  "envCannotRemoveActive": "Switch to another environment first",
+  "envUnsavedBody": "{count, plural, =1{1 open tab has unsaved changes} other{{count} open tabs have unsaved changes}}. Switching environment closes all tabs and discards them.",
+  "@envUnsavedBody": {"placeholders": {"count": {"type": "int"}}},
+  "envDiscardAndSwitch": "Discard and switch"
 }

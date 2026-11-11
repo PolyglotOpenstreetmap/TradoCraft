@@ -540,4 +540,93 @@ void main() {
       expect(find.text('TEST · Acme test'), findsOneWidget);
     });
   });
+
+  group('unsaved tabs', () {
+    Future<ProviderContainer> open(
+      WidgetTester tester, {
+      required bool dirty,
+    }) async {
+      final c = _container();
+      final ws = c.read(workspaceProvider.notifier);
+      final id = ws.open('/orders/o1');
+      ws.open('/quotations/q1');
+      if (dirty) ws.dirtyOf(id).value = true;
+      await tester.pumpWidget(
+        _app(c, const Scaffold(body: EnvironmentBanner())),
+      );
+      await tester.tap(find.byType(EnvironmentBanner));
+      await tester.pumpAndSettle();
+      return c;
+    }
+
+    testWidgets('no dirty tab: switches at once', (tester) async {
+      final c = await open(tester, dirty: false);
+      await tester.tap(find.byKey(const ValueKey('env-tile-env-2')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('env-unsaved-discard')), findsNothing);
+      expect(c.read(environmentsProvider).activeId, 'env-2');
+      expect(c.read(workspaceProvider).tabs, isEmpty);
+    });
+
+    testWidgets('a dirty tab asks first; Cancel keeps everything', (
+      tester,
+    ) async {
+      final c = await open(tester, dirty: true);
+      await tester.tap(find.byKey(const ValueKey('env-tile-env-2')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('1 open tab has unsaved changes'), findsOne);
+      expect(find.text('Discard and switch'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('env-unsaved-cancel')));
+      await tester.pumpAndSettle();
+      expect(c.read(environmentsProvider).activeId, 'env-1');
+      expect(c.read(dioProvider).options.baseUrl, _liveUrl);
+      expect(c.read(workspaceProvider).tabs, hasLength(2));
+    });
+
+    testWidgets('confirming switches and closes the tabs', (tester) async {
+      final c = await open(tester, dirty: true);
+      await tester.tap(find.byKey(const ValueKey('env-tile-env-2')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('env-unsaved-discard')));
+      await tester.pumpAndSettle();
+      expect(c.read(environmentsProvider).activeId, 'env-2');
+      expect(c.read(dioProvider).options.baseUrl, _testUrl);
+      expect(c.read(workspaceProvider).tabs, isEmpty);
+    });
+
+    testWidgets('adding an environment confirms too', (tester) async {
+      final c = await open(tester, dirty: true);
+      _servers['http://localhost:8084'] = const EnvironmentProbe(
+        name: 'Practice',
+        kind: EnvironmentKind.tutorial,
+        dbName: 'practice',
+        version: '0.1.0',
+      );
+      addTearDown(() => _servers.remove('http://localhost:8084'));
+      await tester.tap(find.byKey(const ValueKey('env-add')));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(const ValueKey('env-url')),
+        'http://localhost:8084',
+      );
+      await tester.tap(find.byKey(const ValueKey('env-check')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('env-add-confirm')));
+      await tester.pumpAndSettle();
+      // Asked first: nothing added or closed yet.
+      expect(find.byKey(const ValueKey('env-unsaved-discard')), findsOneWidget);
+      expect(c.read(environmentsProvider).items, hasLength(2));
+      expect(c.read(workspaceProvider).tabs, hasLength(2));
+      await tester.tap(find.byKey(const ValueKey('env-unsaved-cancel')));
+      await tester.pumpAndSettle();
+      expect(c.read(environmentsProvider).items, hasLength(2));
+      await tester.tap(find.byKey(const ValueKey('env-add-confirm')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('env-unsaved-discard')));
+      await tester.pumpAndSettle();
+      expect(c.read(environmentsProvider).items, hasLength(3));
+      expect(c.read(environmentsProvider).active.name, 'Practice');
+      expect(c.read(workspaceProvider).tabs, isEmpty);
+    });
+  });
 }
