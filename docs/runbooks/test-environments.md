@@ -9,7 +9,7 @@ tradocraft-worker`; without one, `cargo run` is used). Docker is not needed.
 Put the connection in `.env` (or export it): `DATABASE_URL=postgresql://user:pass@host:5432/tradocraft`.
 The user must be able to create and drop databases. Optional: `AUTH_MODE`, `DEV_DEFAULT_USER`,
 `OIDC_*`, `ENVCTL_DIR`, `ENVCTL_PORT_MIN`/`ENVCTL_PORT_MAX`, `ENVCTL_API_BIN`. Protect the live
-database from `drop`: `scripts/envctl register live --database tradocraft --kind live`.
+database from `drop`: `scripts/envctl register live_main --database tradocraft --kind live`.
 
 ## Clone, start, connect
 
@@ -26,8 +26,11 @@ that URL: its kind and name come from the server and show in the banner. Sign-in
 `AUTH_MODE=dev` use any copied user (the admin keeps its address even with `--anonymize`; other
 users become `user-<hash>@example.test`). With OIDC the clone instance needs the same
 `OIDC_ISSUER`/`OIDC_AUDIENCE`; identity bindings were cleared, so the first sign-in binds by
-e-mail. To reach an instance from other machines put it behind your own reverse proxy: dev
-authentication refuses non-loopback binds.
+e-mail. Instances bind to loopback only. To reach one from other machines, put it behind a reverse
+proxy only when the clone uses OIDC, or the proxy itself authenticates users, restricts who may
+connect and strips any `X-Dev-User` header: forwarding to the loopback listener with the default
+dev authentication is not sufficient, because every caller could then choose any identity. Dev
+authentication refuses non-loopback binds for the same reason.
 
 ## Drop
 
@@ -36,7 +39,9 @@ scripts/envctl drop trial1          # asks you to type the name; --yes skips the
 ```
 
 It stops the instance, drops the database and removes `ENVCTL_DIR/envs/<name>`. It only drops
-environments it created.
+environments it created, and only when `DATABASE_URL` points to the server it was created on
+(the registry stores host and port). The names `live`, `postgres`, `template0`, `template1`,
+`default` and `all` are reserved.
 
 ## What a clone changes
 

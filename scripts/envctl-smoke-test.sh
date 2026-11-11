@@ -6,12 +6,14 @@
 # psql/pg_dump/pg_restore/curl/jq. PostgreSQL comes from one of:
 #   SMOKE_DATABASE_URL  an existing server (a superuser-like URL, e.g. postgresql://u:p@host:5432/postgres)
 #   Docker              otherwise a throwaway postgres:16 container on SMOKE_PG_PORT (default 55441)
+# shellcheck disable=SC2015  # pass never fails, so A && pass || fail is safe here
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENVCTL="$ROOT/scripts/envctl"
 WORK="$(mktemp -d)"
-CONTAINER="tradocraft-envctl-smoke"
+CONTAINER="tradocraft-envctl-smoke-$$-$RANDOM"
+CID=""
 FAILS=0
 
 pass() { echo "PASS: $*"; }
@@ -21,11 +23,21 @@ check() { # check "description" command...
   if "$@" >/dev/null 2>&1; then pass "$d"; else fail "$d"; fi
 }
 
+export ENVCTL_DIR="$WORK/envs"
+export ENVCTL_CONFIG=/dev/null
+
 cleanup() {
-  if [[ -n "${STARTED_CONTAINER:-}" ]]; then docker rm -f "$CONTAINER" >/dev/null 2>&1 || true; fi
-  for n in smoke_clone smoke_anon smoke_src; do
-    ENVCTL_DIR="$WORK/envs" "$ENVCTL" stop "$n" >/dev/null 2>&1 || true
-  done
+  # Drop every environment this run created (database, instance, directory); fall back to a plain
+  # stop when drop refuses. Runs after early failures too, also against SMOKE_DATABASE_URL.
+  local f n
+  if [[ -d "$ENVCTL_DIR/registry" && -n "${DATABASE_URL:-}" ]]; then
+    for f in "$ENVCTL_DIR"/registry/*.env; do
+      [[ -e "$f" ]] || continue
+      n="$(basename "$f" .env)"
+      "$ENVCTL" drop "$n" --yes >/dev/null 2>&1 || "$ENVCTL" stop "$n" >/dev/null 2>&1 || true
+    done
+  fi
+  if [[ -n "$CID" ]]; then docker rm -f "$CID" >/dev/null 2>&1 || true; fi
   rm -rf "$WORK"
 }
 trap cleanup EXIT
@@ -34,10 +46,8 @@ if [[ -n "${SMOKE_DATABASE_URL:-}" ]]; then
   export DATABASE_URL="$SMOKE_DATABASE_URL"
 else
   PORT="${SMOKE_PG_PORT:-55441}"
-  docker rm -f "$CONTAINER" >/dev/null 2>&1 || true
-  docker run -d --name "$CONTAINER" -e POSTGRES_PASSWORD=smoke -p "127.0.0.1:$PORT:5432" \
-    postgres:16 -c max_connections=300 >/dev/null
-  STARTED_CONTAINER=1
+  CID="$(docker run -d --name "$CONTAINER" -e POSTGRES_PASSWORD=smoke -p "127.0.0.1:$PORT:5432" \
+    postgres:16 -c max_connections=300)"
   export DATABASE_URL="postgresql://postgres:smoke@127.0.0.1:$PORT/postgres"
   for _ in $(seq 1 60); do
     PGPASSWORD=smoke psql -h 127.0.0.1 -p "$PORT" -U postgres -d postgres -c 'select 1' >/dev/null 2>&1 && break
@@ -45,8 +55,6 @@ else
   done
 fi
 
-export ENVCTL_DIR="$WORK/envs"
-export ENVCTL_CONFIG=/dev/null
 export ENVCTL_PORT_MIN="${SMOKE_API_PORT_MIN:-18100}"
 export ENVCTL_PORT_MAX="${SMOKE_API_PORT_MAX:-18150}"
 # Credentials of a "real" mailbox and SMTP server in the shell: they must never be used.
@@ -54,9 +62,15 @@ export IMAP_HOST=imap.invalid IMAP_USER=real IMAP_PASSWORD=real SMTP_HOST=smtp.i
 export AUTH_MODE=dev
 
 # Parse the connection once for psql helpers (no password on the command line).
-eval "$(DATABASE_URL="$DATABASE_URL" bash -c '
-  rest="${DATABASE_URL#*://}"; ui="${rest%@*}"; hp="${rest##*@}"; hp="${hp%%/*}"
-  echo "export PGUSER=${ui%%:*} PGPASSWORD=${ui#*:} PGHOST=${hp%%:*} PGPORT=${hp#*:}"')"
+# Connection settings for the psql helpers, assigned as plain data (no eval, no command line).
+_rest="${DATABASE_URL#*://}"
+_userinfo="${_rest%@*}"
+_hostport="${_rest##*@}"
+_hostport="${_hostport%%/*}"
+export PGUSER="${_userinfo%%:*}"
+export PGPASSWORD="${_userinfo#*:}"
+export PGHOST="${_hostport%%:*}"
+export PGPORT="${_hostport#*:}"
 q() { psql -X -q -t -A -v ON_ERROR_STOP=1 -d "$1" -c "$2"; }
 
 echo "== source: an empty environment with the development seed =="
@@ -77,6 +91,13 @@ q smoke_src "
 q smoke_src "
   INSERT INTO core.mail_outbox (id, company_id, to_address, subject, body)
   SELECT gen_random_uuid(), id, 'real.person@customer.com', 'queued in live', 'hello' FROM core.companies LIMIT 1"
+q smoke_src "
+  INSERT INTO crm.contact_phones (id, contact_id, number, normalized)
+  SELECT gen_random_uuid(), id, '0475/11.22.33', '32475112233' FROM crm.contacts LIMIT 1"
+q smoke_src "
+  INSERT INTO core.mail_outbox (id, company_id, to_address, subject, body, delivery, sent_at)
+  SELECT gen_random_uuid(), id, 'real.person@customer.com', 'login', 'open https://x.test/login#token=SECRETTOKEN123 now', 'sent', now()
+    FROM core.companies LIMIT 1"
 SRC_CUSTOMERS="$(q smoke_src "SELECT count(*) FROM crm.customers")"
 
 echo "== clone (the source API keeps running and stays connected) =="
@@ -91,13 +112,21 @@ echo "== credentials scrubbed =="
 [[ "$(q smoke_clone "SELECT count(*) FROM portal.login_links")" == 0 ]] && pass "portal login links removed" || fail "login links"
 [[ "$(q smoke_clone "SELECT count(*) FROM core.users WHERE oidc_subject IS NOT NULL")" == 0 ]] && pass "oidc subjects cleared" || fail "oidc"
 [[ "$(q smoke_clone "SELECT count(*) FROM core.mail_outbox WHERE delivery = 'queued'")" == 0 ]] && pass "queued system mail cancelled" || fail "outbox"
+[[ "$(q smoke_clone "SELECT count(*) FROM core.mail_outbox WHERE body LIKE '%SECRETTOKEN123%'")" == 0 ]] && pass "login tokens redacted in sent mail bodies" || fail "token in mail body"
+[[ "$(q smoke_src "SELECT count(*) FROM core.mail_outbox WHERE body LIKE '%SECRETTOKEN123%'")" == 1 ]] && pass "source mail untouched" || fail "source mail changed"
 [[ "$(q smoke_src "SELECT count(*) FROM portal.login_links")" == 1 ]] && pass "source keeps its data" || fail "source login links changed"
 [[ "$(q smoke_clone "SELECT count(*) FROM crm.customers WHERE email = 'real.person@customer.com'")" == 1 ]] && pass "customer data copied (no anonymize)" || fail "customer copy"
 
 echo "== outbound disabled =="
 API_LOG="$ENVCTL_DIR/envs/smoke_clone/api.log"
 WORKER_LOG="$ENVCTL_DIR/envs/smoke_clone/worker.log"
-sleep 3
+# Wait (bounded) for the worker's start-up lines; report when it exits before they appear.
+WORKER_PID="$(grep '^worker_pid=' "$ENVCTL_DIR/registry/smoke_clone.env" | cut -d= -f2-)"
+for _ in $(seq 1 60); do
+  grep -q "worker started" "$WORKER_LOG" 2>/dev/null && break
+  if ! kill -0 "$WORKER_PID" 2>/dev/null; then fail "worker exited before it started"; tail -n 10 "$WORKER_LOG" >&2 || true; break; fi
+  sleep 1
+done
 check "API log shows the outbound safety banner" grep -q "OUTBOUND SAFETY" "$API_LOG"
 check "worker log shows the outbound safety banner" grep -q "OUTBOUND SAFETY" "$WORKER_LOG"
 check "worker ignored IMAP_HOST" grep -q "IMAP_HOST ignored" "$WORKER_LOG"
@@ -123,8 +152,15 @@ echo "== anonymize =="
 "$ENVCTL" clone smoke_src smoke_anon --kind tutorial --anonymize --no-start
 [[ "$(q smoke_anon "SELECT count(*) FROM crm.customers WHERE email LIKE '%@customer.com'")" == 0 ]] && pass "customer e-mail anonymized" || fail "anon customers"
 [[ "$(q smoke_anon "SELECT count(*) FROM crm.contact_emails WHERE email NOT LIKE '%@example.test'")" == 0 ]] && pass "contact e-mail anonymized" || fail "anon contacts"
+[[ "$(q smoke_anon "SELECT count(*) FROM crm.contact_phones WHERE number <> '+32 000 00 00 00' OR normalized = '32475112233'")" == 0 ]] && pass "contact phones anonymized" || fail "anon phones"
 [[ "$(q smoke_anon "SELECT count(*) FROM core.users WHERE email = 'admin@example.com'")" == 1 ]] && pass "admin user kept for sign-in" || fail "admin kept"
 [[ "$(q smoke_src "SELECT count(*) FROM crm.customers WHERE email = 'real.person@customer.com'")" == 1 ]] && pass "source not anonymized" || fail "source anon"
+
+echo "== server identity =="
+cp "$ENVCTL_DIR/registry/smoke_anon.env" "$WORK/anon.env.bak"
+sed -i 's/^server=.*/server=other-host:1/' "$ENVCTL_DIR/registry/smoke_anon.env"
+check "refuses to drop an environment registered for another server" bash -c "! '$ENVCTL' drop smoke_anon --yes"
+cp "$WORK/anon.env.bak" "$ENVCTL_DIR/registry/smoke_anon.env"
 
 echo "== versions, status, drop =="
 "$ENVCTL" versions

@@ -7,7 +7,7 @@
 # files. The source database is only ever read. Passwords are never printed.
 #
 # Usage: scripts/envctl help
-set -euo pipefail
+set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -198,6 +198,17 @@ reg_names() {
 
 env_dir() { printf '%s/%s' "$ENVS_DIR" "$1"; }
 
+# Identity of the PostgreSQL server of the active connection (host:port).
+server_id() { printf '%s:%s' "${PGHOST:-local}" "${PGPORT:-5432}"; }
+
+# Refuses to act on an environment that was registered for another server than the active one.
+check_server() {
+  local registered
+  registered="$(reg_get "$1" server)"
+  [[ -z "$registered" || "$registered" == "$(server_id)" ]] \
+    || die "'$1' is registered for server $registered but DATABASE_URL points to $(server_id): refusing"
+}
+
 pid_matches() {
   # True when the pid is alive and is this environment's process (guards against pid reuse).
   local pid="$1" name="$2"
@@ -268,17 +279,20 @@ start_process() {
   [[ -n "${TEMPLATE_DIR:-}" ]] && envs+=("TEMPLATE_DIR=$TEMPLATE_DIR")
   # A clone never inherits a mailbox or SMTP server from the shell (the worker policy would
   # ignore them too; this keeps the process environment clean as well).
-  setsid nohup env -u SMTP_HOST -u SMTP_PASSWORD "${envs[@]}" "${cmd[@]}" >"$logf" 2>&1 </dev/null &
+  setsid nohup env -u SMTP_HOST -u SMTP_PASSWORD "${envs[@]}" "${cmd[@]}" >"$logf" 2>&1 </dev/null 9>&- &
   pid=$!
   reg_set "$name" "${label}_pid" "$pid"
   info "$label started (pid $pid), log: $logf"
 }
 
 wait_ready() {
-  local name="$1" port="$2" waited=0 pid
+  local name="$1" port="$2" waited=0 pid doc
   pid="$(reg_get "$name" api_pid)"
   while ((waited < START_TIMEOUT)); do
-    if curl -fsS -m 2 "http://$BIND_HOST:$port/api/v1/meta/environment" >/dev/null 2>&1; then return 0; fi
+    doc="$(curl -fsS -m 2 "http://$BIND_HOST:$port/api/v1/meta/environment" 2>/dev/null || true)"
+    if [[ -n "$doc" && "$(jq -r '[.name, .db_name, .kind] | join("|")' <<<"$doc" 2>/dev/null)" == "$name|$(reg_get "$name" database)|$(reg_get "$name" kind)" ]]; then
+      return 0
+    fi
     if ! kill -0 "$pid" 2>/dev/null; then
       echo "--- last log lines ---" >&2
       tail -n 15 "$(env_dir "$name")/api.log" >&2 || true
@@ -291,18 +305,40 @@ wait_ready() {
 }
 
 cmd_start_instance() {
-  local name="$1" worker="$2" seed="${3:-false}" port kind
+  local name="$1" worker="$2" seed="${3:-}" port kind
   reg_exists "$name" || die "unknown environment '$name'"
   kind="$(reg_get "$name" kind)"
   [[ "$kind" != live ]] || die "'$name' is registered as live: envctl never starts live instances"
-  if pid_matches "$(reg_get "$name" api_pid)" "$name"; then die "'$name' is already running (port $(reg_get "$name" port))"; fi
+  check_server "$name"
+  [[ -n "$seed" ]] || seed="$(reg_get "$name" seed)"
+  [[ "$seed" == true ]] || seed=false
+  # One lock for port choice and start-up, so concurrent starts never claim the same port. The
+  # lock is released once the API answers; child processes do not inherit it.
+  mkdir -p "$ENVCTL_DIR"
+  if command -v flock >/dev/null; then
+    exec 9>"$ENVCTL_DIR/.start.lock"
+    flock 9
+  fi
+  if pid_matches "$(reg_get "$name" api_pid)" "$name"; then
+    info "API of '$name' is already running (port $(reg_get "$name" port))"
+  else
+    port="$(reg_get "$name" port)"
+    if [[ -z "$port" ]] || port_in_use "$port"; then port="$(pick_port)"; fi
+    reg_set "$name" port "$port"
+    reg_set "$name" url "http://$BIND_HOST:$port"
+    start_process "$name" api "$port" "$seed"
+    wait_ready "$name" "$port"
+    reg_set "$name" seed false
+  fi
+  exec 9>&- || true
   port="$(reg_get "$name" port)"
-  if [[ -z "$port" ]] || port_in_use "$port"; then port="$(pick_port)"; fi
-  reg_set "$name" port "$port"
-  reg_set "$name" url "http://$BIND_HOST:$port"
-  start_process "$name" api "$port" "$seed"
-  wait_ready "$name" "$port"
-  if [[ "$worker" == yes ]]; then start_process "$name" worker "$port" false; fi
+  if [[ "$worker" == yes ]]; then
+    if pid_matches "$(reg_get "$name" worker_pid)" "$name"; then
+      info "worker of '$name' is already running: reusing it"
+    else
+      start_process "$name" worker "$port" false
+    fi
+  fi
   info "'$name' ($kind) is ready: http://$BIND_HOST:$port  (add this URL as an environment in the app)"
 }
 
@@ -387,6 +423,8 @@ register_new() {
   reg_set "$name" url ""
   reg_set "$name" api_pid ""
   reg_set "$name" worker_pid ""
+  reg_set "$name" server "$(server_id)"
+  reg_set "$name" seed "${4:-false}"
   reg_set "$name" created "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 }
 
@@ -405,9 +443,23 @@ cmd_create_empty() {
   parse_create_flags "$@"
   check_new_name "$name"
   createdb -- "$name"
-  register_new "$name" "$KIND" "$name"
+  register_new "$name" "$KIND" "$name" "$SEED"
   info "created empty database '$name' (kind $KIND)"
-  if [[ "$NOSTART" == no ]]; then cmd_start_instance "$name" "$WORKER" "$SEED"; fi
+  if [[ "$NOSTART" == no ]]; then cmd_start_instance "$name" "$WORKER"; fi
+}
+
+# Brings the clone to the schema of the binary that will run it, before scrubbing and before any
+# listener exists (the source may be at an older migration version).
+migrate_target() {
+  local bin
+  bin="$(find_bin tradocraft-api "${ENVCTL_API_BIN:-}")"
+  info "migrating the clone to the current schema"
+  if [[ -n "$bin" ]]; then
+    DATABASE_URL="$(url_for_db "$1")" "$bin" migrate >/dev/null
+  else
+    command -v cargo >/dev/null || die "no built tradocraft-api binary and no cargo to run the migrations"
+    DATABASE_URL="$(url_for_db "$1")" nice cargo run --quiet --manifest-path "$REPO_ROOT/Cargo.toml" -p tradocraft-api -- migrate >/dev/null
+  fi
 }
 
 cmd_clone() {
@@ -428,6 +480,7 @@ cmd_clone() {
   trap "dropdb --if-exists --force -- '$name' >/dev/null 2>&1 || true; echo 'envctl: clone failed, target database removed' >&2" ERR
   PGOPTIONS='-c default_transaction_read_only=on' pg_dump --format=custom --no-owner --no-acl -d "$src_db" \
     | pg_restore --no-owner --no-acl --exit-on-error -d "$name"
+  migrate_target "$name"
   info "applying credential scrub"
   sql "$name" -f "$SQL_DIR/scrub_credentials.sql"
   if [[ "$ANON" == yes ]]; then
@@ -439,7 +492,7 @@ cmd_clone() {
   reg_set "$name" cloned_from "$src_db"
   reg_set "$name" anonymized "$ANON"
   info "clone '$name' registered (kind $KIND)"
-  if [[ "$NOSTART" == no ]]; then cmd_start_instance "$name" "$WORKER" false; fi
+  if [[ "$NOSTART" == no ]]; then cmd_start_instance "$name" "$WORKER"; fi
 }
 
 cmd_start() {
@@ -450,7 +503,7 @@ cmd_start() {
     shift
   done
   parse_pg_url
-  cmd_start_instance "$name" "$worker" false
+  cmd_start_instance "$name" "$worker"
 }
 
 cmd_versions() {
@@ -491,6 +544,7 @@ cmd_register() {
   reg_exists "$name" && die "environment '$name' is already registered"
   [[ -n "$db" && "$db" =~ ^[A-Za-z0-9_.-]+$ ]] || die "--database is required (letters, digits, _ . -)"
   case "$kind" in live|test|tutorial) ;; *) die "--kind must be live, test or tutorial" ;; esac
+  parse_pg_url
   register_new "$name" "$kind" "$db"
   reg_set "$name" external yes
   [[ -z "$url" ]] || reg_set "$name" url "$url"
@@ -509,6 +563,7 @@ cmd_drop() {
   [[ "$(reg_get "$name" kind)" != live ]] || die "'$name' is registered as live: refusing to drop it"
   [[ "$(reg_get "$name" external)" != yes ]] || die "'$name' was registered, not created by envctl: refusing to drop it (use psql yourself)"
   parse_pg_url
+  check_server "$name"
   local db
   db="$(reg_get "$name" database)"
   [[ "$db" != "${URL_DB:-}" ]] || die "'$db' is the database of DATABASE_URL: refusing to drop it"
@@ -525,9 +580,9 @@ cmd_drop() {
 }
 
 main() {
-  local cmd="${1:-help}"
+  local subcmd="${1:-help}"
   [[ $# -eq 0 ]] || shift
-  case "$cmd" in
+  case "$subcmd" in
     help|-h|--help) usage ;;
     list) cmd_list ;;
     status) cmd_status "$@" ;;

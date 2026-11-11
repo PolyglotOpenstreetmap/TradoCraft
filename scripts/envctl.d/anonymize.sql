@@ -26,6 +26,11 @@ UPDATE crm.contact_emails
    SET email = 'contact-' || left(md5(contact_id::text), 10) || '-' || left(md5(id::text), 10)
                || '@example.test';
 
+-- Contact phone numbers; `normalized` must stay unique per contact and 6-15 digits.
+UPDATE crm.contact_phones
+   SET number = '+32 000 00 00 00',
+       normalized = '32' || lpad(((('x' || left(md5(id::text), 7))::bit(28)::int) % 1000000000)::text, 9, '0');
+
 -- Users other than admins (the unique lower-case index stays satisfied: ids differ).
 UPDATE core.users u
    SET email = 'user-' || left(md5(u.id::text), 10) || '@example.test',
@@ -46,7 +51,28 @@ UPDATE helpdesk.articles
                               FROM generate_series(1, COALESCE(array_length(to_addresses, 1), 0)) n),
        cc_addresses = ARRAY(SELECT 'cc-' || left(md5(id::text), 10) || '-' || n || '@example.test'
                               FROM generate_series(1, COALESCE(array_length(cc_addresses, 1), 0)) n),
-       raw_message = NULL;
+       raw_message = NULL,
+       phone_number = NULL;
+
+-- Ticket attachments (links, metadata and blobs). A file is only deleted when nothing else
+-- (knowledge base, field service, repairs, packages) references it.
+DO $$
+DECLARE
+    r record;
+BEGIN
+    CREATE TEMP TABLE gone_files ON COMMIT DROP AS SELECT file_id FROM helpdesk.ticket_attachments;
+    DELETE FROM helpdesk.ticket_attachments;
+    FOR r IN
+        SELECT k.conrelid::regclass::text AS tbl, a.attname AS col
+          FROM pg_constraint k
+          JOIN pg_attribute a ON a.attrelid = k.conrelid AND a.attnum = k.conkey[1]
+         WHERE k.contype = 'f' AND k.confrelid = 'core.files'::regclass
+           AND k.conrelid <> 'core.file_blobs'::regclass
+    LOOP
+        EXECUTE format('DELETE FROM gone_files WHERE file_id IN (SELECT %I FROM %s)', r.col, r.tbl);
+    END LOOP;
+    DELETE FROM core.files WHERE id IN (SELECT file_id FROM gone_files);
+END $$;
 
 -- System mail still in the table: addresses and the attached document.
 UPDATE core.mail_outbox

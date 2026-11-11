@@ -29,6 +29,23 @@ async fn main() -> anyhow::Result<()> {
         )
         .init();
 
+    // `tradocraft-api migrate` applies the pending migrations and exits (used by `envctl clone`
+    // so a clone is brought to this binary's schema before it is scrubbed and before any listener
+    // starts).
+    if std::env::args().nth(1).as_deref() == Some("migrate") {
+        let url = env("DATABASE_URL").context("DATABASE_URL is required")?;
+        let db = PgPoolOptions::new()
+            .max_connections(2)
+            .connect(&url)
+            .await?;
+        tradocraft_api::MIGRATOR
+            .run(&db)
+            .await
+            .context("running migrations")?;
+        tracing::info!("migrations applied");
+        return Ok(());
+    }
+
     // Fail fast on a bad APP_ENV_KIND, before touching the database.
     let environment = tradocraft_core::environment::EnvironmentConfig::from_env()
         .map_err(|e| anyhow::anyhow!(e))?;
