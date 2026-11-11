@@ -11231,6 +11231,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done, but the list of environments could not be saved on this device.'**
   String get envNotSaved;
+
+  /// No description provided for @purchasing.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchasing'**
+  String get purchasing;
+
+  /// No description provided for @tabSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier'**
+  String get tabSupplier;
+
+  /// No description provided for @purchSuppliers.
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers'**
+  String get purchSuppliers;
+
+  /// No description provided for @purchNewSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'New supplier'**
+  String get purchNewSupplier;
+
+  /// No description provided for @purchPaymentTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment terms'**
+  String get purchPaymentTerms;
+
+  /// No description provided for @purchDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days'**
+  String purchDays(int count);
+
+  /// No description provided for @purchActiveOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Active only'**
+  String get purchActiveOnly;
+
+  /// No description provided for @purchNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'The name is required.'**
+  String get purchNameRequired;
+
+  /// No description provided for @purchCountryInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The country must be a 2-letter code.'**
+  String get purchCountryInvalid;
+
+  /// No description provided for @purchCurrencyInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The currency must be a 3-letter code.'**
+  String get purchCurrencyInvalid;
+
+  /// No description provided for @purchTermsInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment terms must be a whole number of days.'**
+  String get purchTermsInvalid;
+
+  /// No description provided for @purchInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get purchInactive;
+
+  /// No description provided for @purchPriceList.
+  ///
+  /// In en, this message translates to:
+  /// **'Price list'**
+  String get purchPriceList;
+
+  /// No description provided for @purchAddProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Add product'**
+  String get purchAddProduct;
+
+  /// No description provided for @purchEditPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit price'**
+  String get purchEditPrice;
+
+  /// No description provided for @purchNoPrices.
+  ///
+  /// In en, this message translates to:
+  /// **'No products on this price list yet.'**
+  String get purchNoPrices;
+
+  /// No description provided for @purchPickProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a product.'**
+  String get purchPickProduct;
+
+  /// No description provided for @purchPriceInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid unit price.'**
+  String get purchPriceInvalid;
+
+  /// No description provided for @purchMoqInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid minimum order quantity.'**
+  String get purchMoqInvalid;
+
+  /// No description provided for @purchLeadInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Lead time must be a whole number of days.'**
+  String get purchLeadInvalid;
+
+  /// No description provided for @purchSupplierArticleCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier article code'**
+  String get purchSupplierArticleCode;
+
+  /// No description provided for @purchSupplierArticleName.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier article name'**
+  String get purchSupplierArticleName;
+
+  /// No description provided for @purchMoq.
+  ///
+  /// In en, this message translates to:
+  /// **'Min. order qty'**
+  String get purchMoq;
+
+  /// No description provided for @purchLeadTimeDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Lead time (days)'**
+  String get purchLeadTimeDays;
+
+  /// No description provided for @purchPreferred.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred supplier'**
+  String get purchPreferred;
+
+  /// No description provided for @purchRemoveProductConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {code} from this price list?'**
+  String purchRemoveProductConfirm(String code);
+
+  /// No description provided for @purchMoqValue.
+  ///
+  /// In en, this message translates to:
+  /// **'MOQ {qty}'**
+  String purchMoqValue(String qty);
+
+  /// No description provided for @purchLeadValue.
+  ///
+  /// In en, this message translates to:
+  /// **'lead time {days} d'**
+  String purchLeadValue(int days);
+
+  /// No description provided for @purchNoSuppliers.
+  ///
+  /// In en, this message translates to:
+  /// **'No suppliers found.'**
+  String get purchNoSuppliers;
 }
 
 class _AppLocalizationsDelegate

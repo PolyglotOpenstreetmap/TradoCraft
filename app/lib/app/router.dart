@@ -37,6 +37,7 @@ import '../features/shipping/shipping_page.dart';
 import '../features/login/login_page.dart';
 import '../features/opportunities/opportunities_page.dart';
 import '../features/products/products_page.dart';
+import '../features/purchasing/purchasing_page.dart';
 import '../features/packages/intake_page.dart';
 import '../features/packages/receiving_page.dart';
 import '../features/repairs/departments_page.dart';
@@ -249,6 +250,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(path: '/products', builder: (_, _) => const ProductsPage()),
           GoRoute(
             path: '/products/:id',
+            builder: (_, s) => DetailPortal(location: s.uri.toString()),
+          ),
+          GoRoute(
+            path: '/purchasing',
+            builder: (_, _) => const PurchasingPage(),
+          ),
+          GoRoute(
+            path: '/suppliers/:id',
             builder: (_, s) => DetailPortal(location: s.uri.toString()),
           ),
           GoRoute(path: '/admin', builder: (_, _) => const AdminPage()),

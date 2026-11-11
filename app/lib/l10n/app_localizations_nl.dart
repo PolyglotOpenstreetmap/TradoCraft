@@ -6220,4 +6220,104 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get envNotSaved =>
       'Gedaan, maar de lijst met omgevingen kon niet op dit toestel worden bewaard.';
+
+  @override
+  String get purchasing => 'Inkoop';
+
+  @override
+  String get tabSupplier => 'Leverancier';
+
+  @override
+  String get purchSuppliers => 'Leveranciers';
+
+  @override
+  String get purchNewSupplier => 'Nieuwe leverancier';
+
+  @override
+  String get purchPaymentTerms => 'Betalingstermijn';
+
+  @override
+  String purchDays(int count) {
+    return '$count dagen';
+  }
+
+  @override
+  String get purchActiveOnly => 'Alleen actieve';
+
+  @override
+  String get purchNameRequired => 'De naam is verplicht.';
+
+  @override
+  String get purchCountryInvalid =>
+      'Het land moet een code van 2 letters zijn.';
+
+  @override
+  String get purchCurrencyInvalid =>
+      'De munt moet een code van 3 letters zijn.';
+
+  @override
+  String get purchTermsInvalid =>
+      'De betalingstermijn moet een geheel aantal dagen zijn.';
+
+  @override
+  String get purchInactive => 'Inactief';
+
+  @override
+  String get purchPriceList => 'Prijslijst';
+
+  @override
+  String get purchAddProduct => 'Product toevoegen';
+
+  @override
+  String get purchEditPrice => 'Prijs wijzigen';
+
+  @override
+  String get purchNoPrices => 'Nog geen producten in deze prijslijst.';
+
+  @override
+  String get purchPickProduct => 'Kies een product.';
+
+  @override
+  String get purchPriceInvalid => 'Geef een geldige eenheidsprijs in.';
+
+  @override
+  String get purchMoqInvalid =>
+      'Geef een geldige minimale bestelhoeveelheid in.';
+
+  @override
+  String get purchLeadInvalid =>
+      'De levertijd moet een geheel aantal dagen zijn.';
+
+  @override
+  String get purchSupplierArticleCode => 'Artikelcode leverancier';
+
+  @override
+  String get purchSupplierArticleName => 'Artikelnaam leverancier';
+
+  @override
+  String get purchMoq => 'Min. bestelhoeveelheid';
+
+  @override
+  String get purchLeadTimeDays => 'Levertijd (dagen)';
+
+  @override
+  String get purchPreferred => 'Voorkeursleverancier';
+
+  @override
+  String purchRemoveProductConfirm(String code) {
+    return '$code uit deze prijslijst verwijderen?';
+  }
+
+  @override
+  String purchMoqValue(String qty) {
+    return 'MBH $qty';
+  }
+
+  @override
+  String purchLeadValue(int days) {
+    return 'levertijd $days d';
+  }
+
+  @override
+  String get purchNoSuppliers => 'Geen leveranciers gevonden.';
 }

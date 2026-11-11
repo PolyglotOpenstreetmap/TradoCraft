@@ -6228,4 +6228,102 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get envNotSaved =>
       'Fait, mais la liste des environnements n\'a pas pu être enregistrée sur cet appareil.';
+
+  @override
+  String get purchasing => 'Achats';
+
+  @override
+  String get tabSupplier => 'Fournisseur';
+
+  @override
+  String get purchSuppliers => 'Fournisseurs';
+
+  @override
+  String get purchNewSupplier => 'Nouveau fournisseur';
+
+  @override
+  String get purchPaymentTerms => 'Conditions de paiement';
+
+  @override
+  String purchDays(int count) {
+    return '$count jours';
+  }
+
+  @override
+  String get purchActiveOnly => 'Actifs uniquement';
+
+  @override
+  String get purchNameRequired => 'Le nom est obligatoire.';
+
+  @override
+  String get purchCountryInvalid => 'Le pays doit être un code à 2 lettres.';
+
+  @override
+  String get purchCurrencyInvalid => 'La devise doit être un code à 3 lettres.';
+
+  @override
+  String get purchTermsInvalid =>
+      'Les conditions de paiement doivent être un nombre entier de jours.';
+
+  @override
+  String get purchInactive => 'Inactif';
+
+  @override
+  String get purchPriceList => 'Liste de prix';
+
+  @override
+  String get purchAddProduct => 'Ajouter un produit';
+
+  @override
+  String get purchEditPrice => 'Modifier le prix';
+
+  @override
+  String get purchNoPrices => 'Aucun produit dans cette liste de prix.';
+
+  @override
+  String get purchPickProduct => 'Choisissez un produit.';
+
+  @override
+  String get purchPriceInvalid => 'Saisissez un prix unitaire valide.';
+
+  @override
+  String get purchMoqInvalid =>
+      'Saisissez une quantité minimale de commande valide.';
+
+  @override
+  String get purchLeadInvalid =>
+      'Le délai doit être un nombre entier de jours.';
+
+  @override
+  String get purchSupplierArticleCode => 'Code article fournisseur';
+
+  @override
+  String get purchSupplierArticleName => 'Désignation fournisseur';
+
+  @override
+  String get purchMoq => 'Qté min. de commande';
+
+  @override
+  String get purchLeadTimeDays => 'Délai (jours)';
+
+  @override
+  String get purchPreferred => 'Fournisseur préféré';
+
+  @override
+  String purchRemoveProductConfirm(String code) {
+    return 'Retirer $code de cette liste de prix ?';
+  }
+
+  @override
+  String purchMoqValue(String qty) {
+    return 'QMC $qty';
+  }
+
+  @override
+  String purchLeadValue(int days) {
+    return 'délai $days j';
+  }
+
+  @override
+  String get purchNoSuppliers => 'Aucun fournisseur trouvé.';
 }
