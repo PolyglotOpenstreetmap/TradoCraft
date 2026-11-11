@@ -116,6 +116,8 @@ abstract final class AppIcons {
   static const IconData pictureAsPdf = Icons.picture_as_pdf_outlined;
   static const IconData place = Icons.place_outlined;
   static const IconData playArrow = Icons.play_arrow;
+  static const IconData school = Icons.school_outlined;
+  static const IconData skipNext = Icons.skip_next_outlined;
   static const IconData precisionManufacturing =
       Icons.precision_manufacturing_outlined;
   static const IconData priorityHigh = Icons.priority_high;

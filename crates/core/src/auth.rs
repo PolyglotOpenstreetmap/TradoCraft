@@ -124,6 +124,13 @@ pub enum Permission {
     PurchasingApprove,
     /// Receive goods against purchase orders.
     GoodsReceipt,
+    /// See supplier invoices, their match report and the finance settings (ADR 0046).
+    FinanceRead,
+    /// Register, edit, match, dispute and delete supplier invoices.
+    FinanceWrite,
+    /// Approve supplier invoices (also against a failed match, with a reason), record payment
+    /// and change the match tolerances.
+    FinanceApprove,
     /// Build configurators: models, revisions, tables, formulas, activation (ADR 0034).
     ConfiguratorDesign,
     /// Run configurators, save configurations and turn them into quotations (ADR 0034).
@@ -154,7 +161,7 @@ pub enum Permission {
 }
 
 impl Permission {
-    pub const ALL: [Permission; 66] = [
+    pub const ALL: [Permission; 69] = [
         Permission::CustomersRead,
         Permission::CustomersWrite,
         Permission::ProductsRead,
@@ -208,6 +215,9 @@ impl Permission {
         Permission::PurchasingWrite,
         Permission::PurchasingApprove,
         Permission::GoodsReceipt,
+        Permission::FinanceRead,
+        Permission::FinanceWrite,
+        Permission::FinanceApprove,
         Permission::ConfiguratorDesign,
         Permission::ConfiguratorUse,
         Permission::DeliveryRead,
@@ -278,6 +288,9 @@ impl Permission {
             Permission::PurchasingWrite => "purchasing.write",
             Permission::PurchasingApprove => "purchasing.approve",
             Permission::GoodsReceipt => "purchasing.receipt",
+            Permission::FinanceRead => "finance.read",
+            Permission::FinanceWrite => "finance.write",
+            Permission::FinanceApprove => "finance.approve",
             Permission::ConfiguratorDesign => "configurator.design",
             Permission::ConfiguratorUse => "configurator.use",
             Permission::DeliveryRead => "delivery.read",
@@ -297,7 +310,7 @@ impl Permission {
 
 /// The roles that exist. Roles are fixed in code (ADR 0004); the user administration picks from
 /// this list.
-pub const ROLES: [&str; 16] = [
+pub const ROLES: [&str; 17] = [
     "admin",
     "sales_manager",
     "sales",
@@ -311,6 +324,8 @@ pub const ROLES: [&str; 16] = [
     "logistics",
     "viewer",
     "purchaser",
+    // Accounts payable: supplier invoices and the three-way match (ADR 0046).
+    "finance",
     // Incoming parcels and the repair hand-over (ADR 0030).
     "goods_in",
     "repair_intake",
@@ -525,6 +540,7 @@ pub fn role_grants(role: &str, p: Permission) -> bool {
                 | OrdersRead
                 | InventoryRead
                 | PurchasingRead
+                | FinanceRead
                 | DeliveryRead
                 | ProductionRead
                 | ReportsRead
@@ -542,6 +558,19 @@ pub fn role_grants(role: &str, p: Permission) -> bool {
                 | PurchasingWrite
                 | PurchasingApprove
                 | GoodsReceipt
+                | FinanceRead
+        ),
+        // Accounts payable: registers, matches, approves and pays supplier invoices (ADR 0046).
+        "finance" => matches!(
+            p,
+            CustomersRead
+                | ProductsRead
+                | InventoryRead
+                | PurchasingRead
+                | FinanceRead
+                | FinanceWrite
+                | FinanceApprove
+                | ReportsRead
         ),
         // The receiving dock: registers and photographs incoming parcels (ADR 0030, step 1).
         "goods_in" => matches!(
@@ -1194,6 +1223,29 @@ mod tests {
             assert!(!role_grants(r, Permission::PurchasingWrite), "{r}");
             assert!(!role_grants(r, Permission::PurchasingApprove), "{r}");
             assert!(!role_grants(r, Permission::GoodsReceipt), "{r}");
+        }
+    }
+
+    #[test]
+    fn finance_rights_follow_the_roles() {
+        for p in [
+            Permission::FinanceRead,
+            Permission::FinanceWrite,
+            Permission::FinanceApprove,
+        ] {
+            assert!(role_grants("admin", p));
+            assert!(role_grants("finance", p));
+            assert_eq!(p.as_str().split('.').next(), Some("finance"));
+        }
+        // The purchaser sees invoices but cannot register or approve them.
+        assert!(role_grants("purchaser", Permission::FinanceRead));
+        assert!(!role_grants("purchaser", Permission::FinanceWrite));
+        assert!(!role_grants("purchaser", Permission::FinanceApprove));
+        // The viewer reads everything (every `.read` permission), but cannot write or approve.
+        assert!(role_grants("viewer", Permission::FinanceRead));
+        assert!(!role_grants("viewer", Permission::FinanceWrite));
+        for r in ["sales", "warehouse", "logistics", "production"] {
+            assert!(!role_grants(r, Permission::FinanceRead), "{r}");
         }
     }
 

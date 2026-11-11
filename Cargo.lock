@@ -2919,6 +2919,7 @@ dependencies = [
  "tradocraft-delivery",
  "tradocraft-engineering",
  "tradocraft-fieldservice",
+ "tradocraft-finance",
  "tradocraft-helpdesk",
  "tradocraft-inventory",
  "tradocraft-kb",
@@ -3067,6 +3068,24 @@ dependencies = [
  "tradocraft-core",
  "tradocraft-crm",
  "tradocraft-documents",
+ "utoipa",
+ "utoipa-axum",
+ "uuid",
+]
+
+[[package]]
+name = "tradocraft-finance"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "chrono",
+ "rust_decimal",
+ "rust_decimal_macros",
+ "serde",
+ "serde_json",
+ "sqlx",
+ "tradocraft-core",
+ "tradocraft-purchasing",
  "utoipa",
  "utoipa-axum",
  "uuid",

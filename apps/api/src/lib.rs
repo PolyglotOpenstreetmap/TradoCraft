@@ -35,6 +35,7 @@ pub const DEV_SEED_SQL: &str = include_str!("../../../seed/dev_seed.sql");
         (name = "inventory", description = "Warehouses, stock moves, lots, reservations and counts"),
         (name = "planning", description = "Planning board: technician calendars, absences, skills, conflicts and suggestions"),
         (name = "purchasing", description = "Suppliers, price lists, purchase orders and goods receipts"),
+        (name = "finance", description = "Supplier invoices (AP register), the three-way match, approval and payment status"),
         (name = "delivery", description = "Delivery notes for sales orders: planning, picking, shipping and the closure policy"),
         (name = "production", description = "Production orders from the BOM: divisions, release, component reservation, completion and output"),
         (name = "configurator", description = "Admin-defined product configurators: models, revisions, formulas, evaluation and saved configurations"),
@@ -75,6 +76,7 @@ fn api() -> (Router<AppState>, OpenApiDoc) {
         .merge(tradocraft_inventory::router())
         .merge(tradocraft_planning::router())
         .merge(tradocraft_purchasing::router())
+        .merge(tradocraft_finance::router())
         .merge(tradocraft_delivery::router())
         .merge(tradocraft_production::router())
         .merge(tradocraft_configurator::router())

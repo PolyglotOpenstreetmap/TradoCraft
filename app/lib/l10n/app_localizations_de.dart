@@ -6237,6 +6237,223 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erledigt, aber die Liste der Umgebungen konnte auf diesem Gerät nicht gespeichert werden.';
 
   @override
+  String get tutTitle => 'Tutorial';
+
+  @override
+  String get tutBack => 'Zurück';
+
+  @override
+  String get tutNext => 'Weiter';
+
+  @override
+  String get tutSkipStep => 'Schritt überspringen';
+
+  @override
+  String get tutPause => 'Pausieren';
+
+  @override
+  String get tutResume => 'Fortsetzen';
+
+  @override
+  String get tutPaused => 'Tutorial pausiert';
+
+  @override
+  String get tutTakeMe => 'Dorthin gehen';
+
+  @override
+  String tutStepOf(int current, int total) {
+    return 'Schritt $current von $total';
+  }
+
+  @override
+  String get tutOfferTitle => 'Willkommen bei TradoCraft';
+
+  @override
+  String get tutOfferBody =>
+      'Dies ist eine Tutorial-Umgebung. Möchten Sie eine geführte Tour, die Ihnen die App Schritt für Schritt mit Übungsdaten zeigt?';
+
+  @override
+  String get tutOfferStart => 'Tutorial starten';
+
+  @override
+  String get tutOfferLater => 'Nicht jetzt';
+
+  @override
+  String get tutLiveTitle => 'Das Tutorial läuft nicht mit Live-Daten';
+
+  @override
+  String get tutLiveBody =>
+      'Das Tutorial legt Datensätze an und läuft daher nur in einer Test- oder Tutorial-Umgebung. Wechseln Sie in eine solche oder fügen Sie eine hinzu.';
+
+  @override
+  String get tutSwitchEnv => 'Umgebung wechseln';
+
+  @override
+  String get tutAddEnv => 'Umgebung hinzufügen';
+
+  @override
+  String get tutMapIntro =>
+      'Arbeiten Sie die Kapitel der Reihe nach durch. Sie können ein Kapitel jederzeit pausieren, wiederholen oder überspringen.';
+
+  @override
+  String get tutStatusDone => 'Erledigt';
+
+  @override
+  String get tutStatusCurrent => 'Als Nächstes';
+
+  @override
+  String get tutStatusLocked => 'Gesperrt';
+
+  @override
+  String get tutStatusSkipped => 'Übersprungen';
+
+  @override
+  String get tutStatusPaused => 'In Arbeit';
+
+  @override
+  String get tutStart => 'Starten';
+
+  @override
+  String get tutReplay => 'Wiederholen';
+
+  @override
+  String get tutSkipChapter => 'Kapitel überspringen';
+
+  @override
+  String get tutWelcomeTitle => 'Willkommen';
+
+  @override
+  String get tutWelcomeSummary =>
+      'Orientierung: das Umgebungsband, die Tabs und die Tutorial-Steuerung.';
+
+  @override
+  String get tutProductTitle => 'Ihr erstes Produkt';
+
+  @override
+  String get tutProductSummary =>
+      'Rolle: Produktmanager. Legen Sie drei Komponenten, ein Fertigprodukt und seine Stückliste an.';
+
+  @override
+  String get tutWelcomeBannerTitle => 'Das Band oben';
+
+  @override
+  String get tutWelcomeBannerBody =>
+      'Dieses Band zeigt immer, in welcher Umgebung Sie sind: Name und Art. Gelb steht für Test, Blau für Tutorial und Rot für Live-Daten. Das Tutorial läuft nur in Test- und Tutorial-Umgebungen, nichts davon berührt echte Daten.';
+
+  @override
+  String get tutWelcomeTabsTitle => 'Tabs und Bereiche';
+
+  @override
+  String get tutWelcomeTabsBody =>
+      'Die Bereiche stehen links (auf dem Telefon in der unteren Leiste). Wenn Sie einen Datensatz öffnen, etwa ein Produkt oder ein Angebot, kommt ein Tab im Arbeitsbereich hinzu, so können Sie mehrere Datensätze offen halten.';
+
+  @override
+  String get tutWelcomeControlsTitle => 'Diese Karte';
+
+  @override
+  String get tutWelcomeControlsBody =>
+      'Ich bin Ihr Erzähler. „Weiter“ geht weiter, wenn ein Schritt nur eine Erklärung ist. Schritte, in denen Sie etwas tun sollen, sind von selbst erledigt, sobald Sie es getan haben. Mit „Zurück“ und „Schritt überspringen“ bewegen Sie sich frei, „Pausieren“ blendet mich bis „Fortsetzen“ aus.';
+
+  @override
+  String get tutWelcomeMenuTitle => 'Wo Sie mich finden';
+
+  @override
+  String get tutWelcomeMenuBody =>
+      'Öffnen Sie das Kontomenü, dort finden Sie den Eintrag Tutorial. Er öffnet die Kapitelübersicht, in der Sie ein Kapitel jederzeit fortsetzen, wiederholen oder überspringen können.';
+
+  @override
+  String get tutWelcomeProductsTitle => 'Fangen wir an';
+
+  @override
+  String get tutWelcomeProductsBody =>
+      'Öffnen Sie den Bereich Produkte. Das nächste Kapitel beginnt dort.';
+
+  @override
+  String get tutProductOpenTitle => 'Produkte';
+
+  @override
+  String get tutProductOpenBody =>
+      'Heute sind Sie der Produktmanager. Alles, was die Firma verkauft oder baut, ist ein Produkt. Öffnen Sie den Bereich Produkte.';
+
+  @override
+  String get tutProductMotorTitle => 'Komponente: Motor';
+
+  @override
+  String get tutProductMotorBody =>
+      'Legen Sie die erste Komponente an. Wählen Sie Neues Produkt, geben Sie Code TUT-MOTOR und Name Motor ein, lassen Sie den Typ auf Gekauft und speichern Sie.';
+
+  @override
+  String get tutProductMotorHint =>
+      'Das Präfix TUT- kennzeichnet Tutorial-Daten, damit Sie sie später erkennen.';
+
+  @override
+  String get tutProductFrameTitle => 'Komponente: Frame';
+
+  @override
+  String get tutProductFrameBody =>
+      'Legen Sie auf die gleiche Weise eine zweite Komponente an: Code TUT-FRAME, Name Frame, Typ Gekauft.';
+
+  @override
+  String get tutProductControllerTitle => 'Komponente: Controller';
+
+  @override
+  String get tutProductControllerBody =>
+      'Und eine dritte: Code TUT-CTRL, Name Controller, Typ Gekauft.';
+
+  @override
+  String get tutProductCartTitle => 'Das Fertigprodukt';
+
+  @override
+  String get tutProductCartBody =>
+      'Nun das Produkt, das Sie aus diesen Teilen bauen. Legen Sie Code TUT-CART, Name Cart an und wählen Sie den Typ Eigenfertigung: nur selbst gefertigte Produkte haben eine Stückliste.';
+
+  @override
+  String get tutProductOpenCartTitle => 'Cart öffnen';
+
+  @override
+  String get tutProductOpenCartBody =>
+      'Öffnen Sie das neue Produkt Cart aus der Liste, um seine Tabs zu sehen.';
+
+  @override
+  String get tutProductBomTabTitle => 'Stückliste';
+
+  @override
+  String get tutProductBomTabBody =>
+      'Wählen Sie den Tab Stückliste. Er listet die Komponenten, die für eine Einheit nötig sind. Eine Revision ist ein Entwurf, den Sie bearbeiten, oder die aktive, die die Fertigung verwendet. Drücken Sie Weiter, wenn Sie dort sind.';
+
+  @override
+  String get tutProductRevisionTitle => 'Eine erste Revision';
+
+  @override
+  String get tutProductRevisionBody =>
+      'Wählen Sie Neue Revision, um einen Entwurf zu beginnen.';
+
+  @override
+  String get tutProductLinesTitle => 'Komponenten hinzufügen';
+
+  @override
+  String get tutProductLinesBody =>
+      'Suchen Sie jede Komponente und fügen Sie sie hinzu: Motor, Frame und Controller. Drücken Sie dann Entwurf speichern.';
+
+  @override
+  String get tutProductLinesHint =>
+      'Geben Sie TUT ins Suchfeld ein, um die drei Komponenten zu finden.';
+
+  @override
+  String get tutProductActivateTitle => 'Aktivieren';
+
+  @override
+  String get tutProductActivateBody =>
+      'Drücken Sie Aktivieren. Ab jetzt verwenden Fertigung und Angebote diese Revision; spätere Änderungen laufen über eine neue Revision.';
+
+  @override
+  String get tutProductDoneTitle => 'Gut gemacht';
+
+  @override
+  String get tutProductDoneBody =>
+      'Sie haben ein Fertigprodukt mit einer Stückliste aus drei Komponenten. Spätere Kapitel bauen darauf auf.';
+
+  @override
   String get purchasing => 'Einkauf';
 
   @override
