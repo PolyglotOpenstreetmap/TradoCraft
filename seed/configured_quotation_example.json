@@ -1,0 +1,29 @@
+{
+  "source": "configurator",
+  "external_ref": "CFG-2026-0001",
+  "customer_id": "00000000-0000-7000-8000-000000000401",
+  "price_zone_code": "Z2",
+  "purpose": "installation",
+  "notes": "Configured process unit, fictitious demo data.",
+  "strict": false,
+  "configuration": {
+    "model": "UNIT-200",
+    "version": 3,
+    "choices": { "supply": "400V-3ph", "frame": "stainless", "controller": "touch-panel", "coating": "C4" }
+  },
+  "lines": [
+    {
+      "code": "UNIT-200",
+      "quantity": "1",
+      "section": "Process unit",
+      "unit_price": "6500",
+      "comment": "Configured for 400 V, stainless frame",
+      "children": [
+        { "code": "FRAME-A", "quantity": "1" },
+        { "code": "CTRL-01", "quantity": "1", "comment": "Touch panel" },
+        { "code": "COAT-PROT", "quantity": "1", "percent_of_parent": "20", "comment": "Corrosivity class C4" }
+      ]
+    },
+    { "code": "INSTALL", "quantity": "8", "section": "Installation" }
+  ]
+}

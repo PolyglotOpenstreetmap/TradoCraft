@@ -1,0 +1,24 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, unused_import, invalid_annotation_target, unnecessary_import
+
+import 'package:json_annotation/json_annotation.dart';
+
+part 'new_priority_request.g.dart';
+
+@JsonSerializable()
+class NewPriorityRequest {
+  const NewPriorityRequest({
+    required this.message,
+    required this.priority,
+  });
+  
+  factory NewPriorityRequest.fromJson(Map<String, Object?> json) => _$NewPriorityRequestFromJson(json);
+  
+  final String message;
+
+  /// expedite | low
+  final String priority;
+
+  Map<String, Object?> toJson() => _$NewPriorityRequestToJson(this);
+}

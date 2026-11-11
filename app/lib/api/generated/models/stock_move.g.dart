@@ -1,0 +1,71 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'stock_move.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+StockMove _$StockMoveFromJson(Map<String, dynamic> json) => StockMove(
+  createdAt: DateTime.parse(json['created_at'] as String),
+  createdByName: json['created_by_name'] as String,
+  fromLocation: json['from_location'] as String,
+  fromLocationId: json['from_location_id'] as String,
+  id: json['id'] as String,
+  kind: json['kind'] as String,
+  note: json['note'] as String,
+  occurredAt: DateTime.parse(json['occurred_at'] as String),
+  productCode: json['product_code'] as String,
+  productId: json['product_id'] as String,
+  productName: json['product_name'] as String,
+  quantity: json['quantity'] as String,
+  reason: json['reason'] as String,
+  seq: (json['seq'] as num).toInt(),
+  toLocation: json['to_location'] as String,
+  toLocationId: json['to_location_id'] as String,
+  unit: json['unit'] as String,
+  currency: json['currency'] as String?,
+  enteredQuantity: json['entered_quantity'] as String?,
+  enteredUom: json['entered_uom'] as String?,
+  lotId: json['lot_id'] as String?,
+  lotNumber: json['lot_number'] as String?,
+  referenceId: json['reference_id'] as String?,
+  referenceType: json['reference_type'] as String?,
+  reversedBy: json['reversed_by'] as String?,
+  reversedOf: json['reversed_of'] as String?,
+  serialNumber: json['serial_number'] as String?,
+  serialUnitId: json['serial_unit_id'] as String?,
+  unitCost: json['unit_cost'] as String?,
+);
+
+Map<String, dynamic> _$StockMoveToJson(StockMove instance) => <String, dynamic>{
+  'created_at': instance.createdAt.toIso8601String(),
+  'created_by_name': instance.createdByName,
+  'currency': ?instance.currency,
+  'entered_quantity': ?instance.enteredQuantity,
+  'entered_uom': ?instance.enteredUom,
+  'from_location': instance.fromLocation,
+  'from_location_id': instance.fromLocationId,
+  'id': instance.id,
+  'kind': instance.kind,
+  'lot_id': ?instance.lotId,
+  'lot_number': ?instance.lotNumber,
+  'note': instance.note,
+  'occurred_at': instance.occurredAt.toIso8601String(),
+  'product_code': instance.productCode,
+  'product_id': instance.productId,
+  'product_name': instance.productName,
+  'quantity': instance.quantity,
+  'reason': instance.reason,
+  'reference_id': ?instance.referenceId,
+  'reference_type': ?instance.referenceType,
+  'reversed_by': ?instance.reversedBy,
+  'reversed_of': ?instance.reversedOf,
+  'seq': instance.seq,
+  'serial_number': ?instance.serialNumber,
+  'serial_unit_id': ?instance.serialUnitId,
+  'to_location': instance.toLocation,
+  'to_location_id': instance.toLocationId,
+  'unit': instance.unit,
+  'unit_cost': ?instance.unitCost,
+};

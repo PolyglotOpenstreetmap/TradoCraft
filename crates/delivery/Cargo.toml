@@ -1,0 +1,24 @@
+[package]
+name = "tradocraft-delivery"
+description = "Delivery: delivery notes for sales orders, picking, shipping and the closure policy."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+tradocraft-core.workspace = true
+tradocraft-crm.workspace = true
+tradocraft-sales.workspace = true
+tradocraft-inventory.workspace = true
+tradocraft-products.workspace = true
+tradocraft-documents.workspace = true
+axum.workspace = true
+chrono.workspace = true
+rust_decimal.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sqlx.workspace = true
+utoipa.workspace = true
+utoipa-axum.workspace = true
+uuid.workspace = true

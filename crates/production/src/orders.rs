@@ -1,0 +1,977 @@
+//! Production orders: releasing an order (or building for stock), the frozen BOM and its reserved
+//! components, planning dates, start, cancel, and the order status that follows (ADR 0036).
+
+use axum::extract::{Path, Query, State};
+use axum::http::StatusCode;
+use axum::Json;
+use chrono::{DateTime, Datelike, NaiveDate, Utc};
+use rust_decimal::{Decimal, RoundingStrategy};
+use serde::{Deserialize, Serialize};
+use sqlx::{FromRow, PgConnection};
+use tradocraft_core::{
+    audit, new_id, numbering, AppError, AppResult, AppState, CurrentUser, Permission,
+};
+use tradocraft_engineering::bom::active_bom_lines;
+use tradocraft_inventory::reservations::{
+    held_by, line_reservation, release_reference, set_reserved, ReservePin, ReserveTarget,
+    PRODUCTION_COMPONENT,
+};
+use utoipa::{IntoParams, ToSchema};
+use utoipa_axum::router::OpenApiRouter;
+use utoipa_axum::routes;
+use uuid::Uuid;
+
+type ErrorBody = tradocraft_core::error::ErrorBody;
+
+/// Order statuses in which a sales order can still be released to production.
+const RELEASABLE: [&str; 4] = ["confirmed", "in_planning", "planned", "in_production"];
+
+#[derive(Debug, Clone, Serialize, FromRow, ToSchema)]
+pub struct ProductionComponent {
+    pub id: Uuid,
+    pub position: i32,
+    pub component_product_id: Uuid,
+    pub component_code: String,
+    pub component_name: String,
+    pub unit: String,
+    /// none | serial | lot
+    pub tracking: String,
+    #[schema(value_type = String, example = "4")]
+    pub required_quantity: Decimal,
+    /// What is reserved for it in stock right now.
+    #[schema(value_type = String, example = "4")]
+    pub reserved_quantity: Decimal,
+    #[schema(value_type = String)]
+    pub consumed_quantity: Decimal,
+    #[schema(value_type = String)]
+    pub scrap_quantity: Decimal,
+    /// The component is itself built from a BOM: it may need a production order of its own.
+    pub manufactured: bool,
+    /// Not (fully) reserved while the order is still open: stock is short.
+    #[sqlx(skip)]
+    pub short: bool,
+}
+
+#[derive(Debug, Clone, Serialize, FromRow, ToSchema)]
+pub struct ProductionOutput {
+    pub id: Uuid,
+    #[schema(value_type = String)]
+    pub quantity: Decimal,
+    pub lot_number: Option<String>,
+    pub serial_number: Option<String>,
+    pub stock_move_id: Uuid,
+}
+
+#[derive(Debug, Clone, Serialize, FromRow, ToSchema)]
+pub struct ProductionSummary {
+    pub id: Uuid,
+    pub number: String,
+    pub product_id: Uuid,
+    pub product_code: String,
+    pub product_name: String,
+    pub unit: String,
+    /// none | serial | lot: what completion needs for the output.
+    pub product_tracking: String,
+    #[schema(value_type = String)]
+    pub quantity: Decimal,
+    pub bom_revision: i32,
+    pub division_id: Option<Uuid>,
+    pub division_name: Option<String>,
+    pub order_id: Option<Uuid>,
+    pub order_number: Option<String>,
+    pub customer_name: Option<String>,
+    /// low | normal | expedite: the priority of the sales order (normal for stock).
+    pub priority: String,
+    /// The sales order was cancelled meanwhile: the planner should cancel this order too.
+    pub order_cancelled: bool,
+    /// released | in_progress | completed | cancelled
+    pub status: String,
+    pub planned_ready_date: Option<NaiveDate>,
+    pub short_components: i64,
+    pub created_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, ToSchema)]
+pub struct ProductionOrder {
+    #[serde(flatten)]
+    pub summary: ProductionSummary,
+    pub order_line_id: Option<Uuid>,
+    pub parent_order_id: Option<Uuid>,
+    pub started_at: Option<DateTime<Utc>>,
+    pub completed_at: Option<DateTime<Utc>>,
+    #[schema(value_type = Option<String>)]
+    pub completed_quantity: Option<Decimal>,
+    pub notes: String,
+    pub cancel_reason: Option<String>,
+    pub components: Vec<ProductionComponent>,
+    pub outputs: Vec<ProductionOutput>,
+}
+
+#[derive(Debug, Serialize, ToSchema)]
+pub struct ProductionPage {
+    pub items: Vec<ProductionSummary>,
+    pub total: i64,
+}
+
+#[derive(Debug, Deserialize, ToSchema)]
+pub struct ReleaseProductionInput {
+    /// Release a line of a confirmed sales order (with `order_line_id`), or leave both out to build
+    /// for stock (with `product_id` and `quantity`).
+    pub order_id: Option<Uuid>,
+    pub order_line_id: Option<Uuid>,
+    pub product_id: Option<Uuid>,
+    /// In the stock unit of the product. For an order line it defaults to what is still to be built.
+    #[schema(value_type = Option<String>, example = "5")]
+    pub quantity: Option<Decimal>,
+    /// Defaults to the division that normally builds the product.
+    pub division_id: Option<Uuid>,
+    #[serde(default, deserialize_with = "tradocraft_core::serde_util::opt_date")]
+    pub planned_ready_date: Option<NaiveDate>,
+    /// A subassembly order made for a component of this production order.
+    pub parent_order_id: Option<Uuid>,
+    #[serde(default)]
+    pub notes: String,
+}
+
+#[derive(Debug, Deserialize, ToSchema)]
+pub struct UpdateProductionInput {
+    pub division_id: Option<Uuid>,
+    #[serde(default, deserialize_with = "tradocraft_core::serde_util::opt_date")]
+    pub planned_ready_date: Option<NaiveDate>,
+    #[serde(default)]
+    pub notes: String,
+}
+
+#[derive(Debug, Deserialize, ToSchema)]
+pub struct CancelProductionInput {
+    pub reason: String,
+}
+
+#[derive(Debug, Deserialize, IntoParams)]
+pub struct ListParams {
+    /// released | in_progress | completed | cancelled
+    pub status: Option<String>,
+    pub division_id: Option<Uuid>,
+    pub order_id: Option<Uuid>,
+    /// Searches the number, the product, the sales order and the customer.
+    pub q: Option<String>,
+    pub limit: Option<i64>,
+    pub offset: Option<i64>,
+}
+
+const SELECT_SUMMARY: &str = "SELECT po.id, po.number, po.product_id, p.code AS product_code, p.name AS product_name,
+        p.unit, p.tracking AS product_tracking, po.quantity, po.bom_revision, po.division_id, d.name AS division_name, po.order_id,
+        o.number AS order_number, o.customer_name, COALESCE(o.priority, 'normal') AS priority,
+        COALESCE(o.status = 'cancelled', false) AS order_cancelled, po.status, po.planned_ready_date,
+        (SELECT count(*) FROM production.order_components c
+          WHERE c.production_order_id = po.id AND po.status IN ('released', 'in_progress')
+            AND c.required_quantity > COALESCE((SELECT sum(r.quantity) FROM inventory.reservations r
+                 WHERE r.reference_type = 'production_component' AND r.reference_id = c.id
+                   AND r.status = 'active'), 0)) AS short_components,
+        po.created_at
+     FROM production.production_orders po
+     JOIN products.products p ON p.id = po.product_id
+     LEFT JOIN production.divisions d ON d.id = po.division_id
+     LEFT JOIN sales.orders o ON o.id = po.order_id";
+
+const SELECT_COMPONENTS: &str =
+    "SELECT c.id, c.position, c.component_product_id, p.code AS component_code,
+        p.name AS component_name, p.unit, p.tracking, c.required_quantity,
+        COALESCE((SELECT sum(r.quantity) FROM inventory.reservations r
+                  WHERE r.reference_type = 'production_component' AND r.reference_id = c.id
+                    AND r.status = 'active'), 0) AS reserved_quantity,
+        c.consumed_quantity, c.scrap_quantity,
+        EXISTS (SELECT 1 FROM engineering.boms b
+                WHERE b.product_id = c.component_product_id AND b.status = 'active') AS manufactured
+     FROM production.order_components c
+     JOIN products.products p ON p.id = c.component_product_id
+     WHERE c.production_order_id = $1
+     ORDER BY c.position";
+
+/// The production order row that is being changed, locked until the transaction ends.
+#[derive(Debug, FromRow)]
+pub(crate) struct Locked {
+    pub number: String,
+    pub product_id: Uuid,
+    pub quantity: Decimal,
+    pub bom_id: Uuid,
+    pub status: String,
+    pub order_id: Option<Uuid>,
+    pub division_id: Option<Uuid>,
+}
+
+/// Locks a production order of the company until the transaction ends.
+pub(crate) async fn lock_order(
+    conn: &mut PgConnection,
+    company_id: Uuid,
+    id: Uuid,
+) -> AppResult<Locked> {
+    sqlx::query_as(
+        "SELECT id, number, product_id, quantity, bom_id, status, order_id, division_id
+         FROM production.production_orders WHERE id = $1 AND company_id = $2 FOR UPDATE",
+    )
+    .bind(id)
+    .bind(company_id)
+    .fetch_optional(conn)
+    .await?
+    .ok_or(AppError::NotFound("production order"))
+}
+
+/// Loads a production order with its components and outputs.
+pub(crate) async fn load_order(
+    conn: &mut PgConnection,
+    company_id: Uuid,
+    id: Uuid,
+) -> AppResult<ProductionOrder> {
+    let summary: ProductionSummary = sqlx::query_as(&format!(
+        "{SELECT_SUMMARY} WHERE po.id = $1 AND po.company_id = $2"
+    ))
+    .bind(id)
+    .bind(company_id)
+    .fetch_optional(&mut *conn)
+    .await?
+    .ok_or(AppError::NotFound("production order"))?;
+    #[derive(FromRow)]
+    struct Extra {
+        order_line_id: Option<Uuid>,
+        parent_order_id: Option<Uuid>,
+        started_at: Option<DateTime<Utc>>,
+        completed_at: Option<DateTime<Utc>>,
+        completed_quantity: Option<Decimal>,
+        notes: String,
+        cancel_reason: Option<String>,
+    }
+    let extra: Extra = sqlx::query_as(
+        "SELECT order_line_id, parent_order_id, started_at, completed_at, completed_quantity, notes, cancel_reason
+         FROM production.production_orders WHERE id = $1",
+    )
+    .bind(id)
+    .fetch_one(&mut *conn)
+    .await?;
+    let mut components: Vec<ProductionComponent> = sqlx::query_as(SELECT_COMPONENTS)
+        .bind(id)
+        .fetch_all(&mut *conn)
+        .await?;
+    let open = matches!(summary.status.as_str(), "released" | "in_progress");
+    for c in &mut components {
+        c.short = open && c.reserved_quantity < c.required_quantity;
+    }
+    let outputs = sqlx::query_as(
+        "SELECT o.id, o.quantity, lot.lot_number, su.serial_number, o.stock_move_id
+         FROM production.order_outputs o
+         LEFT JOIN inventory.lots lot ON lot.id = o.lot_id
+         LEFT JOIN engineering.serial_units su ON su.id = o.serial_unit_id
+         WHERE o.production_order_id = $1 ORDER BY su.serial_number, o.id",
+    )
+    .bind(id)
+    .fetch_all(conn)
+    .await?;
+    Ok(ProductionOrder {
+        summary,
+        order_line_id: extra.order_line_id,
+        parent_order_id: extra.parent_order_id,
+        started_at: extra.started_at,
+        completed_at: extra.completed_at,
+        completed_quantity: extra.completed_quantity,
+        notes: extra.notes,
+        cancel_reason: extra.cancel_reason,
+        components,
+        outputs,
+    })
+}
+
+/// Where an order is in the chain production drives; the order never goes back.
+fn rank(status: &str) -> i32 {
+    match status {
+        "in_planning" => 1,
+        "planned" => 2,
+        "in_production" => 3,
+        "ready_for_shipping" => 4,
+        _ => 0,
+    }
+}
+
+const BY_RANK: [&str; 5] = [
+    "confirmed",
+    "in_planning",
+    "planned",
+    "in_production",
+    "ready_for_shipping",
+];
+
+/// Brings the sales order in line with its production orders (ADR 0036). All of them completed:
+/// `ready_for_shipping`; any started or completed: `in_production`; all planned: `planned`;
+/// otherwise `in_planning`. The promised date is the latest planned-ready date once every open
+/// production order has one. The order only moves forward, and a cancelled or shipped order is left
+/// alone.
+pub(crate) async fn sync_order_status(
+    conn: &mut PgConnection,
+    user: &CurrentUser,
+    order_id: Uuid,
+) -> AppResult<()> {
+    let head = tradocraft_sales::orders::lock_for_delivery(conn, user.company_id, order_id).await?;
+    if !BY_RANK.contains(&head.status.as_str()) {
+        return Ok(());
+    }
+    let rows: Vec<(String, Option<NaiveDate>)> = sqlx::query_as(
+        "SELECT status, planned_ready_date FROM production.production_orders
+         WHERE order_id = $1 AND status <> 'cancelled'",
+    )
+    .bind(order_id)
+    .fetch_all(&mut *conn)
+    .await?;
+    if rows.is_empty() {
+        return Ok(());
+    }
+    let all_completed = rows.iter().all(|(s, _)| s == "completed");
+    let any_started = rows.iter().any(|(s, _)| s != "released");
+    let all_dated = rows.iter().all(|(_, d)| d.is_some());
+    let wanted = if all_completed {
+        "ready_for_shipping"
+    } else if any_started {
+        "in_production"
+    } else if all_dated {
+        "planned"
+    } else {
+        "in_planning"
+    };
+    let target = rank(wanted).max(rank(&head.status));
+    let promised = if all_dated {
+        rows.iter().filter_map(|(_, d)| *d).max()
+    } else {
+        None
+    };
+    tradocraft_sales::orders::set_production_status(
+        conn,
+        user,
+        order_id,
+        BY_RANK[target as usize],
+        promised,
+    )
+    .await
+}
+
+/// A component needs this much for the whole order: BOM quantity x order quantity x (1 + scrap %),
+/// rounded up to four decimals so the order never runs short by rounding.
+fn required(per_unit: Decimal, quantity: Decimal, scrap_percent: Decimal) -> Decimal {
+    (per_unit * quantity * (Decimal::ONE_HUNDRED + scrap_percent) / Decimal::ONE_HUNDRED)
+        .round_dp_with_strategy(4, RoundingStrategy::AwayFromZero)
+}
+
+/// Reserves what a component needs, all or nothing. Short stock is not an error: the component
+/// stays unreserved and is flagged, and `reserve` tries again later.
+async fn try_reserve(
+    conn: &mut PgConnection,
+    user: &CurrentUser,
+    component_id: Uuid,
+    product_id: Uuid,
+    want: Decimal,
+) -> AppResult<()> {
+    let product = tradocraft_products::get_product(&mut *conn, product_id).await?;
+    if product.product_type == "service" {
+        return Ok(());
+    }
+    let target = ReserveTarget {
+        reference_type: PRODUCTION_COMPONENT,
+        reference_id: component_id,
+        product_id,
+    };
+    match set_reserved(conn, user, &target, want, &ReservePin::default()).await {
+        Ok(_) | Err(AppError::Conflict(_)) => Ok(()),
+        Err(e) => Err(e),
+    }
+}
+
+/// Checks that a division exists in the company and is active.
+async fn check_division(
+    conn: &mut PgConnection,
+    company_id: Uuid,
+    division_id: Uuid,
+) -> AppResult<()> {
+    let ok: bool = sqlx::query_scalar(
+        "SELECT EXISTS (SELECT 1 FROM production.divisions WHERE id = $1 AND company_id = $2 AND active)",
+    )
+    .bind(division_id)
+    .bind(company_id)
+    .fetch_one(conn)
+    .await?;
+    if ok {
+        Ok(())
+    } else {
+        Err(AppError::Validation(
+            "the division does not exist or is not active".into(),
+        ))
+    }
+}
+
+/// Releases a line of a sales order, or a quantity for stock, to production: freezes the active
+/// BOM, creates the production order and its components and reserves them.
+#[utoipa::path(post, path = "/production-orders", tag = "production", request_body = ReleaseProductionInput,
+    responses((status = 201, body = ProductionOrder), (status = 409, body = ErrorBody), (status = 422, body = ErrorBody)))]
+async fn release(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Json(input): Json<ReleaseProductionInput>,
+) -> AppResult<(StatusCode, Json<ProductionOrder>)> {
+    user.require(Permission::ProductionWrite)?;
+    let mut tx = state.db.begin().await?;
+    let (product_id, default_quantity, order_number) = match (input.order_id, input.order_line_id) {
+        (Some(order_id), Some(line_id)) => {
+            let head =
+                tradocraft_sales::orders::lock_for_delivery(&mut tx, user.company_id, order_id)
+                    .await?;
+            if !RELEASABLE.contains(&head.status.as_str()) {
+                return Err(AppError::Conflict(format!(
+                    "order {} is {}; only a confirmed order can be released to production",
+                    head.number, head.status
+                )));
+            }
+            let line = tradocraft_sales::orders::delivery_lines(&mut tx, order_id, head.revision)
+                .await?
+                .into_iter()
+                .find(|l| l.id == line_id)
+                .ok_or_else(|| {
+                    AppError::Validation("not a line of the confirmed revision of the order".into())
+                })?;
+            let product_id = line
+                .product_id
+                .ok_or_else(|| AppError::Validation("the order line has no product".into()))?;
+            let ordered = line_reservation(&mut tx, user.company_id, line_id, false)
+                .await?
+                .ordered;
+            let planned: Decimal = sqlx::query_scalar(
+                "SELECT COALESCE(sum(quantity), 0) FROM production.production_orders
+                 WHERE order_line_id = $1 AND status <> 'cancelled'",
+            )
+            .bind(line_id)
+            .fetch_one(&mut *tx)
+            .await?;
+            (product_id, Some(ordered - planned), Some(head.number))
+        }
+        (None, None) => {
+            let product_id = input.product_id.ok_or_else(|| {
+                AppError::Validation("give an order line, or a product to build for stock".into())
+            })?;
+            (product_id, None, None)
+        }
+        _ => {
+            return Err(AppError::Validation(
+                "order_id and order_line_id go together".into(),
+            ))
+        }
+    };
+    let quantity = match (input.quantity, default_quantity) {
+        (Some(q), _) => q,
+        (None, Some(d)) if d > Decimal::ZERO => d,
+        (None, Some(_)) => {
+            return Err(AppError::Conflict(
+                "production orders already cover this order line".into(),
+            ))
+        }
+        (None, None) => {
+            return Err(AppError::Validation(
+                "a quantity is needed to build for stock".into(),
+            ))
+        }
+    };
+    if quantity <= Decimal::ZERO || quantity.round_dp(4) != quantity {
+        return Err(AppError::Validation(
+            "quantity must be more than 0, with at most 4 decimals".into(),
+        ));
+    }
+    let product = tradocraft_products::get_product(&mut *tx, product_id).await?;
+    if product.product_type == "service" || product.product_type == "purchased" {
+        return Err(AppError::Validation(format!(
+            "{} is a {} product and is not built",
+            product.code, product.product_type
+        )));
+    }
+    let (bom_id, bom_revision, lines) =
+        active_bom_lines(&mut tx, product_id)
+            .await?
+            .ok_or_else(|| {
+                AppError::Validation(format!("{} has no active BOM to build from", product.code))
+            })?;
+    if lines.is_empty() {
+        return Err(AppError::Validation(format!(
+            "the active BOM of {} has no components",
+            product.code
+        )));
+    }
+    let division_id = match input.division_id {
+        Some(d) => Some(d),
+        None => {
+            sqlx::query_scalar(
+                "SELECT pd.division_id FROM production.product_divisions pd
+                 JOIN production.divisions d ON d.id = pd.division_id AND d.active
+                 WHERE pd.company_id = $1 AND pd.product_id = $2",
+            )
+            .bind(user.company_id)
+            .bind(product_id)
+            .fetch_optional(&mut *tx)
+            .await?
+        }
+    };
+    if let Some(d) = input.division_id {
+        check_division(&mut tx, user.company_id, d).await?;
+    }
+    if let Some(parent) = input.parent_order_id {
+        lock_order(&mut tx, user.company_id, parent).await?;
+    }
+    let year = Utc::now().year();
+    let seq = numbering::next_number(&mut tx, user.company_id, "MO", year).await?;
+    let number = format!("MO{year}-{seq:05}");
+    let id = new_id();
+    sqlx::query(
+        "INSERT INTO production.production_orders
+             (id, company_id, number, product_id, quantity, bom_id, bom_revision, division_id, order_id,
+              order_line_id, parent_order_id, planned_ready_date, notes, created_by)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
+    )
+    .bind(id)
+    .bind(user.company_id)
+    .bind(&number)
+    .bind(product_id)
+    .bind(quantity)
+    .bind(bom_id)
+    .bind(bom_revision)
+    .bind(division_id)
+    .bind(input.order_id)
+    .bind(input.order_line_id)
+    .bind(input.parent_order_id)
+    .bind(input.planned_ready_date)
+    .bind(input.notes.trim())
+    .bind(user.user_id)
+    .execute(&mut *tx)
+    .await?;
+    for (i, l) in lines.iter().enumerate() {
+        let component_id = new_id();
+        let need = required(l.quantity, quantity, l.scrap_percent);
+        sqlx::query(
+            "INSERT INTO production.order_components
+                 (id, production_order_id, position, component_product_id, required_quantity)
+             VALUES ($1, $2, $3, $4, $5)",
+        )
+        .bind(component_id)
+        .bind(id)
+        .bind(i as i32 + 1)
+        .bind(l.component_product_id)
+        .bind(need)
+        .execute(&mut *tx)
+        .await?;
+        try_reserve(&mut tx, &user, component_id, l.component_product_id, need).await?;
+    }
+    audit::record(
+        &mut tx,
+        &user,
+        "production_order",
+        id,
+        "released",
+        serde_json::json!({
+            "number": number, "product": product.code, "quantity": quantity, "bom_revision": bom_revision,
+            "order": order_number, "division_id": division_id,
+        }),
+    )
+    .await?;
+    if let Some(order_id) = input.order_id {
+        sync_order_status(&mut tx, &user, order_id).await?;
+    }
+    let out = load_order(&mut tx, user.company_id, id).await?;
+    tx.commit().await?;
+    Ok((StatusCode::CREATED, Json(out)))
+}
+
+/// Changes the division, the planned-ready date and the notes of an open production order.
+#[utoipa::path(put, path = "/production-orders/{id}", tag = "production", params(("id" = Uuid, Path)),
+    request_body = UpdateProductionInput,
+    responses((status = 200, body = ProductionOrder), (status = 404, body = ErrorBody), (status = 409, body = ErrorBody), (status = 422, body = ErrorBody)))]
+async fn update_order(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+    Json(input): Json<UpdateProductionInput>,
+) -> AppResult<Json<ProductionOrder>> {
+    user.require(Permission::ProductionWrite)?;
+    let mut tx = state.db.begin().await?;
+    let po = lock_order(&mut tx, user.company_id, id).await?;
+    if !matches!(po.status.as_str(), "released" | "in_progress") {
+        return Err(AppError::Conflict(format!(
+            "production order {} is {} and can no longer be changed",
+            po.number, po.status
+        )));
+    }
+    // Keeping the division the order already has is fine even when it was deactivated since.
+    if let Some(d) = input.division_id.filter(|d| Some(*d) != po.division_id) {
+        check_division(&mut tx, user.company_id, d).await?;
+    }
+    sqlx::query(
+        "UPDATE production.production_orders
+         SET division_id = $2, planned_ready_date = $3, notes = $4, updated_at = now() WHERE id = $1",
+    )
+    .bind(id)
+    .bind(input.division_id)
+    .bind(input.planned_ready_date)
+    .bind(input.notes.trim())
+    .execute(&mut *tx)
+    .await?;
+    audit::record(
+        &mut tx,
+        &user,
+        "production_order",
+        id,
+        "updated",
+        serde_json::json!({
+            "number": po.number, "division_id": input.division_id, "planned_ready_date": input.planned_ready_date,
+        }),
+    )
+    .await?;
+    if let Some(order_id) = po.order_id {
+        sync_order_status(&mut tx, &user, order_id).await?;
+    }
+    let out = load_order(&mut tx, user.company_id, id).await?;
+    tx.commit().await?;
+    Ok(Json(out))
+}
+
+/// Tries again to reserve the components that were short at release.
+#[utoipa::path(post, path = "/production-orders/{id}/reserve", tag = "production", params(("id" = Uuid, Path)),
+    responses((status = 200, body = ProductionOrder), (status = 404, body = ErrorBody), (status = 409, body = ErrorBody)))]
+async fn reserve_components(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+) -> AppResult<Json<ProductionOrder>> {
+    user.require(Permission::ProductionWrite)?;
+    let mut tx = state.db.begin().await?;
+    let po = lock_order(&mut tx, user.company_id, id).await?;
+    if !matches!(po.status.as_str(), "released" | "in_progress") {
+        return Err(AppError::Conflict(format!(
+            "production order {} is {}; nothing to reserve",
+            po.number, po.status
+        )));
+    }
+    let components: Vec<(Uuid, Uuid, Decimal)> = sqlx::query_as(
+        "SELECT id, component_product_id, required_quantity FROM production.order_components
+         WHERE production_order_id = $1 ORDER BY component_product_id, position",
+    )
+    .bind(id)
+    .fetch_all(&mut *tx)
+    .await?;
+    for (component_id, product_id, need) in components {
+        let held = held_by(
+            &mut tx,
+            user.company_id,
+            &ReserveTarget {
+                reference_type: PRODUCTION_COMPONENT,
+                reference_id: component_id,
+                product_id,
+            },
+        )
+        .await?;
+        if held < need {
+            try_reserve(&mut tx, &user, component_id, product_id, need).await?;
+        }
+    }
+    let out = load_order(&mut tx, user.company_id, id).await?;
+    tx.commit().await?;
+    Ok(Json(out))
+}
+
+/// Starts a production order: the order is being built.
+#[utoipa::path(post, path = "/production-orders/{id}/start", tag = "production", params(("id" = Uuid, Path)),
+    responses((status = 200, body = ProductionOrder), (status = 404, body = ErrorBody), (status = 409, body = ErrorBody)))]
+async fn start_order(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+) -> AppResult<Json<ProductionOrder>> {
+    user.require(Permission::ProductionRun)?;
+    let mut tx = state.db.begin().await?;
+    let po = lock_order(&mut tx, user.company_id, id).await?;
+    if po.status != "released" {
+        return Err(AppError::Conflict(format!(
+            "production order {} is {}; only a released order can be started",
+            po.number, po.status
+        )));
+    }
+    sqlx::query(
+        "UPDATE production.production_orders
+         SET status = 'in_progress', started_at = now(), updated_at = now() WHERE id = $1",
+    )
+    .bind(id)
+    .execute(&mut *tx)
+    .await?;
+    audit::record(
+        &mut tx,
+        &user,
+        "production_order",
+        id,
+        "started",
+        serde_json::json!({ "number": po.number }),
+    )
+    .await?;
+    if let Some(order_id) = po.order_id {
+        sync_order_status(&mut tx, &user, order_id).await?;
+    }
+    let out = load_order(&mut tx, user.company_id, id).await?;
+    tx.commit().await?;
+    Ok(Json(out))
+}
+
+/// Cancels an open production order and releases the components reserved for it.
+#[utoipa::path(post, path = "/production-orders/{id}/cancel", tag = "production", params(("id" = Uuid, Path)),
+    request_body = CancelProductionInput,
+    responses((status = 200, body = ProductionOrder), (status = 404, body = ErrorBody), (status = 409, body = ErrorBody), (status = 422, body = ErrorBody)))]
+async fn cancel_order(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+    Json(input): Json<CancelProductionInput>,
+) -> AppResult<Json<ProductionOrder>> {
+    user.require(Permission::ProductionWrite)?;
+    if input.reason.trim().is_empty() {
+        return Err(AppError::Validation("a reason is required".into()));
+    }
+    let mut tx = state.db.begin().await?;
+    let po = lock_order(&mut tx, user.company_id, id).await?;
+    if !matches!(po.status.as_str(), "released" | "in_progress") {
+        return Err(AppError::Conflict(format!(
+            "production order {} is {} and cannot be cancelled",
+            po.number, po.status
+        )));
+    }
+    release_components(&mut tx, &user, id).await?;
+    sqlx::query(
+        "UPDATE production.production_orders
+         SET status = 'cancelled', cancel_reason = $2, updated_at = now() WHERE id = $1",
+    )
+    .bind(id)
+    .bind(input.reason.trim())
+    .execute(&mut *tx)
+    .await?;
+    audit::record(
+        &mut tx,
+        &user,
+        "production_order",
+        id,
+        "cancelled",
+        serde_json::json!({ "number": po.number, "reason": input.reason.trim() }),
+    )
+    .await?;
+    if let Some(order_id) = po.order_id {
+        sync_order_status(&mut tx, &user, order_id).await?;
+    }
+    let out = load_order(&mut tx, user.company_id, id).await?;
+    tx.commit().await?;
+    Ok(Json(out))
+}
+
+/// Releases every reservation held for the components of a production order.
+pub(crate) async fn release_components(
+    conn: &mut PgConnection,
+    user: &CurrentUser,
+    production_order_id: Uuid,
+) -> AppResult<()> {
+    let ids: Vec<Uuid> = sqlx::query_scalar(
+        "SELECT id FROM production.order_components WHERE production_order_id = $1",
+    )
+    .bind(production_order_id)
+    .fetch_all(&mut *conn)
+    .await?;
+    for component_id in ids {
+        release_reference(
+            conn,
+            user.company_id,
+            PRODUCTION_COMPONENT,
+            component_id,
+            Some(user.user_id),
+        )
+        .await?;
+    }
+    Ok(())
+}
+
+/// One production order with its components and outputs.
+#[utoipa::path(get, path = "/production-orders/{id}", tag = "production", params(("id" = Uuid, Path)),
+    responses((status = 200, body = ProductionOrder), (status = 404, body = ErrorBody)))]
+async fn get_order(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+) -> AppResult<Json<ProductionOrder>> {
+    user.require(Permission::ProductionRead)?;
+    let mut conn = state.db.acquire().await?;
+    Ok(Json(load_order(&mut conn, user.company_id, id).await?))
+}
+
+/// The production queue: most urgent first (sales order priority, then planned-ready date).
+#[utoipa::path(get, path = "/production-orders", tag = "production", params(ListParams),
+    responses((status = 200, body = ProductionPage)))]
+async fn list_orders(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Query(p): Query<ListParams>,
+) -> AppResult<Json<ProductionPage>> {
+    user.require(Permission::ProductionRead)?;
+    if let Some(s) = &p.status {
+        if !matches!(
+            s.as_str(),
+            "released" | "in_progress" | "completed" | "cancelled"
+        ) {
+            return Err(AppError::Validation(
+                "status must be released, in_progress, completed or cancelled".into(),
+            ));
+        }
+    }
+    let filter = "po.company_id = $1
+         AND ($2::text IS NULL OR po.status = $2)
+         AND ($3::uuid IS NULL OR po.division_id = $3)
+         AND ($4::uuid IS NULL OR po.order_id = $4)
+         AND ($5::text IS NULL OR po.number ILIKE $5 OR p.code ILIKE $5 OR p.name ILIKE $5
+              OR o.number ILIKE $5 OR o.customer_name ILIKE $5)";
+    let q =
+        p.q.as_deref()
+            .map(str::trim)
+            .filter(|q| !q.is_empty())
+            .map(|q| format!("%{q}%"));
+    let items: Vec<ProductionSummary> = sqlx::query_as(&format!(
+        "{SELECT_SUMMARY} WHERE {filter}
+         ORDER BY (po.status IN ('completed', 'cancelled')),
+                  CASE COALESCE(o.priority, 'normal') WHEN 'expedite' THEN 0 WHEN 'normal' THEN 1 ELSE 2 END,
+                  po.planned_ready_date NULLS LAST, po.number
+         LIMIT $6 OFFSET $7"
+    ))
+    .bind(user.company_id)
+    .bind(&p.status)
+    .bind(p.division_id)
+    .bind(p.order_id)
+    .bind(&q)
+    .bind(p.limit.unwrap_or(50).clamp(1, 200))
+    .bind(p.offset.unwrap_or(0).max(0))
+    .fetch_all(&state.db)
+    .await?;
+    let total: i64 = sqlx::query_scalar(&format!(
+        "SELECT count(*) FROM production.production_orders po
+         JOIN products.products p ON p.id = po.product_id
+         LEFT JOIN sales.orders o ON o.id = po.order_id
+         WHERE {filter}"
+    ))
+    .bind(user.company_id)
+    .bind(&p.status)
+    .bind(p.division_id)
+    .bind(p.order_id)
+    .bind(&q)
+    .fetch_one(&state.db)
+    .await?;
+    Ok(Json(ProductionPage { items, total }))
+}
+
+#[derive(Debug, Serialize, ToSchema)]
+pub struct ProductionToRelease {
+    pub order_id: Uuid,
+    pub order_number: String,
+    pub customer_name: String,
+    /// low | normal | expedite
+    pub priority: String,
+    pub order_line_id: Uuid,
+    pub product_id: Uuid,
+    pub product_code: String,
+    pub product_name: String,
+    /// Ordered, in the stock unit.
+    #[schema(value_type = String)]
+    pub ordered: Decimal,
+    /// What production orders already cover.
+    #[schema(value_type = String)]
+    pub planned: Decimal,
+    /// Still to be released: ordered minus planned.
+    #[schema(value_type = String)]
+    pub to_build: Decimal,
+}
+
+/// Lines of confirmed orders that are built from a BOM and not yet fully covered by production
+/// orders: what a planner can release. Most urgent orders first.
+#[utoipa::path(get, path = "/production/to-release", tag = "production",
+    responses((status = 200, body = Vec<ProductionToRelease>)))]
+async fn to_release(
+    State(state): State<AppState>,
+    user: CurrentUser,
+) -> AppResult<Json<Vec<ProductionToRelease>>> {
+    user.require(Permission::ProductionRead)?;
+    let mut conn = state.db.acquire().await?;
+    #[derive(FromRow)]
+    struct OrderRow {
+        id: Uuid,
+        number: String,
+        customer_name: String,
+        priority: String,
+    }
+    let orders: Vec<OrderRow> = sqlx::query_as(
+        "SELECT id, number, customer_name, priority FROM sales.orders
+         WHERE company_id = $1 AND status = ANY($2)
+         ORDER BY CASE priority WHEN 'expedite' THEN 0 WHEN 'normal' THEN 1 ELSE 2 END, order_date, number
+         LIMIT 200",
+    )
+    .bind(user.company_id)
+    .bind(RELEASABLE.iter().map(|s| s.to_string()).collect::<Vec<_>>())
+    .fetch_all(&mut *conn)
+    .await?;
+    let mut out = Vec::new();
+    for o in orders {
+        // A read: no row lock needed.
+        let head =
+            tradocraft_sales::orders::delivery_head(&mut conn, user.company_id, o.id).await?;
+        for line in tradocraft_sales::orders::delivery_lines(&mut conn, o.id, head.revision).await?
+        {
+            let Some(product_id) = line.product_id else {
+                continue;
+            };
+            let product = tradocraft_products::get_product(&mut *conn, product_id).await?;
+            if !matches!(
+                product.product_type.as_str(),
+                "manufactured" | "configurable"
+            ) {
+                continue;
+            }
+            if !tradocraft_engineering::bom::has_active_bom(&mut conn, product_id).await? {
+                continue;
+            }
+            let ordered = line_reservation(&mut conn, user.company_id, line.id, false)
+                .await?
+                .ordered;
+            let planned: Decimal = sqlx::query_scalar(
+                "SELECT COALESCE(sum(quantity), 0) FROM production.production_orders
+                 WHERE order_line_id = $1 AND status <> 'cancelled'",
+            )
+            .bind(line.id)
+            .fetch_one(&mut *conn)
+            .await?;
+            if ordered > planned {
+                out.push(ProductionToRelease {
+                    order_id: o.id,
+                    order_number: o.number.clone(),
+                    customer_name: o.customer_name.clone(),
+                    priority: o.priority.clone(),
+                    order_line_id: line.id,
+                    product_id,
+                    product_code: product.code,
+                    product_name: product.name,
+                    ordered,
+                    planned,
+                    to_build: ordered - planned,
+                });
+            }
+        }
+    }
+    Ok(Json(out))
+}
+
+/// The production order routes.
+pub fn router() -> OpenApiRouter<AppState> {
+    OpenApiRouter::new()
+        .routes(routes!(list_orders, release))
+        .routes(routes!(get_order, update_order))
+        .routes(routes!(reserve_components))
+        .routes(routes!(start_order))
+        .routes(routes!(cancel_order))
+        .routes(routes!(to_release))
+}

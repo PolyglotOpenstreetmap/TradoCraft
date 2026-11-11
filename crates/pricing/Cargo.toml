@@ -1,0 +1,17 @@
+[package]
+name = "tradocraft-pricing"
+description = "Pure, database-free pricing engine. The single authority for price calculations."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+chrono.workspace = true
+rust_decimal.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+rust_decimal_macros.workspace = true

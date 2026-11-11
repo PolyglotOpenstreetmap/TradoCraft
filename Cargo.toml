@@ -1,0 +1,53 @@
+[workspace]
+resolver = "2"
+members = ["apps/*", "crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false
+
+[workspace.dependencies]
+tradocraft-core = { path = "crates/core" }
+tradocraft-pricing = { path = "crates/pricing" }
+tradocraft-crm = { path = "crates/crm" }
+tradocraft-products = { path = "crates/products" }
+tradocraft-sales = { path = "crates/sales" }
+tradocraft-documents = { path = "crates/documents" }
+tradocraft-engineering = { path = "crates/engineering" }
+tradocraft-helpdesk = { path = "crates/helpdesk" }
+tradocraft-portal = { path = "crates/portal" }
+tradocraft-kb = { path = "crates/kb" }
+tradocraft-repairs = { path = "crates/repairs" }
+tradocraft-fieldservice = { path = "crates/fieldservice" }
+tradocraft-inventory = { path = "crates/inventory" }
+tradocraft-planning = { path = "crates/planning" }
+tradocraft-configurator = { path = "crates/configurator" }
+tradocraft-purchasing = { path = "crates/purchasing" }
+tradocraft-delivery = { path = "crates/delivery" }
+tradocraft-production = { path = "crates/production" }
+tradocraft-reports = { path = "crates/reports" }
+
+anyhow = "1"
+axum = { version = "0.8", features = ["macros"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std", "serde"] }
+jsonwebtoken = "9"
+regex = "1"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+rust_decimal = { version = "1", features = ["serde-with-str", "db-postgres"] }
+rust_decimal_macros = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "postgres", "uuid", "chrono", "rust_decimal", "migrate", "macros", "json"] }
+tempfile = "3"
+thiserror = "2"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "process", "signal", "time", "fs"] }
+tower = { version = "0.5", features = ["util"] }
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+utoipa = { version = "5", features = ["axum_extras", "chrono", "uuid", "decimal"] }
+utoipa-axum = "0.2"
+utoipa-scalar = { version = "0.3", features = ["axum"] }
+uuid = { version = "1", features = ["v4", "v7", "serde"] }

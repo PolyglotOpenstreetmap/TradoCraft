@@ -1,0 +1,3220 @@
+{
+  "@@locale": "en",
+  "accepted": "Accepted",
+  "accessToken": "Access token",
+  "account": "Account",
+  "action": "Action",
+  "actionAddTag": "Add tag",
+  "actionSetCategory": "Set category",
+  "actionSetInternal": "Mark as internal",
+  "actionSetOwner": "Set owner",
+  "actionSetPriority": "Set priority",
+  "actionSetTeam": "Set team",
+  "actions": "Actions",
+  "activate": "Activate",
+  "active": "Active",
+  "activeSince": "Active since {date}. Changes go through a new revision.",
+  "@activeSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "Add",
+  "addAction": "Add action",
+  "addClosure": "Add closure",
+  "addComponent": "Add component",
+  "addComponentBySerial": "Add component by serial number (in stock)",
+  "addEquipment": "Add equipment",
+  "addMember": "Add member",
+  "addNote": "Add note",
+  "addNoteHint": "Add an internal note",
+  "addPart": "Add part",
+  "addPhone": "Add phone number",
+  "addPhoto": "Add photo",
+  "addProduct": "Add product",
+  "addRebate": "Add rebate",
+  "addTag": "Add tag",
+  "addTask": "Add task",
+  "addedBy": "added {date} by {name}",
+  "@addedBy": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "addressForm": "Form of address",
+  "addressFormal": "Formal (Dear Mr. Smith)",
+  "addressInformal": "Informal (Hi Sam)",
+  "addVisit": "Add visit",
+  "agreed": "Agreed",
+  "all": "All",
+  "allCategories": "All categories",
+  "allOwners": "All owners",
+  "allProducts": "All products",
+  "allStatuses": "All statuses",
+  "allTags": "All tags",
+  "allTeams": "All teams",
+  "always": "always",
+  "andMore": "… and {count} more",
+  "@andMore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "announceRepair": "Announce a repair",
+  "announcedNotReceived": "Announced, not received yet",
+  "answerFallback": "No {ticketLanguage} text yet: the {usedLanguage} text was used. Translate it before sending.",
+  "@answerFallback": {
+    "placeholders": {
+      "ticketLanguage": {
+        "type": "String"
+      },
+      "usedLanguage": {
+        "type": "String"
+      }
+    }
+  },
+  "anyValue": "Any",
+  "appLanguage": "Language",
+  "appTitle": "tradocraft",
+  "apply": "Apply",
+  "assignTo": "Assign to",
+  "attachFile": "Attach file",
+  "attachments": "Attachments",
+  "attachmentsHelp": "Images (JPEG, PNG, WebP) and PDF, up to 12 MB",
+  "automatic": "Automatic",
+  "automationHelp": "Rules run in this order when a ticket is created, changed or answered by the customer. A rule applies when all its conditions match. Rules change tickets only; they send no e-mail.",
+  "automationRules": "Automation rules",
+  "autoRenew": "Renew automatically",
+  "backIntoWork": "Back into work",
+  "backToCurrentRevision": "Back to current revision",
+  "backlogByOwner": "Open tickets by owner",
+  "backlogByPriority": "Open tickets by priority",
+  "backlogByStatus": "Open tickets by status",
+  "backlogByTeam": "Open tickets by team",
+  "basisBusiness": "business hours",
+  "basisElapsed": "elapsed time",
+  "billOfMaterials": "Bill of materials",
+  "billable": "Billable",
+  "bomActive": "active",
+  "bomObsolete": "obsolete",
+  "bomRev": "BOM rev.",
+  "bomRevision": "BOM revision",
+  "breached": "Breached",
+  "breachesByTeam": "SLA breaches by team",
+  "builtInto": "Built into",
+  "bulkKeepsQuotes": "Quotations before this date keep using the current prices",
+  "bulkPriceChange": "Bulk price change",
+  "businessHours": "Business hours",
+  "businessHoursEnabled": "Count business hours only",
+  "businessHoursHelp": "Service level times count only the hours below, on days that are not holidays. Switched off, they run around the clock.",
+  "businessHoursInvalidTime": "Enter times as HH:MM.",
+  "businessHoursRecompute": "Saving recalculates the due times of all open tickets.",
+  "businessHoursSaved": "Saved. Open tickets were recalculated.",
+  "byStage": "by stage",
+  "callIncoming": "Incoming call",
+  "callLogged": "Call logged",
+  "callMinutes": "Duration (minutes)",
+  "callOutgoing": "Outgoing call",
+  "callSummary": "What was discussed",
+  "callWith": "Call with {name}",
+  "@callWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "canStillKeep": "You can still keep the agreed prices.",
+  "cancel": "Cancel",
+  "cancelJob": "Cancel job",
+  "cancelOrder": "Cancel order",
+  "cancelReasonLabel": "Reason for cancelling",
+  "cancelRepair": "Cancel repair",
+  "cancelled": "cancelled",
+  "cancelledReason": "Cancelled: {reason}",
+  "@cancelledReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "cannotConfirmNewer": "A newer revision of this order is being prepared. You can confirm it once it has been sent to you.",
+  "cannotConfirmOther": "This order cannot be confirmed.",
+  "captureSignature": "Capture signature",
+  "category": "Category",
+  "categoryComplaint": "complaint",
+  "categoryLead": "lead (new business)",
+  "categoryOrderConfirmation": "order confirmation",
+  "categoryOther": "other",
+  "categoryProductionQuestion": "production question",
+  "categoryQuestion": "question",
+  "categoryQuoteChange": "quote change",
+  "categoryService": "service / repair",
+  "cc": "Cc",
+  "change": "Change",
+  "changePriority": "Change priority",
+  "channel": "Channel",
+  "channelEmail": "E-mail",
+  "channelInternal": "Internal question",
+  "channelManual": "Entered by hand",
+  "channelPhone": "Phone",
+  "channelPortal": "Portal",
+  "checklistOnePerLine": "Checklist (one task per line)",
+  "chooseCustomerAndLine": "Choose a customer and add at least one valid line.",
+  "choosePhoto": "Choose from gallery",
+  "chooseRebateTarget": "Choose a product or family and enter a percentage.",
+  "chooseZonePrice": "Choose a zone and enter a price.",
+  "city": "City",
+  "clear": "Clear",
+  "close": "Close",
+  "closedLabel": "closed",
+  "closes": "Closes",
+  "closureKindCollectiveLeave": "Collective leave",
+  "closureKindHoliday": "Holiday",
+  "closureKindInventory": "Inventory",
+  "closureKindLabel": "Reason",
+  "closureKindOther": "Other",
+  "closureKindWorks": "Works",
+  "closurePolicyBlock": "Not allowed",
+  "closurePolicyBlockHelp": "A delivery cannot be planned on a closed day; another date has to be chosen.",
+  "closurePolicyOverride": "Needs a reason and the right to override",
+  "closurePolicyOverrideHelp": "Only users who may override can plan on a closed day, and they must give a reason.",
+  "closurePolicyTitle": "When a delivery is planned on a day the customer is closed",
+  "closurePolicyWarn": "Warn only",
+  "closurePolicyWarnHelp": "The date is saved and the closure is shown as a warning.",
+  "closures": "Closed days",
+  "closuresShowPast": "Show past closures",
+  "code": "Code",
+  "codeNameRequired": "Code and name are required.",
+  "codeNameVatRequired": "Code, name and VAT rate are required.",
+  "completeJob": "Complete job",
+  "completionNotes": "What was done (and anything left open)",
+  "component": "Component",
+  "componentHistory": "Component history",
+  "componentSince": "{product} · since {date}",
+  "@componentSince": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "componentsAsBuilt": "Components (as built)",
+  "confirm": "confirm",
+  "confirmOnBehalf": "Confirm on behalf of customer",
+  "confirmOnBehalfHelp": "Record that the customer has confirmed this revision, for example by phone or e-mail.",
+  "confirmOrder": "Confirm order",
+  "confirmOrderHelp": "By confirming you accept this order as shown.",
+  "confirmation": "Confirmation",
+  "confirmationDate": "Confirmed on",
+  "confirmed": "confirmed",
+  "confirmedRevision": "Confirmed revision",
+  "confirmedVia": "Confirmed via",
+  "confirmedViaPortal": "customer portal",
+  "confirmedViaStaff": "staff, on behalf of the customer",
+  "conflictsOnDate": "{count} already have a price on this date",
+  "@conflictsOnDate": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contactName": "Contact name",
+  "contactPerson": "Contact person",
+  "contacts": "Contacts",
+  "contractEnded": "Ended",
+  "contractJobs": "Jobs of this contract",
+  "contractLabel": "Contract {number}",
+  "@contractLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "contractOpenJobs": "{count} open jobs",
+  "@contractOpenJobs": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "contracts": "Contracts",
+  "contractSuspended": "Suspended",
+  "convertHelp": "Does the customer want changes? Make a new revision of the quotation first, link it here, then convert.",
+  "convertToOrder": "Convert to order",
+  "countAddLine": "Add stock not listed",
+  "countCancel": "Cancel count",
+  "countCounted": "Counted",
+  "countDifference": "Difference",
+  "countExpected": "Expected",
+  "countInvalidQuantity": "A counted quantity is not a number.",
+  "countMovedDuring": "{count} line(s) had stock movements during the count; the counted quantity replaced them.",
+  "@countMovedDuring": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "countNew": "New count",
+  "countOf": "{count} of {total}",
+  "@countOf": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "countOneProduct": "Only one product (optional)",
+  "countOverwriteWarning": "Movements made while you count are overwritten: when the count is posted, the counted quantity becomes the stock.",
+  "countPost": "Post count",
+  "countPostConfirm": "The differences are posted as stock adjustments. Lines without a counted quantity are left alone.",
+  "countProgress": "Counted",
+  "countStart": "Start count",
+  "countStatusCounting": "Counting",
+  "countStatusPosted": "Posted",
+  "countStockAtPost": "Stock when posted: {quantity}",
+  "@countStockAtPost": {
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "countWarehouseRequired": "Choose a warehouse.",
+  "countWholeWarehouse": "Whole warehouse",
+  "countedBy": "Started by",
+  "country": "Country",
+  "create": "Create",
+  "createLead": "Create lead",
+  "createRepair": "Create repair",
+  "created": "created",
+  "csatAlready": "This survey was already answered.",
+  "csatAverage": "Customer satisfaction",
+  "csatBad": "Not satisfied",
+  "csatComment": "Comment (optional)",
+  "csatEnabled": "Send a satisfaction survey when a ticket is closed",
+  "csatExpired": "This survey link has expired.",
+  "csatGood": "Satisfied",
+  "csatNone": "No rating yet",
+  "csatQuestion": "How satisfied are you with the handling of ticket {number}?",
+  "@csatQuestion": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "csatResponses": "{count} responses",
+  "@csatResponses": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "csatThanks": "Thank you for your feedback!",
+  "csatTitle": "Customer satisfaction",
+  "csvCopied": "CSV copied to the clipboard",
+  "current": "Current",
+  "customer": "Customer",
+  "customerDeclinedToSign": "The customer declined to sign",
+  "customerEquipment": "Customer equipment",
+  "customerLanguage": "Customer language",
+  "customerMainNumber": "Main number of {name}",
+  "@customerMainNumber": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "customerNamed": "Customer: {name}",
+  "@customerNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "customerOptional": "Customer (optional)",
+  "customerReference": "Customer reference",
+  "customers": "Customers",
+  "customerSignature": "Customer signature",
+  "date": "Date",
+  "declinedToSignWithReason": "Declined to sign: {reason}",
+  "@declinedToSignWithReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "defaultTeam": "Default team for new tickets",
+  "deleteRuleConfirm": "Delete this rule? Tickets that it changed keep their changes.",
+  "deliveries": "Deliveries",
+  "deliveryBlocked": "Deliveries on a closed day are not allowed. Choose another date.",
+  "deliveryCancel": "Cancel delivery",
+  "deliveryCancelReason": "Reason for cancelling",
+  "deliveryChooseSerial": "Choose serial number",
+  "deliveryClosedWarning": "The customer is closed from {from} to {to}. Next open day: {next}.",
+  "@deliveryClosedWarning": {
+    "placeholders": {
+      "from": {"type": "String"},
+      "to": {"type": "String"},
+      "next": {"type": "String"}
+    }
+  },
+  "deliveryFailed": "not sent",
+  "deliveryLocation": "Location",
+  "deliveryLot": "Lot",
+  "deliveryNew": "New delivery",
+  "deliveryNoDate": "no date",
+  "deliveryNoLines": "Nothing to deliver yet: reserve stock for the order first.",
+  "deliveryOnClosure": "on a closure",
+  "deliveryOverrideNeedsRight": "Delivering on a closed day needs a reason and the right to override.",
+  "deliveryOverrideReason": "Reason for delivering on a closed day",
+  "deliveryPicking": "Picking list",
+  "deliveryPlannedDate": "Planned date",
+  "deliveryQueued": "waiting to send",
+  "deliverySent": "sent",
+  "deliverySerial": "Serial number",
+  "deliverySettingsTitle": "Delivery settings",
+  "deliveryShip": "Ship",
+  "deliveryShipTo": "Deliver to",
+  "deliveryShippedSnack": "Delivery shipped",
+  "deliveryStatusPlanned": "planned",
+  "deliveryStatusShipped": "shipped",
+  "deliveryUseDay": "Use {date}",
+  "@deliveryUseDay": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "department": "Department",
+  "departmentCode": "Code",
+  "departmentMembers": "Colleagues in this department",
+  "departments": "Departments",
+  "departmentsHelp": "Repairs are routed to these departments. Only colleagues who belong to a department can work on its repairs.",
+  "description": "Description",
+  "devModeHelp": "Server must run with AUTH_MODE=dev",
+  "developmentUser": "Development user",
+  "deviceLanguage": "Device language",
+  "difference": "Difference",
+  "dismiss": "Dismiss",
+  "dismissRequest": "Dismiss request",
+  "draftSaved": "Draft saved",
+  "dryRun": "Try on a ticket",
+  "dryRunHelp": "Shows which rules would apply to a ticket and what they would change. Nothing is changed.",
+  "dryRunRun": "Run test",
+  "drawSignatureFirst": "Draw a signature first",
+  "dueOnDate": "Due {date}",
+  "@dueOnDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "edit": "Edit",
+  "editClosure": "Edit closure",
+  "editContact": "Edit contact",
+  "editDepartment": "Edit department",
+  "editJob": "Edit job",
+  "email": "E-mail",
+  "emailAddresses": "E-mail addresses (the first is primary)",
+  "endContract": "End contract",
+  "endDate": "End date",
+  "enterChange": "Enter the change, e.g. 4.5 for +4.5 %.",
+  "enterValidNumbersLine": "Line {line}: enter valid numbers.",
+  "@enterValidNumbersLine": {
+    "placeholders": {
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "equipment": "Equipment",
+  "estimatedMinutes": "Estimated minutes",
+  "expectedClose": "Expected close",
+  "expectedCloseDate": "Expected close {date}",
+  "@expectedCloseDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "expectedValue": "Expected value",
+  "expectedValueEur": "Expected value (€)",
+  "expectedValueOptional": "Expected value (optional)",
+  "explode": "Explode",
+  "exportCsv": "Copy as CSV",
+  "families": "Families",
+  "family": "Family",
+  "familyNamed": "Family {code}",
+  "@familyNamed": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "faultDescription": "What is wrong",
+  "firstDueDate": "First due date",
+  "firstName": "First name",
+  "firstResponseMinutes": "First response (min)",
+  "firstResponseTime": "First response",
+  "from": "From",
+  "fromYou": "You",
+  "generalRebateInfo": "General rebate on all products: {percent} % (net-priced products are never discounted).",
+  "@generalRebateInfo": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "generalRebatePercent": "General rebate %",
+  "greetingPreview": "Greeting: {greeting}",
+  "@greetingPreview": {
+    "placeholders": {
+      "greeting": {
+        "type": "String"
+      }
+    }
+  },
+  "helpdesk": "Helpdesk",
+  "helpdeskReports": "Reports",
+  "helpdeskSettings": "Helpdesk settings",
+  "history": "History",
+  "holidayDate": "Date",
+  "holidayInvalid": "Enter a date (YYYY-MM-DD) and a name.",
+  "holidays": "Holidays",
+  "holidaysHelp": "Days on which the helpdesk is closed.",
+  "calendarFor": "Calendar for",
+  "calendarCompanyWide": "Whole company",
+  "calendarInherited": "This team has no calendar of its own and uses the company calendar. Saving creates one for the team.",
+  "calendarHolidaysInherited": "The company holidays apply to this team as well. Holidays added here are the team's own.",
+  "calendarUseCompany": "Use the company calendar",
+  "calendarRemoved": "The team uses the company calendar again.",
+  "basisMixed": "business hours or elapsed time, per team",
+  "inactive": "inactive",
+  "inactiveContact": "No longer active (left the company)",
+  "indicativeLine": "{description} (indicative, to confirm)",
+  "@indicativeLine": {
+    "placeholders": {
+      "description": {
+        "type": "String"
+      }
+    }
+  },
+  "indicativeToConfirm": "{count} indicative price(s) to confirm before the quotation can be sent: enter the agreed price in the list price field.",
+  "@indicativeToConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "insertPreparedAnswer": "Insert prepared answer",
+  "instructions": "Instructions",
+  "internalNote": "Internal note",
+  "internalQuestionHelp": "Internal question. Ask the customer in {language} with a reply, then post the answer for your colleague as an internal note.",
+  "@internalQuestionHelp": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "internalTicket": "Internal ticket",
+  "internalTicketHelp": "A question between colleagues; nothing is sent to the customer.",
+  "interval": "Interval",
+  "jobCancelled": "Cancelled",
+  "jobCompleted": "Completed",
+  "jobCount": "{count} jobs",
+  "@jobCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "jobCreatedOnDate": "job created on {date}",
+  "@jobCreatedOnDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "jobInProgress": "In progress",
+  "jobKindInspection": "Inspection",
+  "jobKindInstallation": "Installation",
+  "jobKindMaintenance": "Maintenance",
+  "jobKindOther": "Other",
+  "jobKindRepair": "Repair",
+  "jobName": "Title",
+  "jobPlanned": "Planned",
+  "jobTitle": "Job title",
+  "jobs": "Jobs",
+  "keepAgreedPrices": "Keep agreed prices",
+  "language": "Language",
+  "languageSameAsCustomer": "Same as company ({language})",
+  "@languageSameAsCustomer": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "lastDays": "Last {days} days",
+  "@lastDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "lastName": "Last name",
+  "leadCreated": "Lead created",
+  "leadDays": "Create the job (days before)",
+  "lineDiscount": "Extra disc. ±",
+  "listPrice": "List price",
+  "loadMore": "Load more",
+  "logCall": "Log call",
+  "logTime": "Log time",
+  "logWork": "Log work",
+  "loginLinkInvalid": "This login link has expired or was already used. Request a new one.",
+  "loginLinkSent": "If this address may use the portal, a login link is on its way. Check your inbox.",
+  "lookUp": "Look up",
+  "lost": "Lost",
+  "lostReason": "Lost reason",
+  "markAsLost": "Mark as lost",
+  "markAsSent": "Mark as sent",
+  "markCompleted": "Mark as completed",
+  "markReceived": "Mark as received",
+  "markShipped": "Mark as shipped back",
+  "markWaitingCustomer": "Waiting for customer",
+  "markWaitingParts": "Waiting for parts",
+  "materialRequirements": "Material requirements (active revision)",
+  "mergeAction": "Merge",
+  "mergeHelp": "All messages, files, tags and time entries move to the chosen ticket of the same customer. This ticket is closed. This cannot be undone.",
+  "mergeNoCandidates": "No other open ticket of this customer.",
+  "mergeTicket": "Merge into another ticket…",
+  "mergedInto": "Merged into {number}",
+  "@mergedInto": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "message": "Message",
+  "messageSent": "Message sent",
+  "minutes": "Minutes",
+  "minutesShort": "{minutes} min",
+  "@minutesShort": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleDelivery": "Delivery",
+  "moduleProduction": "Production",
+  "moveDown": "Move down",
+  "moveUp": "Move up",
+  "months": "Months",
+  "myJobs": "My jobs",
+  "myOrders": "My orders",
+  "myProfile": "My details",
+  "myRepairs": "My repairs",
+  "myTickets": "My tickets",
+  "name": "Name",
+  "navigate": "Navigate",
+  "netPrice": "Net price",
+  "newAnswer": "New answer",
+  "newContact": "New contact",
+  "newContract": "New contract",
+  "newCustomer": "New customer",
+  "newDepartment": "New department",
+  "newFamily": "New family",
+  "newItem": "New",
+  "newJob": "New job",
+  "newLabel": "New",
+  "newOpportunity": "New opportunity",
+  "newPrice": "New price",
+  "newPricesValidFrom": "New prices valid from {date}",
+  "@newPricesValidFrom": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "newPriority": "New priority",
+  "newProduct": "New product",
+  "newQuotation": "New quotation",
+  "newRepair": "New repair",
+  "newRevision": "New revision",
+  "newRevisionOf": "New revision of {number}",
+  "@newRevisionOf": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "newRule": "New rule",
+  "newTeam": "New team",
+  "newTicket": "New ticket",
+  "no": "No",
+  "noAccess": "Your account has no access to any section yet. Ask an administrator.",
+  "noActiveBom": "No active bill of materials.",
+  "noBom": "No bill of materials yet.",
+  "noClosures": "No closures recorded.",
+  "noContactLinked": "No contact person linked",
+  "noContacts": "No contacts yet.",
+  "noContracts": "No contracts",
+  "noCustomerEquipment": "This customer has no installed units",
+  "noCustomerLinked": "No customer linked",
+  "noEquipment": "No equipment linked",
+  "noExpectedClose": "No expected close date",
+  "noJobsAssigned": "No jobs assigned to you.",
+  "noLines": "No lines yet.",
+  "noOrdersYet": "You have no orders yet.",
+  "noParts": "No parts recorded",
+  "noPermission": "You do not have permission to change these settings.",
+  "noPhotos": "No photos yet.",
+  "noPrices": "No prices yet.",
+  "noPriorityChanges": "No priority changes yet.",
+  "noPriorityRequests": "No requests.",
+  "noQuotations": "No quotations yet.",
+  "noRebates": "No product or family rebates.",
+  "noRepairs": "No repairs.",
+  "noRepairsYet": "You have no repairs yet.",
+  "noRules": "No rules yet.",
+  "noSerialComponents": "No serialised components.",
+  "noSignature": "Not signed yet",
+  "noTeam": "No team",
+  "noTechnicians": "Nobody assigned",
+  "noTicketsYet": "You have no tickets yet.",
+  "noTimeEntries": "No time logged yet.",
+  "nobodyFound": "Nobody found with this number.",
+  "nonBillable": "Not billable",
+  "none": "None",
+  "notClosed": "Not closed",
+  "notRouted": "Not routed yet",
+  "notScheduled": "Not scheduled",
+  "noteAdded": "Note added",
+  "noteOptional": "Note (optional)",
+  "notes": "Notes",
+  "noUpcomingVisits": "No visits due",
+  "number": "Number",
+  "numberRequired": "Number",
+  "obsoleteRevision": "Obsolete revision (read-only).",
+  "oidcAccessToken": "OIDC access token",
+  "ok": "OK",
+  "onSiteContact": "Person on site",
+  "openEnded": "open",
+  "openJobsOnly": "Active only",
+  "openOnly": "Open only",
+  "openOpportunity": "Open opportunity",
+  "openPriorityRequests": "{count, plural, =1{1 open priority request} other{{count} open priority requests}}",
+  "@openPriorityRequests": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "openRepairsCount": "{count} open",
+  "@openRepairsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "opens": "Opens",
+  "opportunities": "Opportunities",
+  "opportunity": "Opportunity",
+  "opportunityOptional": "Opportunity (optional)",
+  "order": "Order",
+  "orderAlreadyConfirmed": "This order was confirmed on {date}.",
+  "@orderAlreadyConfirmed": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "orderAwaitingConfirmation": "awaiting your confirmation",
+  "orderConfirmationQueued": "Order confirmation queued for sending.",
+  "orderConfirmedSnack": "Order confirmed.",
+  "orderConfirmedThanks": "Thank you, your order is confirmed.",
+  "orderCreated": "Order created",
+  "orderSaved": "Order saved.",
+  "orderStatusInPlanning": "in planning",
+  "orderStatusInProduction": "in production",
+  "orderStatusPartiallyShipped": "partially shipped",
+  "orderStatusPlanned": "planned",
+  "orderStatusReadyForShipping": "ready for shipping",
+  "orderStatusShipped": "shipped",
+  "orderStockRelease": "Release",
+  "orderStockReserve": "Reserve",
+  "orderStockReserveHint": "Stock can be reserved once the customer has confirmed the order.",
+  "orderStockThisLine": "{quantity} reserved for this line",
+  "@orderStockThisLine": {
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "orderStockTitle": "Stock availability",
+  "orders": "Orders",
+  "owner": "Owner",
+  "ownerEmpty": "Nobody",
+  "ownerSet": "Somebody",
+  "p90": "90% within",
+  "partFreeTextHint": "Pick a product or type a description",
+  "partsUsed": "Parts used",
+  "paymentDays": "Payment days",
+  "pdf": "PDF",
+  "perDay": "Per day",
+  "perWeek": "Per week",
+  "personTitle": "Title",
+  "phone": "Phone",
+  "phoneCall": "Phone call",
+  "phoneDirect": "Direct",
+  "phoneHint": "With country code, e.g. +32 475 12 34 56",
+  "phoneMobile": "Mobile",
+  "phoneNumber": "Phone number",
+  "phoneNumbers": "Phone numbers",
+  "phoneOther": "Other",
+  "phoneWork": "Work",
+  "photoBy": "by {name}",
+  "@photoBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "photos": "Photos",
+  "photosAdded": "Photos added",
+  "placeholdersHelp": "Placeholders (click to insert in the current language):",
+  "portalAccess": "Customer portal access",
+  "portalScope": "Sees in the portal",
+  "portalScopeCustomer": "All tickets of the company",
+  "portalScopeOwn": "Own tickets only",
+  "portalSignInIntro": "Enter your e-mail address. We will send you a link to sign in, no password needed.",
+  "portalTitle": "Customer portal",
+  "postalCode": "Postal code",
+  "preparedAnswers": "Prepared answers",
+  "preparedAnswersHelp": "Reusable answers to recurring questions, one text per language. Placeholders such as «quotation.number» are filled in for the ticket; the text can still be edited before sending.",
+  "preview": "Preview",
+  "priceListOf": "Price list of {date}",
+  "@priceListOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "priceListValidOn": "Price list valid on",
+  "priceZone": "Price zone",
+  "pricedOnPriceListOf": "Priced on the price list of {date}",
+  "@pricedOnPriceListOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "prices": "Prices",
+  "pricesCreated": "{count} prices created, valid from {date}",
+  "@pricesCreated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pricesWillChange": "{count} prices will change",
+  "@pricesWillChange": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pricing": "Pricing",
+  "pricingIndicative": "indicative",
+  "pricingIndicativeHelp": "Indicative (confirm per quote)",
+  "pricingList": "list price",
+  "pricingListHelp": "List price (rebates apply)",
+  "pricingNet": "net",
+  "pricingNetHelp": "Net price (never discounted)",
+  "priority": "Priority",
+  "priorityChangeLine": "{date}: {from} → {to} by {name}",
+  "@priorityChangeLine": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "priorityChangedSnack": "Priority changed.",
+  "priorityExpedite": "expedite",
+  "priorityHigh": "high",
+  "priorityHistory": "Priority history",
+  "priorityLow": "low",
+  "priorityNormal": "normal",
+  "priorityRequestHelp": "Our team decides whether and how the priority is changed.",
+  "priorityRequestLine": "{name} asks for priority: {priority}",
+  "@priorityRequestLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "priority": {
+        "type": "String"
+      }
+    }
+  },
+  "priorityRequestSent": "Your request has been sent.",
+  "priorityRequests": "Customer priority requests",
+  "priorityUrgent": "urgent",
+  "probability": "Probability",
+  "probabilityPercent": "Probability %",
+  "probabilityShort": "Prob.",
+  "product": "Product",
+  "productCount": "{count} products",
+  "@productCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "productDescription": "Product",
+  "productFamilies": "Product families",
+  "productFamily": "Product family",
+  "productRebates": "Product rebates",
+  "productTypeConfigurable": "configurable",
+  "productTypeManufactured": "manufactured",
+  "productTypePurchased": "purchased",
+  "productTypeService": "service",
+  "production": "Production",
+  "productionBomRevision": "BOM revision {revision}",
+  "@productionBomRevision": {
+    "placeholders": {
+      "revision": {"type": "String"}
+    }
+  },
+  "productionBuildComponent": "Build it",
+  "productionBuildForStock": "Build for stock",
+  "productionCancel": "Cancel production order",
+  "productionCancelReason": "Reason for cancelling",
+  "productionChooseSerials": "Choose serial numbers",
+  "productionComplete": "Complete",
+  "productionCompleted": "Production order completed",
+  "productionComponents": "Components",
+  "productionConsumed": "Consumed",
+  "productionDivision": "Division",
+  "productionDivisionAdd": "Add division",
+  "productionDivisionEdit": "Edit division",
+  "productionDivisions": "Divisions",
+  "productionExpiry": "Expiry date",
+  "productionExtraFrom": "Extra stock taken from",
+  "productionLocation": "Put into",
+  "productionLot": "Lot number",
+  "productionNoDivision": "no division",
+  "productionNothingToRelease": "Nothing to release: every manufactured line is covered by production orders.",
+  "productionOrderCancelled": "The sales order was cancelled. Cancel this production order to free its components.",
+  "productionOrdersOfOrder": "Production orders",
+  "productionOutput": "Output",
+  "productionPlannedReady": "Planned ready",
+  "productionPromised": "Promised",
+  "productionQuantityBuilt": "Quantity built",
+  "productionRelease": "Release to production",
+  "productionReleased": "Released to production",
+  "productionRequired": "Required",
+  "productionReserveAgain": "Reserve again",
+  "productionReserved": "Reserved",
+  "productionScrap": "Scrap",
+  "productionSerials": "Serial numbers, one per line",
+  "productionSerialsNeeded": "Choose {count} serial numbers",
+  "@productionSerialsNeeded": {
+    "placeholders": {
+      "count": {"type": "String"}
+    }
+  },
+  "productionShort": "short of stock",
+  "productionStart": "Start",
+  "productionStatusCompleted": "completed",
+  "productionStatusInProgress": "in progress",
+  "productionStatusReleased": "released",
+  "productionToRelease": "To release",
+  "products": "Products",
+  "profileHelp": "Choose the language and the way we address you in our e-mails and in this portal.",
+  "quantity": "Quantity",
+  "question": "Question",
+  "questionToSales": "Question to sales",
+  "questionToSalesHelp": "{salesperson} gets this question and asks the customer in their language.",
+  "@questionToSalesHelp": {
+    "placeholders": {
+      "salesperson": {
+        "type": "String"
+      }
+    }
+  },
+  "quotation": "Quotation",
+  "quotations": "Quotations",
+  "raisedBy": "Raised by {name}",
+  "@raisedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reason": "Reason",
+  "reasonRequired": "A reason is required.",
+  "rebate": "Std. rebate",
+  "rebateFor": "{target}: {percent} %",
+  "@rebateFor": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "rebatePercent": "Rebate %",
+  "rebateSourceFamily": "family",
+  "rebateSourceGeneral": "general",
+  "rebateSourceProduct": "product",
+  "rebatesOf": "Rebates · {customer}",
+  "@rebatesOf": {
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "recurrenceMonthList": "In chosen months",
+  "recurrenceMonths": "Every N months",
+  "recurrenceWeeks": "Every N weeks",
+  "registerProduct": "Register {product}",
+  "@registerProduct": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      }
+    }
+  },
+  "registerUnit": "Register unit",
+  "registered": "Registered",
+  "rejected": "Rejected",
+  "remove": "Remove",
+  "removeAndScrap": "Remove and scrap",
+  "removeBackToStock": "Remove, back to stock",
+  "removeLine": "Remove line",
+  "removedBy": "removed {date} by {name}",
+  "@removedBy": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reopenJob": "Reopen job",
+  "repairAnnouncedByTicket": "The customer announced it (the product has not arrived yet)",
+  "repairAnnouncedOk": "Repair announced. Write the number on the parcel and send the product to us.",
+  "repairPhotosHelp": "Photos of the product and the fault help us a lot.",
+  "repairPortalAnnounced": "Announced, not received yet",
+  "repairPortalInRepair": "In repair",
+  "repairPortalReady": "Repaired, ready to ship",
+  "repairPortalWaitingCustomer": "Waiting for your answer",
+  "repairStatusAnnounced": "Announced",
+  "repairStatusCancelled": "Cancelled",
+  "repairStatusCompleted": "Completed",
+  "repairStatusInProgress": "In progress",
+  "repairStatusReceived": "Received",
+  "repairStatusRouted": "In department queue",
+  "repairStatusShipped": "Shipped back",
+  "repairStatusWaitingCustomer": "Waiting for customer",
+  "repairStatusWaitingParts": "Waiting for parts",
+  "repairs": "Repairs",
+  "replaceSignature": "Replace signature",
+  "replyQueued": "Reply queued for sending",
+  "replyToCustomer": "Reply to customer",
+  "reportQueued": "The report will be sent",
+  "reportSend": "Send report by e-mail",
+  "reportSentTo": "Sent to {to} on {date}",
+  "@reportSentTo": {
+    "placeholders": {
+      "to": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reportView": "View report (PDF)",
+  "repricingFailed": "Today's prices could not be calculated: {error}",
+  "@repricingFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "requestDismissedSnack": "Request dismissed.",
+  "requestLessUrgent": "Less urgent",
+  "requestMoreUrgent": "More urgent (expedite)",
+  "requestPriorityChange": "Request priority change",
+  "requestStatusApplied": "applied",
+  "requestStatusDismissed": "dismissed",
+  "requestStatusOpen": "open",
+  "required": "Required",
+  "resolutionHours": "Resolution within (hours)",
+  "resolutionMinutes": "Resolution (min)",
+  "resolutionTime": "Resolution",
+  "responseTimes": "Response and resolution times",
+  "responseHours": "Response within (hours)",
+  "retry": "Retry",
+  "revisionActivated": "Revision activated",
+  "revisionItem": "Revision {revision} · {status} · {lines} lines",
+  "@revisionItem": {
+    "placeholders": {
+      "revision": {
+        "type": "int"
+      },
+      "status": {
+        "type": "String"
+      },
+      "lines": {
+        "type": "int"
+      }
+    }
+  },
+  "revisionNotes": "Revision notes",
+  "revisionNumber": "Revision {revision}",
+  "@revisionNumber": {
+    "placeholders": {
+      "revision": {
+        "type": "int"
+      }
+    }
+  },
+  "revisionPriceLists": "Agreed prices: price list of {agreed}. Current prices: price list of {current}.",
+  "@revisionPriceLists": {
+    "placeholders": {
+      "agreed": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "revisionViewNotice": "You are viewing revision {revision} (read-only). The current revision is {current}.",
+  "@revisionViewNotice": {
+    "placeholders": {
+      "revision": {
+        "type": "int"
+      },
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "revisions": "Revisions",
+  "roleInvoicing": "Invoicing",
+  "roleManagement": "Management",
+  "roleOther": "Other",
+  "rolePurchasing": "Purchasing",
+  "roleQuality": "Quality",
+  "roleSalesContact": "Sales contact",
+  "roleTechnical": "Technician",
+  "roles": "Roles",
+  "roundTo": "Round to",
+  "routeNote": "Note for the department",
+  "routeRepair": "Route to department",
+  "ruleActions": "Actions",
+  "ruleConditions": "Conditions (all must match)",
+  "ruleConditionsHelp": "Pick any number of values per line; a ticket needs one of them. Empty lines are ignored.",
+  "ruleNameRequired": "A rule needs a name.",
+  "ruleResultAfterStop": "skipped (stopped)",
+  "ruleResultInactive": "off",
+  "ruleResultMatched": "applies",
+  "ruleResultNoMatch": "no match",
+  "ruleResultOtherTrigger": "other event",
+  "ruleTrigger": "When",
+  "ruleTriggerCreated": "A ticket is created",
+  "ruleTriggerCustomerReplied": "The customer replies",
+  "ruleTriggerUpdated": "A ticket is updated by staff",
+  "salesperson": "Salesperson",
+  "save": "Save",
+  "saveChanges": "Save changes",
+  "saveDraft": "Save draft",
+  "saved": "Saved",
+  "savedNumber": "Saved {number}",
+  "@savedNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "scheduledEnd": "End",
+  "scheduledStart": "Start",
+  "scrapPercent": "Scrap %",
+  "search": "Search",
+  "send": "Send",
+  "sendBackToTriage": "Send back to triage",
+  "sendLoginLink": "Send login link",
+  "sendOrderConfirmation": "Send order confirmation",
+  "sendOrderConfirmationHelp": "The order confirmation is e-mailed to the customer as a PDF. The revision can no longer be edited afterwards.",
+  "senderDomain": "Sender domain",
+  "serial": "serial",
+  "serialBuiltIn": "built in",
+  "serialDelivered": "delivered",
+  "serialInStock": "in stock",
+  "serialInstalled": "installed",
+  "serialNumber": "Serial number",
+  "serialNumbers": "Serial numbers",
+  "serialNumbersHelp": "Every unit gets its own serial number and history",
+  "serialScrapped": "scrapped",
+  "server": "Server",
+  "serviceReport": "Service report",
+  "setWarranty": "Set warranty",
+  "showInactive": "Show inactive",
+  "signedByOn": "Signed by {name} on {date}",
+  "@signedByOn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "signerName": "Name of the signer",
+  "signHere": "Sign here",
+  "signIn": "Sign in",
+  "signOut": "Sign out",
+  "signedInAs": "Signed in as {name}",
+  "@signedInAs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signingIn": "Signing in…",
+  "singleProduct": "Single product",
+  "siteAddress": "Where to go",
+  "siteName": "Site name",
+  "skippedWithoutPrice": "{count} product/zone combinations have no price and are skipped",
+  "@skippedWithoutPrice": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sla": "SLA",
+  "slaAndSatisfaction": "SLA and satisfaction",
+  "slaAtRisk": "At risk",
+  "slaBreached": "Breached",
+  "slaCompliance": "SLA compliance",
+  "slaComplianceDetail": "{breached} of {total} breached",
+  "@slaComplianceDetail": {
+    "placeholders": {
+      "breached": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "slaDue": "Due {date}",
+  "@slaDue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "slaFilterAny": "Any SLA state",
+  "slaFirstResponse": "First response",
+  "slaLeft": "{time} left",
+  "@slaLeft": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "slaMet": "Met",
+  "slaNone": "No SLA",
+  "slaOnTime": "On time",
+  "slaOverdue": "{time} overdue",
+  "@slaOverdue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "slaPaused": "Clock stopped: waiting for the customer",
+  "slaPolicies": "Service levels (SLA)",
+  "slaPoliciesHelp": "Plain elapsed time, business hours are not taken into account. The clock stops while a ticket waits for the customer.",
+  "slaResolution": "Resolution",
+  "splitAction": "Split",
+  "splitFiles": "{count} file(s)",
+  "@splitFiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "splitHelp": "Choose the messages that move to a new ticket for the same customer. Their files move with them. This cannot be undone (tickets can be merged again).",
+  "splitKeepOne": "At least one message must stay in this ticket.",
+  "splitSubjectOptional": "Subject of the new ticket (optional)",
+  "splitTicket": "Split ticket…",
+  "stage": "Stage",
+  "stageLead": "lead",
+  "stageLost": "lost",
+  "stageNegotiation": "negotiation",
+  "stageProposal": "proposal",
+  "stageQualified": "qualified",
+  "stageWon": "won",
+  "startDate": "Start date",
+  "startJob": "Start job",
+  "startWork": "Start work",
+  "status": "Status",
+  "statusAccepted": "accepted",
+  "statusAfterwards": "Status afterwards",
+  "statusDraft": "draft",
+  "statusRejected": "rejected",
+  "statusSent": "sent",
+  "statusSuperseded": "superseded",
+  "stopOnMatch": "Stop after this rule",
+  "stopOnMatchHelp": "When it matches, the rules after it are skipped.",
+  "stockAdjust": "Adjust",
+  "stockAdjustReason": "Why is the stock corrected?",
+  "stockAdjustRequired": "Choose a location, enter a quantity and give a reason.",
+  "stockAllWarehouses": "All warehouses",
+  "stockAssignedTo": "Assigned to",
+  "stockAvailable": "Available",
+  "stockBarcode": "Barcode",
+  "stockBelowReorder": "Below reorder level",
+  "stockChangeBy": "Change by (+/−)",
+  "stockCounts": "Stock counts",
+  "stockExpiredQty": "{quantity} expired",
+  "@stockExpiredQty": {
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockExpiry": "Expiry date",
+  "stockFrom": "From",
+  "stockInVans": "In vans",
+  "stockInvalidNumbers": "Cost, reorder levels and lead time must be numbers.",
+  "stockIssue": "Issue",
+  "stockKindVan": "Service van",
+  "stockKindWarehouse": "Warehouse",
+  "stockLeadTime": "Lead time (days)",
+  "stockLocation": "Location",
+  "stockLocations": "Stock by location",
+  "stockLot": "Lot",
+  "stockLotNumber": "Lot number",
+  "stockLotTrackingHelp": "Lots / batches",
+  "stockMoves": "Movements",
+  "stockNewLocation": "New location",
+  "stockNewLot": "New lot",
+  "stockNewQuantity": "New quantity",
+  "stockNewVan": "New service van",
+  "stockNewWarehouse": "New warehouse",
+  "stockNoMoves": "No movements yet",
+  "stockNoWarehouses": "No warehouses yet. An administrator creates them here.",
+  "stockNote": "Note",
+  "stockNothingInStock": "Nothing in stock",
+  "stockOnHand": "On hand",
+  "stockOnlyInStock": "Only in stock",
+  "stockProductQuantityRequired": "Choose a product and enter a quantity.",
+  "stockReasonConsumption": "Consumption",
+  "stockReasonCorrection": "Correction",
+  "stockReasonCount": "Count",
+  "stockReasonManualReceipt": "Manual receipt",
+  "stockReasonProductionOutput": "Production output",
+  "stockReasonPurchaseReceipt": "Purchase receipt",
+  "stockReasonRepairUse": "Used in repair",
+  "stockReasonReturn": "Customer return",
+  "stockReasonReversal": "Reversal",
+  "stockReasonScrap": "Scrap",
+  "stockReasonShipment": "Shipment",
+  "stockReasonVanReplenishment": "Van replenishment",
+  "stockReceive": "Receive",
+  "stockReorderMax": "Reorder maximum",
+  "stockReorderMin": "Reorder minimum",
+  "stockReservations": "Reserved for orders",
+  "stockReserved": "Reserved",
+  "stockReverse": "Reverse",
+  "stockReverseAnyway": "Reverse anyway",
+  "stockReverseTitle": "Reverse this movement",
+  "stockReversed": "reversed",
+  "stockShortBy": "Short by {quantity}",
+  "@stockShortBy": {
+    "placeholders": {
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "stockStandardCost": "Standard cost",
+  "stockStateAvailable": "In stock",
+  "stockStateNotStocked": "Not stocked",
+  "stockStatePartial": "Partly in stock",
+  "stockStateReserved": "Reserved",
+  "stockStateShort": "Not in stock",
+  "stockTitle": "Stock",
+  "stockTo": "To",
+  "stockTrackingLot": "lot",
+  "stockTransfer": "Transfer",
+  "stockWarehouse": "Warehouse",
+  "stockWarehouses": "Warehouses",
+  "street": "Street",
+  "streetAddress": "Street and number",
+  "structureRevision": "Structure (revision {revision})",
+  "@structureRevision": {
+    "placeholders": {
+      "revision": {
+        "type": "int"
+      }
+    }
+  },
+  "subassembly": "subassembly",
+  "subject": "Subject",
+  "subjectContains": "Subject contains",
+  "subjectOptional": "Subject (optional)",
+  "suggested": "Suggested: {value}",
+  "@suggested": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "tag": "Tag",
+  "suspendContract": "Suspend",
+  "tags": "Tags",
+  "takePhoto": "Take a photo",
+  "tasks": "Tasks",
+  "tasksProgress": "{done} of {total} done",
+  "@tasksProgress": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "team": "Team",
+  "teamLead": "Lead",
+  "teamMembers": "Members",
+  "teamName": "Team name",
+  "teams": "Teams",
+  "technicians": "Technicians",
+  "text": "Text",
+  "ticket": "Ticket",
+  "ticketClosed": "Closed",
+  "ticketDetails": "Ticket details",
+  "ticketInProgress": "In progress",
+  "ticketMerged": "Tickets merged",
+  "ticketOpened": "Ticket opened",
+  "ticketSplit": "Created ticket {number}",
+  "@ticketSplit": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "ticketStatusClosed": "closed",
+  "ticketStatusNew": "new",
+  "ticketStatusOpen": "open",
+  "ticketStatusPendingCustomer": "waiting for customer",
+  "ticketStatusPendingInternal": "waiting for colleague",
+  "ticketVolume": "Tickets created and closed",
+  "ticketWaitingForYou": "Waiting for your reply",
+  "tickets": "Tickets",
+  "timeLogged": "Time logged",
+  "timeNote": "Note",
+  "timeTotal": "Total {total}, billable {billable}",
+  "@timeTotal": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "billable": {
+        "type": "String"
+      }
+    }
+  },
+  "timeTotals": "Work {work} · Travel {travel}",
+  "@timeTotals": {
+    "placeholders": {
+      "work": {
+        "type": "String"
+      },
+      "travel": {
+        "type": "String"
+      }
+    }
+  },
+  "timeTracking": "Time tracking",
+  "timeZone": "Time zone",
+  "title": "Title",
+  "titleCustomerValueRequired": "Title, customer and a valid value are required.",
+  "titleMr": "Mr.",
+  "titleMs": "Ms.",
+  "titleNone": "Not specified",
+  "to": "To",
+  "topCategories": "Top categories",
+  "topTags": "Top tags",
+  "total": "Total",
+  "productsTotalChange": "Products excl. shipping and VAT: {from} → {to} ({difference})",
+  "@productsTotalChange": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "totalExclVat": "Total excl. VAT",
+  "totalInclVat": "Total incl. VAT",
+  "totalsToBuyOrMake": "Totals to buy or make",
+  "tracking": "Tracking",
+  "twoLetters": "2 letters",
+  "type": "Type",
+  "unassigned": "Unassigned",
+  "unchanged": "Unchanged",
+  "unit": "Unit",
+  "unitPrice": "Unit price",
+  "unitPriceExclVat": "Unit price (excl. VAT)",
+  "unknownCaller": "Unknown caller",
+  "until": "Until",
+  "upcomingVisits": "Upcoming visits",
+  "updateToCurrentPrices": "Update to current prices",
+  "updated": "Updated",
+  "uploadingFile": "Uploading…",
+  "uploadingPhotos": "Uploading…",
+  "useAnotherPriceListDate": "Use another price list date",
+  "validFrom": "Valid from",
+  "validFromDate": "Valid from {date}",
+  "@validFromDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "validUntil": "valid until {date}",
+  "@validUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "value": "Value",
+  "vat": "VAT",
+  "vatNumber": "VAT number",
+  "vatOn": "VAT {rate} % on {base}",
+  "@vatOn": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "base": {
+        "type": "String"
+      }
+    }
+  },
+  "vatPercent": "VAT %",
+  "viaPortal": "Via the customer portal",
+  "visitTemplates": "Visits",
+  "visitTitleRequired": "Every visit needs a title",
+  "warranty": "Warranty",
+  "warrantyExpired": "Warranty expired",
+  "warrantyIn": "In warranty",
+  "warrantyOut": "Out of warranty",
+  "warrantyUnknown": "Unknown",
+  "weekdayFriday": "Friday",
+  "weekdayMonday": "Monday",
+  "weekdaySaturday": "Saturday",
+  "weekdaySunday": "Sunday",
+  "weekdayThursday": "Thursday",
+  "weekdayTuesday": "Tuesday",
+  "weekdayWednesday": "Wednesday",
+  "warrantyUntilDate": "until {date}",
+  "@warrantyUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "warrantyUntilLabel": "Warranty until",
+  "weighted": "weighted {amount}",
+  "@weighted": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "whatWasAsked": "What was asked?",
+  "whoIsCalling": "Who is calling?",
+  "won": "Won",
+  "workFrom": "From",
+  "workKindTravel": "Travel",
+  "workKindWork": "Work",
+  "workLogs": "Time registered",
+  "workUntil": "Until",
+  "writeIn": "Write in {language}",
+  "@writeIn": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "yes": "Yes",
+  "yourMessage": "Your message",
+  "yourReference": "Your reference (RMA or order)",
+  "zone": "Zone",
+  "zoneAndRebate": "Zone {zone} · general rebate {percent} %",
+  "@zoneAndRebate": {
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "zonesNoneAll": "Zones (none selected = all)",
+  "kbTitle": "Knowledge base",
+  "kbNewArticle": "New article",
+  "kbSearchHint": "Search articles",
+  "kbAllCategories": "All categories",
+  "kbAllStatuses": "All statuses",
+  "kbAllAudiences": "All audiences",
+  "kbManageCategories": "Categories",
+  "kbStatusPublished": "Published",
+  "kbStatusArchived": "Archived",
+  "kbAudience": "Audience",
+  "kbAudienceInternal": "Internal (staff only)",
+  "kbAudiencePortal": "Customer portal",
+  "kbAudiencePublic": "Public",
+  "kbArticleTitle": "Title",
+  "kbSummary": "Summary",
+  "kbBody": "Text (Markdown)",
+  "kbPreview": "Preview",
+  "kbWriteTab": "Write",
+  "kbMarkdownHelp": "Use # for headings, **bold**, *italic*, - for lists, [text](https://…) for links and ![description](image:ID) for pictures.",
+  "kbTagsLabel": "Tags (comma separated)",
+  "kbRelated": "Related articles",
+  "kbAddRelated": "Add related article",
+  "kbImages": "Images",
+  "kbUploadImage": "Upload image",
+  "kbInsertImage": "Insert in text",
+  "kbPublish": "Publish",
+  "kbUnpublish": "Unpublish",
+  "kbArchive": "Archive",
+  "kbHistory": "Version history",
+  "kbVersionLine": "Version {version} · {name} · {date}",
+  "@kbVersionLine": {
+    "placeholders": {
+      "version": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "kbRestore": "Restore this version",
+  "kbRestoredFrom": "restored from version {version}",
+  "@kbRestoredFrom": {
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "kbFeedback": "{yes} found this helpful, {no} did not",
+  "@kbFeedback": {
+    "placeholders": {
+      "yes": {
+        "type": "int"
+      },
+      "no": {
+        "type": "int"
+      }
+    }
+  },
+  "kbViews": "{count} views",
+  "@kbViews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "kbNoArticles": "No articles found.",
+  "kbNoCategory": "No category",
+  "kbMainCategory": "Main category",
+  "kbSortOrder": "Sort order",
+  "kbNewCategory": "New category",
+  "kbCategoryNames": "Name per language",
+  "kbDelete": "Delete",
+  "kbSuggestedArticles": "Suggested articles",
+  "kbNoSuggestions": "No matching articles.",
+  "kbInsertText": "Insert text",
+  "kbInsertLink": "Insert link",
+  "kbInsertArticle": "Insert article",
+  "kbNoPortalLink": "This article is internal: only its text can be inserted.",
+  "kbHelp": "Help",
+  "kbHelpHeading": "How can we help?",
+  "kbHelpSearch": "Search the help articles",
+  "kbHelpEmpty": "No articles found. You can open a ticket instead.",
+  "kbWasHelpful": "Was this article helpful?",
+  "kbYes": "Yes",
+  "kbNo": "No",
+  "kbThanks": "Thank you for your feedback.",
+  "kbStillNeedHelp": "Still need help? Open a ticket.",
+  "kbRelatedReading": "Related articles",
+  "kbDeflectionTitle": "These articles may already answer your question",
+  "kbShownIn": "Not available in your language; shown in {language}.",
+  "@kbShownIn": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "kbUpdatedOn": "Updated {date}",
+  "@kbUpdatedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineWaiting": "{count, plural, =1{1 change waiting to sync} other{{count} changes waiting to sync}}",
+  "@offlineWaiting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "offlineFailedCount": "{count, plural, =1{1 needs your attention} other{{count} need your attention}}",
+  "@offlineFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "offlineQueueTitle": "Changes waiting to sync",
+  "offlineSyncNow": "Sync now",
+  "offlineRetry": "Try again",
+  "offlineDiscard": "Discard",
+  "offlineDiscardQuestion": "Discard this change? It will not be sent to the server.",
+  "offlineAllSynced": "Everything is synced.",
+  "offlineAttempts": "Attempts: {count}",
+  "@offlineAttempts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "offlineLastError": "Last error: {message}",
+  "@offlineLastError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineRejected": "The server refused this change. The job may have been reassigned, cancelled or changed in the meantime.",
+  "offlineDataFrom": "Offline: data from {time}",
+  "@offlineDataFrom": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "offlinePendingSync": "Waiting to sync",
+  "offlineQueuedMessage": "No connection: saved on this device, it will be sent when you are back online.",
+  "offlinePhotosWaiting": "{count, plural, =1{1 photo waiting to upload} other{{count} photos waiting to upload}}",
+  "@offlinePhotosWaiting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "offlineTooLarge": "Too large to keep offline. Connect to send it.",
+  "offlineReload": "Reload",
+  "offlineOpStart": "Start job",
+  "offlineOpTaskDone": "Task ticked",
+  "offlineOpTaskUndone": "Task unticked",
+  "offlineOpTaskAdd": "New task",
+  "offlineOpWorkLog": "Time entry",
+  "offlineOpPart": "Part used",
+  "offlineOpComplete": "Complete job",
+  "offlineOpDecline": "Customer declined to sign",
+  "offlineOpSignature": "Customer signature",
+  "offlineOpPhoto": "Photo",
+  "collabEscalate": "Escalate",
+  "collabEscalateTitle": "Escalate ticket",
+  "collabDelegate": "Hand over",
+  "collabDelegateTitle": "Hand over ticket",
+  "collabEscalateTo": "Escalate to",
+  "collabNoTarget": "Leads of the ticket's team",
+  "collabPerson": "Colleague",
+  "collabTeam": "Team",
+  "collabHandOverTo": "New owner",
+  "collabReasonRequired": "Reason (required)",
+  "collabRaisePriority": "Raise priority one step",
+  "collabCommentOptional": "Comment for the new owner (optional)",
+  "collabInternalHint": "Internal: never sent to the customer.",
+  "collabEscalated": "Ticket escalated",
+  "collabHandedOver": "Ticket handed over",
+  "collabEscalatedBadge": "Escalated",
+  "collabEscalatedBy": "Escalated by {name}",
+  "@collabEscalatedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "collabWatch": "Watch",
+  "collabUnwatch": "Stop watching",
+  "collabWatchers": "Watchers",
+  "collabNoWatchers": "Nobody follows this ticket",
+  "collabAddWatcher": "Add watcher",
+  "collabActivity": "Activity",
+  "collabNoActivity": "No activity yet",
+  "collabSeenBy": "Seen by {readers}",
+  "@collabSeenBy": {
+    "placeholders": {
+      "readers": {
+        "type": "String"
+      }
+    }
+  },
+  "collabFilterUnread": "Unread",
+  "collabFilterWatching": "Watching",
+  "collabFilterEscalated": "Escalated",
+  "collabUnreadTooltip": "Unread",
+  "collabReplying": "{count, plural, one{{names} is replying} other{{names} are replying}} — coordinate before sending",
+  "@collabReplying": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "collabViewing": "{count, plural, one{{names} is viewing this ticket} other{{names} are viewing this ticket}}",
+  "@collabViewing": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "collabConfirmSend": "{count, plural, one{{names} is replying to this ticket right now.} other{{names} are replying to this ticket right now.}} Send anyway?",
+  "@collabConfirmSend": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "collabSendAnyway": "Send anyway",
+  "collabSystem": "System",
+  "collabEventCreated": "{actor} created the ticket",
+  "@collabEventCreated": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventAssignedOwner": "{actor} assigned the ticket to {owner}",
+  "@collabEventAssignedOwner": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "owner": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventOwnerCleared": "{actor} removed the owner",
+  "@collabEventOwnerCleared": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventTeam": "{actor} moved the ticket to team {team}",
+  "@collabEventTeam": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "team": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventTeamCleared": "{actor} removed the team",
+  "@collabEventTeamCleared": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventDelegated": "{actor} handed the ticket over to {owner}",
+  "@collabEventDelegated": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "owner": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventEscalated": "{actor} escalated the ticket",
+  "@collabEventEscalated": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventStatus": "{actor} changed the status from {before} to {after}",
+  "@collabEventStatus": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "before": {
+        "type": "String"
+      },
+      "after": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventPriority": "{actor} changed the priority from {before} to {after}",
+  "@collabEventPriority": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "before": {
+        "type": "String"
+      },
+      "after": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventMergedInto": "{actor} merged this ticket into {number}",
+  "@collabEventMergedInto": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventMergedFrom": "{actor} merged {number} into this ticket",
+  "@collabEventMergedFrom": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventTagAdded": "{actor} added the tag {tag}",
+  "@collabEventTagAdded": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
+  "collabEventTagRemoved": "{actor} removed the tag {tag}",
+  "@collabEventTagRemoved": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
+  "collabMsgCustomer": "{actor} (customer) wrote",
+  "@collabMsgCustomer": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "collabMsgReply": "{actor} replied to the customer",
+  "@collabMsgReply": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "collabMsgNote": "{actor} added an internal note",
+  "@collabMsgNote": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "collabMsgCall": "{actor} logged a call",
+  "@collabMsgCall": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "planningTitle": "Planning",
+  "planningDay": "Day",
+  "planningWeek": "Week",
+  "planningToday": "Today",
+  "planningPrevious": "Previous",
+  "planningNext": "Next",
+  "planningBacklog": "To plan",
+  "planningBacklogEmpty": "Nothing left to plan.",
+  "planningSkillFilter": "Skill",
+  "planningAllSkills": "All skills",
+  "planningNoTechnicians": "No technicians to show. Give users the technician role.",
+  "planningPlan": "Plan",
+  "planningScheduleJob": "Schedule {number}",
+  "@planningScheduleJob": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "planningSuggestions": "Suggestions",
+  "planningShowSuggestions": "Show suggestions",
+  "planningNoSuggestions": "No free slot found in the next two weeks.",
+  "planningMissingSkills": "{count} skill(s) missing",
+  "@planningMissingSkills": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planningRequiredSkills": "Required skills",
+  "planningChecking": "Checking…",
+  "planningNoConflicts": "No conflicts.",
+  "planningConfirmTitle": "Schedule with conflicts?",
+  "planningConfirmBody": "This placement has errors:",
+  "planningScheduleAnyway": "Schedule anyway",
+  "planningScheduled": "Job scheduled.",
+  "planningConflictDoubleBooked": "{name} has another job at that time (travel time included).",
+  "@planningConflictDoubleBooked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planningConflictOutsideHours": "{name} is outside working hours.",
+  "@planningConflictOutsideHours": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planningConflictOnAbsence": "{name} is absent.",
+  "@planningConflictOnAbsence": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planningConflictMissingSkill": "{name} lacks the skill {skill}.",
+  "@planningConflictMissingSkill": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "skill": {
+        "type": "String"
+      }
+    }
+  },
+  "planningConflictCrossesDays": "The job runs past midnight.",
+  "planningAbsenceVacation": "Vacation",
+  "planningAbsenceSick": "Sick",
+  "planningAbsenceTraining": "Training",
+  "planningAbsenceOther": "Other absence",
+  "planningAgendaEmpty": "Nothing planned.",
+  "planningSettingsTitle": "Planning settings",
+  "planningAbsences": "Absences",
+  "planningHours": "Working hours",
+  "planningSkills": "Skills",
+  "planningGeneral": "General",
+  "planningAddAbsence": "Add absence",
+  "planningNoAbsences": "No absences recorded.",
+  "planningTechnician": "Technician",
+  "planningKind": "Kind",
+  "planningDefaultHours": "Company default",
+  "planningUsesDefault": "No hours of their own: the company default applies.",
+  "planningAddBlock": "Add block",
+  "planningAddSkill": "Add skill",
+  "planningTechnicianSkills": "Skills per technician",
+  "planningSkillLevel": "Level {n}",
+  "@planningSkillLevel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "planningTravelBuffer": "Travel time between jobs (minutes)",
+  "planningTravelBufferHelp": "Kept free between two jobs of a technician on the same day.",
+  "planningDefaultJobMinutes": "Default job length (minutes)",
+  "planningTimezone": "Time zone",
+  "adminTitle": "Administration",
+  "adminUsers": "Users",
+  "adminModules": "Modules",
+  "newUser": "New user",
+  "editUser": "Edit user",
+  "userDisabledModules": "Disabled modules",
+  "userNotSignedIn": "Not signed in yet",
+  "userResendInvitation": "Send invitation again",
+  "userInvitationSent": "Invitation sent",
+  "userCreated": "User added",
+  "userFilterAll": "All members",
+  "userFilterActive": "Active members",
+  "userFilterInactive": "Deactivated members",
+  "userActiveHelp": "A deactivated member can no longer sign in to this company.",
+  "userCannotDeactivateSelf": "You cannot deactivate yourself.",
+  "userCannotDropOwnAdmin": "You cannot remove your own admin role.",
+  "userRolePermissions": "{count} permissions",
+  "@userRolePermissions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "userModulesHelp": "Switch modules off for this person. Modules the company has switched off cannot be turned back on here.",
+  "userModuleCompanyOff": "Switched off for the whole company",
+  "moduleRequires": "Needs {modules}",
+  "@moduleRequires": {
+    "placeholders": {
+      "modules": {
+        "type": "String"
+      }
+    }
+  },
+  "modulesIntro": "Switch off the modules this company does not use. People no longer see them and the server refuses their requests.",
+  "modulesSaved": "Modules saved",
+  "userRoleAdmin": "Administrator",
+  "userRoleSalesManager": "Sales manager",
+  "userRoleSales": "Sales",
+  "userRoleSupport": "Support",
+  "userRoleProduction": "Production",
+  "userRoleWarehouse": "Warehouse",
+  "userRoleProductManager": "Product manager",
+  "userRoleWorkshop": "Workshop",
+  "userRoleTechnician": "Technician",
+  "userRoleDispatcher": "Dispatcher",
+  "userRoleLogistics": "Logistics",
+  "userRoleViewer": "Viewer",
+  "moduleCustomers": "Customers",
+  "moduleProducts": "Products",
+  "moduleSales": "Sales",
+  "moduleEngineering": "Engineering",
+  "moduleInventory": "Inventory",
+  "moduleHelpdesk": "Helpdesk",
+  "moduleKb": "Knowledge base",
+  "moduleRepairs": "Repairs",
+  "moduleField": "Field service",
+  "purpose": "Purpose",
+  "purposeInstallation": "Installation",
+  "purposeStock": "Stock",
+  "deliveryCountry": "Delivery country",
+  "deliveryCountryDefault": "Default: {country}",
+  "@deliveryCountryDefault": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryCountryInvalid": "Enter a two-letter country code, for example BE.",
+  "shippingNotRequired": "not required",
+  "shippingPending": "pending",
+  "shippingQuoted": "quoted",
+  "shippingRequested": "requested",
+  "shippingPendingBanner": "Waiting for a shipping quote from logistics. The quotation cannot be sent until the cost has been entered.",
+  "shippingQuotedBanner": "The shipping cost has been quoted and is on the quotation as a shipping line.",
+  "shippingLineNote": "Added by logistics",
+  "sendAnyway": "Send anyway",
+  "sendAnywayHelp": "{message}\n\nAs logistics you may send the quotation without the shipping cost. Send it anyway?",
+  "@sendAnywayHelp": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "shippingRequests": "Shipping requests",
+  "shippingQueue": "Open and requested",
+  "markAsRequested": "Mark as requested",
+  "enterQuote": "Enter quote",
+  "carrier": "Carrier",
+  "amount": "Amount",
+  "currency": "Currency",
+  "quotedAmount": "Quoted amount",
+  "requestedAt": "Requested",
+  "amountRequired": "Enter a valid amount.",
+  "carrierRequired": "Enter the carrier.",
+  "packagingCategory": "Packaging category",
+  "packagingCategories": "Packaging categories",
+  "newPackagingCategory": "New packaging category",
+  "requiresShippingQuote": "Requires a shipping quote",
+  "lengthMm": "Length (mm)",
+  "widthMm": "Width (mm)",
+  "heightMm": "Height (mm)",
+  "weightG": "Weight (g)",
+  "dimensions": "Dimensions",
+  "dimensionsValue": "{length} x {width} x {height} mm",
+  "@dimensionsValue": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      },
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
+  },
+  "weight": "Weight",
+  "weightValue": "{grams} g",
+  "@weightValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "positiveWholeNumbers": "Dimensions and weight must be positive whole numbers, or empty.",
+  "powerTab": "Power",
+  "powerNotElectrical": "No supplies are listed, so this is not an electrical product and is never checked against a power grid.",
+  "powerAddSupply": "Add supply",
+  "currentType": "Current",
+  "currentAc": "AC",
+  "currentDc": "DC",
+  "voltageV": "Voltage (V)",
+  "phases": "Phases",
+  "frequencyHz": "Frequency (Hz)",
+  "frequencyBoth": "50 and 60 Hz",
+  "tolerancePct": "Tolerance (%)",
+  "powerVoltageInvalid": "Enter the voltage as a positive whole number.",
+  "powerToleranceInvalid": "The tolerance must be a whole number from 0 to 50.",
+  "powerSupplyDuplicate": "The same supply is listed twice.",
+  "powerCheckTitle": "Grid compatibility check",
+  "powerCheckHelp": "Checks the saved supplies against the power grids of a country.",
+  "powerGrid": "Power grid",
+  "powerAnyGrid": "Any grid in this country",
+  "powerCheck": "Check",
+  "powerResultCompatible": "Compatible with the power grid of {country}.",
+  "@powerResultCompatible": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "powerResultIncompatible": "Does not fit the grid of {country}. Supported: {supported}. Available there: {available}.",
+  "@powerResultIncompatible": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "supported": {
+        "type": "String"
+      },
+      "available": {
+        "type": "String"
+      }
+    }
+  },
+  "powerResultExternal": "Runs on DC only and needs an external power supply; it is not checked against the grid.",
+  "powerResultNotApplicable": "Not an electrical product; there is nothing to check.",
+  "powerResultUnknown": "There is no grid data for {country}, so compatibility cannot be checked.",
+  "@powerResultUnknown": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "powerStatusCompatible": "Compatible",
+  "powerStatusIncompatible": "Incompatible",
+  "powerStatusExternal": "Needs external supply",
+  "powerStatusNotApplicable": "Not applicable",
+  "powerStatusUnknown": "Unknown grid",
+  "relatedTab": "Related",
+  "relationRules": "Rules",
+  "relationSuggestions": "Suggestions",
+  "relationNoRules": "No rules apply to this product.",
+  "relationNoSuggestions": "No suggestions yet.",
+  "relationKindCompatible": "Compatible",
+  "relationKindIncompatible": "Incompatible",
+  "relationKindSuggested": "Suggested",
+  "relationAddRule": "Add rule",
+  "relationEdit": "Edit relation",
+  "relationsTitle": "Product relations",
+  "newRelation": "New relation",
+  "relationKindLabel": "Kind",
+  "relationSideA": "First side",
+  "relationSideB": "Second side",
+  "relationBidirectional": "Applies in both directions",
+  "relationStrength": "Strength (1-100)",
+  "relationStrengthHelp": "Only used by suggested rules.",
+  "relationNeedSides": "Choose a product or a family on both sides.",
+  "relationStrengthInvalid": "The strength must be a whole number from 1 to 100.",
+  "relationsEmpty": "No relations.",
+  "relationFamilyValue": "Family {code}",
+  "@relationFamilyValue": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "suggestionReasonRule": "Rule",
+  "suggestionReasonOften": "Often bought together",
+  "suggestionStrength": "Strength {n}",
+  "@suggestionStrength": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "suggestionConfidence": "Confidence {pct} %",
+  "@suggestionConfidence": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "suggestionBecause": "Because of {code}",
+  "@suggestionBecause": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "powerGridsTitle": "Power grids",
+  "newPowerGrid": "New power grid",
+  "powerGridInvalid": "Enter a two-letter country code, a voltage, 1 or 3 phases and 50 or 60 Hz.",
+  "warningKindPowerGrid": "Power grid",
+  "warningKindIncompatible": "Incompatible products",
+  "hintsPowerIncompatible": "{code} does not fit the power grid at the delivery site.",
+  "@hintsPowerIncompatible": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "hintsSupported": "Supported: {value}",
+  "@hintsSupported": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "hintsAvailable": "Available: {value}",
+  "@hintsAvailable": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "hintsPowerExternal": "{code} runs on DC and needs an external power supply.",
+  "@hintsPowerExternal": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "hintsPowerUnknown": "No grid data for {country}, so {code} could not be checked. Add the country's grid under Power grids on the Products page.",
+  "@hintsPowerUnknown": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "hintsIncompatibleProducts": "{a} and {b} are not compatible.",
+  "@hintsIncompatibleProducts": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "suggestionsTitle": "Suggested additions",
+  "hintsTitle": "Warnings and suggestions",
+  "revisionShippingExisting": "Existing shipping charge: {amount}",
+  "@revisionShippingExisting": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "revisionShippingReset": "With current prices, this shipping charge will be reset. A new shipping quote from logistics is needed before the revised quotation can be sent.",
+  "revisionShippingKept": "With agreed prices, the quoted shipping is carried over to the revised quotation (current charge: {amount}).",
+  "@revisionShippingKept": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "packagesReceiving": "Receiving",
+  "packagesIntake": "Repair intake",
+  "registerParcel": "Register parcel",
+  "registeredParcels": "Registered parcels",
+  "noParcels": "No parcels.",
+  "sender": "Sender",
+  "trackingNumber": "Tracking number",
+  "parcelCount": "Number of parcels",
+  "packageCondition": "Condition of the box",
+  "conditionIntact": "Intact",
+  "conditionDamaged": "Damaged",
+  "conditionOpened": "Opened",
+  "conditionWet": "Wet",
+  "conditionNote": "Note on the condition",
+  "removePhoto": "Remove photo",
+  "parcelRegistered": "Parcel {number} registered",
+  "@parcelRegistered": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "pkgStatusRegistered": "Registered",
+  "pkgStatusOpened": "Opened",
+  "pkgStatusLinked": "Linked to a repair",
+  "pkgStatusClosed": "Closed",
+  "packageKindRepair": "Repair",
+  "packageKindOther": "Other (no repair)",
+  "packageKindReturn": "Return to sender",
+  "toOpen": "To open",
+  "toProcess": "To process",
+  "toRoute": "To route",
+  "nothingHere": "Nothing to do here.",
+  "openParcel": "Open parcel",
+  "parcelContents": "What is in the parcel?",
+  "closeParcel": "Close parcel",
+  "noteRequired": "A note is required.",
+  "linkToRepair": "Match with a repair",
+  "repairSuggestions": "Suggested repairs",
+  "noSuggestions": "No announced repair matches.",
+  "suggestedCustomer": "Suggested customer: {name}",
+  "@suggestedCustomer": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "suggestionScore": "Score {score}",
+  "@suggestionScore": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "reasonSerial": "Same serial number",
+  "reasonCustomer": "Same customer",
+  "reasonReference": "Same reference",
+  "reasonTicket": "Same ticket",
+  "reasonProduct": "Similar product",
+  "reasonRecent": "Announced recently",
+  "confirmLinkTitle": "Confirm match",
+  "confirmLinkBody": "Parcel {parcel} contains repair {repair}. An announced repair will be marked as received.",
+  "@confirmLinkBody": {
+    "placeholders": {
+      "parcel": {
+        "type": "String"
+      },
+      "repair": {
+        "type": "String"
+      }
+    }
+  },
+  "customerMismatchWarning": "The customer of the parcel is not the customer of the repair.",
+  "confirmCustomerMismatch": "Yes, it was sent by someone else (for example a colleague)",
+  "confirmLink": "Confirm and link",
+  "linkConflict": "The repair has changed in the meantime. The list was refreshed; check it and try again.",
+  "createNewRepair": "Create new repair",
+  "parcelsSection": "Parcels",
+  "noParcelsLinked": "No parcel linked.",
+  "unlinkParcel": "Unlink parcel",
+  "parcelsToLink": "Parcels waiting for this repair",
+  "linkParcel": "Link parcel",
+  "parcelLinked": "Parcel linked",
+  "parcelUnlinked": "Parcel unlinked",
+  "customerUnknown": "Customer not known",
+  "findingsSection": "Findings",
+  "findingsLabel": "What was found",
+  "diagnosisLabel": "Diagnosis",
+  "saveFindings": "Save findings",
+  "warrantySection": "Warranty",
+  "warrantyVoid": "Void (misuse)",
+  "warrantyAutomatic": "Automatic result",
+  "warrantyComparedWith": "Compared with the arrival date {date}",
+  "@warrantyComparedWith": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "warrantyProvisional": "Not received yet: compared with today, so provisional.",
+  "serialUnitLabel": "Serial unit: {unit}",
+  "@serialUnitLabel": {
+    "placeholders": {
+      "unit": {"type": "String"}
+    }
+  },
+  "noSerialUnit": "No serial unit linked",
+  "linkSerialUnit": "Link serial unit",
+  "unlinkSerialUnit": "Unlink serial unit",
+  "serialUnitSeveral": "Several serial units match. Pick the right one.",
+  "serialUnitNoResults": "No serial units found",
+  "recheckWarranty": "Check warranty again",
+  "markWarrantyVoid": "Mark warranty void (misuse)",
+  "removeWarrantyOverride": "Remove override",
+  "warrantyVoidTitle": "Mark warranty void",
+  "warrantyRemoveTitle": "Remove the void override",
+  "warrantyReasonLabel": "Reason (required)",
+  "warrantyOverriddenBy": "Overridden to void by {name} on {date}: {reason}",
+  "@warrantyOverriddenBy": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "date": {"type": "String"},
+      "reason": {"type": "String"}
+    }
+  },
+  "eventFindings": "Findings updated",
+  "eventSerialUnit": "Serial unit",
+  "eventWarrantyAuto": "Automatic warranty",
+  "eventWarrantyManual": "Warranty set by hand",
+  "eventWarrantyVoid": "Warranty void",
+  "eventWarrantyVoidRemoved": "Warranty override removed",
+  "csvMenu": "CSV export and import",
+  "csvExport": "Export CSV",
+  "csvImport": "Import CSV",
+  "csvExported": "Saved {name}",
+  "@csvExported": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "csvExportFailed": "Export failed: {error}",
+  "@csvExportFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "csvImportTitle": "Import CSV: {entity}",
+  "@csvImportTitle": {
+    "placeholders": {
+      "entity": {"type": "String"}
+    }
+  },
+  "csvImportHelp": "Rows are matched on the code: an existing code is updated, a new code is created. Columns that are missing from the file are left untouched, and nothing is ever deleted. It is all or nothing: if any row has an error, nothing is imported. Semicolon or comma separated, UTF-8.",
+  "csvChooseFile": "Choose CSV file",
+  "csvChooseOther": "Choose another file",
+  "csvChecking": "Checking the file...",
+  "csvImporting": "Importing...",
+  "csvPreview": "Preview: nothing has been imported yet",
+  "csvDone": "Import complete",
+  "csvToCreate": "To create",
+  "csvToUpdate": "To update",
+  "csvUnchanged": "Unchanged",
+  "csvCreated": "Created",
+  "csvUpdated": "Updated",
+  "csvImportAction": "Import",
+  "csvEmptyFile": "The file is empty.",
+  "csvNotUtf8": "The file is not UTF-8 text. Save it as CSV (UTF-8) and try again.",
+  "csvReadFailed": "The file could not be read.",
+  "csvErrorsFound": "{count, plural, =1{1 problem found} other{{count} problems found}}. Nothing has been imported.",
+  "@csvErrorsFound": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "csvErrorRow": "Row {row}",
+  "@csvErrorRow": {
+    "placeholders": {
+      "row": {"type": "int"}
+    }
+  },
+  "csvErrorRowColumn": "Row {row}, column {column}",
+  "@csvErrorRowColumn": {
+    "placeholders": {
+      "row": {"type": "int"},
+      "column": {"type": "String"}
+    }
+  },
+  "csvAndMore": "and {count} more",
+  "@csvAndMore": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "profileTooltip": "Profile: {name}",
+  "@profileTooltip": {"placeholders": {"name": {"type": "String"}}},
+  "tabTicket": "Ticket",
+  "tabQuotation": "Quotation",
+  "tabNewQuotation": "New quotation",
+  "tabOrder": "Order",
+  "tabRepair": "Repair",
+  "tabJob": "Job",
+  "tabProduct": "Product",
+  "tabOpportunity": "Opportunity",
+  "tabStock": "Stock",
+  "tabArticle": "Article",
+  "tabContract": "Contract",
+  "tabCount": "Count",
+  "workspaceOverview": "Overview",
+  "openTabs": "Open tabs",
+  "closeTab": "Close tab",
+  "openInNewTab": "Open in new tab",
+  "unsavedChangesTitle": "Unsaved changes",
+  "unsavedChangesBody": "This tab has unsaved changes. Close it and discard them?",
+  "discardChanges": "Discard changes",
+  "remarkProduction": "Production remark",
+  "remarkProductionHelp": "Internal, never shown to the customer",
+  "remarkCustomer": "Customer remark",
+  "remarkCustomerHelp": "Printed on the quotation and the order confirmation",
+  "remarkHistory": "Earlier remarks",
+  "remarkHistoryThisCustomer": "This customer",
+  "remarkHistoryThisLanguage": "This language",
+  "remarkHistoryAll": "All",
+  "remarkHistoryEmpty": "No earlier remarks for this product.",
+  "remarkHistoryUsed": "Used {count} times, last on {quotation}",
+  "@remarkHistoryUsed": {"placeholders": {"count": {"type": "int"}, "quotation": {"type": "String"}}},
+  "defaultProductionRemark": "Default production remark",
+  "optionsTab": "Options",
+  "optionsIntro": "Products offered together with this one on a quotation. A required option is added automatically.",
+  "optionsNone": "This product has no options.",
+  "optionAdd": "Add option",
+  "optionRequired": "Required",
+  "optionQuantity": "Quantity per unit",
+  "optionRemove": "Remove option",
+  "optionsSaved": "Options saved.",
+  "optionsInvalidQuantity": "Enter a quantity greater than 0 for every option.",
+  "optionsChooseTitle": "Options for {product}",
+  "@optionsChooseTitle": {"placeholders": {"product": {"type": "String"}}},
+  "optionsChooseHelp": "Required options are added automatically. Tick the optional ones to add.",
+  "optionsAddSelected": "Add",
+  "optionsSkip": "Without optional options",
+  "optionLine": "Option of the line above",
+  "configurator": "Configurator",
+  "configurators": "Configurators",
+  "configure": "Configure",
+  "newConfiguration": "New configuration",
+  "savedConfigurations": "Saved configurations",
+  "cfgAddRow": "Add {item}",
+  "@cfgAddRow": {
+    "placeholders": {"item": {"type": "String"}}
+  },
+  "cfgAddRowToGroup": "Add a row to {group}",
+  "@cfgAddRowToGroup": {
+    "placeholders": {"group": {"type": "String"}}
+  },
+  "cfgCalculated": "Calculated",
+  "cfgChangeCustomer": "Other customer",
+  "cfgCreateQuotation": "Create quotation",
+  "cfgUpdateQuotation": "Update quotation",
+  "cfgDeleteConfirm": "Delete this configuration? Quotations made from it stay.",
+  "cfgDeleteRow": "Delete row",
+  "cfgDuplicateRow": "Duplicate row",
+  "cfgDiscard": "Discard",
+  "cfgDiscardChanges": "Discard the unsaved changes?",
+  "cfgEach": "For each: {value}",
+  "@cfgEach": {
+    "placeholders": {"value": {"type": "String"}}
+  },
+  "cfgErrors": "Errors",
+  "cfgWarnings": "Warnings",
+  "cfgInfo": "Information",
+  "cfgEvalFailed": "Could not recalculate: {message}",
+  "@cfgEvalFailed": {
+    "placeholders": {"message": {"type": "String"}}
+  },
+  "cfgInput": "Input",
+  "cfgIssues": "Issues",
+  "cfgLines": "Lines",
+  "cfgWhy": "Why?",
+  "cfgInvalidNumber": "Not a valid number",
+  "cfgNewerRevision": "A newer revision of this configurator is available.",
+  "cfgUpgrade": "Upgrade",
+  "cfgNoConfigurations": "No saved configurations yet.",
+  "cfgNoModels": "No configurator is active yet.",
+  "cfgNoCustomer": "No customer",
+  "cfgNoIssues": "No issues.",
+  "cfgNoLines": "The configuration produces no lines yet.",
+  "cfgNotInCatalogue": "Not in the product catalogue",
+  "cfgPinned": "Your own value (pinned)",
+  "cfgPricesNeedCustomer": "Choose a customer to see prices.",
+  "cfgQuoteBlocked": "Fix the errors before making a quotation.",
+  "cfgQuoteNeedsCustomer": "Choose a customer before making a quotation.",
+  "cfgQuoteCreated": "Quotation {number} created.",
+  "@cfgQuoteCreated": {
+    "placeholders": {"number": {"type": "String"}}
+  },
+  "cfgQuoteUpdated": "Quotation {number} updated.",
+  "@cfgQuoteUpdated": {
+    "placeholders": {"number": {"type": "String"}}
+  },
+  "cfgQuoteRevised": "Quotation {number}: a new revision was created.",
+  "@cfgQuoteRevised": {
+    "placeholders": {"number": {"type": "String"}}
+  },
+  "cfgResetToCalculated": "Reset to calculated ({value})",
+  "@cfgResetToCalculated": {
+    "placeholders": {"value": {"type": "String"}}
+  },
+  "cfgStale": "The calculation now gives {value}",
+  "@cfgStale": {
+    "placeholders": {"value": {"type": "String"}}
+  },
+  "cfgRevision": "revision {revision}",
+  "@cfgRevision": {
+    "placeholders": {"revision": {"type": "int"}}
+  },
+  "cfgRule": "Rule: {rule}",
+  "@cfgRule": {
+    "placeholders": {"rule": {"type": "String"}}
+  },
+  "cfgSaved": "Saved.",
+  "cfgSelectLine": "Select a line to see where it comes from.",
+  "cfgSetForAll": "Set for all rows…",
+  "cfgSetForAllTitle": "{column} for all rows",
+  "@cfgSetForAllTitle": {
+    "placeholders": {"column": {"type": "String"}}
+  },
+  "cfgStart": "Start",
+  "cfgUnsaved": "Unsaved changes",
+  "cfgNewerRevisionAvailable": "revision {revision} available",
+  "@cfgNewerRevisionAvailable": {
+    "placeholders": {"revision": {"type": "int"}}
+  },
+  "cfgbActivate": "Activate",
+  "cfgbActivateConfirm": "Activate this draft? Sales will use it for new configurations; the current active revision becomes obsolete.",
+  "cfgbActivated": "Activated.",
+  "cfgbActivatedOn": "activated {date}",
+  "@cfgbActivatedOn": {
+    "placeholders": {"date": {"type": "String"}}
+  },
+  "cfgbActivateModel": "Make available",
+  "cfgbActivateRefused": "Not activated: {count, plural, =1{1 problem} other{{count} problems}} to solve.",
+  "@cfgbActivateRefused": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "cfgbActiveRevision": "active: revision {revision}",
+  "@cfgbActiveRevision": {
+    "placeholders": {"revision": {"type": "int"}}
+  },
+  "cfgbAddChild": "Add option line",
+  "cfgbAddColumn": "Add column",
+  "cfgbAddComputed": "Add computed value",
+  "cfgbAddField": "Add field",
+  "cfgbAddItemTable": "Add item table",
+  "cfgbAddOption": "Add option",
+  "cfgbAddRow": "Add row",
+  "cfgbAddRule": "Add output rule",
+  "cfgbAddSection": "Add section",
+  "cfgbAddTable": "Add table",
+  "cfgbAddValidation": "Add check",
+  "cfgbApply": "Apply",
+  "cfgbChildRuleTitle": "Option line {id}",
+  "@cfgbChildRuleTitle": {
+    "placeholders": {"id": {"type": "String"}}
+  },
+  "cfgbCode": "Product code (formula)",
+  "cfgbCodeExpr": "Formula",
+  "cfgbCodeHelp": "e.g. 'BELT-M' or motor_code",
+  "cfgbCodeTemplate": "Product code (template)",
+  "cfgbCodeTemplateHelp": "Text with formulas in curly brackets, e.g. DRV- then motor_size in brackets",
+  "cfgbColumn": "Column",
+  "cfgbColumnName": "Column",
+  "cfgbCommentTemplate": "Comment (template)",
+  "cfgbComputedOf": "Computed values: {scope}",
+  "@cfgbComputedOf": {
+    "placeholders": {"scope": {"type": "String"}}
+  },
+  "cfgbComputedTitle": "Computed value {name}",
+  "@cfgbComputedTitle": {
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "cfgbConditions": "Conditions",
+  "cfgbCreate": "Create",
+  "cfgbCsvExport": "Export CSV",
+  "cfgbCsvImport": "Import CSV",
+  "cfgbCsvImported": "{count, plural, =1{1 row imported.} other{{count} rows imported.}}",
+  "@cfgbCsvImported": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "cfgbCsvProblems": "The CSV file was not imported",
+  "cfgbDeactivateModel": "Withdraw",
+  "cfgbDefault": "Default",
+  "cfgbDefaultExpr": "Default (formula)",
+  "cfgbDefaultExprHelp": "Instead of a fixed default",
+  "cfgbDescriptionTemplate": "Description (template)",
+  "cfgbDesignTitle": "Design configurators",
+  "cfgbDimCurrent": "Current",
+  "cfgbDimension": "Dimension",
+  "cfgbDimLength": "Length",
+  "cfgbDimMass": "Mass",
+  "cfgbDimPower": "Power",
+  "cfgbDimSpeed": "Speed",
+  "cfgbDimVoltage": "Voltage",
+  "cfgbDiscard": "Discard",
+  "cfgbDisplayUnits": "Display units:",
+  "cfgbDraftRevision": "draft: revision {revision}",
+  "@cfgbDraftRevision": {
+    "placeholders": {"revision": {"type": "int"}}
+  },
+  "cfgbEditDraft": "Edit draft",
+  "cfgbEnabledIf": "Enabled when",
+  "cfgbExported": "Saved {name}.",
+  "@cfgbExported": {
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "cfgbExportJson": "Export JSON",
+  "cfgbExpr": "Formula",
+  "cfgbFamily": "Product family (code)",
+  "cfgbFieldsOf": "Fields: {scope}",
+  "@cfgbFieldsOf": {
+    "placeholders": {"scope": {"type": "String"}}
+  },
+  "cfgbFieldTitle": "Field {name}",
+  "@cfgbFieldTitle": {
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "cfgbForEach": "For each",
+  "cfgbForEachHelp": "A list: one line per element, with each and each_index",
+  "cfgbFormulaType": "Result: {type}",
+  "@cfgbFormulaType": {
+    "placeholders": {"type": {"type": "String"}}
+  },
+  "cfgbGroupField": "Group by field",
+  "cfgbGroupHelp": "A group is one section of rows (e.g. a hall): one per distinct value of an item table's group field. Group fields with the name of a project field override it within the group.",
+  "cfgbGroupLabel": "Name of a group",
+  "cfgbHelp": "Help text",
+  "cfgbId": "Id",
+  "cfgbImported": "Imported into the editor; save to keep it.",
+  "cfgbImportFailed": "Not imported: {message}",
+  "@cfgbImportFailed": {
+    "placeholders": {"message": {"type": "String"}}
+  },
+  "cfgbImportJson": "Import JSON",
+  "cfgbImportNotExport": "This file is not a configurator export.",
+  "cfgbImportReplace": "Replace the whole definition of this draft by {name}?",
+  "@cfgbImportReplace": {
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "cfgbInactive": "not available to sales",
+  "cfgbItemLabel": "Item label (template)",
+  "cfgbItemLabelHelp": "Names one row in comments and messages; formulas in curly brackets, e.g. group_name and index",
+  "cfgbItemTable": "Item table",
+  "cfgbKeys": "Key columns:",
+  "cfgbKindExact": "Exact",
+  "cfgbKindRange": "Range",
+  "cfgbLabel": "Label",
+  "cfgbLayout": "Layout",
+  "cfgbLayoutSections": "Form sections",
+  "cfgbLayoutSectionsHelp": "Fields name a section in their layout; the form shows them under its heading.",
+  "cfgbMax": "Maximum",
+  "cfgbMaxLength": "Maximum length",
+  "cfgbMaxRows": "Maximum rows",
+  "cfgbMergeIdentical": "Merge identical lines",
+  "cfgbMergeIdenticalHelp": "Lines with the same code become one; the comment lists the items",
+  "cfgbMessage": "Message (template)",
+  "cfgbMin": "Minimum",
+  "cfgbMinRows": "Minimum rows",
+  "cfgbMoveDown": "Move down",
+  "cfgbMoveUp": "Move up",
+  "cfgbNewDraft": "New draft from the active revision",
+  "cfgbNewDraftFromThis": "New draft from this revision",
+  "cfgbNewModel": "New configurator",
+  "cfgbNoProblems": "No problems",
+  "cfgbOnMissing": "When no row fits",
+  "cfgbOnMissingClamp": "Next higher row",
+  "cfgbOnMissingHelp": "Next higher row: a value below or between the ranges takes the row with the next higher range, a value above all ranges the last row; an offset past either end stops at the first or last row.",
+  "cfgbOnMissingError": "Error",
+  "cfgbOnMissingNull": "No value",
+  "cfgbOptionsFamily": "Product family",
+  "cfgbOptionsFrom": "Allowed alternatives (formula)",
+  "cfgbOptionsFromHelp": "A list the user may choose from instead of the calculated value",
+  "cfgbOptionsStatic": "Fixed list",
+  "cfgbOptionsTable": "Table column",
+  "cfgbOrder": "Order",
+  "cfgbOutputRules": "Output rules",
+  "cfgbOverridable": "The user may override it",
+  "cfgbOverridableHelp": "Shown as calculated, pinned or pinned but stale",
+  "cfgbPattern": "Pattern (regular expression)",
+  "cfgbPercentBase": "Percentage of",
+  "cfgbPercentBaseList": "the parent's list price",
+  "cfgbPercentBaseNet": "the parent's net price",
+  "cfgbPercentOfParent": "Percent of parent (formula)",
+  "cfgbPercentOfParentHelp": "Prices the line as this percentage of the parent line, e.g. 20",
+  "cfgbProblems": "{count, plural, =1{1 problem} other{{count} problems}}",
+  "@cfgbProblems": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "cfgbProductFilter": "Product filter (formula on p)",
+  "cfgbProductFilterHelp": "e.g. p.attr('kw') >= 1",
+  "cfgbQuantity": "Quantity (formula)",
+  "cfgbQuantityHelp": "Defaults to 1; zero or less leaves the line out",
+  "cfgbRangeKey": "Range key",
+  "cfgbRangeKeyHelp": "The lookup key carrying the value",
+  "cfgbRangeMax": "Maximum column",
+  "cfgbRangeMin": "Minimum column",
+  "cfgbRawJson": "Definition as JSON",
+  "cfgbRemoveColumn": "Remove column",
+  "cfgbRemoveItemTable": "Remove item table",
+  "cfgbRemoveRow": "Remove row",
+  "cfgbReplace": "Replace",
+  "cfgbRequired": "Required",
+  "cfgbRevisions": "Revisions",
+  "cfgbRowCount": "{count, plural, =1{1 row} other{{count} rows}}",
+  "@cfgbRowCount": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "cfgbRuleTitle": "Output rule {id}",
+  "@cfgbRuleTitle": {
+    "placeholders": {"id": {"type": "String"}}
+  },
+  "cfgbSavedValid": "Saved. The draft can be activated.",
+  "cfgbSavedWithProblems": "Saved with {count, plural, =1{1 problem} other{{count} problems}}.",
+  "@cfgbSavedWithProblems": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "cfgbScope": "Scope",
+  "cfgbScopeGroup": "Group",
+  "cfgbScopeItem": "Item (row)",
+  "cfgbScopeItems": "Items: {table}",
+  "@cfgbScopeItems": {
+    "placeholders": {"table": {"type": "String"}}
+  },
+  "cfgbScopeProject": "Project",
+  "cfgbScopes": "Scopes",
+  "cfgbSection": "Section",
+  "cfgbSectionTemplate": "Section (template)",
+  "cfgbSectionTemplateHelp": "Defaults to the group name for group and item rules",
+  "cfgbSelectComputed": "Choose a computed value or add one.",
+  "cfgbSelectField": "Choose a field or add one.",
+  "cfgbSelectRule": "Choose an output rule or add one.",
+  "cfgbSelectTable": "Choose a table or add one.",
+  "cfgbSelectValidation": "Choose a check or add one.",
+  "cfgbSeverity": "Severity",
+  "cfgbSeverityError": "Error",
+  "cfgbSeverityInfo": "Information",
+  "cfgbSeverityWarning": "Warning",
+  "cfgbShow": "Shown to the user",
+  "cfgbShownAt": "Shown at field",
+  "cfgbStatusActive": "active",
+  "cfgbStatusDraft": "draft",
+  "cfgbStatusObsolete": "obsolete",
+  "cfgbStep": "Step",
+  "cfgbTabComputed": "Computed values",
+  "cfgbTabFields": "Fields & layout",
+  "cfgbTabGeneral": "General",
+  "cfgbTable": "Table",
+  "cfgbTableKind": "Kind",
+  "cfgbTables": "Lookup tables",
+  "cfgbTableTitle": "Table {name}",
+  "@cfgbTableTitle": {
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "cfgbTabOutputs": "Output rules",
+  "cfgbTabTables": "Tables",
+  "cfgbTabTest": "Test",
+  "cfgbTabTransfer": "Import/export",
+  "cfgbTabValidations": "Checks",
+  "cfgbTestHelp": "Try the saved draft as sales will see it. Nothing is saved; select a line to see why it is there.",
+  "cfgbTestNeedsValid": "The saved draft has problems; the test may fail until they are solved.",
+  "cfgbTestReset": "Start again",
+  "cfgbTestUnsaved": "The test uses the saved draft; save to include your latest changes.",
+  "cfgbTranslations": "Translations",
+  "cfgbTypeBoolean": "Yes/no",
+  "cfgbTypeChoice": "Choice",
+  "cfgbTypeInteger": "Whole number",
+  "cfgbTypeNumber": "Number",
+  "cfgbTypeProduct": "Product",
+  "cfgbTypeText": "Text",
+  "cfgbUnsavedText": "The draft has changes that are not saved.",
+  "cfgbUnsavedTitle": "Unsaved changes",
+  "cfgbValidations": "Checks",
+  "cfgbValidationTitle": "Check {id}",
+  "@cfgbValidationTitle": {
+    "placeholders": {"id": {"type": "String"}}
+  },
+  "cfgbValidationWhenHelp": "When true, the message is shown",
+  "cfgbValue": "Value",
+  "cfgbVisibleIf": "Visible when",
+  "cfgbWhen": "When",
+  "cfgbWhenHelp": "Lines are only made when this is true",
+  "cfgbWidth": "Width",
+  "tabProductionOrder": "Production order",
+  "tabDeliveryNote": "Delivery note",
+  "vatRegime": "VAT regime",
+  "vatRegimeDomestic": "EU customer, VAT charged",
+  "vatRegimeIntraEu": "EU business, VAT reverse-charged",
+  "vatRegimeOutsideEu": "Outside the EU, no VAT",
+  "addSubItem": "Add sub-item",
+  "subItemsOptions": "Options of {product}",
+  "@subItemsOptions": {
+    "placeholders": { "product": { "type": "String" } }
+  },
+  "subItemsNoOptions": "This product has no options defined.",
+  "subItemsOtherProducts": "Other products",
+  "crTitle": "Reports",
+  "crNew": "New report",
+  "crEmpty": "No reports yet. Build one to see your data grouped and summed.",
+  "crShared": "Shared",
+  "crPrivate": "Private",
+  "crShare": "Share with everyone in the company",
+  "crOwnedBy": "By {name}",
+  "@crOwnedBy": {
+    "placeholders": {"name": {"type": "String"}}
+  },
+  "crObject": "Report on",
+  "crJoin": "Add related data",
+  "crGroupBy": "Group by",
+  "crAddGrouping": "Add grouping",
+  "crColumns": "Columns",
+  "crAddColumn": "Add column",
+  "crField": "Field",
+  "crSummary": "Summary",
+  "crSummaryNone": "Show value",
+  "crSumCount": "Count",
+  "crSumSum": "Sum",
+  "crSumAvg": "Average",
+  "crSumMin": "Minimum",
+  "crSumMax": "Maximum",
+  "crFilters": "Filters",
+  "crAddFilter": "Add filter",
+  "crMatchAll": "All filters must match",
+  "crMatchAny": "At least one filter must match",
+  "crOpEq": "equals",
+  "crOpNe": "does not equal",
+  "crOpGt": "greater than",
+  "crOpGte": "at least",
+  "crOpLt": "less than",
+  "crOpLte": "at most",
+  "crOpContains": "contains",
+  "crOpStartsWith": "starts with",
+  "crOpIn": "is one of",
+  "crOpIsNull": "is empty",
+  "crOpNotNull": "is not empty",
+  "crValue": "Value",
+  "crValueListHint": "Separate values with commas",
+  "crBucketNone": "Exact value",
+  "crBucketDay": "By day",
+  "crBucketMonth": "By month",
+  "crBucketYear": "By year",
+  "crSort": "Sort",
+  "crAddSort": "Add sort",
+  "crDescending": "Descending",
+  "crChart": "Chart",
+  "crChartNone": "No chart",
+  "crChartBar": "Bar",
+  "crChartLine": "Line",
+  "crChartPie": "Pie",
+  "crChartX": "Categories",
+  "crChartY": "Values",
+  "crRows": "{count} rows",
+  "@crRows": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "crRowsShown": "{shown} of {total} rows shown",
+  "@crRowsShown": {
+    "placeholders": {"shown": {"type": "int"}, "total": {"type": "int"}}
+  },
+  "crChartShareShown": "Shares are of the {count} groups shown.",
+  "@crChartShareShown": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "crSaved": "Report saved",
+  "crDeleted": "Report deleted",
+  "crDelete": "Delete",
+  "crDeleteConfirm": "Delete this report?",
+  "crExportCsv": "Export CSV",
+  "crExportPdf": "Export PDF",
+  "crNeedName": "Give the report a name.",
+  "crNeedColumn": "Add at least one column.",
+  "crLoadMore": "Show more rows",
+  "crNoRows": "No rows match this report.",
+  "crRun": "Run",
+  "crDateMode": "Date",
+  "crDateFixed": "Fixed date",
+  "crDateRelative": "Relative to today",
+  "crRelativePeriod": "Period",
+  "crRelativeDays": "Number of days",
+  "crRelativeDaysInvalid": "Enter a whole number of days from 1 to 3660.",
+  "crRelToday": "Today",
+  "crRelYesterday": "Yesterday",
+  "crRelThisWeek": "This week",
+  "crRelLastWeek": "Last week",
+  "crRelThisMonth": "This month",
+  "crRelLastMonth": "Last month",
+  "crRelThisQuarter": "This quarter",
+  "crRelLastQuarter": "Last quarter",
+  "crRelThisYear": "This year",
+  "crRelLastYear": "Last year",
+  "crRelLastNDays": "Last N days",
+  "crRelNextNDays": "Next N days"
+}

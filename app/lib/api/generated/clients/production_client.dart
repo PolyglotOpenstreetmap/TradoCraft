@@ -1,0 +1,139 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, unused_import, invalid_annotation_target, unnecessary_import
+
+import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
+
+import '../models/cancel_production_input.dart';
+import '../models/complete_production_input.dart';
+import '../models/division.dart';
+import '../models/division_input.dart';
+import '../models/product_division.dart';
+import '../models/production_order.dart';
+import '../models/production_page.dart';
+import '../models/production_serial_candidate.dart';
+import '../models/production_to_release.dart';
+import '../models/release_production_input.dart';
+import '../models/update_production_input.dart';
+
+part 'production_client.g.dart';
+
+@RestApi()
+abstract class ProductionClient {
+  factory ProductionClient(Dio dio, {String? baseUrl}) = _ProductionClient;
+
+  /// The production queue: most urgent first (sales order priority, then planned-ready date).
+  ///
+  /// [status] - released | in_progress | completed | cancelled.
+  ///
+  /// [q] - Searches the number, the product, the sales order and the customer.
+  @GET('/api/v1/production-orders')
+  Future<ProductionPage> listOrders({
+    @Query('status') String? status,
+    @Query('division_id') String? divisionId,
+    @Query('order_id') String? orderId,
+    @Query('q') String? q,
+    @Query('limit') int? limit,
+    @Query('offset') int? offset,
+  });
+
+  /// Releases a line of a sales order, or a quantity for stock, to production: freezes the active.
+  /// BOM, creates the production order and its components and reserves them.
+  @POST('/api/v1/production-orders')
+  Future<ProductionOrder> release({
+    @Body() required ReleaseProductionInput body,
+  });
+
+  /// One production order with its components and outputs.
+  @GET('/api/v1/production-orders/{id}')
+  Future<ProductionOrder> getOrder({
+    @Path('id') required String id,
+  });
+
+  /// Changes the division, the planned-ready date and the notes of an open production order.
+  @PUT('/api/v1/production-orders/{id}')
+  Future<ProductionOrder> updateOrder({
+    @Path('id') required String id,
+    @Body() required UpdateProductionInput body,
+  });
+
+  /// Cancels an open production order and releases the components reserved for it.
+  @POST('/api/v1/production-orders/{id}/cancel')
+  Future<ProductionOrder> cancelOrder({
+    @Path('id') required String id,
+    @Body() required CancelProductionInput body,
+  });
+
+  /// Completes a production order: consumes the components (backflush, with the actual quantities.
+  /// and scrap), puts the output into stock and moves the sales order on.
+  @POST('/api/v1/production-orders/{id}/complete')
+  Future<ProductionOrder> completeOrder({
+    @Path('id') required String id,
+    @Body() required CompleteProductionInput body,
+  });
+
+  /// The serial units in stock of a serial-tracked component, to choose from when completing.
+  ///
+  /// [q] - Part of the serial number.
+  @GET('/api/v1/production-orders/{id}/components/{component_id}/serial-units')
+  Future<List<ProductionSerialCandidate>> serialCandidates({
+    @Path('id') required String id,
+    @Path('component_id') required String componentId,
+    @Query('q') String? q,
+  });
+
+  /// Tries again to reserve the components that were short at release.
+  @POST('/api/v1/production-orders/{id}/reserve')
+  Future<ProductionOrder> reserveComponents({
+    @Path('id') required String id,
+  });
+
+  /// Starts a production order: the order is being built.
+  @POST('/api/v1/production-orders/{id}/start')
+  Future<ProductionOrder> startOrder({
+    @Path('id') required String id,
+  });
+
+  /// The divisions of the company, in their sort order.
+  @GET('/api/v1/production/divisions')
+  Future<List<Division>> listDivisions();
+
+  /// Adds a division.
+  @POST('/api/v1/production/divisions')
+  Future<Division> createDivision({
+    @Body() required DivisionInput body,
+  });
+
+  /// Changes a division.
+  @PUT('/api/v1/production/divisions/{id}')
+  Future<Division> updateDivision({
+    @Path('id') required String id,
+    @Body() required DivisionInput body,
+  });
+
+  /// Removes a division that nothing uses. One that has production orders is refused with 409.
+  /// Conflict: deactivate it instead.
+  @DELETE('/api/v1/production/divisions/{id}')
+  Future<void> deleteDivision({
+    @Path('id') required String id,
+  });
+
+  /// The division that normally builds a product.
+  @GET('/api/v1/production/products/{id}/division')
+  Future<ProductDivision> getProductDivision({
+    @Path('id') required String id,
+  });
+
+  /// Sets (or clears) the division that normally builds a product.
+  @PUT('/api/v1/production/products/{id}/division')
+  Future<ProductDivision> setProductDivision({
+    @Path('id') required String id,
+    @Body() required ProductDivision body,
+  });
+
+  /// Lines of confirmed orders that are built from a BOM and not yet fully covered by production.
+  /// orders: what a planner can release. Most urgent orders first.
+  @GET('/api/v1/production/to-release')
+  Future<List<ProductionToRelease>> toRelease();
+}

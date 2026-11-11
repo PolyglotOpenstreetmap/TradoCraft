@@ -1,0 +1,24 @@
+[package]
+name = "tradocraft-engineering"
+description = "Bills of materials (multi-level, revisioned) and serial-number traceability."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+tradocraft-core.workspace = true
+tradocraft-products.workspace = true
+anyhow.workspace = true
+axum.workspace = true
+chrono.workspace = true
+rust_decimal.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sqlx.workspace = true
+utoipa.workspace = true
+utoipa-axum.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+rust_decimal_macros.workspace = true

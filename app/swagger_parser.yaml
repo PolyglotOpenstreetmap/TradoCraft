@@ -1,0 +1,14 @@
+# Generates the typed API client from the backend's OpenAPI document.
+# Regenerate after API changes:  ./tool/generate_api.sh
+swagger_parser:
+  schema_path: ../api/openapi.json
+  output_directory: lib/api/generated
+  name: tradocraft
+  language: dart
+  json_serializer: json_serializable
+  root_client: true
+  root_client_name: TradocraftApi
+  put_clients_in_folder: true
+  enums_to_json: true
+  unknown_enum_value: true
+  include_if_null: true

@@ -1,0 +1,522 @@
+//! Prepared answers ("text modules"): reusable replies with one text per language and
+//! `{{placeholders}}`. Rendered for a ticket in its language; the agent edits before sending.
+
+use std::collections::BTreeMap;
+
+use axum::extract::{Path, Query, State};
+use axum::http::StatusCode;
+use axum::Json;
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use sqlx::{FromRow, PgConnection};
+use tradocraft_core::{
+    audit, is_language, new_id, AppError, AppResult, AppState, CurrentUser, Permission, LANGUAGES,
+};
+use utoipa::{IntoParams, ToSchema};
+use utoipa_axum::router::OpenApiRouter;
+use utoipa_axum::routes;
+use uuid::Uuid;
+
+use crate::render::{render, PLACEHOLDERS};
+
+type ErrorBody = tradocraft_core::error::ErrorBody;
+
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
+pub struct AnswerText {
+    /// nl | fr | en | de | es
+    pub language: String,
+    #[serde(default)]
+    pub subject: String,
+    pub body: String,
+}
+
+#[derive(Debug, Clone, Serialize, ToSchema)]
+pub struct PreparedAnswer {
+    pub id: Uuid,
+    /// Short code to find the answer quickly, e.g. `order-confirmed`.
+    pub code: String,
+    pub name: String,
+    pub category: Option<String>,
+    pub active: bool,
+    pub updated_at: DateTime<Utc>,
+    pub texts: Vec<AnswerText>,
+}
+
+#[derive(Debug, Deserialize, ToSchema)]
+pub struct PreparedAnswerInput {
+    pub code: String,
+    pub name: String,
+    pub category: Option<String>,
+    #[serde(default = "default_true")]
+    pub active: bool,
+    /// At least one language; missing languages fall back to English, then any other.
+    pub texts: Vec<AnswerText>,
+}
+
+fn default_true() -> bool {
+    true
+}
+
+#[derive(Debug, Deserialize, IntoParams)]
+pub struct ListParams {
+    /// Searches code, name and texts.
+    pub q: Option<String>,
+    pub active: Option<bool>,
+}
+
+#[derive(Debug, Serialize, ToSchema)]
+pub struct RenderedAnswer {
+    pub answer_id: Uuid,
+    /// Language of the text used.
+    pub language: String,
+    /// True when no text exists in the ticket's language and another language was used.
+    pub fallback: bool,
+    pub subject: String,
+    pub body: String,
+}
+
+#[derive(FromRow)]
+struct Row {
+    id: Uuid,
+    code: String,
+    name: String,
+    category: Option<String>,
+    active: bool,
+    updated_at: DateTime<Utc>,
+}
+
+async fn texts(conn: &mut PgConnection, ids: &[Uuid]) -> AppResult<Vec<(Uuid, AnswerText)>> {
+    #[derive(FromRow)]
+    struct T {
+        answer_id: Uuid,
+        language: String,
+        subject: String,
+        body: String,
+    }
+    let rows: Vec<T> = sqlx::query_as(
+        "SELECT answer_id, language::text AS language, subject, body FROM helpdesk.prepared_answer_texts
+         WHERE answer_id = ANY($1)
+         ORDER BY array_position(ARRAY['nl','fr','en','de','es'], language::text)",
+    )
+    .bind(ids)
+    .fetch_all(conn)
+    .await?;
+    Ok(rows
+        .into_iter()
+        .map(|t| {
+            (
+                t.answer_id,
+                AnswerText {
+                    language: t.language,
+                    subject: t.subject,
+                    body: t.body,
+                },
+            )
+        })
+        .collect())
+}
+
+async fn load(conn: &mut PgConnection, company_id: Uuid, id: Uuid) -> AppResult<PreparedAnswer> {
+    let r: Row = sqlx::query_as(
+        "SELECT id, code, name, category, active, updated_at FROM helpdesk.prepared_answers WHERE id = $1 AND company_id = $2",
+    )
+    .bind(id)
+    .bind(company_id)
+    .fetch_optional(&mut *conn)
+    .await?
+    .ok_or(AppError::NotFound("prepared answer"))?;
+    let t = texts(conn, &[id]).await?;
+    Ok(PreparedAnswer {
+        id: r.id,
+        code: r.code,
+        name: r.name,
+        category: r.category,
+        active: r.active,
+        updated_at: r.updated_at,
+        texts: t.into_iter().map(|(_, t)| t).collect(),
+    })
+}
+
+impl PreparedAnswerInput {
+    fn validate(&self) -> AppResult<()> {
+        if self.code.trim().is_empty() || self.name.trim().is_empty() {
+            return Err(AppError::Validation("code and name are required".into()));
+        }
+        let filled: Vec<&AnswerText> = self
+            .texts
+            .iter()
+            .filter(|t| !t.body.trim().is_empty())
+            .collect();
+        if filled.is_empty() {
+            return Err(AppError::Validation(
+                "write the answer in at least one language".into(),
+            ));
+        }
+        let mut seen = Vec::new();
+        for t in &filled {
+            if !is_language(&t.language) {
+                return Err(AppError::Validation(format!(
+                    "language must be one of {}",
+                    LANGUAGES.join(", ")
+                )));
+            }
+            if seen.contains(&t.language) {
+                return Err(AppError::Validation(format!(
+                    "language {} appears twice",
+                    t.language
+                )));
+            }
+            seen.push(t.language.clone());
+        }
+        Ok(())
+    }
+}
+
+async fn save_texts(
+    conn: &mut PgConnection,
+    id: Uuid,
+    input: &PreparedAnswerInput,
+) -> AppResult<()> {
+    sqlx::query("DELETE FROM helpdesk.prepared_answer_texts WHERE answer_id = $1")
+        .bind(id)
+        .execute(&mut *conn)
+        .await?;
+    for t in input.texts.iter().filter(|t| !t.body.trim().is_empty()) {
+        sqlx::query(
+            "INSERT INTO helpdesk.prepared_answer_texts (answer_id, language, subject, body) VALUES ($1, $2, $3, $4)",
+        )
+        .bind(id)
+        .bind(&t.language)
+        .bind(t.subject.trim())
+        .bind(&t.body)
+        .execute(&mut *conn)
+        .await?;
+    }
+    Ok(())
+}
+
+#[utoipa::path(get, path = "/prepared-answers", tag = "helpdesk", params(ListParams),
+    responses((status = 200, body = Vec<PreparedAnswer>)))]
+async fn list_answers(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Query(p): Query<ListParams>,
+) -> AppResult<Json<Vec<PreparedAnswer>>> {
+    user.require(Permission::HelpdeskRead)?;
+    let pattern =
+        p.q.as_deref()
+            .map(|q| format!("%{}%", q.trim().to_lowercase()));
+    let rows: Vec<Row> = sqlx::query_as(
+        "SELECT a.id, a.code, a.name, a.category, a.active, a.updated_at FROM helpdesk.prepared_answers a
+         WHERE a.company_id = $1 AND ($3::boolean IS NULL OR a.active = $3)
+           AND ($2::text IS NULL OR lower(a.code) LIKE $2 OR lower(a.name) LIKE $2
+                OR EXISTS (SELECT 1 FROM helpdesk.prepared_answer_texts t
+                           WHERE t.answer_id = a.id AND lower(t.body) LIKE $2))
+         ORDER BY a.category NULLS LAST, a.name",
+    )
+    .bind(user.company_id)
+    .bind(&pattern)
+    .bind(p.active)
+    .fetch_all(&state.db)
+    .await?;
+    let mut conn = state.db.acquire().await?;
+    let ids: Vec<Uuid> = rows.iter().map(|r| r.id).collect();
+    let all = texts(&mut conn, &ids).await?;
+    Ok(Json(
+        rows.into_iter()
+            .map(|r| PreparedAnswer {
+                texts: all
+                    .iter()
+                    .filter(|(id, _)| *id == r.id)
+                    .map(|(_, t)| t.clone())
+                    .collect(),
+                id: r.id,
+                code: r.code,
+                name: r.name,
+                category: r.category,
+                active: r.active,
+                updated_at: r.updated_at,
+            })
+            .collect(),
+    ))
+}
+
+/// Placeholders that can be used in prepared answers, e.g. `{{quotation.number}}`.
+#[utoipa::path(get, path = "/prepared-answers/placeholders", tag = "helpdesk",
+    responses((status = 200, body = Vec<String>)))]
+async fn placeholders(user: CurrentUser) -> AppResult<Json<Vec<String>>> {
+    user.require(Permission::HelpdeskRead)?;
+    Ok(Json(PLACEHOLDERS.iter().map(|p| p.to_string()).collect()))
+}
+
+#[utoipa::path(post, path = "/prepared-answers", tag = "helpdesk", request_body = PreparedAnswerInput,
+    responses((status = 201, body = PreparedAnswer), (status = 409, body = ErrorBody), (status = 422, body = ErrorBody)))]
+async fn create_answer(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Json(input): Json<PreparedAnswerInput>,
+) -> AppResult<(StatusCode, Json<PreparedAnswer>)> {
+    user.require(Permission::AnswersWrite)?;
+    input.validate()?;
+    let mut tx = state.db.begin().await?;
+    let id = new_id();
+    sqlx::query("INSERT INTO helpdesk.prepared_answers (id, company_id, code, name, category, active) VALUES ($1, $2, $3, $4, $5, $6)")
+        .bind(id)
+        .bind(user.company_id)
+        .bind(input.code.trim())
+        .bind(input.name.trim())
+        .bind(input.category.as_deref().map(str::trim).filter(|c| !c.is_empty()))
+        .bind(input.active)
+        .execute(&mut *tx)
+        .await?;
+    save_texts(&mut tx, id, &input).await?;
+    audit::record(
+        &mut tx,
+        &user,
+        "prepared_answer",
+        id,
+        "created",
+        serde_json::json!({ "code": input.code }),
+    )
+    .await?;
+    let a = load(&mut tx, user.company_id, id).await?;
+    tx.commit().await?;
+    Ok((StatusCode::CREATED, Json(a)))
+}
+
+#[utoipa::path(put, path = "/prepared-answers/{id}", tag = "helpdesk", params(("id" = Uuid, Path)),
+    request_body = PreparedAnswerInput, responses((status = 200, body = PreparedAnswer)))]
+async fn update_answer(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+    Json(input): Json<PreparedAnswerInput>,
+) -> AppResult<Json<PreparedAnswer>> {
+    user.require(Permission::AnswersWrite)?;
+    input.validate()?;
+    let mut tx = state.db.begin().await?;
+    let r = sqlx::query(
+        "UPDATE helpdesk.prepared_answers SET code = $3, name = $4, category = $5, active = $6, updated_at = now()
+         WHERE id = $1 AND company_id = $2",
+    )
+    .bind(id)
+    .bind(user.company_id)
+    .bind(input.code.trim())
+    .bind(input.name.trim())
+    .bind(input.category.as_deref().map(str::trim).filter(|c| !c.is_empty()))
+    .bind(input.active)
+    .execute(&mut *tx)
+    .await?;
+    if r.rows_affected() == 0 {
+        return Err(AppError::NotFound("prepared answer"));
+    }
+    save_texts(&mut tx, id, &input).await?;
+    audit::record(
+        &mut tx,
+        &user,
+        "prepared_answer",
+        id,
+        "updated",
+        serde_json::json!({}),
+    )
+    .await?;
+    let a = load(&mut tx, user.company_id, id).await?;
+    tx.commit().await?;
+    Ok(Json(a))
+}
+
+/// Picks the text for `language`: exact match, else English, else the company's default, else any.
+pub fn pick_text<'a>(
+    texts: &'a [AnswerText],
+    language: &str,
+    company_default: &str,
+) -> Option<(&'a AnswerText, bool)> {
+    let find = |l: &str| texts.iter().find(|t| t.language == l);
+    if let Some(t) = find(language) {
+        return Some((t, false));
+    }
+    find("en")
+        .or_else(|| find(company_default))
+        .or_else(|| texts.first())
+        .map(|t| (t, true))
+}
+
+/// The values for the placeholders of a ticket.
+pub async fn ticket_values(
+    conn: &mut PgConnection,
+    user: &CurrentUser,
+    ticket_id: Uuid,
+) -> AppResult<(String, BTreeMap<String, String>)> {
+    #[derive(FromRow)]
+    struct V {
+        language: String,
+        number: String,
+        subject: String,
+        contact_name: String,
+        contact_first_name: Option<String>,
+        contact_last_name: Option<String>,
+        contact_title: Option<String>,
+        contact_address_form: Option<String>,
+        customer_name: Option<String>,
+        company_name: String,
+        company_language: String,
+        quotation_number: Option<String>,
+        quotation_revision: Option<i32>,
+        quotation_total: Option<rust_decimal::Decimal>,
+        order_number: Option<String>,
+        order_reference: Option<String>,
+    }
+    let v: V = sqlx::query_as(
+        "SELECT t.language::text AS language, t.number, t.subject, t.contact_name, ct.first_name AS contact_first_name,
+                ct.last_name AS contact_last_name, ct.title AS contact_title, ct.address_form AS contact_address_form,
+                c.name AS customer_name, co.name AS company_name, co.default_language::text AS company_language,
+                q.number AS quotation_number, q.revision AS quotation_revision, q.total AS quotation_total,
+                o.number AS order_number, o.customer_reference AS order_reference
+         FROM helpdesk.tickets t
+         JOIN core.companies co ON co.id = t.company_id
+         LEFT JOIN crm.customers c ON c.id = t.customer_id
+         LEFT JOIN crm.contacts ct ON ct.id = t.contact_id
+         LEFT JOIN sales.quotations q ON q.id = t.quotation_id
+         LEFT JOIN sales.orders o ON o.id = t.order_id
+         WHERE t.id = $1 AND t.company_id = $2",
+    )
+    .bind(ticket_id)
+    .bind(user.company_id)
+    .fetch_optional(conn)
+    .await?
+    .ok_or(AppError::NotFound("ticket"))?;
+    let customer = v
+        .customer_name
+        .clone()
+        .unwrap_or_else(|| v.contact_name.clone());
+    let contact = if v.contact_name.is_empty() {
+        customer.clone()
+    } else {
+        v.contact_name.clone()
+    };
+    let values = BTreeMap::from([
+        ("customer.name".to_string(), customer),
+        ("contact.name".to_string(), contact),
+        (
+            "contact.first_name".to_string(),
+            v.contact_first_name.clone().unwrap_or_default(),
+        ),
+        (
+            "contact.last_name".to_string(),
+            v.contact_last_name.clone().unwrap_or_default(),
+        ),
+        // The greeting in the language of the answer and the way this person wants to be
+        // addressed. Empty (so left visible) when the ticket has no known person.
+        (
+            "contact.salutation".to_string(),
+            match (
+                &v.contact_last_name,
+                &v.contact_title,
+                &v.contact_address_form,
+            ) {
+                (Some(last), Some(title), Some(form)) => tradocraft_crm::contacts::greeting(
+                    &v.language,
+                    title,
+                    form,
+                    v.contact_first_name.as_deref().unwrap_or_default(),
+                    last,
+                ),
+                _ => String::new(),
+            },
+        ),
+        ("ticket.number".to_string(), v.number),
+        ("ticket.subject".to_string(), v.subject),
+        ("agent.name".to_string(), user.display_name.clone()),
+        ("company.name".to_string(), v.company_name),
+        (
+            "quotation.number".to_string(),
+            v.quotation_number.unwrap_or_default(),
+        ),
+        (
+            "quotation.revision".to_string(),
+            v.quotation_revision
+                .map(|r| r.to_string())
+                .unwrap_or_default(),
+        ),
+        (
+            "quotation.total".to_string(),
+            v.quotation_total
+                .map(|t| format!("€ {}", tradocraft_documents::format_amount(t)))
+                .unwrap_or_default(),
+        ),
+        (
+            "order.number".to_string(),
+            v.order_number.unwrap_or_default(),
+        ),
+        (
+            "order.reference".to_string(),
+            v.order_reference.unwrap_or_default(),
+        ),
+        ("__company_language".to_string(), v.company_language),
+    ]);
+    Ok((v.language, values))
+}
+
+/// Fills in a prepared answer for a ticket, in the ticket's language. Nothing is sent.
+#[utoipa::path(post, path = "/tickets/{id}/prepared-answers/{answer_id}/render", tag = "helpdesk",
+    params(("id" = Uuid, Path), ("answer_id" = Uuid, Path)),
+    responses((status = 200, body = RenderedAnswer), (status = 404, body = ErrorBody)))]
+async fn render_answer(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path((ticket_id, answer_id)): Path<(Uuid, Uuid)>,
+) -> AppResult<Json<RenderedAnswer>> {
+    user.require(Permission::HelpdeskRead)?;
+    let mut conn = state.db.acquire().await?;
+    let (language, values) = ticket_values(&mut conn, &user, ticket_id).await?;
+    let answer = load(&mut conn, user.company_id, answer_id).await?;
+    let (text, fallback) = pick_text(&answer.texts, &language, &values["__company_language"])
+        .ok_or_else(|| AppError::Validation("this prepared answer has no text".into()))?;
+    Ok(Json(RenderedAnswer {
+        answer_id,
+        language: text.language.clone(),
+        fallback,
+        subject: render(&text.subject, &values),
+        body: render(&text.body, &values),
+    }))
+}
+
+pub fn router() -> OpenApiRouter<AppState> {
+    OpenApiRouter::new()
+        .routes(routes!(list_answers, create_answer))
+        .routes(routes!(placeholders))
+        .routes(routes!(update_answer))
+        .routes(routes!(render_answer))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn t(l: &str) -> AnswerText {
+        AnswerText {
+            language: l.into(),
+            subject: String::new(),
+            body: l.into(),
+        }
+    }
+
+    #[test]
+    fn picks_the_ticket_language_then_falls_back() {
+        let texts = vec![t("nl"), t("en"), t("de")];
+        assert_eq!(
+            pick_text(&texts, "de", "nl").map(|(t, f)| (t.language.as_str(), f)),
+            Some(("de", false))
+        );
+        assert_eq!(
+            pick_text(&texts, "es", "nl").map(|(t, f)| (t.language.as_str(), f)),
+            Some(("en", true))
+        );
+        let no_en = vec![t("fr"), t("nl")];
+        assert_eq!(
+            pick_text(&no_en, "es", "nl").map(|(t, f)| (t.language.as_str(), f)),
+            Some(("nl", true))
+        );
+        assert!(pick_text(&[], "nl", "nl").is_none());
+    }
+}

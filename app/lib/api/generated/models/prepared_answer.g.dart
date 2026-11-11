@@ -1,0 +1,31 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'prepared_answer.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+PreparedAnswer _$PreparedAnswerFromJson(Map<String, dynamic> json) =>
+    PreparedAnswer(
+      active: json['active'] as bool,
+      code: json['code'] as String,
+      id: json['id'] as String,
+      name: json['name'] as String,
+      texts: (json['texts'] as List<dynamic>)
+          .map((e) => AnswerText.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
+      category: json['category'] as String?,
+    );
+
+Map<String, dynamic> _$PreparedAnswerToJson(PreparedAnswer instance) =>
+    <String, dynamic>{
+      'active': instance.active,
+      'category': ?instance.category,
+      'code': instance.code,
+      'id': instance.id,
+      'name': instance.name,
+      'texts': instance.texts,
+      'updated_at': instance.updatedAt.toIso8601String(),
+    };

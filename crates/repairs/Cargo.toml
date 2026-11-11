@@ -1,0 +1,21 @@
+[package]
+name = "tradocraft-repairs"
+description = "Repairs: products customers send in, routed through the workshop departments, with photos."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+tradocraft-core.workspace = true
+tradocraft-crm.workspace = true
+tradocraft-helpdesk.workspace = true
+axum.workspace = true
+chrono.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sqlx.workspace = true
+tracing.workspace = true
+utoipa.workspace = true
+utoipa-axum.workspace = true
+uuid.workspace = true

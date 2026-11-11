@@ -1,0 +1,79 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../api/generated/export.dart';
+import 'session.dart';
+
+export '../api/generated/export.dart';
+
+final dioProvider = Provider<Dio>((ref) {
+  final session = ref.watch(sessionProvider);
+  return Dio(
+    BaseOptions(
+      baseUrl: session.serverUrl,
+      headers: session.headers,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 60),
+    ),
+  );
+});
+
+/// Typed client generated from the backend's OpenAPI document.
+final apiProvider = Provider<TradocraftApi>(
+  (ref) => TradocraftApi(ref.watch(dioProvider)),
+);
+
+final meProvider = FutureProvider<Me>(
+  (ref) => ref.watch(apiProvider).core.me(),
+);
+
+/// Whether the signed-in user holds [permission]. False while `me` is loading or failed, so
+/// controls guarded by it stay hidden until the server has answered. Watches [meProvider].
+bool can(WidgetRef ref, String permission) =>
+    ref.watch(meProvider).value?.permissions.contains(permission) ?? false;
+
+/// Power grids, optionally of one country (ISO alpha-2; empty = all).
+final powerGridsProvider = FutureProvider.autoDispose
+    .family<List<PowerGrid>, String>(
+      (ref, country) => ref
+          .watch(apiProvider)
+          .products
+          .listPowerGrids(country: country.isEmpty ? null : country),
+    );
+
+final priceZonesProvider = FutureProvider<List<PriceZone>>(
+  (ref) => ref.watch(apiProvider).products.listPriceZones(),
+);
+
+/// The stable `code` the API adds to errors a client must tell apart (null when absent).
+String? errorCode(Object error) {
+  if (error is DioException) {
+    final data = error.response?.data;
+    if (data is Map && data['code'] is String) return data['code'] as String;
+  }
+  return null;
+}
+
+/// Turns API errors into a sentence for the user (the server sends `{error, message}`).
+String errorMessage(Object error) {
+  if (error is DioException) {
+    final data = error.response?.data;
+    if (data is Map && data['message'] is String) {
+      return data['message'] as String;
+    }
+    if (error.response == null) {
+      return 'Cannot reach the server (${error.message ?? error.type.name}).';
+    }
+    return 'Server error ${error.response?.statusCode}.';
+  }
+  return error.toString();
+}
+
+/// Downloads a PDF produced by the API.
+Future<List<int>> downloadBytes(Dio dio, String path) async {
+  final res = await dio.get<List<int>>(
+    path,
+    options: Options(responseType: ResponseType.bytes),
+  );
+  return res.data ?? const [];
+}

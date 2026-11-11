@@ -1,0 +1,136 @@
+{
+  "format": "tradocraft.configurator",
+  "format_version": 1,
+  "model": {
+    "code": "CONVEYOR-LINE",
+    "name": "Conveyor line",
+    "description": "Fictitious demo: a belt conveyor line made of segments in one or more halls.",
+    "translations": { "nl": { "label": "Transportband" }, "fr": { "label": "Ligne de convoyage" }, "de": { "label": "Förderstrecke" } }
+  },
+  "definition": {
+    "schema_version": 1,
+    "name": "Conveyor line",
+    "description": "Segments with length, load and speed, grouped by hall. Motors are chosen from a range table, drives are built from the motor size, controller boards hold four segments each.",
+    "sections": [
+      { "name": "supply", "label": "Supply" },
+      { "name": "options", "label": "Options" }
+    ],
+    "project": {
+      "fields": [
+        { "name": "phases", "type": "choice", "label": "Supply phases", "required": true, "default": 3,
+          "options": [ { "value": 1, "label": "Single phase" }, { "value": 3, "label": "Three phase" } ],
+          "layout": { "section": "supply", "order": 1 } },
+        { "name": "voltage", "type": "number", "label": "Supply voltage", "dimension": "voltage", "unit": "V",
+          "display_units": ["V", "kV"], "min": 100, "max": 690, "default": 400, "required": true,
+          "layout": { "section": "supply", "order": 2 } },
+        { "name": "coating", "type": "boolean", "label": "Corrosion protection", "default": false,
+          "help": "Protective coating of the motors, priced at 20 % of each motor.",
+          "layout": { "section": "options", "order": 1 } },
+        { "name": "coating_class", "type": "choice", "label": "Corrosivity class", "default": "C4",
+          "visible_if": "coating",
+          "options": [ { "value": "C3" }, { "value": "C4" }, { "value": "C5" } ],
+          "layout": { "section": "options", "order": 2 } },
+        { "name": "install", "type": "boolean", "label": "Installation on site", "default": true,
+          "layout": { "section": "options", "order": 3 } }
+      ],
+      "computed": [
+        { "name": "total_length", "label": "Total length", "unit": "m", "expr": "sum(segments, s => s.length_m)" }
+      ]
+    },
+    "group": {
+      "label": "Hall",
+      "fields": [
+        { "name": "voltage", "type": "number", "label": "Supply voltage in this hall", "dimension": "voltage", "unit": "V",
+          "min": 100, "max": 690, "help": "Leave empty to use the project voltage." }
+      ],
+      "computed": [
+        { "name": "boards", "label": "Controller boards", "expr": "chunks(count(items), 4)" }
+      ]
+    },
+    "item_tables": [
+      {
+        "name": "segments",
+        "label": "Segment",
+        "group_field": "hall",
+        "item_label": "{group_name} / segment {index}",
+        "min_rows": 1,
+        "max_rows": 200,
+        "fields": [
+          { "name": "hall", "type": "text", "label": "Hall", "required": true, "default": "Hall 1", "max_length": 40 },
+          { "name": "length_m", "type": "number", "label": "Length", "dimension": "length", "unit": "m",
+            "display_units": ["m", "mm"], "min": 0.5, "max": 100, "required": true },
+          { "name": "load_kg", "type": "number", "label": "Load", "dimension": "mass", "unit": "kg",
+            "min": 0, "max": 5000, "required": true },
+          { "name": "speed", "type": "number", "label": "Belt speed", "dimension": "speed", "unit": "m/s",
+            "display_units": ["m/s", "m/min"], "min": 0.1, "max": 3, "default": 0.5 },
+          { "name": "emergency_stop", "type": "boolean", "label": "Emergency stop", "default": false }
+        ],
+        "computed": [
+          { "name": "power_kw", "label": "Required power", "unit": "kW",
+            "expr": "round(load_kg * 9.81 * speed * 0.05 / 1000 / 0.85 + length_m * 0.01, 3)" },
+          { "name": "motor", "label": "Motor row", "show": false,
+            "expr": "lookup('motors', {phases: phases, kw: power_kw}, speed > 1.5 ? 1 : 0)" },
+          { "name": "motor_code", "label": "Motor", "overridable": true,
+            "expr": "motor.code",
+            "options_from": "map(filter(rows('motors'), r => r.phases == phases), r => r.code)" },
+          { "name": "motor_size", "label": "Motor size", "show": false,
+            "expr": "product(motor_code).attr('size') ?? motor.size" }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "motors",
+        "label": "Motors by power",
+        "kind": "range",
+        "keys": ["phases"],
+        "range": { "key": "kw", "min": "kw_min", "max": "kw_max" },
+        "on_missing": "error",
+        "columns": [
+          { "name": "phases", "type": "integer" },
+          { "name": "kw_min", "type": "number" },
+          { "name": "kw_max", "type": "number" },
+          { "name": "size", "type": "text" },
+          { "name": "code", "type": "text" }
+        ],
+        "rows": [
+          { "phases": 3, "kw_min": 0, "kw_max": 0.55, "size": "05", "code": "MOT-055" },
+          { "phases": 3, "kw_min": 0.55, "kw_max": 1.1, "size": "11", "code": "MOT-110" },
+          { "phases": 3, "kw_min": 1.1, "kw_max": 2.2, "size": "22", "code": "MOT-220" },
+          { "phases": 3, "kw_min": 2.2, "kw_max": 4.0, "size": "40", "code": "MOT-400" },
+          { "phases": 1, "kw_min": 0, "kw_max": 0.55, "size": "05", "code": "MOT-055" },
+          { "phases": 1, "kw_min": 0.55, "kw_max": 1.1, "size": "11", "code": "MOT-110" }
+        ]
+      }
+    ],
+    "outputs": [
+      { "id": "belt", "label": "Belt per hall", "scope": "item", "code": "'BELT-M'",
+        "quantity": "ceil(length_m * 2 + 1)", "merge_identical": true },
+      { "id": "motor", "label": "Motor per segment", "scope": "item", "code": "motor_code", "merge_identical": true,
+        "children": [
+          { "id": "motor_coating", "when": "coating", "code": "'COAT-PROT'", "quantity": "1",
+            "percent_of_parent": "20", "comment": "Corrosivity class {coating_class}" }
+        ] },
+      { "id": "drive", "label": "Drive per segment", "scope": "item",
+        "code_template": "DRV-{motor_size}{phases == 3 ? 'T' : 'M'}", "merge_identical": true },
+      { "id": "emergency_stop", "scope": "item", "when": "emergency_stop", "code": "'ESTOP-01'", "merge_identical": true },
+      { "id": "tensioner", "scope": "item", "when": "length_m > 40", "code": "'TENS-ST'",
+        "comment": "Segment longer than 40 m", "merge_identical": true },
+      { "id": "boards", "label": "Controller boards per hall", "scope": "group", "for_each": "boards",
+        "code": "'CTRL-B4'", "comment": "{each} of 4 channels used" },
+      { "id": "installation", "when": "install", "code": "'INSTALL'", "section": "Installation",
+        "quantity": "ceil(total_length / 10) * 4 + 4", "comment": "{total_length} m of conveyor" }
+    ],
+    "validations": [
+      { "id": "three_phase_voltage", "scope": "group", "severity": "warning", "field": "voltage",
+        "when": "phases == 3 and voltage < 380",
+        "message": "three-phase motors need at least 380 V, but {voltage} V is set" },
+      { "id": "motor_too_small", "scope": "item", "severity": "warning", "field": "motor_code",
+        "when": "product(motor_code).attr('kw') < power_kw",
+        "message": "motor {motor_code} ({product(motor_code).attr('kw')} kW) is smaller than the required {power_kw} kW" },
+      { "id": "fast_belt", "scope": "item", "severity": "info", "field": "speed",
+        "when": "speed > 1.5",
+        "message": "speeds above 1.5 m/s use the next motor size up" }
+    ]
+  }
+}
