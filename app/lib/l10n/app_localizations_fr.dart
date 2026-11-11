@@ -6228,4 +6228,266 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get envNotSaved =>
       'Fait, mais la liste des environnements n\'a pas pu être enregistrée sur cet appareil.';
+
+  @override
+  String get purchasing => 'Achats';
+
+  @override
+  String get tabSupplier => 'Fournisseur';
+
+  @override
+  String get purchSuppliers => 'Fournisseurs';
+
+  @override
+  String get purchNewSupplier => 'Nouveau fournisseur';
+
+  @override
+  String get purchPaymentTerms => 'Conditions de paiement';
+
+  @override
+  String purchDays(int count) {
+    return '$count jours';
+  }
+
+  @override
+  String get purchActiveOnly => 'Actifs uniquement';
+
+  @override
+  String get purchNameRequired => 'Le nom est obligatoire.';
+
+  @override
+  String get purchCountryInvalid => 'Le pays doit être un code à 2 lettres.';
+
+  @override
+  String get purchCurrencyInvalid => 'La devise doit être un code à 3 lettres.';
+
+  @override
+  String get purchTermsInvalid =>
+      'Les conditions de paiement doivent être un nombre entier de jours.';
+
+  @override
+  String get purchInactive => 'Inactif';
+
+  @override
+  String get purchPriceList => 'Liste de prix';
+
+  @override
+  String get purchAddProduct => 'Ajouter un produit';
+
+  @override
+  String get purchEditPrice => 'Modifier le prix';
+
+  @override
+  String get purchNoPrices => 'Aucun produit dans cette liste de prix.';
+
+  @override
+  String get purchPickProduct => 'Choisissez un produit.';
+
+  @override
+  String get purchPriceInvalid => 'Saisissez un prix unitaire valide.';
+
+  @override
+  String get purchMoqInvalid =>
+      'Saisissez une quantité minimale de commande valide.';
+
+  @override
+  String get purchLeadInvalid =>
+      'Le délai doit être un nombre entier de jours.';
+
+  @override
+  String get purchSupplierArticleCode => 'Code article fournisseur';
+
+  @override
+  String get purchSupplierArticleName => 'Désignation fournisseur';
+
+  @override
+  String get purchMoq => 'Qté min. de commande';
+
+  @override
+  String get purchLeadTimeDays => 'Délai (jours)';
+
+  @override
+  String get purchPreferred => 'Fournisseur préféré';
+
+  @override
+  String purchRemoveProductConfirm(String code) {
+    return 'Retirer $code de cette liste de prix ?';
+  }
+
+  @override
+  String purchMoqValue(String qty) {
+    return 'QMC $qty';
+  }
+
+  @override
+  String purchLeadValue(int days) {
+    return 'délai $days j';
+  }
+
+  @override
+  String get purchNoSuppliers => 'Aucun fournisseur trouvé.';
+
+  @override
+  String get purchOrders => 'Commandes d\'achat';
+
+  @override
+  String get purchNewOrder => 'Nouvelle commande d\'achat';
+
+  @override
+  String get purchNoOrders => 'Aucune commande d\'achat trouvée.';
+
+  @override
+  String get purchOrderNumber => 'Numéro';
+
+  @override
+  String get purchSupplier => 'Fournisseur';
+
+  @override
+  String get purchAllSuppliers => 'Tous les fournisseurs';
+
+  @override
+  String get purchOrderDate => 'Date de commande';
+
+  @override
+  String get purchExpectedDate => 'Livraison prévue';
+
+  @override
+  String get purchStatusDraft => 'brouillon';
+
+  @override
+  String get purchStatusApproved => 'approuvée';
+
+  @override
+  String get purchStatusSent => 'envoyée';
+
+  @override
+  String get purchStatusPartial => 'partiellement reçue';
+
+  @override
+  String get purchStatusReceived => 'reçue';
+
+  @override
+  String get purchStatusCancelled => 'annulée';
+
+  @override
+  String get purchLines => 'Lignes';
+
+  @override
+  String get purchAddLine => 'Ajouter une ligne';
+
+  @override
+  String get purchPickSupplier => 'Choisissez un fournisseur.';
+
+  @override
+  String get purchLineQtyInvalid =>
+      'La quantité doit être supérieure à zéro, avec au plus 4 décimales.';
+
+  @override
+  String get purchLinePriceInvalid =>
+      'Le prix unitaire doit être nul ou positif, avec au plus 4 décimales.';
+
+  @override
+  String get purchNeedLine => 'Ajoutez au moins une ligne.';
+
+  @override
+  String get purchApprove => 'Approuver';
+
+  @override
+  String get purchCancelOrder => 'Annuler la commande';
+
+  @override
+  String purchCancelOrderConfirm(String number) {
+    return 'Annuler la commande d\'achat $number ? Cette action est irréversible.';
+  }
+
+  @override
+  String get purchKeepOrder => 'Conserver la commande';
+
+  @override
+  String get purchQtyReceived => 'Reçu';
+
+  @override
+  String get purchLineTotal => 'Total de la ligne';
+
+  @override
+  String get purchSubtotal => 'Sous-total';
+
+  @override
+  String get purchTax => 'TVA';
+
+  @override
+  String get tabPurchaseOrder => 'Commande d\'achat';
+
+  @override
+  String get purchReceiveGoods => 'Réceptionner les marchandises';
+
+  @override
+  String purchReceiveTitle(String number) {
+    return 'Réceptionner les marchandises de $number';
+  }
+
+  @override
+  String get purchReceiveDestination => 'Emplacement de destination';
+
+  @override
+  String get purchReceiveQty => 'Quantité à réceptionner';
+
+  @override
+  String purchReceiveRemaining(String qty) {
+    return 'Restant : $qty';
+  }
+
+  @override
+  String get purchReceiveSerialsHelp => 'Un numéro de série par ligne';
+
+  @override
+  String get purchDeliveryNote => 'Bon de livraison du fournisseur';
+
+  @override
+  String purchReceiveQtyInvalid(String product, String max) {
+    return '$product : saisissez une quantité entre 0 et $max.';
+  }
+
+  @override
+  String purchReceiveLotNeeded(String product) {
+    return '$product : saisissez un numéro de lot.';
+  }
+
+  @override
+  String purchReceiveSerialWhole(String product) {
+    return '$product : la quantité doit être un nombre entier.';
+  }
+
+  @override
+  String purchReceiveSerialCount(String product, int count) {
+    return '$product : saisissez exactement $count numéros de série différents.';
+  }
+
+  @override
+  String get purchReceiveNothing =>
+      'Saisissez une quantité pour au moins une ligne.';
+
+  @override
+  String get purchReceiveLocationNeeded =>
+      'Choisissez un emplacement de destination.';
+
+  @override
+  String purchReceiptBooked(String number) {
+    return 'Réception $number enregistrée.';
+  }
+
+  @override
+  String get purchOpenReceipt => 'Ouvrir la réception';
+
+  @override
+  String get purchReceipts => 'Réceptions de marchandises';
+
+  @override
+  String get purchReceivedDate => 'Reçu le';
+
+  @override
+  String get purchOpenOrder => 'Commande d\'achat';
+
+  @override
+  String get tabGoodsReceipt => 'Réception';
 }

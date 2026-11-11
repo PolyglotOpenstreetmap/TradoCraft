@@ -15,6 +15,7 @@ import '../models/receive_goods_input.dart';
 import '../models/set_supplier_product_input.dart';
 import '../models/supplier.dart';
 import '../models/supplier_product.dart';
+import '../models/update_purchase_order_input.dart';
 import '../models/update_supplier_input.dart';
 
 part 'purchasing_client.g.dart';
@@ -50,6 +51,13 @@ abstract class PurchasingClient {
   @GET('/api/v1/purchase-orders/{id}')
   Future<PurchaseOrderDetail> getOrder({
     @Path('id') required String id,
+  });
+
+  /// [id] - Purchase Order ID
+  @PUT('/api/v1/purchase-orders/{id}')
+  Future<PurchaseOrderDetail> updateOrder({
+    @Path('id') required String id,
+    @Body() required UpdatePurchaseOrderInput body,
   });
 
   /// [id] - Purchase Order ID
