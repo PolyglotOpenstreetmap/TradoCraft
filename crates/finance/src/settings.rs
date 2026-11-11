@@ -64,32 +64,36 @@ pub async fn update(
     user: &CurrentUser,
     input: UpdateFinanceSettingsInput,
 ) -> AppResult<FinanceSettings> {
-    let cur = load(conn, user.company_id).await?;
-    let qty = input
-        .quantity_tolerance_pct
-        .unwrap_or(cur.quantity_tolerance_pct);
-    let price = input.price_tolerance_pct.unwrap_or(cur.price_tolerance_pct);
-    for (name, v) in [("quantity tolerance", qty), ("price tolerance", price)] {
-        if v < Decimal::ZERO || v > Decimal::from(100) || v.scale() > 4 {
-            return Err(AppError::Validation(format!(
-                "{name} must be between 0 and 100 percent with at most 4 decimals"
-            )));
+    for (name, v) in [
+        ("quantity tolerance", input.quantity_tolerance_pct),
+        ("price tolerance", input.price_tolerance_pct),
+    ] {
+        if let Some(v) = v {
+            if v < Decimal::ZERO || v > Decimal::from(100) || v.scale() > 4 {
+                return Err(AppError::Validation(format!(
+                    "{name} must be between 0 and 100 percent with at most 4 decimals"
+                )));
+            }
         }
     }
+    // Each column is applied against the row as it is now: an absent input keeps the stored
+    // value (the defaults on a first write), whatever a concurrent update did meanwhile.
     sqlx::query(
         "INSERT INTO finance.settings (company_id, quantity_tolerance_pct, price_tolerance_pct,
                                        updated_by_user_id, updated_at)
-         VALUES ($1, $2, $3, $4, now())
+         VALUES ($1, COALESCE($2, 0), COALESCE($3, 2), $4, now())
          ON CONFLICT (company_id) DO UPDATE
-         SET quantity_tolerance_pct = $2, price_tolerance_pct = $3,
+         SET quantity_tolerance_pct = COALESCE($2, finance.settings.quantity_tolerance_pct),
+             price_tolerance_pct = COALESCE($3, finance.settings.price_tolerance_pct),
              updated_by_user_id = $4, updated_at = now()",
     )
     .bind(user.company_id)
-    .bind(qty)
-    .bind(price)
+    .bind(input.quantity_tolerance_pct)
+    .bind(input.price_tolerance_pct)
     .bind(user.user_id)
     .execute(&mut *conn)
     .await?;
+    let saved = load(conn, user.company_id).await?;
     audit::record(
         conn,
         user,
@@ -97,10 +101,10 @@ pub async fn update(
         user.company_id,
         "updated",
         serde_json::json!({
-            "quantity_tolerance_pct": qty.to_string(),
-            "price_tolerance_pct": price.to_string(),
+            "quantity_tolerance_pct": saved.quantity_tolerance_pct.to_string(),
+            "price_tolerance_pct": saved.price_tolerance_pct.to_string(),
         }),
     )
     .await?;
-    load(conn, user.company_id).await
+    Ok(saved)
 }

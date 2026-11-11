@@ -231,16 +231,19 @@ pub struct InvoiceFilter {
     pub offset: Option<i64>,
 }
 
+/// Columns and table shared by every invoice header query.
 const SELECT_SUMMARY: &str = "SELECT id, company_id, number, supplier_id, purchase_order_id,
     invoice_number, invoice_date, due_date, currency, status, net_total, vat_total, gross_total,
     notes, dispute_reason, override_reason, created_by_user_id, approved_by_user_id, approved_at,
     paid_at, payment_reference, created_at, updated_at
     FROM finance.supplier_invoices";
 
+/// Rounds an amount to 2 decimals, half away from zero.
 fn money(v: Decimal) -> Decimal {
     v.round_dp_with_strategy(2, RoundingStrategy::MidpointAwayFromZero)
 }
 
+/// Maps a unique violation to the duplicate-invoice-number conflict; other errors pass through.
 fn duplicate_or(e: sqlx::Error) -> AppError {
     if let sqlx::Error::Database(d) = &e {
         if d.code().as_deref() == Some("23505") {
@@ -264,6 +267,7 @@ struct ValidLine {
     vat: Decimal,
 }
 
+/// Validates line input against the purchase order (if any) and computes the line amounts.
 fn validate_lines(
     inputs: Vec<InvoiceLineInput>,
     po: Option<&PurchaseOrderDetail>,
@@ -328,6 +332,7 @@ fn validate_lines(
     Ok(out)
 }
 
+/// Stores the validated lines and returns the net and VAT totals.
 async fn insert_lines(
     conn: &mut PgConnection,
     invoice_id: Uuid,
@@ -452,6 +457,7 @@ pub async fn match_report(
     Ok(report)
 }
 
+/// Fills supplier names and purchase order numbers, read through purchasing.
 async fn fill_names(
     conn: &mut PgConnection,
     company_id: Uuid,
@@ -474,6 +480,7 @@ async fn fill_names(
     Ok(())
 }
 
+/// Loads an invoice header of the company, optionally locking the row.
 async fn load_summary(
     conn: &mut PgConnection,
     company_id: Uuid,
@@ -494,6 +501,7 @@ async fn load_summary(
     Ok(s)
 }
 
+/// Loads the lines of an invoice in order.
 async fn load_lines(conn: &mut PgConnection, invoice_id: Uuid) -> AppResult<Vec<InvoiceLine>> {
     sqlx::query_as::<_, InvoiceLine>(
         "SELECT id, invoice_id, line_number, purchase_order_line_id, product_id, description,
@@ -524,6 +532,7 @@ pub async fn list(
     company_id: Uuid,
     f: InvoiceFilter,
 ) -> AppResult<InvoicePage> {
+    /// Appends the WHERE clause of the list filters to the query.
     fn filters<'a>(
         qb: &mut QueryBuilder<'a, sqlx::Postgres>,
         company_id: Uuid,
@@ -608,6 +617,7 @@ async fn prefill(
         .collect())
 }
 
+/// Trims the supplier invoice number and rejects an empty or overlong one.
 fn required_number(raw: &str) -> AppResult<String> {
     let n = raw.trim();
     if n.is_empty() || n.len() > 64 {
@@ -740,6 +750,7 @@ pub async fn create(
     load(conn, user.company_id, id).await
 }
 
+/// Stores the invoice totals.
 async fn set_totals(
     conn: &mut PgConnection,
     id: Uuid,
@@ -759,6 +770,7 @@ async fn set_totals(
     Ok(())
 }
 
+/// The 409 for an action the invoice status does not allow.
 fn conflict_status(inv: &InvoiceSummary, what: &str) -> AppError {
     AppError::Conflict(format!(
         "invoice {} is {} and cannot be {what}",
@@ -856,6 +868,7 @@ pub async fn delete(conn: &mut PgConnection, user: &CurrentUser, id: Uuid) -> Ap
     Ok(())
 }
 
+/// Sets the invoice status.
 async fn set_status(conn: &mut PgConnection, id: Uuid, status: &str) -> AppResult<()> {
     sqlx::query(
         "UPDATE finance.supplier_invoices SET status = $2, updated_at = now() WHERE id = $1",

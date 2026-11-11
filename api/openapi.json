@@ -5626,6 +5626,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Returns the match tolerances of the company.",
         "operationId": "get_settings",
         "responses": {
           "200": {
@@ -5664,6 +5665,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Changes the match tolerances; omitted fields keep their value.",
         "operationId": "update_settings",
         "requestBody": {
           "content": {
@@ -20657,6 +20659,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Lists supplier invoices with filters and paging.",
         "operationId": "list_invoices",
         "parameters": [
           {
@@ -20783,6 +20786,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Registers a draft supplier invoice, optionally prefilled from a purchase order.",
         "operationId": "create_invoice",
         "requestBody": {
           "content": {
@@ -20863,6 +20867,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Returns a supplier invoice with its lines and the live three-way match report.",
         "operationId": "get_invoice",
         "parameters": [
           {
@@ -20923,6 +20928,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Changes a draft supplier invoice and replaces its lines.",
         "operationId": "update_invoice",
         "parameters": [
           {
@@ -21013,6 +21019,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Deletes a draft supplier invoice.",
         "operationId": "delete_invoice",
         "parameters": [
           {
@@ -21078,6 +21085,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Approves a matched invoice, or any draft or matched one with an override reason.",
         "operationId": "approve_invoice",
         "parameters": [
           {
@@ -21160,6 +21168,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Disputes an invoice with a reason.",
         "operationId": "dispute_invoice",
         "parameters": [
           {
@@ -21252,6 +21261,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Records that an approved invoice was paid.",
         "operationId": "mark_paid",
         "parameters": [
           {
@@ -21334,6 +21344,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Takes a disputed or matched invoice back to draft.",
         "operationId": "reopen_invoice",
         "parameters": [
           {
@@ -21406,6 +21417,7 @@
         "tags": [
           "finance"
         ],
+        "summary": "Re-evaluates the match: all lines ok makes the invoice matched, otherwise it stays draft.",
         "operationId": "submit_match",
         "parameters": [
           {

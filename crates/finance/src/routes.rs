@@ -14,6 +14,7 @@ use crate::invoices::{
 };
 use crate::settings::{self, FinanceSettings, UpdateFinanceSettingsInput};
 
+/// Error body used in the OpenAPI responses.
 type ErrorBody = tradocraft_core::error::ErrorBody;
 
 /// Query filters for listing supplier invoices.
@@ -33,6 +34,7 @@ pub struct ListInvoicesParams {
     pub offset: Option<i64>,
 }
 
+/// Lists supplier invoices with filters and paging.
 #[utoipa::path(
     get,
     path = "/supplier-invoices",
@@ -68,6 +70,7 @@ async fn list_invoices(
     Ok(Json(page))
 }
 
+/// Registers a draft supplier invoice, optionally prefilled from a purchase order.
 #[utoipa::path(
     post,
     path = "/supplier-invoices",
@@ -94,6 +97,7 @@ async fn create_invoice(
     Ok((StatusCode::CREATED, Json(d)))
 }
 
+/// Returns a supplier invoice with its lines and the live three-way match report.
 #[utoipa::path(
     get,
     path = "/supplier-invoices/{id}",
@@ -112,10 +116,17 @@ async fn get_invoice(
     Path(id): Path<Uuid>,
 ) -> AppResult<Json<InvoiceDetail>> {
     user.require(Permission::FinanceRead)?;
-    let mut conn = state.db.acquire().await?;
-    Ok(Json(invoices::load(&mut conn, user.company_id, id).await?))
+    // One snapshot for header, lines and the match report (which reads purchasing data).
+    let mut tx = state.db.begin().await?;
+    sqlx::query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY")
+        .execute(&mut *tx)
+        .await?;
+    let detail = invoices::load(&mut tx, user.company_id, id).await?;
+    tx.rollback().await?;
+    Ok(Json(detail))
 }
 
+/// Changes a draft supplier invoice and replaces its lines.
 #[utoipa::path(
     put,
     path = "/supplier-invoices/{id}",
@@ -144,6 +155,7 @@ async fn update_invoice(
     Ok(Json(d))
 }
 
+/// Deletes a draft supplier invoice.
 #[utoipa::path(
     delete,
     path = "/supplier-invoices/{id}",
@@ -169,6 +181,7 @@ async fn delete_invoice(
     Ok(StatusCode::NO_CONTENT)
 }
 
+/// Re-evaluates the match: all lines ok makes the invoice matched, otherwise it stays draft.
 #[utoipa::path(
     post,
     path = "/supplier-invoices/{id}/submit-match",
@@ -194,6 +207,7 @@ async fn submit_match(
     Ok(Json(d))
 }
 
+/// Approves a matched invoice, or any draft or matched one with an override reason.
 #[utoipa::path(
     post,
     path = "/supplier-invoices/{id}/approve",
@@ -221,6 +235,7 @@ async fn approve_invoice(
     Ok(Json(d))
 }
 
+/// Disputes an invoice with a reason.
 #[utoipa::path(
     post,
     path = "/supplier-invoices/{id}/dispute",
@@ -249,6 +264,7 @@ async fn dispute_invoice(
     Ok(Json(d))
 }
 
+/// Takes a disputed or matched invoice back to draft.
 #[utoipa::path(
     post,
     path = "/supplier-invoices/{id}/reopen",
@@ -274,6 +290,7 @@ async fn reopen_invoice(
     Ok(Json(d))
 }
 
+/// Records that an approved invoice was paid.
 #[utoipa::path(
     post,
     path = "/supplier-invoices/{id}/mark-paid",
@@ -301,6 +318,7 @@ async fn mark_paid(
     Ok(Json(d))
 }
 
+/// Returns the match tolerances of the company.
 #[utoipa::path(
     get,
     path = "/finance/settings",
@@ -320,6 +338,7 @@ async fn get_settings(
     Ok(Json(settings::load(&mut conn, user.company_id).await?))
 }
 
+/// Changes the match tolerances; omitted fields keep their value.
 #[utoipa::path(
     put,
     path = "/finance/settings",
