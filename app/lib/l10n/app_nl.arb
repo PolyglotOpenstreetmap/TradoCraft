@@ -50,7 +50,7 @@
   "answerFallback": "Nog geen tekst in het {ticketLanguage}: de tekst in het {usedLanguage} werd gebruikt. Vertaal voor verzending.",
   "anyValue": "Alle",
   "appLanguage": "Taal",
-  "appTitle": "tradocraft",
+  "appTitle": "TradoCraft",
   "apply": "Toepassen",
   "assignTo": "Toewijzen aan",
   "attachFile": "Bestand bijvoegen",

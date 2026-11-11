@@ -169,7 +169,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get appLanguage => 'Taal';
 
   @override
-  String get appTitle => 'tradocraft';
+  String get appTitle => 'TradoCraft';
 
   @override
   String get apply => 'Toepassen';

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'api.dart';
+import 'brand.dart';
 import 'detail_routes.dart';
 import 'environment_ui.dart';
 import 'environments.dart';
@@ -13,9 +14,6 @@ import 'workspace.dart';
 import '../l10n/l10n.dart';
 import '../shared/app_icons.dart';
 import '../shared/module_icon.dart';
-
-/// The brand label shown in the navigation (the only place the app spells its name for people).
-const brandName = 'TradoCraft';
 
 class _Dest {
   const _Dest(this.path, this.label, this.icon, this.permission, {this.unless});

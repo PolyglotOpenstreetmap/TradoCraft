@@ -20,7 +20,7 @@ static void first_frame_cb(MyApplication* self, FlView* view) {
   gtk_widget_show(gtk_widget_get_toplevel(GTK_WIDGET(view)));
 }
 
-// The window title: "tradocraft", plus the profile when started with --profile=<name> or with
+// The window title: "TradoCraft", plus the profile when started with --profile=<name> or with
 // TRAYD_PROFILE set, so that several windows (one per role) can be told apart.
 static gchar* window_title(char** args) {
   const gchar* profile = nullptr;
@@ -35,9 +35,9 @@ static gchar* window_title(char** args) {
     profile = g_getenv("TRAYD_PROFILE");
   }
   if (profile == nullptr || *profile == '\0') {
-    return g_strdup("tradocraft");
+    return g_strdup("TradoCraft");
   }
-  return g_strdup_printf("tradocraft - %s", profile);
+  return g_strdup_printf("TradoCraft - %s", profile);
 }
 
 // Sets the window icon from data/icons/app_icon.png next to the executable

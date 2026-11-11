@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/router.dart';
 import 'l10n/l10n.dart';
+import 'app/brand.dart';
 import 'app/environments.dart';
 import 'app/profile.dart';
 import 'app/session.dart';
@@ -52,7 +53,7 @@ class TradocraftApp extends ConsumerWidget {
     // Keeps the list of environments following the session for as long as the app runs.
     ref.read(environmentsProvider);
     return MaterialApp.router(
-      title: 'tradocraft',
+      title: brandName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: const Color(0xFF2F5D62),
@@ -69,7 +70,7 @@ class TradocraftApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       onGenerateTitle: (context) {
         final profile = ref.read(profileProvider);
-        return profile == null ? 'tradocraft' : 'tradocraft - $profile';
+        return appWindowTitle(profile);
       },
     );
   }

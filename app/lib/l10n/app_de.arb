@@ -50,7 +50,7 @@
   "answerFallback": "Noch kein Text auf {ticketLanguage}: der Text auf {usedLanguage} wurde verwendet. Vor dem Senden übersetzen.",
   "anyValue": "Alle",
   "appLanguage": "Sprache",
-  "appTitle": "tradocraft",
+  "appTitle": "TradoCraft",
   "apply": "Anwenden",
   "assignTo": "Zuweisen an",
   "attachFile": "Datei anhängen",

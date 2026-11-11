@@ -1,6 +1,6 @@
 {
-    "name": "tradocraft_app",
-    "short_name": "tradocraft_app",
+    "name": "TradoCraft",
+    "short_name": "TradoCraft",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

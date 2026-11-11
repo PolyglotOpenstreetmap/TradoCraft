@@ -220,7 +220,7 @@ final environmentProbeProvider =
           final d = res.data;
           final kind = d is Map ? EnvironmentKind.parse(d['kind']) : null;
           if (d is! Map || kind == null || d['name'] is! String) {
-            throw const FormatException('Not a tradocraft server');
+            throw const FormatException('Not a TradoCraft server');
           }
           return EnvironmentProbe(
             name: d['name'] as String,

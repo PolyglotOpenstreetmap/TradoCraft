@@ -169,7 +169,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appLanguage => 'Sprache';
 
   @override
-  String get appTitle => 'tradocraft';
+  String get appTitle => 'TradoCraft';
 
   @override
   String get apply => 'Anwenden';
