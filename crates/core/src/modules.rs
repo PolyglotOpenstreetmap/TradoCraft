@@ -24,13 +24,15 @@ pub enum Module {
     Production,
     /// User-defined reports over the other modules' data (ADR 0042).
     Reports,
+    /// Supplier invoices and the three-way match: an AP register, not a ledger (ADR 0046).
+    Finance,
 }
 
 /// Permissions that belong to no module: they cannot be switched off.
 pub const ALWAYS_ON: [Permission; 1] = [Permission::UsersAdmin];
 
 impl Module {
-    pub const ALL: [Module; 14] = [
+    pub const ALL: [Module; 15] = [
         Module::Customers,
         Module::Products,
         Module::Sales,
@@ -45,6 +47,7 @@ impl Module {
         Module::Delivery,
         Module::Production,
         Module::Reports,
+        Module::Finance,
     ];
 
     pub fn code(self) -> &'static str {
@@ -63,6 +66,7 @@ impl Module {
             Module::Delivery => "delivery",
             Module::Production => "production",
             Module::Reports => "reports",
+            Module::Finance => "finance",
         }
     }
 
@@ -144,6 +148,7 @@ impl Module {
                 ProductionAdmin,
             ],
             Module::Reports => &[ReportsRead, ReportsWrite],
+            Module::Finance => &[FinanceRead, FinanceWrite, FinanceApprove],
         }
     }
 
@@ -153,6 +158,8 @@ impl Module {
         match self {
             Module::Sales => &[Module::Customers, Module::Products],
             Module::Purchasing => &[Module::Products, Module::Inventory],
+            // Invoices are matched against purchase orders and goods receipts.
+            Module::Finance => &[Module::Purchasing],
             Module::Engineering | Module::Inventory => &[Module::Products],
             Module::Repairs | Module::Field => &[Module::Customers],
             // Models reference products; configurations become quotations.
@@ -385,6 +392,7 @@ mod tests {
                 "engineering",
                 "inventory",
                 "purchasing",
+                "finance",
                 "configurator",
                 "delivery",
                 "production"
