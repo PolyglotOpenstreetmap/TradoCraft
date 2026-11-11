@@ -8,7 +8,7 @@ use common::{call, call_portal};
 use serde_json::{json, Value};
 use sqlx::PgPool;
 use std::sync::Arc;
-use tradocraft_core::auth::{AuthConfig, OidcVerifier};
+use tradocraft_core::auth::{bind_oidc_user, AuthConfig, Claims, OidcVerifier};
 use tradocraft_core::companies::BootstrapConfig;
 use tradocraft_core::environment::EnvironmentConfig;
 use tradocraft_core::{AppState, DocumentConfig};
@@ -223,6 +223,66 @@ async fn outside_dev_mode_the_endpoint_needs_a_token(db: PgPool) {
     .await
     .unwrap();
     assert_eq!(subject, None, "bound at the first sign-in");
+
+    // First sign-in through the identity provider. The token signature is checked by the
+    // verifier before this point; the binding step takes the verified claims.
+    let state = AppState {
+        db: db.clone(),
+        auth: Arc::new(AuthConfig::Dev {
+            default_email: None,
+        }),
+        documents: Arc::new(DocumentConfig {
+            typst_bin: "typst".into(),
+            template_dir: "templates".into(),
+        }),
+    };
+    let claims = |email: Option<&str>, verified: Option<bool>| Claims {
+        sub: "idp|boss".into(),
+        email: email.map(str::to_string),
+        email_verified: verified,
+    };
+    for (email, verified) in [
+        (Some("boss@fresh.example"), Some(false)),
+        (Some("boss@fresh.example"), None),
+        (None, Some(true)),
+    ] {
+        assert!(
+            bind_oidc_user(&state, &claims(email, verified))
+                .await
+                .is_err(),
+            "{email:?} {verified:?}"
+        );
+    }
+    let subject: Option<String> = sqlx::query_scalar(
+        "SELECT oidc_subject FROM core.users WHERE email = 'boss@fresh.example'",
+    )
+    .fetch_one(&db)
+    .await
+    .unwrap();
+    assert_eq!(subject, None, "nothing bound for unverified identities");
+
+    let uid = bind_oidc_user(&state, &claims(Some("Boss@Fresh.example"), Some(true)))
+        .await
+        .unwrap();
+    assert_eq!(uid.to_string(), res["admin"]["user_id"].as_str().unwrap());
+    let (subject, roles, company): (String, Vec<String>, uuid::Uuid) = sqlx::query_as(
+        "SELECT u.oidc_subject, uc.roles, uc.company_id FROM core.users u
+         JOIN core.user_companies uc ON uc.user_id = u.id WHERE u.id = $1 AND uc.is_default",
+    )
+    .bind(uid)
+    .fetch_one(&db)
+    .await
+    .unwrap();
+    assert_eq!(subject, "idp|boss");
+    assert_eq!(roles, ["admin"]);
+    assert_eq!(company.to_string(), res["company"]["id"].as_str().unwrap());
+    // The bound subject now signs in without the e-mail claim.
+    let again = Claims {
+        sub: "idp|boss".into(),
+        email: None,
+        email_verified: None,
+    };
+    assert_eq!(bind_oidc_user(&state, &again).await.unwrap(), uid);
 }
 
 #[sqlx::test(migrator = "tradocraft_api::MIGRATOR")]

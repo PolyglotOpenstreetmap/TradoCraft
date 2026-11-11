@@ -7036,4 +7036,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get moduleFinance => 'Finanzas';
+
+  @override
+  String get setupErrInsecure =>
+      'El token de configuración no se envía por una conexión sin cifrar a otro equipo. Use una dirección https:// (http simple solo se permite para localhost).';
+
+  @override
+  String get setupUnavailable =>
+      'La configuración no está disponible en este servidor: ya tiene una empresa o la configuración está desactivada.';
 }

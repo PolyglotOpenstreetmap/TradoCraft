@@ -60,7 +60,7 @@ never returned, and its `Debug` output is redacted. The creation is audited
 *Per environment.* In dev mode the admin e-mail simply becomes the dev user: the app stores it as
 the session's `X-Dev-User` and is signed in as soon as the company exists. With OIDC the admin is
 pre-provisioned by e-mail; the first sign-in through the identity provider with that e-mail binds
-the subject (ADR 0004 flow), so the operator must make sure the IdP account of that e-mail
+the subject (ADR 0004 flow) only when the identity provider marks that e-mail as verified (`email_verified` must be true; `preferred_username` is no longer a fallback), so the operator must make sure the IdP account of that e-mail
 belongs to the intended person. The wizard shows these instructions instead of signing in.
 
 *App.* A top-level `/setup` wizard (company, legal name and VAT, country, currency and language,

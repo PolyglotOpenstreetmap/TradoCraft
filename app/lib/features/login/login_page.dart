@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -43,6 +45,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   /// The address [_needsSetup] was asked for, so a late answer for another address is ignored.
   String? _setupAskedFor;
+
+  Timer? _setupDebounce;
+
+  /// The address was edited: the earlier answer no longer applies, so the offer goes away and the
+  /// new address is asked after a short pause. A late answer for an older address is ignored.
+  void _serverEdited(String _) {
+    _setupDebounce?.cancel();
+    _setupAskedFor = null;
+    if (_needsSetup) setState(() => _needsSetup = false);
+    _setupDebounce = Timer(const Duration(milliseconds: 500), _checkSetup);
+  }
+
+  @override
+  void dispose() {
+    _setupDebounce?.cancel();
+    super.dispose();
+  }
 
   /// Asks the server in the address field whether it needs setting up. Failures (unreachable,
   /// not a TradoCraft server) just mean no offer.
@@ -142,6 +161,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   TextField(
                     controller: _server,
                     decoration: InputDecoration(labelText: context.l10n.server),
+                    onChanged: _serverEdited,
                     onSubmitted: (_) => _checkSetup(),
                   ),
                   SizedBox(height: 12),

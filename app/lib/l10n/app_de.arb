@@ -2264,5 +2264,7 @@
   "finSettingsHelp": "Größte akzeptierte Abweichung zwischen Bestellung und Rechnung, bevor eine Position als Abweichung gilt.",
   "finCreateInvoice": "Eingangsrechnung anlegen",
   "userRoleFinance": "Finanzen",
-  "moduleFinance": "Finanzen"
+  "moduleFinance": "Finanzen",
+  "setupErrInsecure": "Das Einrichtungstoken wird nicht über eine unverschlüsselte Verbindung an einen anderen Rechner gesendet. Verwenden Sie eine https://-Adresse (reines http ist nur für localhost erlaubt).",
+  "setupUnavailable": "Die Einrichtung ist auf diesem Server nicht verfügbar: Er hat bereits ein Unternehmen, oder die Einrichtung ist deaktiviert."
 }

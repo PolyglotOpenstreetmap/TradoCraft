@@ -7047,4 +7047,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get moduleFinance => 'Finance';
+
+  @override
+  String get setupErrInsecure =>
+      'Le jeton d\'installation n\'est pas envoyé par une connexion non chiffrée vers un autre ordinateur. Utilisez une adresse https:// (http simple n\'est autorisé que pour localhost).';
+
+  @override
+  String get setupUnavailable =>
+      'La configuration n\'est pas disponible sur ce serveur : il a déjà une société, ou la configuration est désactivée.';
 }

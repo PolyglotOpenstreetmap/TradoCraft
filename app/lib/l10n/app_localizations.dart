@@ -12701,6 +12701,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finance'**
   String get moduleFinance;
+
+  /// No description provided for @setupErrInsecure.
+  ///
+  /// In en, this message translates to:
+  /// **'The setup token is not sent over an unencrypted connection to another computer. Use an https:// address (plain http is only allowed for localhost).'**
+  String get setupErrInsecure;
+
+  /// No description provided for @setupUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up is not available on this server: it already has a company, or setting up is disabled.'**
+  String get setupUnavailable;
 }
 
 class _AppLocalizationsDelegate
