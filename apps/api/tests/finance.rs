@@ -793,6 +793,16 @@ async fn settings_have_defaults_validation_and_audit(db: PgPool) {
     assert_eq!(dec(&s["price_tolerance_pct"]), q("3.5"));
     assert_eq!(dec(&s["quantity_tolerance_pct"]), q("0"));
     assert!(s["updated_at"].is_string());
+    // Each update only touches what it sets.
+    let qty = json!({ "quantity_tolerance_pct": "5" });
+    put(&e.app, FIN, "/finance/settings", qty).await;
+    let price = json!({ "price_tolerance_pct": "4" });
+    let (_, s) = put(&e.app, FIN, "/finance/settings", price).await;
+    assert_eq!(dec(&s["quantity_tolerance_pct"]), q("5"));
+    assert_eq!(dec(&s["price_tolerance_pct"]), q("4"));
+    let (_, s) = put(&e.app, FIN, "/finance/settings", json!({})).await;
+    assert_eq!(dec(&s["quantity_tolerance_pct"]), q("5"));
+    assert_eq!(dec(&s["price_tolerance_pct"]), q("4"));
     for bad in [
         json!({ "price_tolerance_pct": "-1" }),
         json!({ "quantity_tolerance_pct": "101" }),
@@ -805,7 +815,7 @@ async fn settings_have_defaults_validation_and_audit(db: PgPool) {
             .fetch_one(&e.db)
             .await
             .unwrap();
-    assert_eq!(n, 1);
+    assert_eq!(n, 4);
 }
 
 #[sqlx::test(migrator = "tradocraft_api::MIGRATOR")]

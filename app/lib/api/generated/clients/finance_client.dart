@@ -21,14 +21,18 @@ part 'finance_client.g.dart';
 abstract class FinanceClient {
   factory FinanceClient(Dio dio, {String? baseUrl}) = _FinanceClient;
 
+  /// Returns the match tolerances of the company.
   @GET('/api/v1/finance/settings')
   Future<FinanceSettings> getSettings();
 
+  /// Changes the match tolerances; omitted fields keep their value.
   @PUT('/api/v1/finance/settings')
   Future<FinanceSettings> updateSettings({
     @Body() required UpdateFinanceSettingsInput body,
   });
 
+  /// Lists supplier invoices with filters and paging.
+  ///
   /// [status] - draft | matched | disputed | approved | paid.
   ///
   /// [supplierId] - Only invoices of this supplier.
@@ -50,58 +54,75 @@ abstract class FinanceClient {
     @Query('offset') int? offset,
   });
 
+  /// Registers a draft supplier invoice, optionally prefilled from a purchase order.
   @POST('/api/v1/supplier-invoices')
   Future<InvoiceDetail> createInvoice({
     @Body() required NewInvoiceInput body,
   });
 
-  /// [id] - Supplier invoice ID
+  /// Returns a supplier invoice with its lines and the live three-way match report.
+  ///
+  /// [id] - Supplier invoice ID.
   @GET('/api/v1/supplier-invoices/{id}')
   Future<InvoiceDetail> getInvoice({
     @Path('id') required String id,
   });
 
-  /// [id] - Supplier invoice ID
+  /// Changes a draft supplier invoice and replaces its lines.
+  ///
+  /// [id] - Supplier invoice ID.
   @PUT('/api/v1/supplier-invoices/{id}')
   Future<InvoiceDetail> updateInvoice({
     @Path('id') required String id,
     @Body() required UpdateInvoiceInput body,
   });
 
-  /// [id] - Supplier invoice ID
+  /// Deletes a draft supplier invoice.
+  ///
+  /// [id] - Supplier invoice ID.
   @DELETE('/api/v1/supplier-invoices/{id}')
   Future<void> deleteInvoice({
     @Path('id') required String id,
   });
 
-  /// [id] - Supplier invoice ID
+  /// Approves a matched invoice, or any draft or matched one with an override reason.
+  ///
+  /// [id] - Supplier invoice ID.
   @POST('/api/v1/supplier-invoices/{id}/approve')
   Future<InvoiceDetail> approveInvoice({
     @Path('id') required String id,
     @Body() required ApproveInvoiceInput body,
   });
 
-  /// [id] - Supplier invoice ID
+  /// Disputes an invoice with a reason.
+  ///
+  /// [id] - Supplier invoice ID.
   @POST('/api/v1/supplier-invoices/{id}/dispute')
   Future<InvoiceDetail> disputeInvoice({
     @Path('id') required String id,
     @Body() required DisputeInvoiceInput body,
   });
 
-  /// [id] - Supplier invoice ID
+  /// Records that an approved invoice was paid.
+  ///
+  /// [id] - Supplier invoice ID.
   @POST('/api/v1/supplier-invoices/{id}/mark-paid')
   Future<InvoiceDetail> markPaid({
     @Path('id') required String id,
     @Body() required MarkPaidInput body,
   });
 
-  /// [id] - Supplier invoice ID
+  /// Takes a disputed or matched invoice back to draft.
+  ///
+  /// [id] - Supplier invoice ID.
   @POST('/api/v1/supplier-invoices/{id}/reopen')
   Future<InvoiceDetail> reopenInvoice({
     @Path('id') required String id,
   });
 
-  /// [id] - Supplier invoice ID
+  /// Re-evaluates the match: all lines ok makes the invoice matched, otherwise it stays draft.
+  ///
+  /// [id] - Supplier invoice ID.
   @POST('/api/v1/supplier-invoices/{id}/submit-match')
   Future<InvoiceDetail> submitMatch({
     @Path('id') required String id,
