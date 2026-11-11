@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=tradocraft
+Comment=Integrated business platform
+Exec=@EXEC@
+Icon=be.tradocraft.tradocraft_app
+Terminal=false
+Categories=Office;
+StartupWMClass=be.tradocraft.tradocraft_app

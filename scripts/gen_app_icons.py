@@ -2,7 +2,7 @@
 """Generate the platform launcher icons from the brand SVGs in app/assets/branding/.
 
 Sources:  app_icon.svg (rounded), app_icon_maskable.svg (full-bleed, glyph in the safe zone).
-Outputs:  Android (legacy + adaptive + themed monochrome), web/PWA icons and favicon, Windows .ico.
+Outputs:  Android (legacy + adaptive + themed monochrome), web/PWA icons and favicon, Linux window icon, Windows .ico.
 Usage:    python3 -I scripts/gen_app_icons.py     (needs inkscape and imagemagick)
 """
 import re
@@ -78,6 +78,9 @@ def main() -> int:
         render(rounded, web / f"icons/Icon-{px}.png", px)
         render(maskable, web / f"icons/Icon-maskable-{px}.png", px)
     render(rounded, web / "favicon.png", 32)
+
+    # Linux: window icon, installed into the bundle by linux/CMakeLists.txt
+    render(rounded, APP / "linux/runner/resources/app_icon.png", 256)
 
     # Windows
     sizes = [16, 24, 32, 48, 64, 128, 256]
