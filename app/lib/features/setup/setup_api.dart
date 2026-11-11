@@ -101,6 +101,43 @@ class SetupResult {
   bool get isDev => authMode == 'dev';
 }
 
+/// Thrown instead of sending the setup token over an unencrypted connection to a remote server.
+class InsecureServerException implements Exception {
+  /// Creates the exception for [serverUrl].
+  const InsecureServerException(this.serverUrl);
+
+  /// The address that was refused.
+  final String serverUrl;
+
+  @override
+  String toString() =>
+      'Refusing to send the setup token over plain HTTP to $serverUrl';
+}
+
+/// Thrown when the server answered the bootstrap request with a redirect (or the request ended
+/// on another origin): the setup token is never re-sent to a redirect target.
+class RedirectRefusedException implements Exception {
+  /// Creates the exception.
+  const RedirectRefusedException();
+
+  @override
+  String toString() =>
+      'The server redirected the setup request; it was not followed';
+}
+
+/// Whether secrets may be sent to [serverUrl]: https, or http only to this machine (localhost,
+/// 127.0.0.0/8 or ::1).
+bool isSecureServerUrl(String serverUrl) {
+  final u = Uri.tryParse(serverUrl.trim());
+  if (u == null || u.host.isEmpty) return false;
+  if (u.scheme == 'https') return true;
+  if (u.scheme != 'http') return false;
+  final h = u.host.toLowerCase();
+  return h == 'localhost' ||
+      h == '::1' ||
+      RegExp(r'^127(\.\d{1,3}){3}$').hasMatch(h);
+}
+
 /// Makes an HTTP client for a server address, without any session headers (the setup endpoints
 /// need no sign-in). Overridden in tests with a fake.
 final setupDioProvider = Provider<Dio Function(String serverUrl)>(
@@ -145,12 +182,32 @@ final setupBootstrapProvider =
     ) {
       final make = ref.watch(setupDioProvider);
       return (url, req) async {
+        // Checked before anything is sent: the request may carry the BOOTSTRAP_TOKEN.
+        if (!isSecureServerUrl(url)) throw InsecureServerException(url);
         final dio = make(url);
         try {
-          final res = await dio.post<Object?>(
-            '/api/v1/setup/bootstrap',
-            data: req.toJson(),
-          );
+          final Response<Object?> res;
+          try {
+            // Redirects are never followed (on the IO adapter this stops them): the body carries
+            // the BOOTSTRAP_TOKEN and a redirect target could be insecure.
+            res = await dio.post<Object?>(
+              '/api/v1/setup/bootstrap',
+              data: req.toJson(),
+              options: Options(followRedirects: false, maxRedirects: 0),
+            );
+          } on DioException catch (e) {
+            final code = e.response?.statusCode ?? 0;
+            if (code >= 300 && code < 400) {
+              throw const RedirectRefusedException();
+            }
+            rethrow;
+          }
+          // The browser follows redirects inside XHR/fetch and Dart cannot stop that; the best
+          // that can be done there is to notice afterwards that the request ended on another
+          // origin (https-only targets and mixed-content blocking do the preventing).
+          if (res.realUri.origin != res.requestOptions.uri.origin) {
+            throw const RedirectRefusedException();
+          }
           final d = res.data as Map;
           return SetupResult(
             companyName: '${(d['company'] as Map)['name']}',

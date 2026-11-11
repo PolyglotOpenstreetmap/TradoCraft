@@ -7073,4 +7073,16 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get moduleFinance => 'Financiën';
+
+  @override
+  String get setupErrInsecure =>
+      'Het installatietoken wordt niet via een onversleutelde verbinding naar een andere computer gestuurd. Gebruik een https://-adres (gewone http mag alleen voor localhost).';
+
+  @override
+  String get setupUnavailable =>
+      'Instellen is niet beschikbaar op deze server: er is al een bedrijf, of instellen is uitgeschakeld.';
+
+  @override
+  String get setupErrRedirect =>
+      'De server stuurde de aanvraag door, dus het installatietoken is niet verder gestuurd. Controleer het serveradres (gebruik het definitieve https://-adres).';
 }

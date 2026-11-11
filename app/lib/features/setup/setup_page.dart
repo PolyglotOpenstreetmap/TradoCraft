@@ -134,6 +134,8 @@ class _SetupPageState extends ConsumerState<SetupPage> {
 
   String _failure(Object e) {
     final l = context.l10n;
+    if (e is InsecureServerException) return l.setupErrInsecure;
+    if (e is RedirectRefusedException) return l.setupErrRedirect;
     if (e is DioException) {
       switch (e.response?.statusCode) {
         case 403:
@@ -270,6 +272,22 @@ class _SetupPageState extends ConsumerState<SetupPage> {
         ],
       );
     }
+    if (!_status!.needsSetup) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ...header,
+          Text(l.setupUnavailable, key: const ValueKey('setup-unavailable')),
+          const SizedBox(height: 16),
+          TextButton(
+            key: const ValueKey('setup-unavailable-back'),
+            onPressed: () => context.go('/login'),
+            child: Text(l.setupToLogin),
+          ),
+        ],
+      );
+    }
     final problems = _validated ? _problems(_step, l) : <String, String>{};
     final last = _step == _Step.review;
     return Column(
@@ -364,8 +382,8 @@ class _SetupPageState extends ConsumerState<SetupPage> {
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: 8),
-          _field('name', _name, l.setupCompanyName, p),
-          _field('legal', _legal, l.setupLegalName, p),
+          _field('name', _name, l.setupCompanyName, p, maxLength: 200),
+          _field('legal', _legal, l.setupLegalName, p, maxLength: 200),
           _field('vat', _vat, l.setupVatNumber, p),
         ];
       case _Step.region:
@@ -419,7 +437,7 @@ class _SetupPageState extends ConsumerState<SetupPage> {
             p,
             type: TextInputType.emailAddress,
           ),
-          _field('adminName', _adminName, l.setupAdminName, p),
+          _field('adminName', _adminName, l.setupAdminName, p, maxLength: 200),
         ];
       case _Step.token:
         return [
