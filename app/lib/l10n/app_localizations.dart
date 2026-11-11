@@ -7262,6 +7262,54 @@ abstract class AppLocalizations {
   /// **'Modules saved'**
   String get modulesSaved;
 
+  /// No description provided for @moduleAlsoRequires.
+  ///
+  /// In en, this message translates to:
+  /// **'Also needs {modules}'**
+  String moduleAlsoRequires(String modules);
+
+  /// No description provided for @moduleAlsoSwitchedOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Also switches off: {modules}'**
+  String moduleAlsoSwitchedOff(String modules);
+
+  /// No description provided for @moduleAlsoSwitchedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Also switches on: {modules}'**
+  String moduleAlsoSwitchedOn(String modules);
+
+  /// No description provided for @moduleExpand.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand {module}'**
+  String moduleExpand(String module);
+
+  /// No description provided for @moduleCollapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse {module}'**
+  String moduleCollapse(String module);
+
+  /// No description provided for @moduleOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get moduleOn;
+
+  /// No description provided for @moduleOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get moduleOff;
+
+  /// No description provided for @moduleLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String moduleLevel(int level);
+
   /// No description provided for @userRoleAdmin.
   ///
   /// In en, this message translates to:

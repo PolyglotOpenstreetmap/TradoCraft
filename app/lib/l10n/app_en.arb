@@ -2233,6 +2233,56 @@
   },
   "modulesIntro": "Switch off the modules this company does not use. People no longer see them and the server refuses their requests.",
   "modulesSaved": "Modules saved",
+  "moduleAlsoRequires": "Also needs {modules}",
+  "@moduleAlsoRequires": {
+    "placeholders": {
+      "modules": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleAlsoSwitchedOff": "Also switches off: {modules}",
+  "@moduleAlsoSwitchedOff": {
+    "placeholders": {
+      "modules": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleAlsoSwitchedOn": "Also switches on: {modules}",
+  "@moduleAlsoSwitchedOn": {
+    "placeholders": {
+      "modules": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleExpand": "Expand {module}",
+  "@moduleExpand": {
+    "placeholders": {
+      "module": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleCollapse": "Collapse {module}",
+  "@moduleCollapse": {
+    "placeholders": {
+      "module": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleOn": "On",
+  "moduleOff": "Off",
+  "moduleLevel": "Level {level}",
+  "@moduleLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "userRoleAdmin": "Administrator",
   "userRoleSalesManager": "Sales manager",
   "userRoleSales": "Sales",
