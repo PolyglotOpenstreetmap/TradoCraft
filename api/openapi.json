@@ -4,8 +4,8 @@
     "title": "tradocraft API",
     "description": "Business platform API (CRM, products, pricing, sales, engineering, helpdesk, customer portal).",
     "license": {
-      "name": "GPL-3.0-or-later",
-      "identifier": "GPL-3.0-or-later"
+      "name": "AGPL-3.0-or-later",
+      "identifier": "AGPL-3.0-or-later"
     },
     "version": "0.1.0"
   },

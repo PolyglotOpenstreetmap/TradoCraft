@@ -147,4 +147,4 @@ CI fails if `api/openapi.json` or the generated client is out of date.
 
 ## License
 
-GPL-3.0-or-later. See [LICENSE](LICENSE).
+AGPL-3.0-or-later. See [LICENSE](LICENSE).
