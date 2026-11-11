@@ -258,6 +258,7 @@ export 'models/prepared_answer_input.dart';
 export 'models/presence_entry.dart';
 export 'models/presence_input.dart';
 export 'models/price_zone.dart';
+export 'models/price_zone_input.dart';
 export 'models/pricing_preview.dart';
 export 'models/pricing_preview_input.dart';
 export 'models/priority_change.dart';

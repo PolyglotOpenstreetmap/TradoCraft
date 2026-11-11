@@ -6201,4 +6201,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get envDiscardAndSwitch => 'Verwerfen und wechseln';
+
+  @override
+  String get adminPriceZones => 'Preiszonen';
+
+  @override
+  String get newPriceZone => 'Neue Preiszone';
+
+  @override
+  String get editPriceZone => 'Preiszone bearbeiten';
+
+  @override
+  String get sortOrder => 'Sortierreihenfolge';
+
+  @override
+  String get noPriceZones => 'Noch keine Preiszonen.';
+
+  @override
+  String get priceZoneDeleted => 'Preiszone gelöscht';
+
+  @override
+  String get delete => 'Löschen';
+
+  @override
+  String deletePriceZoneConfirm(String code) {
+    return 'Preiszone $code löschen? Abgelehnt, wenn Preise oder Kunden sie verwenden.';
+  }
+
+  @override
+  String get sortOrderInvalid =>
+      'Die Sortierreihenfolge muss eine ganze Zahl sein.';
 }

@@ -2000,5 +2000,14 @@
   "envCannotRemoveActive": "Passez d'abord à un autre environnement",
   "envUnsavedBody": "{count, plural, =1{1 onglet ouvert contient des modifications non enregistrées} other{{count} onglets ouverts contiennent des modifications non enregistrées}}. Changer d'environnement ferme tous les onglets et abandonne ces modifications.",
   "@envUnsavedBody": {"placeholders": {"count": {"type": "int"}}},
-  "envDiscardAndSwitch": "Abandonner et changer"
+  "envDiscardAndSwitch": "Abandonner et changer",
+  "adminPriceZones": "Zones de prix",
+  "newPriceZone": "Nouvelle zone de prix",
+  "editPriceZone": "Modifier la zone de prix",
+  "sortOrder": "Ordre de tri",
+  "noPriceZones": "Aucune zone de prix.",
+  "priceZoneDeleted": "Zone de prix supprimée",
+  "delete": "Supprimer",
+  "deletePriceZoneConfirm": "Supprimer la zone de prix {code} ? Refusé si des prix ou des clients l'utilisent.",
+  "sortOrderInvalid": "L'ordre de tri doit être un nombre entier."
 }

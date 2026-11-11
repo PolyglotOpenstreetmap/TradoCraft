@@ -2000,5 +2000,14 @@
   "envCannotRemoveActive": "Wissel eerst naar een andere omgeving",
   "envUnsavedBody": "{count, plural, =1{1 open tabblad heeft niet-opgeslagen wijzigingen} other{{count} open tabbladen hebben niet-opgeslagen wijzigingen}}. Bij het wisselen van omgeving worden alle tabbladen gesloten en gaan die wijzigingen verloren.",
   "@envUnsavedBody": {"placeholders": {"count": {"type": "int"}}},
-  "envDiscardAndSwitch": "Verwerpen en wisselen"
+  "envDiscardAndSwitch": "Verwerpen en wisselen",
+  "adminPriceZones": "Prijszones",
+  "newPriceZone": "Nieuwe prijszone",
+  "editPriceZone": "Prijszone bewerken",
+  "sortOrder": "Sorteervolgorde",
+  "noPriceZones": "Nog geen prijszones.",
+  "priceZoneDeleted": "Prijszone verwijderd",
+  "delete": "Verwijderen",
+  "deletePriceZoneConfirm": "Prijszone {code} verwijderen? Dit wordt geweigerd als prijzen of klanten ze gebruiken.",
+  "sortOrderInvalid": "De sorteervolgorde moet een geheel getal zijn."
 }

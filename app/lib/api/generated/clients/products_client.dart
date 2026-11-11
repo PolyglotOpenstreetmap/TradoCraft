@@ -16,6 +16,7 @@ import '../models/power_grid_input.dart';
 import '../models/power_supply.dart';
 import '../models/power_supply_input.dart';
 import '../models/price_zone.dart';
+import '../models/price_zone_input.dart';
 import '../models/product.dart';
 import '../models/product_attribute.dart';
 import '../models/product_family.dart';
@@ -70,6 +71,25 @@ abstract class ProductsClient {
 
   @GET('/api/v1/price-zones')
   Future<List<PriceZone>> listPriceZones();
+
+  /// Creates a price zone in the active company.
+  @POST('/api/v1/price-zones')
+  Future<PriceZone> createPriceZone({
+    @Body() required PriceZoneInput body,
+  });
+
+  /// Changes the code, name or sort order of a price zone.
+  @PUT('/api/v1/price-zones/{id}')
+  Future<PriceZone> updatePriceZone({
+    @Path('id') required String id,
+    @Body() required PriceZoneInput body,
+  });
+
+  /// Deletes a price zone that nothing refers to: refused (409) while zone prices or customer terms use it.
+  @DELETE('/api/v1/price-zones/{id}')
+  Future<void> deletePriceZone({
+    @Path('id') required String id,
+  });
 
   /// Applies a bulk price change: one new dated price per product and zone.
   /// Refused if any product already has a price starting on the same date.

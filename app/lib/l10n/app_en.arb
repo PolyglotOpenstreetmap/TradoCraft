@@ -3244,5 +3244,21 @@
   "envCannotRemoveActive": "Switch to another environment first",
   "envUnsavedBody": "{count, plural, =1{1 open tab has unsaved changes} other{{count} open tabs have unsaved changes}}. Switching environment closes all tabs and discards them.",
   "@envUnsavedBody": {"placeholders": {"count": {"type": "int"}}},
-  "envDiscardAndSwitch": "Discard and switch"
+  "envDiscardAndSwitch": "Discard and switch",
+  "adminPriceZones": "Price zones",
+  "newPriceZone": "New price zone",
+  "editPriceZone": "Edit price zone",
+  "sortOrder": "Sort order",
+  "noPriceZones": "No price zones yet.",
+  "priceZoneDeleted": "Price zone deleted",
+  "delete": "Delete",
+  "deletePriceZoneConfirm": "Delete price zone {code}? This is refused when prices or customers use it.",
+  "@deletePriceZoneConfirm": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "sortOrderInvalid": "Sort order must be a whole number."
 }

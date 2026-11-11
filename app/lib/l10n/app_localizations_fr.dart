@@ -6195,4 +6195,33 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get envDiscardAndSwitch => 'Abandonner et changer';
+
+  @override
+  String get adminPriceZones => 'Zones de prix';
+
+  @override
+  String get newPriceZone => 'Nouvelle zone de prix';
+
+  @override
+  String get editPriceZone => 'Modifier la zone de prix';
+
+  @override
+  String get sortOrder => 'Ordre de tri';
+
+  @override
+  String get noPriceZones => 'Aucune zone de prix.';
+
+  @override
+  String get priceZoneDeleted => 'Zone de prix supprimée';
+
+  @override
+  String get delete => 'Supprimer';
+
+  @override
+  String deletePriceZoneConfirm(String code) {
+    return 'Supprimer la zone de prix $code ? Refusé si des prix ou des clients l\'utilisent.';
+  }
+
+  @override
+  String get sortOrderInvalid => 'L\'ordre de tri doit être un nombre entier.';
 }

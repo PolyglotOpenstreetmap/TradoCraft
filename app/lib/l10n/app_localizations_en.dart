@@ -6169,4 +6169,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get envDiscardAndSwitch => 'Discard and switch';
+
+  @override
+  String get adminPriceZones => 'Price zones';
+
+  @override
+  String get newPriceZone => 'New price zone';
+
+  @override
+  String get editPriceZone => 'Edit price zone';
+
+  @override
+  String get sortOrder => 'Sort order';
+
+  @override
+  String get noPriceZones => 'No price zones yet.';
+
+  @override
+  String get priceZoneDeleted => 'Price zone deleted';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String deletePriceZoneConfirm(String code) {
+    return 'Delete price zone $code? This is refused when prices or customers use it.';
+  }
+
+  @override
+  String get sortOrderInvalid => 'Sort order must be a whole number.';
 }

@@ -2000,5 +2000,14 @@
   "envCannotRemoveActive": "Wechseln Sie zuerst zu einer anderen Umgebung",
   "envUnsavedBody": "{count, plural, =1{1 offener Tab hat nicht gespeicherte Änderungen} other{{count} offene Tabs haben nicht gespeicherte Änderungen}}. Beim Wechsel der Umgebung werden alle Tabs geschlossen und diese Änderungen verworfen.",
   "@envUnsavedBody": {"placeholders": {"count": {"type": "int"}}},
-  "envDiscardAndSwitch": "Verwerfen und wechseln"
+  "envDiscardAndSwitch": "Verwerfen und wechseln",
+  "adminPriceZones": "Preiszonen",
+  "newPriceZone": "Neue Preiszone",
+  "editPriceZone": "Preiszone bearbeiten",
+  "sortOrder": "Sortierreihenfolge",
+  "noPriceZones": "Noch keine Preiszonen.",
+  "priceZoneDeleted": "Preiszone gelöscht",
+  "delete": "Löschen",
+  "deletePriceZoneConfirm": "Preiszone {code} löschen? Abgelehnt, wenn Preise oder Kunden sie verwenden.",
+  "sortOrderInvalid": "Die Sortierreihenfolge muss eine ganze Zahl sein."
 }

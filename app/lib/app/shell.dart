@@ -16,7 +16,14 @@ import '../shared/app_icons.dart';
 import '../shared/module_icon.dart';
 
 class _Dest {
-  const _Dest(this.path, this.label, this.icon, this.permission, {this.unless});
+  const _Dest(
+    this.path,
+    this.label,
+    this.icon,
+    this.permission, {
+    this.unless,
+    this.alsoFor,
+  });
   final String path;
   final String Function(AppLocalizations l) label;
   final IconData icon;
@@ -27,8 +34,14 @@ class _Dest {
   /// A permission that hides the tab again, because another tab already covers this section.
   final String? unless;
 
+  /// A second permission that also makes the tab visible (e.g. price zone management).
+  final String? alsoFor;
+
+  /// Whether a user with [perms] sees this destination.
   bool visibleFor(List<String> perms) =>
-      perms.contains(permission) && (unless == null || !perms.contains(unless));
+      (perms.contains(permission) ||
+          (alsoFor != null && perms.contains(alsoFor))) &&
+      (unless == null || !perms.contains(unless));
 }
 
 /// The artwork of each section in the navigation (`assets/icons/<name>.svg`).
@@ -133,6 +146,7 @@ final _allDestinations = [
     (l) => l.adminTitle,
     AppIcons.adminPanelSettings,
     'users.admin',
+    alsoFor: 'prices.write',
   ),
 ];
 

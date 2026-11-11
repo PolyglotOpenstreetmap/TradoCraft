@@ -2000,5 +2000,14 @@
   "envCannotRemoveActive": "Cambie primero a otro entorno",
   "envUnsavedBody": "{count, plural, =1{1 pestaña abierta tiene cambios sin guardar} other{{count} pestañas abiertas tienen cambios sin guardar}}. Al cambiar de entorno se cierran todas las pestañas y se descartan esos cambios.",
   "@envUnsavedBody": {"placeholders": {"count": {"type": "int"}}},
-  "envDiscardAndSwitch": "Descartar y cambiar"
+  "envDiscardAndSwitch": "Descartar y cambiar",
+  "adminPriceZones": "Zonas de precio",
+  "newPriceZone": "Nueva zona de precio",
+  "editPriceZone": "Editar zona de precio",
+  "sortOrder": "Orden",
+  "noPriceZones": "Aún no hay zonas de precio.",
+  "priceZoneDeleted": "Zona de precio eliminada",
+  "delete": "Eliminar",
+  "deletePriceZoneConfirm": "¿Eliminar la zona de precio {code}? Se rechaza si hay precios o clientes que la usan.",
+  "sortOrderInvalid": "El orden debe ser un número entero."
 }
