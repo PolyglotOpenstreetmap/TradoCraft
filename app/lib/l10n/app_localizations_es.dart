@@ -3977,6 +3977,42 @@ class AppLocalizationsEs extends AppLocalizations {
   String get modulesSaved => 'Módulos guardados';
 
   @override
+  String moduleAlsoRequires(String modules) {
+    return 'También necesita $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOff(String modules) {
+    return 'También desactiva: $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOn(String modules) {
+    return 'También activa: $modules';
+  }
+
+  @override
+  String moduleExpand(String module) {
+    return 'Expandir $module';
+  }
+
+  @override
+  String moduleCollapse(String module) {
+    return 'Contraer $module';
+  }
+
+  @override
+  String get moduleOn => 'Activado';
+
+  @override
+  String get moduleOff => 'Desactivado';
+
+  @override
+  String moduleLevel(int level) {
+    return 'Nivel $level';
+  }
+
+  @override
   String get userRoleAdmin => 'Administrador';
 
   @override
@@ -6697,4 +6733,343 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Recepción';
+
+  @override
+  String get setupTitle => 'Configurar una nueva empresa';
+
+  @override
+  String get setupOffer => 'Configurar una nueva empresa';
+
+  @override
+  String get setupOfferHint => 'Este servidor aún no tiene ninguna empresa.';
+
+  @override
+  String setupServer(String url) {
+    return 'Servidor: $url';
+  }
+
+  @override
+  String setupStepOf(int n, int total) {
+    return 'Paso $n de $total';
+  }
+
+  @override
+  String get setupStepCompany => 'Empresa';
+
+  @override
+  String get setupStepRegion => 'País, moneda e idioma';
+
+  @override
+  String get setupStepAdmin => 'Administrador';
+
+  @override
+  String get setupStepToken => 'Token de configuración';
+
+  @override
+  String get setupStepReview => 'Revisión';
+
+  @override
+  String get setupCompanyName => 'Nombre de la empresa';
+
+  @override
+  String get setupLegalName => 'Razón social (opcional)';
+
+  @override
+  String get setupVatNumber => 'Número de IVA (opcional)';
+
+  @override
+  String get setupCountry => 'Código de país (2 letras, p. ej. BE)';
+
+  @override
+  String get setupCurrency => 'Moneda (3 letras, p. ej. EUR)';
+
+  @override
+  String get setupLanguage => 'Idioma predeterminado';
+
+  @override
+  String get setupAdminEmail => 'Correo del administrador';
+
+  @override
+  String get setupAdminName => 'Nombre del administrador';
+
+  @override
+  String get setupToken => 'Token de configuración';
+
+  @override
+  String get setupTokenHelp => 'El valor de BOOTSTRAP_TOKEN en el servidor.';
+
+  @override
+  String get setupErrName => 'Introduzca el nombre de la empresa.';
+
+  @override
+  String get setupErrVat =>
+      'Un número de IVA tiene de 4 a 20 letras y dígitos.';
+
+  @override
+  String get setupErrCountry => 'Introduzca un código de país de dos letras.';
+
+  @override
+  String get setupErrCurrency =>
+      'Introduzca un código de moneda de tres letras.';
+
+  @override
+  String get setupErrEmail => 'Introduzca un correo electrónico válido.';
+
+  @override
+  String get setupErrAdminName => 'Introduzca el nombre del administrador.';
+
+  @override
+  String get setupErrToken => 'Introduzca el token de configuración.';
+
+  @override
+  String get setupNext => 'Siguiente';
+
+  @override
+  String get setupBack => 'Atrás';
+
+  @override
+  String get setupCreate => 'Crear empresa';
+
+  @override
+  String get setupReviewHint =>
+      'Compruebe los datos. Solo se puede crear una empresa una vez en este servidor.';
+
+  @override
+  String get setupErr403 => 'El token de configuración falta o es incorrecto.';
+
+  @override
+  String get setupErr404 =>
+      'La configuración está desactivada en este servidor. Defina BOOTSTRAP_TOKEN en el servidor y reinícielo.';
+
+  @override
+  String get setupErr409 => 'Este servidor ya tiene una empresa.';
+
+  @override
+  String setupDone(String name) {
+    return 'Empresa $name creada.';
+  }
+
+  @override
+  String setupDoneDev(String email) {
+    return 'Iniciando sesión como $email.';
+  }
+
+  @override
+  String setupDoneOidc(String email) {
+    return 'Inicie sesión con su proveedor de identidad con $email: esa cuenta es la del administrador.';
+  }
+
+  @override
+  String get setupToLogin => 'Ir al inicio de sesión';
+
+  @override
+  String get setupAddOfferTitle => '¿Configurar este servidor?';
+
+  @override
+  String get setupAddOfferBody =>
+      'Este servidor aún no tiene empresa. ¿Configurar una ahora?';
+
+  @override
+  String get setupLater => 'Más tarde';
+
+  @override
+  String get finMatchColumn => 'Conciliación';
+
+  @override
+  String get finance => 'Finanzas';
+
+  @override
+  String get finSupplierInvoices => 'Facturas de proveedor';
+
+  @override
+  String get finSettings => 'Ajustes';
+
+  @override
+  String get tabSupplierInvoice => 'Factura de proveedor';
+
+  @override
+  String get finNewInvoice => 'Nueva factura de proveedor';
+
+  @override
+  String get finNoInvoices => 'No se encontraron facturas de proveedor.';
+
+  @override
+  String get finInvoiceNumber => 'Número de factura';
+
+  @override
+  String get finInternalNumber => 'Número interno';
+
+  @override
+  String get finInvoiceDate => 'Fecha de factura';
+
+  @override
+  String get finDueDate => 'Fecha de vencimiento';
+
+  @override
+  String get finStatusDraft => 'borrador';
+
+  @override
+  String get finStatusMatched => 'conciliada';
+
+  @override
+  String get finStatusDisputed => 'en disputa';
+
+  @override
+  String get finStatusApproved => 'aprobada';
+
+  @override
+  String get finStatusPaid => 'pagada';
+
+  @override
+  String get finMatchOk => 'correcto';
+
+  @override
+  String get finMatchNotReceived => 'no recibido';
+
+  @override
+  String get finMatchOverInvoiced => 'sobrefacturado';
+
+  @override
+  String get finMatchPriceVariance => 'diferencia de precio';
+
+  @override
+  String get finMatchNoPoLine => 'sin línea de pedido';
+
+  @override
+  String get finOrderOptional => 'Pedido de compra (opcional)';
+
+  @override
+  String get finNoOrder => 'Sin pedido de compra';
+
+  @override
+  String get finOrderPrefillHint =>
+      'Las líneas se rellenan con la mercancía recibida y aún no facturada.';
+
+  @override
+  String get finNumberRequired =>
+      'El número de factura es obligatorio (máximo 64 caracteres).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'Una línea de texto libre necesita una descripción.';
+
+  @override
+  String get finVatInvalid =>
+      'El tipo de IVA debe estar entre 0 y 100, con 2 decimales como máximo.';
+
+  @override
+  String get finOrdered => 'Pedido';
+
+  @override
+  String get finInvoiced => 'Facturado';
+
+  @override
+  String get finOrderPrice => 'Precio de pedido';
+
+  @override
+  String get finInvoicePrice => 'Precio facturado';
+
+  @override
+  String get finVariance => 'Diferencia';
+
+  @override
+  String get finMatches =>
+      'La factura coincide con el pedido y las recepciones.';
+
+  @override
+  String get finNotMatches =>
+      'La factura no coincide con el pedido y las recepciones.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Tolerancias: cantidad $qty %, precio $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Comprobar conciliación';
+
+  @override
+  String get finApprove => 'Aprobar';
+
+  @override
+  String get finOverrideTitle => 'Aprobar pese a la diferencia';
+
+  @override
+  String get finOverrideHelp =>
+      'La factura no coincide. Indique el motivo para aprobarla igualmente; se guarda con la aprobación.';
+
+  @override
+  String get finOverrideReason => 'Motivo de la excepción';
+
+  @override
+  String get finReasonRequired => 'El motivo es obligatorio.';
+
+  @override
+  String get finDispute => 'Disputar';
+
+  @override
+  String get finDisputeReason => 'Motivo de la disputa';
+
+  @override
+  String get finReopen => 'Reabrir';
+
+  @override
+  String get finMarkPaid => 'Marcar como pagada';
+
+  @override
+  String get finPaymentDate => 'Fecha de pago';
+
+  @override
+  String get finPaymentReference => 'Referencia de pago';
+
+  @override
+  String get finDeleteDraft => 'Eliminar borrador';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return '¿Eliminar la factura $number? No se puede deshacer.';
+  }
+
+  @override
+  String get finNetTotal => 'Neto';
+
+  @override
+  String get finGrossTotal => 'Total con IVA';
+
+  @override
+  String get finDisputeReasonShown => 'Motivo de la disputa';
+
+  @override
+  String get finOverrideShown => 'Motivo de la excepción';
+
+  @override
+  String get finPaidOn => 'Pagada el';
+
+  @override
+  String get finPurchaseOrder => 'Pedido de compra';
+
+  @override
+  String get finQuantityTolerance => 'Tolerancia de cantidad (%)';
+
+  @override
+  String get finPriceTolerance => 'Tolerancia de precio (%)';
+
+  @override
+  String get finToleranceInvalid => 'Introduzca un porcentaje entre 0 y 100.';
+
+  @override
+  String get finSettingsSaved => 'Ajustes guardados.';
+
+  @override
+  String get finSettingsHelp =>
+      'Diferencia máxima aceptada entre el pedido y la factura antes de que una línea cuente como diferencia.';
+
+  @override
+  String get finCreateInvoice => 'Crear factura de proveedor';
+
+  @override
+  String get userRoleFinance => 'Finanzas';
+
+  @override
+  String get moduleFinance => 'Finanzas';
 }

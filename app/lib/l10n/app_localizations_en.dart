@@ -3963,6 +3963,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modulesSaved => 'Modules saved';
 
   @override
+  String moduleAlsoRequires(String modules) {
+    return 'Also needs $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOff(String modules) {
+    return 'Also switches off: $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOn(String modules) {
+    return 'Also switches on: $modules';
+  }
+
+  @override
+  String moduleExpand(String module) {
+    return 'Expand $module';
+  }
+
+  @override
+  String moduleCollapse(String module) {
+    return 'Collapse $module';
+  }
+
+  @override
+  String get moduleOn => 'On';
+
+  @override
+  String get moduleOff => 'Off';
+
+  @override
+  String moduleLevel(int level) {
+    return 'Level $level';
+  }
+
+  @override
   String get userRoleAdmin => 'Administrator';
 
   @override
@@ -6676,4 +6712,340 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Goods receipt';
+
+  @override
+  String get setupTitle => 'Set up a new company';
+
+  @override
+  String get setupOffer => 'Set up a new company';
+
+  @override
+  String get setupOfferHint => 'This server has no company yet.';
+
+  @override
+  String setupServer(String url) {
+    return 'Server: $url';
+  }
+
+  @override
+  String setupStepOf(int n, int total) {
+    return 'Step $n of $total';
+  }
+
+  @override
+  String get setupStepCompany => 'Company';
+
+  @override
+  String get setupStepRegion => 'Country, currency and language';
+
+  @override
+  String get setupStepAdmin => 'Administrator';
+
+  @override
+  String get setupStepToken => 'Setup token';
+
+  @override
+  String get setupStepReview => 'Review';
+
+  @override
+  String get setupCompanyName => 'Company name';
+
+  @override
+  String get setupLegalName => 'Legal name (optional)';
+
+  @override
+  String get setupVatNumber => 'VAT number (optional)';
+
+  @override
+  String get setupCountry => 'Country code (2 letters, e.g. BE)';
+
+  @override
+  String get setupCurrency => 'Currency (3 letters, e.g. EUR)';
+
+  @override
+  String get setupLanguage => 'Default language';
+
+  @override
+  String get setupAdminEmail => 'Administrator e-mail';
+
+  @override
+  String get setupAdminName => 'Administrator name';
+
+  @override
+  String get setupToken => 'Setup token';
+
+  @override
+  String get setupTokenHelp => 'The value of BOOTSTRAP_TOKEN on the server.';
+
+  @override
+  String get setupErrName => 'Enter the company name.';
+
+  @override
+  String get setupErrVat => 'A VAT number has 4 to 20 letters and digits.';
+
+  @override
+  String get setupErrCountry => 'Enter a two-letter country code.';
+
+  @override
+  String get setupErrCurrency => 'Enter a three-letter currency code.';
+
+  @override
+  String get setupErrEmail => 'Enter a valid e-mail address.';
+
+  @override
+  String get setupErrAdminName => 'Enter the administrator\'s name.';
+
+  @override
+  String get setupErrToken => 'Enter the setup token.';
+
+  @override
+  String get setupNext => 'Next';
+
+  @override
+  String get setupBack => 'Back';
+
+  @override
+  String get setupCreate => 'Create company';
+
+  @override
+  String get setupReviewHint =>
+      'Check the details. A company can be created only once on this server.';
+
+  @override
+  String get setupErr403 => 'The setup token is missing or wrong.';
+
+  @override
+  String get setupErr404 =>
+      'Setting up is disabled on this server. Set BOOTSTRAP_TOKEN on the server and restart it.';
+
+  @override
+  String get setupErr409 => 'This server already has a company.';
+
+  @override
+  String setupDone(String name) {
+    return 'Company $name created.';
+  }
+
+  @override
+  String setupDoneDev(String email) {
+    return 'Signing in as $email.';
+  }
+
+  @override
+  String setupDoneOidc(String email) {
+    return 'Sign in through your identity provider with $email: that account is the administrator.';
+  }
+
+  @override
+  String get setupToLogin => 'Go to sign in';
+
+  @override
+  String get setupAddOfferTitle => 'Set up this server?';
+
+  @override
+  String get setupAddOfferBody =>
+      'This server has no company yet. Set one up now?';
+
+  @override
+  String get setupLater => 'Later';
+
+  @override
+  String get finMatchColumn => 'Match';
+
+  @override
+  String get finance => 'Finance';
+
+  @override
+  String get finSupplierInvoices => 'Supplier invoices';
+
+  @override
+  String get finSettings => 'Settings';
+
+  @override
+  String get tabSupplierInvoice => 'Supplier invoice';
+
+  @override
+  String get finNewInvoice => 'New supplier invoice';
+
+  @override
+  String get finNoInvoices => 'No supplier invoices found.';
+
+  @override
+  String get finInvoiceNumber => 'Invoice number';
+
+  @override
+  String get finInternalNumber => 'Internal number';
+
+  @override
+  String get finInvoiceDate => 'Invoice date';
+
+  @override
+  String get finDueDate => 'Due date';
+
+  @override
+  String get finStatusDraft => 'draft';
+
+  @override
+  String get finStatusMatched => 'matched';
+
+  @override
+  String get finStatusDisputed => 'disputed';
+
+  @override
+  String get finStatusApproved => 'approved';
+
+  @override
+  String get finStatusPaid => 'paid';
+
+  @override
+  String get finMatchOk => 'ok';
+
+  @override
+  String get finMatchNotReceived => 'not received';
+
+  @override
+  String get finMatchOverInvoiced => 'over invoiced';
+
+  @override
+  String get finMatchPriceVariance => 'price variance';
+
+  @override
+  String get finMatchNoPoLine => 'no order line';
+
+  @override
+  String get finOrderOptional => 'Purchase order (optional)';
+
+  @override
+  String get finNoOrder => 'No purchase order';
+
+  @override
+  String get finOrderPrefillHint =>
+      'The lines are filled from the goods received and not yet invoiced.';
+
+  @override
+  String get finNumberRequired =>
+      'The invoice number is required (at most 64 characters).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'A free-text line needs a description.';
+
+  @override
+  String get finVatInvalid =>
+      'VAT rate must be between 0 and 100 with at most 2 decimals.';
+
+  @override
+  String get finOrdered => 'Ordered';
+
+  @override
+  String get finInvoiced => 'Invoiced';
+
+  @override
+  String get finOrderPrice => 'Order price';
+
+  @override
+  String get finInvoicePrice => 'Invoice price';
+
+  @override
+  String get finVariance => 'Variance';
+
+  @override
+  String get finMatches => 'The invoice matches the order and the receipts.';
+
+  @override
+  String get finNotMatches =>
+      'The invoice does not match the order and the receipts.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Tolerances: quantity $qty %, price $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Check match';
+
+  @override
+  String get finApprove => 'Approve';
+
+  @override
+  String get finOverrideTitle => 'Approve despite mismatch';
+
+  @override
+  String get finOverrideHelp =>
+      'The invoice does not match. Give the reason for approving it anyway; it is stored with the approval.';
+
+  @override
+  String get finOverrideReason => 'Override reason';
+
+  @override
+  String get finReasonRequired => 'A reason is required.';
+
+  @override
+  String get finDispute => 'Dispute';
+
+  @override
+  String get finDisputeReason => 'Dispute reason';
+
+  @override
+  String get finReopen => 'Reopen';
+
+  @override
+  String get finMarkPaid => 'Mark as paid';
+
+  @override
+  String get finPaymentDate => 'Payment date';
+
+  @override
+  String get finPaymentReference => 'Payment reference';
+
+  @override
+  String get finDeleteDraft => 'Delete draft';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return 'Delete invoice $number? This cannot be undone.';
+  }
+
+  @override
+  String get finNetTotal => 'Net';
+
+  @override
+  String get finGrossTotal => 'Total incl. VAT';
+
+  @override
+  String get finDisputeReasonShown => 'Dispute reason';
+
+  @override
+  String get finOverrideShown => 'Override reason';
+
+  @override
+  String get finPaidOn => 'Paid on';
+
+  @override
+  String get finPurchaseOrder => 'Purchase order';
+
+  @override
+  String get finQuantityTolerance => 'Quantity tolerance (%)';
+
+  @override
+  String get finPriceTolerance => 'Price tolerance (%)';
+
+  @override
+  String get finToleranceInvalid => 'Enter a percentage between 0 and 100.';
+
+  @override
+  String get finSettingsSaved => 'Settings saved.';
+
+  @override
+  String get finSettingsHelp =>
+      'Largest accepted difference between the order and the invoice before a line counts as a mismatch.';
+
+  @override
+  String get finCreateInvoice => 'Create supplier invoice';
+
+  @override
+  String get userRoleFinance => 'Finance';
+
+  @override
+  String get moduleFinance => 'Finance';
 }

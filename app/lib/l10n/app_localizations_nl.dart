@@ -3974,6 +3974,42 @@ class AppLocalizationsNl extends AppLocalizations {
   String get modulesSaved => 'Modules opgeslagen';
 
   @override
+  String moduleAlsoRequires(String modules) {
+    return 'Heeft ook $modules nodig';
+  }
+
+  @override
+  String moduleAlsoSwitchedOff(String modules) {
+    return 'Zet ook uit: $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOn(String modules) {
+    return 'Zet ook aan: $modules';
+  }
+
+  @override
+  String moduleExpand(String module) {
+    return '$module uitklappen';
+  }
+
+  @override
+  String moduleCollapse(String module) {
+    return '$module inklappen';
+  }
+
+  @override
+  String get moduleOn => 'Aan';
+
+  @override
+  String get moduleOff => 'Uit';
+
+  @override
+  String moduleLevel(int level) {
+    return 'Niveau $level';
+  }
+
+  @override
   String get userRoleAdmin => 'Beheerder';
 
   @override
@@ -6700,4 +6736,341 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Goederenontvangst';
+
+  @override
+  String get setupTitle => 'Een nieuw bedrijf instellen';
+
+  @override
+  String get setupOffer => 'Een nieuw bedrijf instellen';
+
+  @override
+  String get setupOfferHint => 'Deze server heeft nog geen bedrijf.';
+
+  @override
+  String setupServer(String url) {
+    return 'Server: $url';
+  }
+
+  @override
+  String setupStepOf(int n, int total) {
+    return 'Stap $n van $total';
+  }
+
+  @override
+  String get setupStepCompany => 'Bedrijf';
+
+  @override
+  String get setupStepRegion => 'Land, valuta en taal';
+
+  @override
+  String get setupStepAdmin => 'Beheerder';
+
+  @override
+  String get setupStepToken => 'Installatietoken';
+
+  @override
+  String get setupStepReview => 'Controle';
+
+  @override
+  String get setupCompanyName => 'Bedrijfsnaam';
+
+  @override
+  String get setupLegalName => 'Juridische naam (optioneel)';
+
+  @override
+  String get setupVatNumber => 'Btw-nummer (optioneel)';
+
+  @override
+  String get setupCountry => 'Landcode (2 letters, bv. BE)';
+
+  @override
+  String get setupCurrency => 'Valuta (3 letters, bv. EUR)';
+
+  @override
+  String get setupLanguage => 'Standaardtaal';
+
+  @override
+  String get setupAdminEmail => 'E-mailadres van de beheerder';
+
+  @override
+  String get setupAdminName => 'Naam van de beheerder';
+
+  @override
+  String get setupToken => 'Installatietoken';
+
+  @override
+  String get setupTokenHelp => 'De waarde van BOOTSTRAP_TOKEN op de server.';
+
+  @override
+  String get setupErrName => 'Vul de bedrijfsnaam in.';
+
+  @override
+  String get setupErrVat => 'Een btw-nummer heeft 4 tot 20 letters en cijfers.';
+
+  @override
+  String get setupErrCountry => 'Vul een landcode van twee letters in.';
+
+  @override
+  String get setupErrCurrency => 'Vul een valutacode van drie letters in.';
+
+  @override
+  String get setupErrEmail => 'Vul een geldig e-mailadres in.';
+
+  @override
+  String get setupErrAdminName => 'Vul de naam van de beheerder in.';
+
+  @override
+  String get setupErrToken => 'Vul het installatietoken in.';
+
+  @override
+  String get setupNext => 'Volgende';
+
+  @override
+  String get setupBack => 'Terug';
+
+  @override
+  String get setupCreate => 'Bedrijf aanmaken';
+
+  @override
+  String get setupReviewHint =>
+      'Controleer de gegevens. Op deze server kan maar één keer een bedrijf worden aangemaakt.';
+
+  @override
+  String get setupErr403 => 'Het installatietoken ontbreekt of is onjuist.';
+
+  @override
+  String get setupErr404 =>
+      'Instellen is uitgeschakeld op deze server. Stel BOOTSTRAP_TOKEN in op de server en herstart die.';
+
+  @override
+  String get setupErr409 => 'Deze server heeft al een bedrijf.';
+
+  @override
+  String setupDone(String name) {
+    return 'Bedrijf $name aangemaakt.';
+  }
+
+  @override
+  String setupDoneDev(String email) {
+    return 'Aanmelden als $email.';
+  }
+
+  @override
+  String setupDoneOidc(String email) {
+    return 'Meld u aan via uw identiteitsprovider met $email: dat account is de beheerder.';
+  }
+
+  @override
+  String get setupToLogin => 'Naar aanmelden';
+
+  @override
+  String get setupAddOfferTitle => 'Deze server instellen?';
+
+  @override
+  String get setupAddOfferBody =>
+      'Deze server heeft nog geen bedrijf. Nu een bedrijf instellen?';
+
+  @override
+  String get setupLater => 'Later';
+
+  @override
+  String get finMatchColumn => 'Match';
+
+  @override
+  String get finance => 'Financiën';
+
+  @override
+  String get finSupplierInvoices => 'Inkoopfacturen';
+
+  @override
+  String get finSettings => 'Instellingen';
+
+  @override
+  String get tabSupplierInvoice => 'Inkoopfactuur';
+
+  @override
+  String get finNewInvoice => 'Nieuwe inkoopfactuur';
+
+  @override
+  String get finNoInvoices => 'Geen inkoopfacturen gevonden.';
+
+  @override
+  String get finInvoiceNumber => 'Factuurnummer';
+
+  @override
+  String get finInternalNumber => 'Intern nummer';
+
+  @override
+  String get finInvoiceDate => 'Factuurdatum';
+
+  @override
+  String get finDueDate => 'Vervaldatum';
+
+  @override
+  String get finStatusDraft => 'concept';
+
+  @override
+  String get finStatusMatched => 'gematcht';
+
+  @override
+  String get finStatusDisputed => 'betwist';
+
+  @override
+  String get finStatusApproved => 'goedgekeurd';
+
+  @override
+  String get finStatusPaid => 'betaald';
+
+  @override
+  String get finMatchOk => 'in orde';
+
+  @override
+  String get finMatchNotReceived => 'niet ontvangen';
+
+  @override
+  String get finMatchOverInvoiced => 'te veel gefactureerd';
+
+  @override
+  String get finMatchPriceVariance => 'prijsafwijking';
+
+  @override
+  String get finMatchNoPoLine => 'geen orderregel';
+
+  @override
+  String get finOrderOptional => 'Inkooporder (optioneel)';
+
+  @override
+  String get finNoOrder => 'Geen inkooporder';
+
+  @override
+  String get finOrderPrefillHint =>
+      'De regels worden ingevuld met de ontvangen, nog niet gefactureerde goederen.';
+
+  @override
+  String get finNumberRequired =>
+      'Het factuurnummer is verplicht (maximaal 64 tekens).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'Een vrije regel heeft een omschrijving nodig.';
+
+  @override
+  String get finVatInvalid =>
+      'Het btw-tarief moet tussen 0 en 100 liggen, met maximaal 2 decimalen.';
+
+  @override
+  String get finOrdered => 'Besteld';
+
+  @override
+  String get finInvoiced => 'Gefactureerd';
+
+  @override
+  String get finOrderPrice => 'Orderprijs';
+
+  @override
+  String get finInvoicePrice => 'Factuurprijs';
+
+  @override
+  String get finVariance => 'Afwijking';
+
+  @override
+  String get finMatches =>
+      'De factuur komt overeen met de order en de ontvangsten.';
+
+  @override
+  String get finNotMatches =>
+      'De factuur komt niet overeen met de order en de ontvangsten.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Toleranties: hoeveelheid $qty %, prijs $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Match controleren';
+
+  @override
+  String get finApprove => 'Goedkeuren';
+
+  @override
+  String get finOverrideTitle => 'Goedkeuren ondanks afwijking';
+
+  @override
+  String get finOverrideHelp =>
+      'De factuur komt niet overeen. Geef de reden om toch goed te keuren; die wordt bij de goedkeuring bewaard.';
+
+  @override
+  String get finOverrideReason => 'Reden voor afwijking';
+
+  @override
+  String get finReasonRequired => 'Een reden is verplicht.';
+
+  @override
+  String get finDispute => 'Betwisten';
+
+  @override
+  String get finDisputeReason => 'Reden van betwisting';
+
+  @override
+  String get finReopen => 'Heropenen';
+
+  @override
+  String get finMarkPaid => 'Markeren als betaald';
+
+  @override
+  String get finPaymentDate => 'Betaaldatum';
+
+  @override
+  String get finPaymentReference => 'Betalingskenmerk';
+
+  @override
+  String get finDeleteDraft => 'Concept verwijderen';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return 'Factuur $number verwijderen? Dit kan niet ongedaan worden gemaakt.';
+  }
+
+  @override
+  String get finNetTotal => 'Netto';
+
+  @override
+  String get finGrossTotal => 'Totaal incl. btw';
+
+  @override
+  String get finDisputeReasonShown => 'Reden van betwisting';
+
+  @override
+  String get finOverrideShown => 'Reden voor afwijking';
+
+  @override
+  String get finPaidOn => 'Betaald op';
+
+  @override
+  String get finPurchaseOrder => 'Inkooporder';
+
+  @override
+  String get finQuantityTolerance => 'Hoeveelheidstolerantie (%)';
+
+  @override
+  String get finPriceTolerance => 'Prijstolerantie (%)';
+
+  @override
+  String get finToleranceInvalid => 'Geef een percentage tussen 0 en 100 op.';
+
+  @override
+  String get finSettingsSaved => 'Instellingen opgeslagen.';
+
+  @override
+  String get finSettingsHelp =>
+      'Grootste toegestane verschil tussen order en factuur voordat een regel als afwijking telt.';
+
+  @override
+  String get finCreateInvoice => 'Inkoopfactuur aanmaken';
+
+  @override
+  String get userRoleFinance => 'Financiën';
+
+  @override
+  String get moduleFinance => 'Financiën';
 }

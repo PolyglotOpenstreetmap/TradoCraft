@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 /// Single source of icons for the app: one name per concept, outlined style throughout.
 /// Swap the icon set here and nowhere else.
 abstract final class AppIcons {
-  static const IconData accountCircle = Icons.account_circle_outlined;
+  static const IconData accountBalance = Icons.account_balance_outlined;
+  static const IconData accountCircle= Icons.account_circle_outlined;
   static const IconData accountTree = Icons.account_tree_outlined;
   static const IconData add = Icons.add;
   static const IconData addAPhoto = Icons.add_a_photo_outlined;

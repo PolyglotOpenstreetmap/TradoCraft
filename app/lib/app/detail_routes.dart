@@ -11,6 +11,7 @@ import '../features/opportunities/opportunity_screen.dart';
 import '../features/orders/order_screen.dart';
 import '../features/production/production_screen.dart';
 import '../features/products/product_screen.dart';
+import '../features/finance/invoice_screen.dart';
 import '../features/purchasing/order_screen.dart';
 import '../features/purchasing/receipt_screen.dart';
 import '../features/purchasing/supplier_screen.dart';
@@ -63,6 +64,8 @@ Widget? detailScreen(Uri uri) {
       return DeliveryScreen(key: key, id: id);
     case 'suppliers' when s.length == 2:
       return SupplierScreen(key: key, id: id);
+    case 'supplier-invoices' when s.length == 2:
+      return SupplierInvoiceScreen(key: key, id: id);
     case 'purchase-orders' when s.length == 2:
       return PurchaseOrderScreen(key: key, id: id);
     case 'goods-receipts' when s.length == 2:

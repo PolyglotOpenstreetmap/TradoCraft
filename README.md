@@ -140,6 +140,27 @@ Photos are JPEG/PNG/WebP up to 12 MB and are stored in the database.
 Staff manage the people at a customer under Customers → Contacts, look up a caller with
 "Who is calling?" in the helpdesk, and give a contact portal access in the contact form.
 
+## First run: a new company
+
+Without the demo seed (`SEED_DEV_DATA` unset) a new database is empty. Start the app, point it at
+the server and choose "Set up a new company" on the sign-in screen (or in the add-environment
+dialog). The wizard asks for the company (name, legal name, VAT number, country, currency,
+language) and its first administrator, and creates the basics: numbering, a warehouse with its
+locations and the price zones Z1-Z5 (units of measure ship with the migrations; no demo
+catalogue). It works once, only while no company exists
+([ADR 0047](docs/adr/0047-company-bootstrap.md)).
+
+* `AUTH_MODE=dev`: the admin e-mail becomes the dev user and the app signs in as that user.
+  `BOOTSTRAP_TOKEN` is optional.
+* `AUTH_MODE=oidc`: set `BOOTSTRAP_TOKEN` (a long random string) before starting, or the setup
+  endpoint answers 404. The wizard asks for it. Afterwards the administrator signs in through the
+  identity provider with the same e-mail address; remove the token from the environment.
+
+Without the app: `curl -X POST localhost:8080/api/v1/setup/bootstrap -H 'content-type:
+application/json' -d '{"name": "Acme", "country_code": "BE", "currency": "EUR",
+"default_language": "en", "admin_email": "me@acme.example", "admin_display_name": "Me",
+"token": "..."}'`.
+
 ## Tests
 
 ```bash

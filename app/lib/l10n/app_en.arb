@@ -2233,6 +2233,56 @@
   },
   "modulesIntro": "Switch off the modules this company does not use. People no longer see them and the server refuses their requests.",
   "modulesSaved": "Modules saved",
+  "moduleAlsoRequires": "Also needs {modules}",
+  "@moduleAlsoRequires": {
+    "placeholders": {
+      "modules": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleAlsoSwitchedOff": "Also switches off: {modules}",
+  "@moduleAlsoSwitchedOff": {
+    "placeholders": {
+      "modules": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleAlsoSwitchedOn": "Also switches on: {modules}",
+  "@moduleAlsoSwitchedOn": {
+    "placeholders": {
+      "modules": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleExpand": "Expand {module}",
+  "@moduleExpand": {
+    "placeholders": {
+      "module": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleCollapse": "Collapse {module}",
+  "@moduleCollapse": {
+    "placeholders": {
+      "module": {
+        "type": "String"
+      }
+    }
+  },
+  "moduleOn": "On",
+  "moduleOff": "Off",
+  "moduleLevel": "Level {level}",
+  "@moduleLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "userRoleAdmin": "Administrator",
   "userRoleSalesManager": "Sales manager",
   "userRoleSales": "Sales",
@@ -3415,5 +3465,116 @@
   "purchReceipts": "Goods receipts",
   "purchReceivedDate": "Received",
   "purchOpenOrder": "Purchase order",
-  "tabGoodsReceipt": "Goods receipt"
+  "tabGoodsReceipt": "Goods receipt",
+  "setupTitle": "Set up a new company",
+  "setupOffer": "Set up a new company",
+  "setupOfferHint": "This server has no company yet.",
+  "setupServer": "Server: {url}",
+  "@setupServer": {"placeholders": {"url": {"type": "String"}}},
+  "setupStepOf": "Step {n} of {total}",
+  "@setupStepOf": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}}},
+  "setupStepCompany": "Company",
+  "setupStepRegion": "Country, currency and language",
+  "setupStepAdmin": "Administrator",
+  "setupStepToken": "Setup token",
+  "setupStepReview": "Review",
+  "setupCompanyName": "Company name",
+  "setupLegalName": "Legal name (optional)",
+  "setupVatNumber": "VAT number (optional)",
+  "setupCountry": "Country code (2 letters, e.g. BE)",
+  "setupCurrency": "Currency (3 letters, e.g. EUR)",
+  "setupLanguage": "Default language",
+  "setupAdminEmail": "Administrator e-mail",
+  "setupAdminName": "Administrator name",
+  "setupToken": "Setup token",
+  "setupTokenHelp": "The value of BOOTSTRAP_TOKEN on the server.",
+  "setupErrName": "Enter the company name.",
+  "setupErrVat": "A VAT number has 4 to 20 letters and digits.",
+  "setupErrCountry": "Enter a two-letter country code.",
+  "setupErrCurrency": "Enter a three-letter currency code.",
+  "setupErrEmail": "Enter a valid e-mail address.",
+  "setupErrAdminName": "Enter the administrator's name.",
+  "setupErrToken": "Enter the setup token.",
+  "setupNext": "Next",
+  "setupBack": "Back",
+  "setupCreate": "Create company",
+  "setupReviewHint": "Check the details. A company can be created only once on this server.",
+  "setupErr403": "The setup token is missing or wrong.",
+  "setupErr404": "Setting up is disabled on this server. Set BOOTSTRAP_TOKEN on the server and restart it.",
+  "setupErr409": "This server already has a company.",
+  "setupDone": "Company {name} created.",
+  "@setupDone": {"placeholders": {"name": {"type": "String"}}},
+  "setupDoneDev": "Signing in as {email}.",
+  "@setupDoneDev": {"placeholders": {"email": {"type": "String"}}},
+  "setupDoneOidc": "Sign in through your identity provider with {email}: that account is the administrator.",
+  "@setupDoneOidc": {"placeholders": {"email": {"type": "String"}}},
+  "setupToLogin": "Go to sign in",
+  "setupAddOfferTitle": "Set up this server?",
+  "setupAddOfferBody": "This server has no company yet. Set one up now?",
+  "setupLater": "Later",
+  "finMatchColumn": "Match",
+  "finance": "Finance",
+  "finSupplierInvoices": "Supplier invoices",
+  "finSettings": "Settings",
+  "tabSupplierInvoice": "Supplier invoice",
+  "finNewInvoice": "New supplier invoice",
+  "finNoInvoices": "No supplier invoices found.",
+  "finInvoiceNumber": "Invoice number",
+  "finInternalNumber": "Internal number",
+  "finInvoiceDate": "Invoice date",
+  "finDueDate": "Due date",
+  "finStatusDraft": "draft",
+  "finStatusMatched": "matched",
+  "finStatusDisputed": "disputed",
+  "finStatusApproved": "approved",
+  "finStatusPaid": "paid",
+  "finMatchOk": "ok",
+  "finMatchNotReceived": "not received",
+  "finMatchOverInvoiced": "over invoiced",
+  "finMatchPriceVariance": "price variance",
+  "finMatchNoPoLine": "no order line",
+  "finOrderOptional": "Purchase order (optional)",
+  "finNoOrder": "No purchase order",
+  "finOrderPrefillHint": "The lines are filled from the goods received and not yet invoiced.",
+  "finNumberRequired": "The invoice number is required (at most 64 characters).",
+  "finLineDescriptionRequired": "A free-text line needs a description.",
+  "finVatInvalid": "VAT rate must be between 0 and 100 with at most 2 decimals.",
+  "finOrdered": "Ordered",
+  "finInvoiced": "Invoiced",
+  "finOrderPrice": "Order price",
+  "finInvoicePrice": "Invoice price",
+  "finVariance": "Variance",
+  "finMatches": "The invoice matches the order and the receipts.",
+  "finNotMatches": "The invoice does not match the order and the receipts.",
+  "finTolerances": "Tolerances: quantity {qty} %, price {price} %",
+  "@finTolerances": {"placeholders": {"qty": {"type": "String"}, "price": {"type": "String"}}},
+  "finSubmitMatch": "Check match",
+  "finApprove": "Approve",
+  "finOverrideTitle": "Approve despite mismatch",
+  "finOverrideHelp": "The invoice does not match. Give the reason for approving it anyway; it is stored with the approval.",
+  "finOverrideReason": "Override reason",
+  "finReasonRequired": "A reason is required.",
+  "finDispute": "Dispute",
+  "finDisputeReason": "Dispute reason",
+  "finReopen": "Reopen",
+  "finMarkPaid": "Mark as paid",
+  "finPaymentDate": "Payment date",
+  "finPaymentReference": "Payment reference",
+  "finDeleteDraft": "Delete draft",
+  "finDeleteConfirm": "Delete invoice {number}? This cannot be undone.",
+  "@finDeleteConfirm": {"placeholders": {"number": {"type": "String"}}},
+  "finNetTotal": "Net",
+  "finGrossTotal": "Total incl. VAT",
+  "finDisputeReasonShown": "Dispute reason",
+  "finOverrideShown": "Override reason",
+  "finPaidOn": "Paid on",
+  "finPurchaseOrder": "Purchase order",
+  "finQuantityTolerance": "Quantity tolerance (%)",
+  "finPriceTolerance": "Price tolerance (%)",
+  "finToleranceInvalid": "Enter a percentage between 0 and 100.",
+  "finSettingsSaved": "Settings saved.",
+  "finSettingsHelp": "Largest accepted difference between the order and the invoice before a line counts as a mismatch.",
+  "finCreateInvoice": "Create supplier invoice",
+  "userRoleFinance": "Finance",
+  "moduleFinance": "Finance"
 }

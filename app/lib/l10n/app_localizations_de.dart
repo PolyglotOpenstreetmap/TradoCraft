@@ -3981,6 +3981,42 @@ class AppLocalizationsDe extends AppLocalizations {
   String get modulesSaved => 'Module gespeichert';
 
   @override
+  String moduleAlsoRequires(String modules) {
+    return 'Benötigt auch $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOff(String modules) {
+    return 'Schaltet auch aus: $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOn(String modules) {
+    return 'Schaltet auch ein: $modules';
+  }
+
+  @override
+  String moduleExpand(String module) {
+    return '$module aufklappen';
+  }
+
+  @override
+  String moduleCollapse(String module) {
+    return '$module zuklappen';
+  }
+
+  @override
+  String get moduleOn => 'An';
+
+  @override
+  String get moduleOff => 'Aus';
+
+  @override
+  String moduleLevel(int level) {
+    return 'Ebene $level';
+  }
+
+  @override
   String get userRoleAdmin => 'Administrator';
 
   @override
@@ -6714,4 +6750,344 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Wareneingang';
+
+  @override
+  String get setupTitle => 'Neues Unternehmen einrichten';
+
+  @override
+  String get setupOffer => 'Neues Unternehmen einrichten';
+
+  @override
+  String get setupOfferHint => 'Dieser Server hat noch kein Unternehmen.';
+
+  @override
+  String setupServer(String url) {
+    return 'Server: $url';
+  }
+
+  @override
+  String setupStepOf(int n, int total) {
+    return 'Schritt $n von $total';
+  }
+
+  @override
+  String get setupStepCompany => 'Unternehmen';
+
+  @override
+  String get setupStepRegion => 'Land, Währung und Sprache';
+
+  @override
+  String get setupStepAdmin => 'Administrator';
+
+  @override
+  String get setupStepToken => 'Einrichtungstoken';
+
+  @override
+  String get setupStepReview => 'Überprüfung';
+
+  @override
+  String get setupCompanyName => 'Name des Unternehmens';
+
+  @override
+  String get setupLegalName => 'Rechtlicher Name (optional)';
+
+  @override
+  String get setupVatNumber => 'USt-IdNr. (optional)';
+
+  @override
+  String get setupCountry => 'Ländercode (2 Buchstaben, z. B. BE)';
+
+  @override
+  String get setupCurrency => 'Währung (3 Buchstaben, z. B. EUR)';
+
+  @override
+  String get setupLanguage => 'Standardsprache';
+
+  @override
+  String get setupAdminEmail => 'E-Mail des Administrators';
+
+  @override
+  String get setupAdminName => 'Name des Administrators';
+
+  @override
+  String get setupToken => 'Einrichtungstoken';
+
+  @override
+  String get setupTokenHelp => 'Der Wert von BOOTSTRAP_TOKEN auf dem Server.';
+
+  @override
+  String get setupErrName => 'Geben Sie den Namen des Unternehmens ein.';
+
+  @override
+  String get setupErrVat =>
+      'Eine USt-IdNr. hat 4 bis 20 Buchstaben und Ziffern.';
+
+  @override
+  String get setupErrCountry => 'Geben Sie einen zweistelligen Ländercode ein.';
+
+  @override
+  String get setupErrCurrency =>
+      'Geben Sie einen dreistelligen Währungscode ein.';
+
+  @override
+  String get setupErrEmail => 'Geben Sie eine gültige E-Mail-Adresse ein.';
+
+  @override
+  String get setupErrAdminName => 'Geben Sie den Namen des Administrators ein.';
+
+  @override
+  String get setupErrToken => 'Geben Sie das Einrichtungstoken ein.';
+
+  @override
+  String get setupNext => 'Weiter';
+
+  @override
+  String get setupBack => 'Zurück';
+
+  @override
+  String get setupCreate => 'Unternehmen anlegen';
+
+  @override
+  String get setupReviewHint =>
+      'Prüfen Sie die Angaben. Auf diesem Server kann nur einmal ein Unternehmen angelegt werden.';
+
+  @override
+  String get setupErr403 => 'Das Einrichtungstoken fehlt oder ist falsch.';
+
+  @override
+  String get setupErr404 =>
+      'Die Einrichtung ist auf diesem Server deaktiviert. Setzen Sie BOOTSTRAP_TOKEN auf dem Server und starten Sie ihn neu.';
+
+  @override
+  String get setupErr409 => 'Dieser Server hat bereits ein Unternehmen.';
+
+  @override
+  String setupDone(String name) {
+    return 'Unternehmen $name angelegt.';
+  }
+
+  @override
+  String setupDoneDev(String email) {
+    return 'Anmeldung als $email.';
+  }
+
+  @override
+  String setupDoneOidc(String email) {
+    return 'Melden Sie sich über Ihren Identitätsanbieter mit $email an: Dieses Konto ist der Administrator.';
+  }
+
+  @override
+  String get setupToLogin => 'Zur Anmeldung';
+
+  @override
+  String get setupAddOfferTitle => 'Diesen Server einrichten?';
+
+  @override
+  String get setupAddOfferBody =>
+      'Dieser Server hat noch kein Unternehmen. Jetzt eines einrichten?';
+
+  @override
+  String get setupLater => 'Später';
+
+  @override
+  String get finMatchColumn => 'Abgleich';
+
+  @override
+  String get finance => 'Finanzen';
+
+  @override
+  String get finSupplierInvoices => 'Eingangsrechnungen';
+
+  @override
+  String get finSettings => 'Einstellungen';
+
+  @override
+  String get tabSupplierInvoice => 'Eingangsrechnung';
+
+  @override
+  String get finNewInvoice => 'Neue Eingangsrechnung';
+
+  @override
+  String get finNoInvoices => 'Keine Eingangsrechnungen gefunden.';
+
+  @override
+  String get finInvoiceNumber => 'Rechnungsnummer';
+
+  @override
+  String get finInternalNumber => 'Interne Nummer';
+
+  @override
+  String get finInvoiceDate => 'Rechnungsdatum';
+
+  @override
+  String get finDueDate => 'Fälligkeitsdatum';
+
+  @override
+  String get finStatusDraft => 'Entwurf';
+
+  @override
+  String get finStatusMatched => 'abgeglichen';
+
+  @override
+  String get finStatusDisputed => 'beanstandet';
+
+  @override
+  String get finStatusApproved => 'freigegeben';
+
+  @override
+  String get finStatusPaid => 'bezahlt';
+
+  @override
+  String get finMatchOk => 'in Ordnung';
+
+  @override
+  String get finMatchNotReceived => 'nicht erhalten';
+
+  @override
+  String get finMatchOverInvoiced => 'überfakturiert';
+
+  @override
+  String get finMatchPriceVariance => 'Preisabweichung';
+
+  @override
+  String get finMatchNoPoLine => 'keine Bestellposition';
+
+  @override
+  String get finOrderOptional => 'Bestellung (optional)';
+
+  @override
+  String get finNoOrder => 'Keine Bestellung';
+
+  @override
+  String get finOrderPrefillHint =>
+      'Die Positionen werden aus dem erhaltenen, noch nicht berechneten Wareneingang übernommen.';
+
+  @override
+  String get finNumberRequired =>
+      'Die Rechnungsnummer ist erforderlich (höchstens 64 Zeichen).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'Eine Freitextposition braucht eine Beschreibung.';
+
+  @override
+  String get finVatInvalid =>
+      'Der MwSt-Satz muss zwischen 0 und 100 liegen, mit höchstens 2 Dezimalstellen.';
+
+  @override
+  String get finOrdered => 'Bestellt';
+
+  @override
+  String get finInvoiced => 'Berechnet';
+
+  @override
+  String get finOrderPrice => 'Bestellpreis';
+
+  @override
+  String get finInvoicePrice => 'Rechnungspreis';
+
+  @override
+  String get finVariance => 'Abweichung';
+
+  @override
+  String get finMatches =>
+      'Die Rechnung stimmt mit Bestellung und Wareneingängen überein.';
+
+  @override
+  String get finNotMatches =>
+      'Die Rechnung stimmt nicht mit Bestellung und Wareneingängen überein.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Toleranzen: Menge $qty %, Preis $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Abgleich prüfen';
+
+  @override
+  String get finApprove => 'Freigeben';
+
+  @override
+  String get finOverrideTitle => 'Trotz Abweichung freigeben';
+
+  @override
+  String get finOverrideHelp =>
+      'Die Rechnung stimmt nicht überein. Geben Sie den Grund für die Freigabe an; er wird mit der Freigabe gespeichert.';
+
+  @override
+  String get finOverrideReason => 'Grund der Ausnahme';
+
+  @override
+  String get finReasonRequired => 'Ein Grund ist erforderlich.';
+
+  @override
+  String get finDispute => 'Beanstanden';
+
+  @override
+  String get finDisputeReason => 'Grund der Beanstandung';
+
+  @override
+  String get finReopen => 'Wieder öffnen';
+
+  @override
+  String get finMarkPaid => 'Als bezahlt markieren';
+
+  @override
+  String get finPaymentDate => 'Zahlungsdatum';
+
+  @override
+  String get finPaymentReference => 'Zahlungsreferenz';
+
+  @override
+  String get finDeleteDraft => 'Entwurf löschen';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return 'Rechnung $number löschen? Das kann nicht rückgängig gemacht werden.';
+  }
+
+  @override
+  String get finNetTotal => 'Netto';
+
+  @override
+  String get finGrossTotal => 'Gesamt inkl. MwSt';
+
+  @override
+  String get finDisputeReasonShown => 'Grund der Beanstandung';
+
+  @override
+  String get finOverrideShown => 'Grund der Ausnahme';
+
+  @override
+  String get finPaidOn => 'Bezahlt am';
+
+  @override
+  String get finPurchaseOrder => 'Bestellung';
+
+  @override
+  String get finQuantityTolerance => 'Mengentoleranz (%)';
+
+  @override
+  String get finPriceTolerance => 'Preistoleranz (%)';
+
+  @override
+  String get finToleranceInvalid =>
+      'Geben Sie einen Prozentsatz zwischen 0 und 100 ein.';
+
+  @override
+  String get finSettingsSaved => 'Einstellungen gespeichert.';
+
+  @override
+  String get finSettingsHelp =>
+      'Größte akzeptierte Abweichung zwischen Bestellung und Rechnung, bevor eine Position als Abweichung gilt.';
+
+  @override
+  String get finCreateInvoice => 'Eingangsrechnung anlegen';
+
+  @override
+  String get userRoleFinance => 'Finanzen';
+
+  @override
+  String get moduleFinance => 'Finanzen';
 }
