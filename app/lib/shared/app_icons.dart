@@ -135,6 +135,7 @@ abstract final class AppIcons {
   static const IconData sentimentDissatisfied = Icons.sentiment_dissatisfied;
   static const IconData sentimentSatisfiedAlt = Icons.sentiment_satisfied_alt;
   static const IconData settings = Icons.settings_outlined;
+  static const IconData shoppingCart = Icons.shopping_cart_outlined;
   static const IconData shoppingCartCheckout = Icons.shopping_cart_checkout;
   static const IconData subdirectory = Icons.subdirectory_arrow_right;
   static const IconData supportAgent = Icons.support_agent;

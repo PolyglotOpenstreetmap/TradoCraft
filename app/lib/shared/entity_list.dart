@@ -50,6 +50,7 @@ class EntityList<T> extends StatefulWidget {
     this.filters,
     this.moreFilters,
     this.actions = const [],
+    this.emptyText,
   });
 
   final String title;
@@ -72,6 +73,9 @@ class EntityList<T> extends StatefulWidget {
 
   /// Extra buttons next to the create button.
   final List<Widget> actions;
+
+  /// Shown instead of the rows when a finished load found nothing.
+  final String? emptyText;
 
   @override
   State<EntityList<T>> createState() => EntityListState<T>();
@@ -99,9 +103,12 @@ class EntityListState<T> extends State<EntityList<T>> {
     super.dispose();
   }
 
+  int _generation = 0;
+
   Future<void> reload() => _fetch(reset: true);
 
   Future<void> _fetch({required bool reset}) async {
+    final generation = ++_generation;
     setState(() {
       _loading = true;
       _error = null;
@@ -113,15 +120,19 @@ class EntityListState<T> extends State<EntityList<T>> {
         reset ? 0 : _items.length,
         _pageSize,
       );
-      if (!mounted) return;
+      if (!mounted || generation != _generation) return;
       setState(() {
         _items = reset ? items : [..._items, ...items];
         _total = total;
       });
     } catch (e) {
-      if (mounted) setState(() => _error = errorMessage(e));
+      if (mounted && generation == _generation) {
+        setState(() => _error = errorMessage(e));
+      }
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted && generation == _generation) {
+        setState(() => _loading = false);
+      }
     }
   }
 
@@ -197,6 +208,14 @@ class EntityListState<T> extends State<EntityList<T>> {
             ),
           if (_loading) const LinearProgressIndicator(),
           if (wide) _header(theme),
+          if (widget.emptyText != null &&
+              !_loading &&
+              _error == null &&
+              _items.isEmpty)
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Center(child: Text(widget.emptyText!)),
+            ),
           Expanded(
             child: ListView.separated(
               itemCount: _items.length + 1,

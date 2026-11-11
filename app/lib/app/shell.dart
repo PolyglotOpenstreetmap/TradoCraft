@@ -24,6 +24,7 @@ class _Dest {
     this.permission, {
     this.unless,
     this.alsoFor,
+    this.alsoPaths = const [],
   });
   final String path;
   final String Function(AppLocalizations l) label;
@@ -37,6 +38,14 @@ class _Dest {
 
   /// A second permission that also makes the tab visible (e.g. price zone management).
   final String? alsoFor;
+
+  /// Detail locations that belong to this section (e.g. `/suppliers`), so a tab showing one
+  /// highlights this destination.
+  final List<String> alsoPaths;
+
+  /// Whether [location] belongs to this destination.
+  bool matches(String location) =>
+      location.startsWith(path) || alsoPaths.any(location.startsWith);
 
   /// Whether a user with [perms] sees this destination.
   bool visibleFor(List<String> perms) =>
@@ -65,6 +74,7 @@ const _sectionArt = {
   '/planning': 'planning',
   '/customers': 'customers',
   '/products': 'product',
+  '/purchasing': 'purchasing',
   '/admin': 'admin',
 };
 
@@ -141,6 +151,13 @@ final _allDestinations = [
   ),
   _Dest('/customers', (l) => l.customers, AppIcons.business, 'customers.read'),
   _Dest('/products', (l) => l.products, AppIcons.inventory2, 'products.read'),
+  _Dest(
+    '/purchasing',
+    (l) => l.purchasing,
+    AppIcons.shoppingCart,
+    'purchasing.read',
+    alsoPaths: ['/suppliers', '/purchase-orders', '/goods-receipts'],
+  ),
   _Dest('/reports', (l) => l.crTitle, AppIcons.tableChart, 'reports.read'),
   _Dest(
     '/admin',
@@ -175,7 +192,7 @@ class AppShell extends ConsumerWidget {
     if (!isDetailLocation(location)) workspaceNotifier.homeLocation = location;
     // The section of the focused tab is highlighted, so a ticket tab belongs to Helpdesk.
     final shown = workspace.activeTab?.location ?? location;
-    final found = destinations.indexWhere((d) => shown.startsWith(d.path));
+    final found = destinations.indexWhere((d) => d.matches(shown));
     if (found < 0 && destinations.isNotEmpty && perms != null) {
       // The current page is not for this user (e.g. the default start page): go to their first.
       WidgetsBinding.instance.addPostFrameCallback((_) {
