@@ -335,7 +335,10 @@ class TabScope extends InheritedWidget {
 }
 
 /// Detail prefixes whose section list lives under another path (`/suppliers/..` is in Purchasing).
-const _sectionOfPrefix = {'suppliers': 'purchasing'};
+const _sectionOfPrefix = {
+  'suppliers': 'purchasing',
+  'supplier-invoices': 'finance',
+};
 
 /// The section list a detail [location] belongs to, e.g. `/orders/x` -> `/orders`.
 String sectionOfDetail(String location) {
@@ -661,6 +664,7 @@ String tabLabel(AppLocalizations l, WorkTab tab) {
     'production' => l.tabProductionOrder,
     'delivery' => l.tabDeliveryNote,
     'suppliers' => l.tabSupplier,
+    'supplier-invoices' => l.tabSupplierInvoice,
     'purchase-orders' => l.tabPurchaseOrder,
     'goods-receipts' => l.tabGoodsReceipt,
     _ => '',

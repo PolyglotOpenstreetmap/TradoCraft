@@ -37,6 +37,7 @@ import '../features/shipping/shipping_page.dart';
 import '../features/login/login_page.dart';
 import '../features/opportunities/opportunities_page.dart';
 import '../features/products/products_page.dart';
+import '../features/finance/finance_page.dart';
 import '../features/purchasing/purchasing_page.dart';
 import '../features/packages/intake_page.dart';
 import '../features/packages/receiving_page.dart';
@@ -255,6 +256,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/purchasing',
             builder: (_, _) => const PurchasingPage(),
+          ),
+          GoRoute(path: '/finance', builder: (_, _) => const FinancePage()),
+          GoRoute(
+            path: '/supplier-invoices/:id',
+            builder: (_, s) => DetailPortal(location: s.uri.toString()),
           ),
           GoRoute(
             path: '/purchase-orders/:id',

@@ -6460,4 +6460,204 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Goods receipt';
+
+  @override
+  String get finMatchColumn => 'Match';
+
+  @override
+  String get finance => 'Finance';
+
+  @override
+  String get finSupplierInvoices => 'Supplier invoices';
+
+  @override
+  String get finSettings => 'Settings';
+
+  @override
+  String get tabSupplierInvoice => 'Supplier invoice';
+
+  @override
+  String get finNewInvoice => 'New supplier invoice';
+
+  @override
+  String get finNoInvoices => 'No supplier invoices found.';
+
+  @override
+  String get finInvoiceNumber => 'Invoice number';
+
+  @override
+  String get finInternalNumber => 'Internal number';
+
+  @override
+  String get finInvoiceDate => 'Invoice date';
+
+  @override
+  String get finDueDate => 'Due date';
+
+  @override
+  String get finStatusDraft => 'draft';
+
+  @override
+  String get finStatusMatched => 'matched';
+
+  @override
+  String get finStatusDisputed => 'disputed';
+
+  @override
+  String get finStatusApproved => 'approved';
+
+  @override
+  String get finStatusPaid => 'paid';
+
+  @override
+  String get finMatchOk => 'ok';
+
+  @override
+  String get finMatchNotReceived => 'not received';
+
+  @override
+  String get finMatchOverInvoiced => 'over invoiced';
+
+  @override
+  String get finMatchPriceVariance => 'price variance';
+
+  @override
+  String get finMatchNoPoLine => 'no order line';
+
+  @override
+  String get finOrderOptional => 'Purchase order (optional)';
+
+  @override
+  String get finNoOrder => 'No purchase order';
+
+  @override
+  String get finOrderPrefillHint =>
+      'The lines are filled from the goods received and not yet invoiced.';
+
+  @override
+  String get finNumberRequired =>
+      'The invoice number is required (at most 64 characters).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'A free-text line needs a description.';
+
+  @override
+  String get finVatInvalid =>
+      'VAT rate must be between 0 and 100 with at most 2 decimals.';
+
+  @override
+  String get finOrdered => 'Ordered';
+
+  @override
+  String get finInvoiced => 'Invoiced';
+
+  @override
+  String get finOrderPrice => 'Order price';
+
+  @override
+  String get finInvoicePrice => 'Invoice price';
+
+  @override
+  String get finVariance => 'Variance';
+
+  @override
+  String get finMatches => 'The invoice matches the order and the receipts.';
+
+  @override
+  String get finNotMatches =>
+      'The invoice does not match the order and the receipts.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Tolerances: quantity $qty %, price $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Check match';
+
+  @override
+  String get finApprove => 'Approve';
+
+  @override
+  String get finOverrideTitle => 'Approve despite mismatch';
+
+  @override
+  String get finOverrideHelp =>
+      'The invoice does not match. Give the reason for approving it anyway; it is stored with the approval.';
+
+  @override
+  String get finOverrideReason => 'Override reason';
+
+  @override
+  String get finReasonRequired => 'A reason is required.';
+
+  @override
+  String get finDispute => 'Dispute';
+
+  @override
+  String get finDisputeReason => 'Dispute reason';
+
+  @override
+  String get finReopen => 'Reopen';
+
+  @override
+  String get finMarkPaid => 'Mark as paid';
+
+  @override
+  String get finPaymentDate => 'Payment date';
+
+  @override
+  String get finPaymentReference => 'Payment reference';
+
+  @override
+  String get finDeleteDraft => 'Delete draft';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return 'Delete invoice $number? This cannot be undone.';
+  }
+
+  @override
+  String get finNetTotal => 'Net';
+
+  @override
+  String get finGrossTotal => 'Total incl. VAT';
+
+  @override
+  String get finDisputeReasonShown => 'Dispute reason';
+
+  @override
+  String get finOverrideShown => 'Override reason';
+
+  @override
+  String get finPaidOn => 'Paid on';
+
+  @override
+  String get finPurchaseOrder => 'Purchase order';
+
+  @override
+  String get finQuantityTolerance => 'Quantity tolerance (%)';
+
+  @override
+  String get finPriceTolerance => 'Price tolerance (%)';
+
+  @override
+  String get finToleranceInvalid => 'Enter a percentage between 0 and 100.';
+
+  @override
+  String get finSettingsSaved => 'Settings saved.';
+
+  @override
+  String get finSettingsHelp =>
+      'Largest accepted difference between the order and the invoice before a line counts as a mismatch.';
+
+  @override
+  String get finCreateInvoice => 'Create supplier invoice';
+
+  @override
+  String get userRoleFinance => 'Finance';
+
+  @override
+  String get moduleFinance => 'Finance';
 }

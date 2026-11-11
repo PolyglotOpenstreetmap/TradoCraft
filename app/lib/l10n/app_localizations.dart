@@ -11693,6 +11693,384 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Goods receipt'**
   String get tabGoodsReceipt;
+
+  /// No description provided for @finMatchColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get finMatchColumn;
+
+  /// No description provided for @finance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get finance;
+
+  /// No description provided for @finSupplierInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier invoices'**
+  String get finSupplierInvoices;
+
+  /// No description provided for @finSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get finSettings;
+
+  /// No description provided for @tabSupplierInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier invoice'**
+  String get tabSupplierInvoice;
+
+  /// No description provided for @finNewInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'New supplier invoice'**
+  String get finNewInvoice;
+
+  /// No description provided for @finNoInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier invoices found.'**
+  String get finNoInvoices;
+
+  /// No description provided for @finInvoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice number'**
+  String get finInvoiceNumber;
+
+  /// No description provided for @finInternalNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal number'**
+  String get finInternalNumber;
+
+  /// No description provided for @finInvoiceDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice date'**
+  String get finInvoiceDate;
+
+  /// No description provided for @finDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get finDueDate;
+
+  /// No description provided for @finStatusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'draft'**
+  String get finStatusDraft;
+
+  /// No description provided for @finStatusMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'matched'**
+  String get finStatusMatched;
+
+  /// No description provided for @finStatusDisputed.
+  ///
+  /// In en, this message translates to:
+  /// **'disputed'**
+  String get finStatusDisputed;
+
+  /// No description provided for @finStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'approved'**
+  String get finStatusApproved;
+
+  /// No description provided for @finStatusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'paid'**
+  String get finStatusPaid;
+
+  /// No description provided for @finMatchOk.
+  ///
+  /// In en, this message translates to:
+  /// **'ok'**
+  String get finMatchOk;
+
+  /// No description provided for @finMatchNotReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'not received'**
+  String get finMatchNotReceived;
+
+  /// No description provided for @finMatchOverInvoiced.
+  ///
+  /// In en, this message translates to:
+  /// **'over invoiced'**
+  String get finMatchOverInvoiced;
+
+  /// No description provided for @finMatchPriceVariance.
+  ///
+  /// In en, this message translates to:
+  /// **'price variance'**
+  String get finMatchPriceVariance;
+
+  /// No description provided for @finMatchNoPoLine.
+  ///
+  /// In en, this message translates to:
+  /// **'no order line'**
+  String get finMatchNoPoLine;
+
+  /// No description provided for @finOrderOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order (optional)'**
+  String get finOrderOptional;
+
+  /// No description provided for @finNoOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase order'**
+  String get finNoOrder;
+
+  /// No description provided for @finOrderPrefillHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The lines are filled from the goods received and not yet invoiced.'**
+  String get finOrderPrefillHint;
+
+  /// No description provided for @finNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice number is required (at most 64 characters).'**
+  String get finNumberRequired;
+
+  /// No description provided for @finLineDescriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A free-text line needs a description.'**
+  String get finLineDescriptionRequired;
+
+  /// No description provided for @finVatInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate must be between 0 and 100 with at most 2 decimals.'**
+  String get finVatInvalid;
+
+  /// No description provided for @finOrdered.
+  ///
+  /// In en, this message translates to:
+  /// **'Ordered'**
+  String get finOrdered;
+
+  /// No description provided for @finInvoiced.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced'**
+  String get finInvoiced;
+
+  /// No description provided for @finOrderPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Order price'**
+  String get finOrderPrice;
+
+  /// No description provided for @finInvoicePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice price'**
+  String get finInvoicePrice;
+
+  /// No description provided for @finVariance.
+  ///
+  /// In en, this message translates to:
+  /// **'Variance'**
+  String get finVariance;
+
+  /// No description provided for @finMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice matches the order and the receipts.'**
+  String get finMatches;
+
+  /// No description provided for @finNotMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice does not match the order and the receipts.'**
+  String get finNotMatches;
+
+  /// No description provided for @finTolerances.
+  ///
+  /// In en, this message translates to:
+  /// **'Tolerances: quantity {qty} %, price {price} %'**
+  String finTolerances(String qty, String price);
+
+  /// No description provided for @finSubmitMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Check match'**
+  String get finSubmitMatch;
+
+  /// No description provided for @finApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get finApprove;
+
+  /// No description provided for @finOverrideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve despite mismatch'**
+  String get finOverrideTitle;
+
+  /// No description provided for @finOverrideHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice does not match. Give the reason for approving it anyway; it is stored with the approval.'**
+  String get finOverrideHelp;
+
+  /// No description provided for @finOverrideReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Override reason'**
+  String get finOverrideReason;
+
+  /// No description provided for @finReasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A reason is required.'**
+  String get finReasonRequired;
+
+  /// No description provided for @finDispute.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute'**
+  String get finDispute;
+
+  /// No description provided for @finDisputeReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute reason'**
+  String get finDisputeReason;
+
+  /// No description provided for @finReopen.
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen'**
+  String get finReopen;
+
+  /// No description provided for @finMarkPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as paid'**
+  String get finMarkPaid;
+
+  /// No description provided for @finPaymentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment date'**
+  String get finPaymentDate;
+
+  /// No description provided for @finPaymentReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reference'**
+  String get finPaymentReference;
+
+  /// No description provided for @finDeleteDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get finDeleteDraft;
+
+  /// No description provided for @finDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete invoice {number}? This cannot be undone.'**
+  String finDeleteConfirm(String number);
+
+  /// No description provided for @finNetTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get finNetTotal;
+
+  /// No description provided for @finGrossTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total incl. VAT'**
+  String get finGrossTotal;
+
+  /// No description provided for @finDisputeReasonShown.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispute reason'**
+  String get finDisputeReasonShown;
+
+  /// No description provided for @finOverrideShown.
+  ///
+  /// In en, this message translates to:
+  /// **'Override reason'**
+  String get finOverrideShown;
+
+  /// No description provided for @finPaidOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on'**
+  String get finPaidOn;
+
+  /// No description provided for @finPurchaseOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get finPurchaseOrder;
+
+  /// No description provided for @finQuantityTolerance.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity tolerance (%)'**
+  String get finQuantityTolerance;
+
+  /// No description provided for @finPriceTolerance.
+  ///
+  /// In en, this message translates to:
+  /// **'Price tolerance (%)'**
+  String get finPriceTolerance;
+
+  /// No description provided for @finToleranceInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a percentage between 0 and 100.'**
+  String get finToleranceInvalid;
+
+  /// No description provided for @finSettingsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings saved.'**
+  String get finSettingsSaved;
+
+  /// No description provided for @finSettingsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Largest accepted difference between the order and the invoice before a line counts as a mismatch.'**
+  String get finSettingsHelp;
+
+  /// No description provided for @finCreateInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Create supplier invoice'**
+  String get finCreateInvoice;
+
+  /// No description provided for @userRoleFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get userRoleFinance;
+
+  /// No description provided for @moduleFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
+  String get moduleFinance;
 }
 
 class _AppLocalizationsDelegate

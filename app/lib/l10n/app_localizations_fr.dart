@@ -6490,4 +6490,205 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Réception';
+
+  @override
+  String get finMatchColumn => 'Rapprochement';
+
+  @override
+  String get finance => 'Finance';
+
+  @override
+  String get finSupplierInvoices => 'Factures fournisseur';
+
+  @override
+  String get finSettings => 'Paramètres';
+
+  @override
+  String get tabSupplierInvoice => 'Facture fournisseur';
+
+  @override
+  String get finNewInvoice => 'Nouvelle facture fournisseur';
+
+  @override
+  String get finNoInvoices => 'Aucune facture fournisseur trouvée.';
+
+  @override
+  String get finInvoiceNumber => 'Numéro de facture';
+
+  @override
+  String get finInternalNumber => 'Numéro interne';
+
+  @override
+  String get finInvoiceDate => 'Date de facture';
+
+  @override
+  String get finDueDate => 'Échéance';
+
+  @override
+  String get finStatusDraft => 'brouillon';
+
+  @override
+  String get finStatusMatched => 'rapprochée';
+
+  @override
+  String get finStatusDisputed => 'contestée';
+
+  @override
+  String get finStatusApproved => 'approuvée';
+
+  @override
+  String get finStatusPaid => 'payée';
+
+  @override
+  String get finMatchOk => 'conforme';
+
+  @override
+  String get finMatchNotReceived => 'non reçu';
+
+  @override
+  String get finMatchOverInvoiced => 'surfacturé';
+
+  @override
+  String get finMatchPriceVariance => 'écart de prix';
+
+  @override
+  String get finMatchNoPoLine => 'pas de ligne de commande';
+
+  @override
+  String get finOrderOptional => 'Commande d\'achat (facultatif)';
+
+  @override
+  String get finNoOrder => 'Pas de commande d\'achat';
+
+  @override
+  String get finOrderPrefillHint =>
+      'Les lignes sont remplies avec les marchandises reçues et pas encore facturées.';
+
+  @override
+  String get finNumberRequired =>
+      'Le numéro de facture est obligatoire (64 caractères au maximum).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'Une ligne libre nécessite une description.';
+
+  @override
+  String get finVatInvalid =>
+      'Le taux de TVA doit être compris entre 0 et 100, avec 2 décimales au maximum.';
+
+  @override
+  String get finOrdered => 'Commandé';
+
+  @override
+  String get finInvoiced => 'Facturé';
+
+  @override
+  String get finOrderPrice => 'Prix de commande';
+
+  @override
+  String get finInvoicePrice => 'Prix facturé';
+
+  @override
+  String get finVariance => 'Écart';
+
+  @override
+  String get finMatches =>
+      'La facture correspond à la commande et aux réceptions.';
+
+  @override
+  String get finNotMatches =>
+      'La facture ne correspond pas à la commande et aux réceptions.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Tolérances : quantité $qty %, prix $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Vérifier le rapprochement';
+
+  @override
+  String get finApprove => 'Approuver';
+
+  @override
+  String get finOverrideTitle => 'Approuver malgré l\'écart';
+
+  @override
+  String get finOverrideHelp =>
+      'La facture ne correspond pas. Indiquez pourquoi vous l\'approuvez quand même ; le motif est enregistré avec l\'approbation.';
+
+  @override
+  String get finOverrideReason => 'Motif de dérogation';
+
+  @override
+  String get finReasonRequired => 'Un motif est obligatoire.';
+
+  @override
+  String get finDispute => 'Contester';
+
+  @override
+  String get finDisputeReason => 'Motif de la contestation';
+
+  @override
+  String get finReopen => 'Rouvrir';
+
+  @override
+  String get finMarkPaid => 'Marquer comme payée';
+
+  @override
+  String get finPaymentDate => 'Date de paiement';
+
+  @override
+  String get finPaymentReference => 'Référence de paiement';
+
+  @override
+  String get finDeleteDraft => 'Supprimer le brouillon';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return 'Supprimer la facture $number ? Cette action est irréversible.';
+  }
+
+  @override
+  String get finNetTotal => 'Net';
+
+  @override
+  String get finGrossTotal => 'Total TTC';
+
+  @override
+  String get finDisputeReasonShown => 'Motif de la contestation';
+
+  @override
+  String get finOverrideShown => 'Motif de dérogation';
+
+  @override
+  String get finPaidOn => 'Payée le';
+
+  @override
+  String get finPurchaseOrder => 'Commande d\'achat';
+
+  @override
+  String get finQuantityTolerance => 'Tolérance de quantité (%)';
+
+  @override
+  String get finPriceTolerance => 'Tolérance de prix (%)';
+
+  @override
+  String get finToleranceInvalid => 'Saisissez un pourcentage entre 0 et 100.';
+
+  @override
+  String get finSettingsSaved => 'Paramètres enregistrés.';
+
+  @override
+  String get finSettingsHelp =>
+      'Écart maximal accepté entre la commande et la facture avant qu\'une ligne soit comptée comme écart.';
+
+  @override
+  String get finCreateInvoice => 'Créer une facture fournisseur';
+
+  @override
+  String get userRoleFinance => 'Finance';
+
+  @override
+  String get moduleFinance => 'Finance';
 }

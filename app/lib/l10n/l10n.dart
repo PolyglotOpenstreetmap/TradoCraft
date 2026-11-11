@@ -380,6 +380,7 @@ extension CodeLabels on AppLocalizations {
     'dispatcher' => userRoleDispatcher,
     'logistics' => userRoleLogistics,
     'viewer' => userRoleViewer,
+    'finance' => userRoleFinance,
     _ => code,
   };
 
@@ -396,6 +397,7 @@ extension CodeLabels on AppLocalizations {
     'field' => moduleField,
     'delivery' => moduleDelivery,
     'production' => moduleProduction,
+    'finance' => moduleFinance,
     _ => code,
   };
 }

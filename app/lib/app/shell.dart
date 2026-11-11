@@ -74,6 +74,7 @@ const _sectionArt = {
   '/customers': 'customers',
   '/products': 'product',
   '/purchasing': 'purchasing',
+  '/finance': 'finance',
   '/admin': 'admin',
 };
 
@@ -156,6 +157,13 @@ final _allDestinations = [
     AppIcons.shoppingCart,
     'purchasing.read',
     alsoPaths: ['/suppliers', '/purchase-orders', '/goods-receipts'],
+  ),
+  _Dest(
+    '/finance',
+    (l) => l.finance,
+    AppIcons.accountBalance,
+    'finance.read',
+    alsoPaths: ['/supplier-invoices'],
   ),
   _Dest('/reports', (l) => l.crTitle, AppIcons.tableChart, 'reports.read'),
   _Dest(
