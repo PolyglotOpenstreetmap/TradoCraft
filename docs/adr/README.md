@@ -46,3 +46,4 @@ accepted one; mark superseded records as such.
 | [0040](0040-profiles.md) | Profiles: isolated sessions in separate windows | Accepted |
 | [0041](0041-workspace-tabs.md) | Workspace tabs for detail screens | Accepted |
 | [0042](0042-report-builder.md) | User-defined reports: catalog, definition, query engine, CSV and PDF export | Accepted |
+| [0043](0043-environments.md) | Environments: one database and API instance each, kinds live, test and tutorial, banner and switcher | Accepted |
