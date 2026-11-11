@@ -50,3 +50,4 @@ accepted one; mark superseded records as such.
 | [0045](0045-story-mission-tutorial.md) | Story-mission tutorial: engine, missions, spotlight, progress, only in test or tutorial environments | Accepted |
 | [0046](0046-supplier-invoices-and-three-way-match.md) | Supplier invoices and the three-way match (accounts-payable register) | Accepted |
 | [0047](0047-company-bootstrap.md) | Company bootstrap: setup wizard and `POST /setup/bootstrap` create the first company in an empty database | Accepted |
+| [0048](0048-environment-clones-and-outbound-safety.md) | Environment clones (pg_dump/pg_restore), envctl, outbound safety policy and clone scrub | Accepted |

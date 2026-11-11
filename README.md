@@ -78,6 +78,13 @@ in (never the host, user or password). The app keeps a list of environments, swi
 them from the account menu or the login page, and always shows the active one in a banner: red
 for live, amber for test, blue for tutorial.
 
+Test environments. `scripts/envctl clone <database> <name> [--anonymize]` copies a database
+(`pg_dump | pg_restore`), clears credentials and starts a separate API instance with
+`APP_ENV_KIND=test`; outside `live` the API and worker force `MAIL_TRANSPORT=files` and do not poll
+IMAP unless `ALLOW_INBOUND_MAIL_IN_NON_LIVE=1`
+([ADR 0048](docs/adr/0048-environment-clones-and-outbound-safety.md),
+[runbook](docs/runbooks/test-environments.md)).
+
 Worker (helpdesk e-mail). By default outgoing mail is written to `./outbox` as `.eml` files;
 set `MAIL_TRANSPORT=smtp` and `SMTP_*`, and `IMAP_*` to fetch incoming mail (see `.env.example`):
 
