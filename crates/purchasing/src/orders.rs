@@ -443,3 +443,21 @@ pub async fn cancel(
 
     load(conn, user.company_id, id).await
 }
+
+/// Looks up the numbers of purchase orders by id (for modules that only hold the id, such as
+/// finance). Unknown or foreign ids are simply absent from the result.
+pub async fn numbers_by_id(
+    conn: &mut PgConnection,
+    company_id: Uuid,
+    ids: &[Uuid],
+) -> AppResult<Vec<(Uuid, String)>> {
+    sqlx::query_as::<_, (Uuid, String)>(
+        "SELECT id, number FROM purchasing.purchase_orders
+         WHERE company_id = $1 AND id = ANY($2)",
+    )
+    .bind(company_id)
+    .bind(ids)
+    .fetch_all(conn)
+    .await
+    .map_err(Into::into)
+}
