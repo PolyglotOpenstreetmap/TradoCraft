@@ -6497,4 +6497,142 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Wareneingang';
+
+  @override
+  String get setupTitle => 'Neues Unternehmen einrichten';
+
+  @override
+  String get setupOffer => 'Neues Unternehmen einrichten';
+
+  @override
+  String get setupOfferHint => 'Dieser Server hat noch kein Unternehmen.';
+
+  @override
+  String setupServer(String url) {
+    return 'Server: $url';
+  }
+
+  @override
+  String setupStepOf(int n, int total) {
+    return 'Schritt $n von $total';
+  }
+
+  @override
+  String get setupStepCompany => 'Unternehmen';
+
+  @override
+  String get setupStepRegion => 'Land, Währung und Sprache';
+
+  @override
+  String get setupStepAdmin => 'Administrator';
+
+  @override
+  String get setupStepToken => 'Einrichtungstoken';
+
+  @override
+  String get setupStepReview => 'Überprüfung';
+
+  @override
+  String get setupCompanyName => 'Name des Unternehmens';
+
+  @override
+  String get setupLegalName => 'Rechtlicher Name (optional)';
+
+  @override
+  String get setupVatNumber => 'USt-IdNr. (optional)';
+
+  @override
+  String get setupCountry => 'Ländercode (2 Buchstaben, z. B. BE)';
+
+  @override
+  String get setupCurrency => 'Währung (3 Buchstaben, z. B. EUR)';
+
+  @override
+  String get setupLanguage => 'Standardsprache';
+
+  @override
+  String get setupAdminEmail => 'E-Mail des Administrators';
+
+  @override
+  String get setupAdminName => 'Name des Administrators';
+
+  @override
+  String get setupToken => 'Einrichtungstoken';
+
+  @override
+  String get setupTokenHelp => 'Der Wert von BOOTSTRAP_TOKEN auf dem Server.';
+
+  @override
+  String get setupErrName => 'Geben Sie den Namen des Unternehmens ein.';
+
+  @override
+  String get setupErrVat =>
+      'Eine USt-IdNr. hat 4 bis 20 Buchstaben und Ziffern.';
+
+  @override
+  String get setupErrCountry => 'Geben Sie einen zweistelligen Ländercode ein.';
+
+  @override
+  String get setupErrCurrency =>
+      'Geben Sie einen dreistelligen Währungscode ein.';
+
+  @override
+  String get setupErrEmail => 'Geben Sie eine gültige E-Mail-Adresse ein.';
+
+  @override
+  String get setupErrAdminName => 'Geben Sie den Namen des Administrators ein.';
+
+  @override
+  String get setupErrToken => 'Geben Sie das Einrichtungstoken ein.';
+
+  @override
+  String get setupNext => 'Weiter';
+
+  @override
+  String get setupBack => 'Zurück';
+
+  @override
+  String get setupCreate => 'Unternehmen anlegen';
+
+  @override
+  String get setupReviewHint =>
+      'Prüfen Sie die Angaben. Auf diesem Server kann nur einmal ein Unternehmen angelegt werden.';
+
+  @override
+  String get setupErr403 => 'Das Einrichtungstoken fehlt oder ist falsch.';
+
+  @override
+  String get setupErr404 =>
+      'Die Einrichtung ist auf diesem Server deaktiviert. Setzen Sie BOOTSTRAP_TOKEN auf dem Server und starten Sie ihn neu.';
+
+  @override
+  String get setupErr409 => 'Dieser Server hat bereits ein Unternehmen.';
+
+  @override
+  String setupDone(String name) {
+    return 'Unternehmen $name angelegt.';
+  }
+
+  @override
+  String setupDoneDev(String email) {
+    return 'Anmeldung als $email.';
+  }
+
+  @override
+  String setupDoneOidc(String email) {
+    return 'Melden Sie sich über Ihren Identitätsanbieter mit $email an: Dieses Konto ist der Administrator.';
+  }
+
+  @override
+  String get setupToLogin => 'Zur Anmeldung';
+
+  @override
+  String get setupAddOfferTitle => 'Diesen Server einrichten?';
+
+  @override
+  String get setupAddOfferBody =>
+      'Dieser Server hat noch kein Unternehmen. Jetzt eines einrichten?';
+
+  @override
+  String get setupLater => 'Später';
 }

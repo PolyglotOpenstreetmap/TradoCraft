@@ -35,6 +35,7 @@ import '../features/planning/planning_settings_page.dart';
 import '../features/orders/orders_page.dart';
 import '../features/shipping/shipping_page.dart';
 import '../features/login/login_page.dart';
+import '../features/setup/setup_page.dart';
 import '../features/opportunities/opportunities_page.dart';
 import '../features/products/products_page.dart';
 import '../features/purchasing/purchasing_page.dart';
@@ -57,12 +58,20 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/quotations',
     refreshListenable: signedIn,
     redirect: (context, state) {
-      final atLogin = state.matchedLocation == '/login';
+      final atLogin =
+          state.matchedLocation == '/login' ||
+          state.matchedLocation == '/setup';
       if (!signedIn.value) return atLogin ? null : '/login';
       return atLogin ? '/quotations' : null;
     },
     routes: [
       GoRoute(path: '/login', builder: (_, _) => const LoginPage()),
+      // Company setup wizard (ADR 0047); `?server=` names the server to set up.
+      GoRoute(
+        path: '/setup',
+        builder: (_, state) =>
+            SetupPage(server: state.uri.queryParameters['server']),
+      ),
       ShellRoute(
         builder: (context, state, child) => OfflineSyncHost(
           child: AppShell(location: state.matchedLocation, child: child),

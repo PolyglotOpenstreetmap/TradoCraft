@@ -20352,6 +20352,104 @@
         }
       }
     },
+    "/api/v1/setup/bootstrap": {
+      "post": {
+        "tags": [
+          "core"
+        ],
+        "summary": "`POST /setup/bootstrap`: creates the first company of an empty database.",
+        "operationId": "bootstrap",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BootstrapRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BootstrapResult"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "token missing or wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "bootstrapping is disabled on this server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "a company already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "invalid company spec",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {}
+        ]
+      }
+    },
+    "/api/v1/setup/status": {
+      "get": {
+        "tags": [
+          "core"
+        ],
+        "summary": "`GET /setup/status`: no sign-in needed.",
+        "operationId": "setup_status",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetupStatus"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {}
+        ]
+      }
+    },
     "/api/v1/shipping-requests": {
       "get": {
         "tags": [
@@ -23134,6 +23232,34 @@
           }
         }
       },
+      "AdminSummary": {
+        "type": "object",
+        "description": "The first administrator, as created.",
+        "required": [
+          "user_id",
+          "email",
+          "display_name",
+          "roles"
+        ],
+        "properties": {
+          "display_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
       "AdminUser": {
         "type": "object",
         "description": "A member of the active company, including deactivated ones.",
@@ -23902,6 +24028,50 @@
           "status": {
             "type": "string",
             "description": "draft | active | obsolete"
+          }
+        }
+      },
+      "BootstrapRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProvisionSpec",
+            "description": "The company and its administrator."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The `BOOTSTRAP_TOKEN`; required whenever the server has one."
+              }
+            }
+          }
+        ],
+        "description": "Body of `POST /setup/bootstrap`: the company spec plus the token, when the server has one."
+      },
+      "BootstrapResult": {
+        "type": "object",
+        "description": "Result of a successful bootstrap. Contains no secrets.",
+        "required": [
+          "company",
+          "admin",
+          "auth_mode"
+        ],
+        "properties": {
+          "admin": {
+            "$ref": "#/components/schemas/AdminSummary",
+            "description": "Its first administrator."
+          },
+          "auth_mode": {
+            "type": "string",
+            "description": "`dev` or `oidc`: how the administrator signs in."
+          },
+          "company": {
+            "$ref": "#/components/schemas/Company",
+            "description": "The new company."
           }
         }
       },
@@ -33770,6 +33940,58 @@
           }
         }
       },
+      "ProvisionSpec": {
+        "type": "object",
+        "description": "Everything needed to create a company and its first administrator.",
+        "required": [
+          "name",
+          "country_code",
+          "currency",
+          "default_language",
+          "admin_email",
+          "admin_display_name"
+        ],
+        "properties": {
+          "admin_display_name": {
+            "type": "string",
+            "description": "Display name of the first administrator."
+          },
+          "admin_email": {
+            "type": "string",
+            "description": "E-mail of the first administrator (created when no such user exists)."
+          },
+          "country_code": {
+            "type": "string",
+            "description": "ISO 3166 alpha-2 country code."
+          },
+          "currency": {
+            "type": "string",
+            "description": "ISO 4217 currency code."
+          },
+          "default_language": {
+            "type": "string",
+            "description": "One of nl, fr, en, de, es."
+          },
+          "legal_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Registered name when it differs from `name`."
+          },
+          "name": {
+            "type": "string",
+            "description": "Trading name; must be unique (case-insensitive)."
+          },
+          "vat_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "VAT number, for example `BE0123456749`."
+          }
+        }
+      },
       "PurchaseOrderDetail": {
         "allOf": [
           {
@@ -37729,6 +37951,29 @@
               "null"
             ],
             "format": "uuid"
+          }
+        }
+      },
+      "SetupStatus": {
+        "type": "object",
+        "description": "Whether this server can be set up, and what the wizard has to ask for.",
+        "required": [
+          "needs_setup",
+          "token_required",
+          "auth_mode"
+        ],
+        "properties": {
+          "auth_mode": {
+            "type": "string",
+            "description": "`dev` (the admin e-mail becomes the dev user) or `oidc` (sign in through the identity provider)."
+          },
+          "needs_setup": {
+            "type": "boolean",
+            "description": "True while no company exists and bootstrapping is enabled on this server."
+          },
+          "token_required": {
+            "type": "boolean",
+            "description": "True when `POST /setup/bootstrap` must carry the `BOOTSTRAP_TOKEN`."
           }
         }
       },
