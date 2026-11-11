@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/api.dart';
 import '../../l10n/l10n.dart';
+import 'orders_page.dart';
 import 'suppliers_page.dart';
 
 /// One segment of the Purchasing section (suppliers now; purchase orders and receipts follow).
@@ -36,6 +37,12 @@ final purchasingSegments = <PurchasingSegment>[
     label: (l) => l.purchSuppliers,
     permission: 'purchasing.read',
     builder: (_) => const SuppliersList(),
+  ),
+  PurchasingSegment(
+    id: 'orders',
+    label: (l) => l.purchOrders,
+    permission: 'purchasing.read',
+    builder: (_) => const PurchaseOrdersList(),
   ),
 ];
 

@@ -6317,4 +6317,95 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchNoSuppliers => 'No se encontraron proveedores.';
+
+  @override
+  String get purchOrders => 'Pedidos de compra';
+
+  @override
+  String get purchNewOrder => 'Nuevo pedido de compra';
+
+  @override
+  String get purchNoOrders => 'No se encontraron pedidos de compra.';
+
+  @override
+  String get purchOrderNumber => 'Número';
+
+  @override
+  String get purchSupplier => 'Proveedor';
+
+  @override
+  String get purchAllSuppliers => 'Todos los proveedores';
+
+  @override
+  String get purchOrderDate => 'Fecha del pedido';
+
+  @override
+  String get purchExpectedDate => 'Entrega prevista';
+
+  @override
+  String get purchStatusDraft => 'borrador';
+
+  @override
+  String get purchStatusApproved => 'aprobado';
+
+  @override
+  String get purchStatusSent => 'enviado';
+
+  @override
+  String get purchStatusPartial => 'recibido parcialmente';
+
+  @override
+  String get purchStatusReceived => 'recibido';
+
+  @override
+  String get purchStatusCancelled => 'cancelado';
+
+  @override
+  String get purchLines => 'Líneas';
+
+  @override
+  String get purchAddLine => 'Añadir línea';
+
+  @override
+  String get purchPickSupplier => 'Elija un proveedor.';
+
+  @override
+  String get purchLineQtyInvalid =>
+      'La cantidad debe ser mayor que cero, con un máximo de 4 decimales.';
+
+  @override
+  String get purchLinePriceInvalid =>
+      'El precio unitario debe ser cero o más, con un máximo de 4 decimales.';
+
+  @override
+  String get purchNeedLine => 'Añada al menos una línea.';
+
+  @override
+  String get purchApprove => 'Aprobar';
+
+  @override
+  String get purchCancelOrder => 'Cancelar pedido';
+
+  @override
+  String purchCancelOrderConfirm(String number) {
+    return '¿Cancelar el pedido de compra $number? No se puede deshacer.';
+  }
+
+  @override
+  String get purchKeepOrder => 'Mantener pedido';
+
+  @override
+  String get purchQtyReceived => 'Recibido';
+
+  @override
+  String get purchLineTotal => 'Total de la línea';
+
+  @override
+  String get purchSubtotal => 'Subtotal';
+
+  @override
+  String get purchTax => 'IVA';
+
+  @override
+  String get tabPurchaseOrder => 'Pedido de compra';
 }

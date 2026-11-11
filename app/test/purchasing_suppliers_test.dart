@@ -100,7 +100,7 @@ Future<void> _app(
 }
 
 void main() {
-  testWidgets('lists suppliers, hides the segment control, filters', (
+  testWidgets('lists suppliers (first segment), filters', (
     tester,
   ) async {
     final http = FakeHttp({
@@ -114,8 +114,8 @@ void main() {
     expect(find.text('Acme Motors'), findsOneWidget);
     expect(find.text('Bolt Works'), findsOneWidget);
     expect(find.text('45 days'), findsNWidgets(2));
-    // Only one segment: no control, and no create button without the write right.
-    expect(find.byKey(const ValueKey('purchasing-segments')), findsNothing);
+    // Suppliers and purchase orders are both segments; no create button without the write right.
+    expect(find.byKey(const ValueKey('purchasing-segments')), findsOneWidget);
     expect(find.text('New supplier'), findsNothing);
     expect(http.queries.last['active_only'], true);
 

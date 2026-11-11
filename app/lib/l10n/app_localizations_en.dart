@@ -6298,4 +6298,95 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchNoSuppliers => 'No suppliers found.';
+
+  @override
+  String get purchOrders => 'Purchase orders';
+
+  @override
+  String get purchNewOrder => 'New purchase order';
+
+  @override
+  String get purchNoOrders => 'No purchase orders found.';
+
+  @override
+  String get purchOrderNumber => 'Number';
+
+  @override
+  String get purchSupplier => 'Supplier';
+
+  @override
+  String get purchAllSuppliers => 'All suppliers';
+
+  @override
+  String get purchOrderDate => 'Order date';
+
+  @override
+  String get purchExpectedDate => 'Expected delivery';
+
+  @override
+  String get purchStatusDraft => 'draft';
+
+  @override
+  String get purchStatusApproved => 'approved';
+
+  @override
+  String get purchStatusSent => 'sent';
+
+  @override
+  String get purchStatusPartial => 'partially received';
+
+  @override
+  String get purchStatusReceived => 'received';
+
+  @override
+  String get purchStatusCancelled => 'cancelled';
+
+  @override
+  String get purchLines => 'Lines';
+
+  @override
+  String get purchAddLine => 'Add line';
+
+  @override
+  String get purchPickSupplier => 'Choose a supplier.';
+
+  @override
+  String get purchLineQtyInvalid =>
+      'Quantity must be greater than zero, with at most 4 decimals.';
+
+  @override
+  String get purchLinePriceInvalid =>
+      'Unit price must be zero or more, with at most 4 decimals.';
+
+  @override
+  String get purchNeedLine => 'Add at least one line.';
+
+  @override
+  String get purchApprove => 'Approve';
+
+  @override
+  String get purchCancelOrder => 'Cancel order';
+
+  @override
+  String purchCancelOrderConfirm(String number) {
+    return 'Cancel purchase order $number? This cannot be undone.';
+  }
+
+  @override
+  String get purchKeepOrder => 'Keep order';
+
+  @override
+  String get purchQtyReceived => 'Received';
+
+  @override
+  String get purchLineTotal => 'Line total';
+
+  @override
+  String get purchSubtotal => 'Subtotal';
+
+  @override
+  String get purchTax => 'Tax';
+
+  @override
+  String get tabPurchaseOrder => 'Purchase order';
 }

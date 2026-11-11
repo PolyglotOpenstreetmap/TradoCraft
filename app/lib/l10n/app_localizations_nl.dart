@@ -6320,4 +6320,95 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get purchNoSuppliers => 'Geen leveranciers gevonden.';
+
+  @override
+  String get purchOrders => 'Inkooporders';
+
+  @override
+  String get purchNewOrder => 'Nieuwe inkooporder';
+
+  @override
+  String get purchNoOrders => 'Geen inkooporders gevonden.';
+
+  @override
+  String get purchOrderNumber => 'Nummer';
+
+  @override
+  String get purchSupplier => 'Leverancier';
+
+  @override
+  String get purchAllSuppliers => 'Alle leveranciers';
+
+  @override
+  String get purchOrderDate => 'Orderdatum';
+
+  @override
+  String get purchExpectedDate => 'Verwachte levering';
+
+  @override
+  String get purchStatusDraft => 'concept';
+
+  @override
+  String get purchStatusApproved => 'goedgekeurd';
+
+  @override
+  String get purchStatusSent => 'verzonden';
+
+  @override
+  String get purchStatusPartial => 'gedeeltelijk ontvangen';
+
+  @override
+  String get purchStatusReceived => 'ontvangen';
+
+  @override
+  String get purchStatusCancelled => 'geannuleerd';
+
+  @override
+  String get purchLines => 'Regels';
+
+  @override
+  String get purchAddLine => 'Regel toevoegen';
+
+  @override
+  String get purchPickSupplier => 'Kies een leverancier.';
+
+  @override
+  String get purchLineQtyInvalid =>
+      'Aantal moet groter zijn dan nul, met maximaal 4 decimalen.';
+
+  @override
+  String get purchLinePriceInvalid =>
+      'Eenheidsprijs moet nul of meer zijn, met maximaal 4 decimalen.';
+
+  @override
+  String get purchNeedLine => 'Voeg minstens een regel toe.';
+
+  @override
+  String get purchApprove => 'Goedkeuren';
+
+  @override
+  String get purchCancelOrder => 'Order annuleren';
+
+  @override
+  String purchCancelOrderConfirm(String number) {
+    return 'Inkooporder $number annuleren? Dit kan niet ongedaan worden gemaakt.';
+  }
+
+  @override
+  String get purchKeepOrder => 'Order behouden';
+
+  @override
+  String get purchQtyReceived => 'Ontvangen';
+
+  @override
+  String get purchLineTotal => 'Regeltotaal';
+
+  @override
+  String get purchSubtotal => 'Subtotaal';
+
+  @override
+  String get purchTax => 'Btw';
+
+  @override
+  String get tabPurchaseOrder => 'Inkooporder';
 }

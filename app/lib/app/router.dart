@@ -257,6 +257,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, _) => const PurchasingPage(),
           ),
           GoRoute(
+            path: '/purchase-orders/:id',
+            builder: (_, s) => DetailPortal(location: s.uri.toString()),
+          ),
+          GoRoute(
             path: '/suppliers/:id',
             builder: (_, s) => DetailPortal(location: s.uri.toString()),
           ),

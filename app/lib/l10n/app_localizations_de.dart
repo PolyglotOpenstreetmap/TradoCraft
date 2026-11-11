@@ -6334,4 +6334,95 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchNoSuppliers => 'Keine Lieferanten gefunden.';
+
+  @override
+  String get purchOrders => 'Bestellungen';
+
+  @override
+  String get purchNewOrder => 'Neue Bestellung';
+
+  @override
+  String get purchNoOrders => 'Keine Bestellungen gefunden.';
+
+  @override
+  String get purchOrderNumber => 'Nummer';
+
+  @override
+  String get purchSupplier => 'Lieferant';
+
+  @override
+  String get purchAllSuppliers => 'Alle Lieferanten';
+
+  @override
+  String get purchOrderDate => 'Bestelldatum';
+
+  @override
+  String get purchExpectedDate => 'Gewünschter Liefertermin';
+
+  @override
+  String get purchStatusDraft => 'Entwurf';
+
+  @override
+  String get purchStatusApproved => 'genehmigt';
+
+  @override
+  String get purchStatusSent => 'gesendet';
+
+  @override
+  String get purchStatusPartial => 'teilweise erhalten';
+
+  @override
+  String get purchStatusReceived => 'erhalten';
+
+  @override
+  String get purchStatusCancelled => 'storniert';
+
+  @override
+  String get purchLines => 'Positionen';
+
+  @override
+  String get purchAddLine => 'Position hinzufügen';
+
+  @override
+  String get purchPickSupplier => 'Wählen Sie einen Lieferanten.';
+
+  @override
+  String get purchLineQtyInvalid =>
+      'Die Menge muss größer als null sein, mit höchstens 4 Dezimalstellen.';
+
+  @override
+  String get purchLinePriceInvalid =>
+      'Der Stückpreis muss null oder größer sein, mit höchstens 4 Dezimalstellen.';
+
+  @override
+  String get purchNeedLine => 'Fügen Sie mindestens eine Position hinzu.';
+
+  @override
+  String get purchApprove => 'Genehmigen';
+
+  @override
+  String get purchCancelOrder => 'Bestellung stornieren';
+
+  @override
+  String purchCancelOrderConfirm(String number) {
+    return 'Bestellung $number stornieren? Das kann nicht rückgängig gemacht werden.';
+  }
+
+  @override
+  String get purchKeepOrder => 'Bestellung behalten';
+
+  @override
+  String get purchQtyReceived => 'Erhalten';
+
+  @override
+  String get purchLineTotal => 'Positionssumme';
+
+  @override
+  String get purchSubtotal => 'Zwischensumme';
+
+  @override
+  String get purchTax => 'MwSt.';
+
+  @override
+  String get tabPurchaseOrder => 'Bestellung';
 }

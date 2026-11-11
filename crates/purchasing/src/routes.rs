@@ -8,7 +8,10 @@ use utoipa_axum::router::OpenApiRouter;
 use utoipa_axum::routes;
 use uuid::Uuid;
 
-use crate::orders::{self, NewPurchaseOrderInput, PurchaseOrderDetail, PurchaseOrderSummary};
+use crate::orders::{
+    self, NewPurchaseOrderInput, PurchaseOrderDetail, PurchaseOrderSummary,
+    UpdatePurchaseOrderInput,
+};
 use crate::receipts::{self, GoodsReceiptDetail, GoodsReceiptSummary, ReceiveGoodsInput};
 use crate::supplier_products::{self, SetSupplierProductInput, SupplierProduct};
 use crate::suppliers::{self, NewSupplierInput, Supplier, UpdateSupplierInput};
@@ -319,6 +322,35 @@ async fn get_order(
 }
 
 #[utoipa::path(
+    put,
+    path = "/purchase-orders/{id}",
+    tag = "purchasing",
+    params(("id" = Uuid, Path, description = "Purchase Order ID")),
+    request_body = UpdatePurchaseOrderInput,
+    responses(
+        (status = 200, body = PurchaseOrderDetail),
+        (status = 400, body = ErrorBody),
+        (status = 422, body = ErrorBody),
+        (status = 401, body = ErrorBody),
+        (status = 403, body = ErrorBody),
+        (status = 404, body = ErrorBody),
+        (status = 409, body = ErrorBody)
+    )
+)]
+async fn update_order(
+    State(state): State<AppState>,
+    user: CurrentUser,
+    Path(id): Path<Uuid>,
+    Json(input): Json<UpdatePurchaseOrderInput>,
+) -> AppResult<Json<PurchaseOrderDetail>> {
+    user.require(Permission::PurchasingWrite)?;
+    let mut tx = state.db.begin().await?;
+    let po = orders::update(&mut tx, &user, id, input).await?;
+    tx.commit().await?;
+    Ok(Json(po))
+}
+
+#[utoipa::path(
     post,
     path = "/purchase-orders/{id}/approve",
     tag = "purchasing",
@@ -478,7 +510,7 @@ pub fn router() -> OpenApiRouter<AppState> {
         .routes(routes!(set_supplier_product, delete_supplier_product))
         .routes(routes!(list_product_suppliers))
         .routes(routes!(list_orders, create_order))
-        .routes(routes!(get_order))
+        .routes(routes!(get_order, update_order))
         .routes(routes!(approve_order))
         .routes(routes!(send_order))
         .routes(routes!(cancel_order))

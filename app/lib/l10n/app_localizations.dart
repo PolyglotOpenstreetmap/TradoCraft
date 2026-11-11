@@ -11405,6 +11405,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No suppliers found.'**
   String get purchNoSuppliers;
+
+  /// No description provided for @purchOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase orders'**
+  String get purchOrders;
+
+  /// No description provided for @purchNewOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'New purchase order'**
+  String get purchNewOrder;
+
+  /// No description provided for @purchNoOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'No purchase orders found.'**
+  String get purchNoOrders;
+
+  /// No description provided for @purchOrderNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get purchOrderNumber;
+
+  /// No description provided for @purchSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier'**
+  String get purchSupplier;
+
+  /// No description provided for @purchAllSuppliers.
+  ///
+  /// In en, this message translates to:
+  /// **'All suppliers'**
+  String get purchAllSuppliers;
+
+  /// No description provided for @purchOrderDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Order date'**
+  String get purchOrderDate;
+
+  /// No description provided for @purchExpectedDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected delivery'**
+  String get purchExpectedDate;
+
+  /// No description provided for @purchStatusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'draft'**
+  String get purchStatusDraft;
+
+  /// No description provided for @purchStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'approved'**
+  String get purchStatusApproved;
+
+  /// No description provided for @purchStatusSent.
+  ///
+  /// In en, this message translates to:
+  /// **'sent'**
+  String get purchStatusSent;
+
+  /// No description provided for @purchStatusPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'partially received'**
+  String get purchStatusPartial;
+
+  /// No description provided for @purchStatusReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'received'**
+  String get purchStatusReceived;
+
+  /// No description provided for @purchStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'cancelled'**
+  String get purchStatusCancelled;
+
+  /// No description provided for @purchLines.
+  ///
+  /// In en, this message translates to:
+  /// **'Lines'**
+  String get purchLines;
+
+  /// No description provided for @purchAddLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Add line'**
+  String get purchAddLine;
+
+  /// No description provided for @purchPickSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a supplier.'**
+  String get purchPickSupplier;
+
+  /// No description provided for @purchLineQtyInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity must be greater than zero, with at most 4 decimals.'**
+  String get purchLineQtyInvalid;
+
+  /// No description provided for @purchLinePriceInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price must be zero or more, with at most 4 decimals.'**
+  String get purchLinePriceInvalid;
+
+  /// No description provided for @purchNeedLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one line.'**
+  String get purchNeedLine;
+
+  /// No description provided for @purchApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get purchApprove;
+
+  /// No description provided for @purchCancelOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel order'**
+  String get purchCancelOrder;
+
+  /// No description provided for @purchCancelOrderConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel purchase order {number}? This cannot be undone.'**
+  String purchCancelOrderConfirm(String number);
+
+  /// No description provided for @purchKeepOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep order'**
+  String get purchKeepOrder;
+
+  /// No description provided for @purchQtyReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get purchQtyReceived;
+
+  /// No description provided for @purchLineTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Line total'**
+  String get purchLineTotal;
+
+  /// No description provided for @purchSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get purchSubtotal;
+
+  /// No description provided for @purchTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get purchTax;
+
+  /// No description provided for @tabPurchaseOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get tabPurchaseOrder;
 }
 
 class _AppLocalizationsDelegate
