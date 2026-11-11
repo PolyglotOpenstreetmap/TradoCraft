@@ -29,9 +29,33 @@ async fn main() -> anyhow::Result<()> {
         )
         .init();
 
+    // `tradocraft-api migrate` applies the pending migrations and exits (used by `envctl clone`
+    // so a clone is brought to this binary's schema before it is scrubbed and before any listener
+    // starts).
+    if std::env::args().nth(1).as_deref() == Some("migrate") {
+        let url = env("DATABASE_URL").context("DATABASE_URL is required")?;
+        let db = PgPoolOptions::new()
+            .max_connections(2)
+            .connect(&url)
+            .await?;
+        tradocraft_api::MIGRATOR
+            .run(&db)
+            .await
+            .context("running migrations")?;
+        tracing::info!("migrations applied");
+        return Ok(());
+    }
+
     // Fail fast on a bad APP_ENV_KIND, before touching the database.
     let environment = tradocraft_core::environment::EnvironmentConfig::from_env()
         .map_err(|e| anyhow::anyhow!(e))?;
+
+    // The API only queues e-mail (the worker sends it) and never polls a mailbox; the banner makes
+    // the policy visible for this instance too (ADR 0048).
+    let requested_transport = env("MAIL_TRANSPORT").unwrap_or_else(|| "files".into());
+    environment
+        .outbound_policy(&requested_transport)
+        .log_warnings(&requested_transport);
 
     let database_url = env("DATABASE_URL").context("DATABASE_URL is required")?;
     let db = PgPoolOptions::new()
@@ -112,7 +136,11 @@ async fn main() -> anyhow::Result<()> {
     tracing::info!("listening on http://{addr} (API docs at /docs)");
     axum::serve(
         listener,
-        tradocraft_api::app_with_environment(state, environment),
+        tradocraft_api::app_with_options(
+            state,
+            environment,
+            tradocraft_core::companies::BootstrapConfig::from_env(),
+        ),
     )
     .with_graceful_shutdown(async {
         let _ = tokio::signal::ctrl_c().await;

@@ -7262,6 +7262,54 @@ abstract class AppLocalizations {
   /// **'Modules saved'**
   String get modulesSaved;
 
+  /// No description provided for @moduleAlsoRequires.
+  ///
+  /// In en, this message translates to:
+  /// **'Also needs {modules}'**
+  String moduleAlsoRequires(String modules);
+
+  /// No description provided for @moduleAlsoSwitchedOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Also switches off: {modules}'**
+  String moduleAlsoSwitchedOff(String modules);
+
+  /// No description provided for @moduleAlsoSwitchedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Also switches on: {modules}'**
+  String moduleAlsoSwitchedOn(String modules);
+
+  /// No description provided for @moduleExpand.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand {module}'**
+  String moduleExpand(String module);
+
+  /// No description provided for @moduleCollapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse {module}'**
+  String moduleCollapse(String module);
+
+  /// No description provided for @moduleOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get moduleOn;
+
+  /// No description provided for @moduleOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get moduleOff;
+
+  /// No description provided for @moduleLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String moduleLevel(int level);
+
   /// No description provided for @userRoleAdmin.
   ///
   /// In en, this message translates to:
@@ -12077,6 +12125,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Goods receipt'**
   String get tabGoodsReceipt;
+
+  /// No description provided for @setupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up a new company'**
+  String get setupTitle;
+
+  /// No description provided for @setupOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up a new company'**
+  String get setupOffer;
+
+  /// No description provided for @setupOfferHint.
+  ///
+  /// In en, this message translates to:
+  /// **'This server has no company yet.'**
+  String get setupOfferHint;
+
+  /// No description provided for @setupServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Server: {url}'**
+  String setupServer(String url);
+
+  /// No description provided for @setupStepOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {n} of {total}'**
+  String setupStepOf(int n, int total);
+
+  /// No description provided for @setupStepCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get setupStepCompany;
+
+  /// No description provided for @setupStepRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Country, currency and language'**
+  String get setupStepRegion;
+
+  /// No description provided for @setupStepAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator'**
+  String get setupStepAdmin;
+
+  /// No description provided for @setupStepToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup token'**
+  String get setupStepToken;
+
+  /// No description provided for @setupStepReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get setupStepReview;
+
+  /// No description provided for @setupCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Company name'**
+  String get setupCompanyName;
+
+  /// No description provided for @setupLegalName.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal name (optional)'**
+  String get setupLegalName;
+
+  /// No description provided for @setupVatNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number (optional)'**
+  String get setupVatNumber;
+
+  /// No description provided for @setupCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Country code (2 letters, e.g. BE)'**
+  String get setupCountry;
+
+  /// No description provided for @setupCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency (3 letters, e.g. EUR)'**
+  String get setupCurrency;
+
+  /// No description provided for @setupLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Default language'**
+  String get setupLanguage;
+
+  /// No description provided for @setupAdminEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator e-mail'**
+  String get setupAdminEmail;
+
+  /// No description provided for @setupAdminName.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator name'**
+  String get setupAdminName;
+
+  /// No description provided for @setupToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup token'**
+  String get setupToken;
+
+  /// No description provided for @setupTokenHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The value of BOOTSTRAP_TOKEN on the server.'**
+  String get setupTokenHelp;
+
+  /// No description provided for @setupErrName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the company name.'**
+  String get setupErrName;
+
+  /// No description provided for @setupErrVat.
+  ///
+  /// In en, this message translates to:
+  /// **'A VAT number has 4 to 20 letters and digits.'**
+  String get setupErrVat;
+
+  /// No description provided for @setupErrCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a two-letter country code.'**
+  String get setupErrCountry;
+
+  /// No description provided for @setupErrCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a three-letter currency code.'**
+  String get setupErrCurrency;
+
+  /// No description provided for @setupErrEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid e-mail address.'**
+  String get setupErrEmail;
+
+  /// No description provided for @setupErrAdminName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the administrator\'s name.'**
+  String get setupErrAdminName;
+
+  /// No description provided for @setupErrToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the setup token.'**
+  String get setupErrToken;
+
+  /// No description provided for @setupNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get setupNext;
+
+  /// No description provided for @setupBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get setupBack;
+
+  /// No description provided for @setupCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create company'**
+  String get setupCreate;
+
+  /// No description provided for @setupReviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the details. A company can be created only once on this server.'**
+  String get setupReviewHint;
+
+  /// No description provided for @setupErr403.
+  ///
+  /// In en, this message translates to:
+  /// **'The setup token is missing or wrong.'**
+  String get setupErr403;
+
+  /// No description provided for @setupErr404.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up is disabled on this server. Set BOOTSTRAP_TOKEN on the server and restart it.'**
+  String get setupErr404;
+
+  /// No description provided for @setupErr409.
+  ///
+  /// In en, this message translates to:
+  /// **'This server already has a company.'**
+  String get setupErr409;
+
+  /// No description provided for @setupDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Company {name} created.'**
+  String setupDone(String name);
+
+  /// No description provided for @setupDoneDev.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing in as {email}.'**
+  String setupDoneDev(String email);
+
+  /// No description provided for @setupDoneOidc.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in through your identity provider with {email}: that account is the administrator.'**
+  String setupDoneOidc(String email);
+
+  /// No description provided for @setupToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to sign in'**
+  String get setupToLogin;
+
+  /// No description provided for @setupAddOfferTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up this server?'**
+  String get setupAddOfferTitle;
+
+  /// No description provided for @setupAddOfferBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This server has no company yet. Set one up now?'**
+  String get setupAddOfferBody;
+
+  /// No description provided for @setupLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get setupLater;
 
   /// No description provided for @finMatchColumn.
   ///

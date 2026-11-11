@@ -3974,6 +3974,42 @@ class AppLocalizationsNl extends AppLocalizations {
   String get modulesSaved => 'Modules opgeslagen';
 
   @override
+  String moduleAlsoRequires(String modules) {
+    return 'Heeft ook $modules nodig';
+  }
+
+  @override
+  String moduleAlsoSwitchedOff(String modules) {
+    return 'Zet ook uit: $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOn(String modules) {
+    return 'Zet ook aan: $modules';
+  }
+
+  @override
+  String moduleExpand(String module) {
+    return '$module uitklappen';
+  }
+
+  @override
+  String moduleCollapse(String module) {
+    return '$module inklappen';
+  }
+
+  @override
+  String get moduleOn => 'Aan';
+
+  @override
+  String get moduleOff => 'Uit';
+
+  @override
+  String moduleLevel(int level) {
+    return 'Niveau $level';
+  }
+
+  @override
   String get userRoleAdmin => 'Beheerder';
 
   @override
@@ -6700,6 +6736,142 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Goederenontvangst';
+
+  @override
+  String get setupTitle => 'Een nieuw bedrijf instellen';
+
+  @override
+  String get setupOffer => 'Een nieuw bedrijf instellen';
+
+  @override
+  String get setupOfferHint => 'Deze server heeft nog geen bedrijf.';
+
+  @override
+  String setupServer(String url) {
+    return 'Server: $url';
+  }
+
+  @override
+  String setupStepOf(int n, int total) {
+    return 'Stap $n van $total';
+  }
+
+  @override
+  String get setupStepCompany => 'Bedrijf';
+
+  @override
+  String get setupStepRegion => 'Land, valuta en taal';
+
+  @override
+  String get setupStepAdmin => 'Beheerder';
+
+  @override
+  String get setupStepToken => 'Installatietoken';
+
+  @override
+  String get setupStepReview => 'Controle';
+
+  @override
+  String get setupCompanyName => 'Bedrijfsnaam';
+
+  @override
+  String get setupLegalName => 'Juridische naam (optioneel)';
+
+  @override
+  String get setupVatNumber => 'Btw-nummer (optioneel)';
+
+  @override
+  String get setupCountry => 'Landcode (2 letters, bv. BE)';
+
+  @override
+  String get setupCurrency => 'Valuta (3 letters, bv. EUR)';
+
+  @override
+  String get setupLanguage => 'Standaardtaal';
+
+  @override
+  String get setupAdminEmail => 'E-mailadres van de beheerder';
+
+  @override
+  String get setupAdminName => 'Naam van de beheerder';
+
+  @override
+  String get setupToken => 'Installatietoken';
+
+  @override
+  String get setupTokenHelp => 'De waarde van BOOTSTRAP_TOKEN op de server.';
+
+  @override
+  String get setupErrName => 'Vul de bedrijfsnaam in.';
+
+  @override
+  String get setupErrVat => 'Een btw-nummer heeft 4 tot 20 letters en cijfers.';
+
+  @override
+  String get setupErrCountry => 'Vul een landcode van twee letters in.';
+
+  @override
+  String get setupErrCurrency => 'Vul een valutacode van drie letters in.';
+
+  @override
+  String get setupErrEmail => 'Vul een geldig e-mailadres in.';
+
+  @override
+  String get setupErrAdminName => 'Vul de naam van de beheerder in.';
+
+  @override
+  String get setupErrToken => 'Vul het installatietoken in.';
+
+  @override
+  String get setupNext => 'Volgende';
+
+  @override
+  String get setupBack => 'Terug';
+
+  @override
+  String get setupCreate => 'Bedrijf aanmaken';
+
+  @override
+  String get setupReviewHint =>
+      'Controleer de gegevens. Op deze server kan maar één keer een bedrijf worden aangemaakt.';
+
+  @override
+  String get setupErr403 => 'Het installatietoken ontbreekt of is onjuist.';
+
+  @override
+  String get setupErr404 =>
+      'Instellen is uitgeschakeld op deze server. Stel BOOTSTRAP_TOKEN in op de server en herstart die.';
+
+  @override
+  String get setupErr409 => 'Deze server heeft al een bedrijf.';
+
+  @override
+  String setupDone(String name) {
+    return 'Bedrijf $name aangemaakt.';
+  }
+
+  @override
+  String setupDoneDev(String email) {
+    return 'Aanmelden als $email.';
+  }
+
+  @override
+  String setupDoneOidc(String email) {
+    return 'Meld u aan via uw identiteitsprovider met $email: dat account is de beheerder.';
+  }
+
+  @override
+  String get setupToLogin => 'Naar aanmelden';
+
+  @override
+  String get setupAddOfferTitle => 'Deze server instellen?';
+
+  @override
+  String get setupAddOfferBody =>
+      'Deze server heeft nog geen bedrijf. Nu een bedrijf instellen?';
+
+  @override
+  String get setupLater => 'Later';
 
   @override
   String get finMatchColumn => 'Match';

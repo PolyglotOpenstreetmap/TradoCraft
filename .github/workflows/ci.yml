@@ -1,8 +1,16 @@
 name: CI
 
 on:
+  # Branches with an open pull request would otherwise run everything twice (push and
+  # pull_request); main still runs on every push.
   push:
+    branches: [main]
   pull_request:
+
+# A newer push to the same branch or pull request cancels the run it supersedes.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   rust:
@@ -32,7 +40,10 @@ jobs:
           sudo mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/
       - name: Install pdftotext
         # The quote remark test reads the printed PDF text to prove the production remark is absent.
-        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+        # Retries: the runner's mirrors fail to resolve now and then, which failed this job.
+        run: |
+          sudo apt-get -o Acquire::Retries=5 update
+          sudo apt-get -o Acquire::Retries=5 install -y poppler-utils
       - run: cargo fmt --check
       - run: cargo clippy --all-targets -- -D warnings
       - run: cargo test
@@ -50,7 +61,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
+          # Pinned to the version the app is developed with. `channel: stable` alone follows the
+          # newest release, whose new deprecations (flutter analyze exits 1 on info-level issues)
+          # break CI without any change to the code. Raise it together with the code.
+          flutter-version: 3.47.9
           channel: stable
+          cache: true
       - run: flutter pub get
       - name: Generated API client is up to date
         run: |

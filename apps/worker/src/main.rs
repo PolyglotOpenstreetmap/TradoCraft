@@ -26,8 +26,8 @@ fn env(name: &str) -> Option<String> {
     std::env::var(name).ok().filter(|v| !v.trim().is_empty())
 }
 
-fn mailer() -> anyhow::Result<Mailer> {
-    match env("MAIL_TRANSPORT").as_deref().unwrap_or("files") {
+fn mailer(transport: &str) -> anyhow::Result<Mailer> {
+    match transport {
         "smtp" => Mailer::smtp(
             &env("SMTP_HOST").context("SMTP_HOST is required for MAIL_TRANSPORT=smtp")?,
             env("SMTP_PORT")
@@ -76,7 +76,19 @@ async fn main() -> anyhow::Result<()> {
         .max_connections(5)
         .connect(&env("DATABASE_URL").context("DATABASE_URL is required")?)
         .await?;
-    let mailer = mailer()?;
+    // One policy for everything that reaches the outside world (ADR 0048): outside live, e-mail is
+    // forced to files and the mailbox is not polled unless explicitly opted in.
+    let environment = tradocraft_core::environment::EnvironmentConfig::from_env()
+        .map_err(|e| anyhow::anyhow!(e))?;
+    let requested_transport = env("MAIL_TRANSPORT").unwrap_or_else(|| "files".into());
+    let policy = environment.outbound_policy(&requested_transport);
+    policy.log_warnings(&requested_transport);
+    tracing::info!(
+        kind = environment.kind.as_str(),
+        name = environment.name.as_deref().unwrap_or("(database name)"),
+        "environment"
+    );
+    let mailer = mailer(&policy.mail_transport)?;
     let interval = Duration::from_secs(
         env("POLL_SECONDS")
             .map(|s| s.parse())
@@ -84,6 +96,12 @@ async fn main() -> anyhow::Result<()> {
             .unwrap_or(30),
     );
     let imap = match env("IMAP_HOST") {
+        Some(_) if !policy.imap_allowed => {
+            tracing::warn!(
+                "IMAP_HOST ignored: not a live environment, incoming e-mail is not fetched"
+            );
+            None
+        }
         Some(host) => Some(ImapConfig {
             host,
             port: env("IMAP_PORT")

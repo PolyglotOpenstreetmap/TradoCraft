@@ -3976,6 +3976,42 @@ class AppLocalizationsFr extends AppLocalizations {
   String get modulesSaved => 'Modules enregistrés';
 
   @override
+  String moduleAlsoRequires(String modules) {
+    return 'Nécessite aussi $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOff(String modules) {
+    return 'Désactive aussi : $modules';
+  }
+
+  @override
+  String moduleAlsoSwitchedOn(String modules) {
+    return 'Active aussi : $modules';
+  }
+
+  @override
+  String moduleExpand(String module) {
+    return 'Développer $module';
+  }
+
+  @override
+  String moduleCollapse(String module) {
+    return 'Réduire $module';
+  }
+
+  @override
+  String get moduleOn => 'Activé';
+
+  @override
+  String get moduleOff => 'Désactivé';
+
+  @override
+  String moduleLevel(int level) {
+    return 'Niveau $level';
+  }
+
+  @override
   String get userRoleAdmin => 'Administrateur';
 
   @override
@@ -6708,6 +6744,144 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Réception';
+
+  @override
+  String get setupTitle => 'Configurer une nouvelle société';
+
+  @override
+  String get setupOffer => 'Configurer une nouvelle société';
+
+  @override
+  String get setupOfferHint => 'Ce serveur n\'a pas encore de société.';
+
+  @override
+  String setupServer(String url) {
+    return 'Serveur : $url';
+  }
+
+  @override
+  String setupStepOf(int n, int total) {
+    return 'Étape $n sur $total';
+  }
+
+  @override
+  String get setupStepCompany => 'Société';
+
+  @override
+  String get setupStepRegion => 'Pays, devise et langue';
+
+  @override
+  String get setupStepAdmin => 'Administrateur';
+
+  @override
+  String get setupStepToken => 'Jeton d\'installation';
+
+  @override
+  String get setupStepReview => 'Vérification';
+
+  @override
+  String get setupCompanyName => 'Nom de la société';
+
+  @override
+  String get setupLegalName => 'Raison sociale (facultatif)';
+
+  @override
+  String get setupVatNumber => 'Numéro de TVA (facultatif)';
+
+  @override
+  String get setupCountry => 'Code pays (2 lettres, p. ex. BE)';
+
+  @override
+  String get setupCurrency => 'Devise (3 lettres, p. ex. EUR)';
+
+  @override
+  String get setupLanguage => 'Langue par défaut';
+
+  @override
+  String get setupAdminEmail => 'E-mail de l\'administrateur';
+
+  @override
+  String get setupAdminName => 'Nom de l\'administrateur';
+
+  @override
+  String get setupToken => 'Jeton d\'installation';
+
+  @override
+  String get setupTokenHelp => 'La valeur de BOOTSTRAP_TOKEN sur le serveur.';
+
+  @override
+  String get setupErrName => 'Saisissez le nom de la société.';
+
+  @override
+  String get setupErrVat =>
+      'Un numéro de TVA comporte de 4 à 20 lettres et chiffres.';
+
+  @override
+  String get setupErrCountry => 'Saisissez un code pays de deux lettres.';
+
+  @override
+  String get setupErrCurrency =>
+      'Saisissez un code de devise de trois lettres.';
+
+  @override
+  String get setupErrEmail => 'Saisissez une adresse e-mail valide.';
+
+  @override
+  String get setupErrAdminName => 'Saisissez le nom de l\'administrateur.';
+
+  @override
+  String get setupErrToken => 'Saisissez le jeton d\'installation.';
+
+  @override
+  String get setupNext => 'Suivant';
+
+  @override
+  String get setupBack => 'Retour';
+
+  @override
+  String get setupCreate => 'Créer la société';
+
+  @override
+  String get setupReviewHint =>
+      'Vérifiez les données. Une société ne peut être créée qu\'une seule fois sur ce serveur.';
+
+  @override
+  String get setupErr403 => 'Le jeton d\'installation est absent ou incorrect.';
+
+  @override
+  String get setupErr404 =>
+      'La configuration est désactivée sur ce serveur. Définissez BOOTSTRAP_TOKEN sur le serveur et redémarrez-le.';
+
+  @override
+  String get setupErr409 => 'Ce serveur a déjà une société.';
+
+  @override
+  String setupDone(String name) {
+    return 'Société $name créée.';
+  }
+
+  @override
+  String setupDoneDev(String email) {
+    return 'Connexion en tant que $email.';
+  }
+
+  @override
+  String setupDoneOidc(String email) {
+    return 'Connectez-vous via votre fournisseur d\'identité avec $email : ce compte est l\'administrateur.';
+  }
+
+  @override
+  String get setupToLogin => 'Aller à la connexion';
+
+  @override
+  String get setupAddOfferTitle => 'Configurer ce serveur ?';
+
+  @override
+  String get setupAddOfferBody =>
+      'Ce serveur n\'a pas encore de société. En configurer une maintenant ?';
+
+  @override
+  String get setupLater => 'Plus tard';
 
   @override
   String get finMatchColumn => 'Rapprochement';

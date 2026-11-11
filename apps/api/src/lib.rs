@@ -3,6 +3,7 @@
 use axum::Router;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;
+use tradocraft_core::companies::BootstrapConfig;
 use tradocraft_core::environment::EnvironmentConfig;
 use tradocraft_core::AppState;
 use utoipa::openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme};
@@ -65,6 +66,7 @@ fn api() -> (Router<AppState>, OpenApiDoc) {
     let v1 = OpenApiRouter::new()
         .merge(tradocraft_core::company::router())
         .merge(tradocraft_core::environment::router())
+        .merge(tradocraft_core::companies::router())
         .merge(tradocraft_crm::router())
         .merge(tradocraft_products::router())
         .merge(tradocraft_sales::router())
@@ -98,6 +100,15 @@ pub fn app(state: AppState) -> Router {
 
 /// The application, reporting itself as `environment` on `GET /api/v1/meta/environment`.
 pub fn app_with_environment(state: AppState, environment: EnvironmentConfig) -> Router {
+    app_with_options(state, environment, BootstrapConfig::default())
+}
+
+/// The application with an environment and the bootstrap secret (`BOOTSTRAP_TOKEN`, ADR 0047).
+pub fn app_with_options(
+    state: AppState,
+    environment: EnvironmentConfig,
+    bootstrap: BootstrapConfig,
+) -> Router {
     let (router, doc) = api();
     router
         .route("/health", axum::routing::get(|| async { "ok" }))
@@ -107,6 +118,7 @@ pub fn app_with_environment(state: AppState, environment: EnvironmentConfig) -> 
             axum::routing::get(move || async move { axum::Json(doc) }),
         )
         .layer(axum::Extension(environment))
+        .layer(axum::Extension(bootstrap))
         .layer(TraceLayer::new_for_http())
         .layer(
             CorsLayer::new()

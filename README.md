@@ -78,6 +78,13 @@ in (never the host, user or password). The app keeps a list of environments, swi
 them from the account menu or the login page, and always shows the active one in a banner: red
 for live, amber for test, blue for tutorial.
 
+Test environments. `scripts/envctl clone <database> <name> [--anonymize]` copies a database
+(`pg_dump | pg_restore`), clears credentials and starts a separate API instance with
+`APP_ENV_KIND=test`; outside `live` the API and worker force `MAIL_TRANSPORT=files` and do not poll
+IMAP unless `ALLOW_INBOUND_MAIL_IN_NON_LIVE=1`
+([ADR 0048](docs/adr/0048-environment-clones-and-outbound-safety.md),
+[runbook](docs/runbooks/test-environments.md)).
+
 Worker (helpdesk e-mail). By default outgoing mail is written to `./outbox` as `.eml` files;
 set `MAIL_TRANSPORT=smtp` and `SMTP_*`, and `IMAP_*` to fetch incoming mail (see `.env.example`):
 
@@ -132,6 +139,27 @@ Photos are JPEG/PNG/WebP up to 12 MB and are stored in the database.
 
 Staff manage the people at a customer under Customers → Contacts, look up a caller with
 "Who is calling?" in the helpdesk, and give a contact portal access in the contact form.
+
+## First run: a new company
+
+Without the demo seed (`SEED_DEV_DATA` unset) a new database is empty. Start the app, point it at
+the server and choose "Set up a new company" on the sign-in screen (or in the add-environment
+dialog). The wizard asks for the company (name, legal name, VAT number, country, currency,
+language) and its first administrator, and creates the basics: numbering, a warehouse with its
+locations and the price zones Z1-Z5 (units of measure ship with the migrations; no demo
+catalogue). It works once, only while no company exists
+([ADR 0047](docs/adr/0047-company-bootstrap.md)).
+
+* `AUTH_MODE=dev`: the admin e-mail becomes the dev user and the app signs in as that user.
+  `BOOTSTRAP_TOKEN` is optional.
+* `AUTH_MODE=oidc`: set `BOOTSTRAP_TOKEN` (a long random string) before starting, or the setup
+  endpoint answers 404. The wizard asks for it. Afterwards the administrator signs in through the
+  identity provider with the same e-mail address; remove the token from the environment.
+
+Without the app: `curl -X POST localhost:8080/api/v1/setup/bootstrap -H 'content-type:
+application/json' -d '{"name": "Acme", "country_code": "BE", "currency": "EUR",
+"default_language": "en", "admin_email": "me@acme.example", "admin_display_name": "Me",
+"token": "..."}'`.
 
 ## Tests
 
