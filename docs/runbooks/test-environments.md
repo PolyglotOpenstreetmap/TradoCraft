@@ -1,0 +1,59 @@
+# Runbook: test and tutorial environments (envctl)
+
+See [ADR 0048](../adr/0048-environment-clones-and-outbound-safety.md). Needs `psql`, `pg_dump`,
+`pg_restore`, `curl`, `jq` and a built API (`cargo build --release -p tradocraft-api -p
+tradocraft-worker`; without one, `cargo run` is used). Docker is not needed.
+
+## Set up
+
+Put the connection in `.env` (or export it): `DATABASE_URL=postgresql://user:pass@host:5432/tradocraft`.
+The user must be able to create and drop databases. Optional: `AUTH_MODE`, `DEV_DEFAULT_USER`,
+`OIDC_*`, `ENVCTL_DIR`, `ENVCTL_PORT_MIN`/`ENVCTL_PORT_MAX`, `ENVCTL_API_BIN`. Protect the live
+database from `drop`: `scripts/envctl register live --database tradocraft --kind live`.
+
+## Clone, start, connect
+
+```bash
+scripts/envctl clone tradocraft trial1 --kind test             # copy, scrub, start the API
+scripts/envctl clone tradocraft trial2 --anonymize --worker    # also anonymize; run the worker
+scripts/envctl create-empty practice --kind tutorial --seed    # empty database (seed needs AUTH_MODE=dev)
+scripts/envctl list; scripts/envctl status; scripts/envctl versions
+scripts/envctl stop trial1 && scripts/envctl start trial1 --worker
+```
+
+`clone` prints the URL (for example `http://127.0.0.1:8100`). In the app, add an environment with
+that URL: its kind and name come from the server and show in the banner. Sign-in: with
+`AUTH_MODE=dev` use any copied user (the admin keeps its address even with `--anonymize`; other
+users become `user-<hash>@example.test`). With OIDC the clone instance needs the same
+`OIDC_ISSUER`/`OIDC_AUDIENCE`; identity bindings were cleared, so the first sign-in binds by
+e-mail. To reach an instance from other machines put it behind your own reverse proxy: dev
+authentication refuses non-loopback binds.
+
+## Drop
+
+```bash
+scripts/envctl drop trial1          # asks you to type the name; --yes skips the question
+```
+
+It stops the instance, drops the database and removes `ENVCTL_DIR/envs/<name>`. It only drops
+environments it created.
+
+## What a clone changes
+
+- Always: portal login links and sessions and CSAT links deleted; OIDC bindings cleared; queued
+  mail cancelled. Mail is written to `ENVCTL_DIR/envs/<name>/outbox/*.eml`; the worker does not
+  poll the mailbox (override only with a dedicated mailbox: `ALLOW_INBOUND_MAIL_IN_NON_LIVE=1`).
+- `--anonymize` additionally: e-mail addresses and phone numbers of customers, suppliers, company,
+  contacts, tickets and queued mail; raw e-mails and mail attachments; non-admin users.
+- Not scrubbed, even with `--anonymize`: names, postal addresses, VAT numbers, IBANs, free text,
+  ticket subjects and bodies, audit data. Do not hand an anonymized clone to people who may not
+  see that data.
+
+## Limits
+
+- A clone is a snapshot at copy time and never syncs. Attachments and photos live in the database,
+  so they are copied (a large database takes time to clone).
+- The tool runs on one host. Hosted or containerised setups need their own orchestration (one
+  database and one API per environment, same variables as above).
+- `scripts/envctl-smoke-test.sh` verifies the tool end to end (it starts a throwaway PostgreSQL in
+  Docker, or uses `SMOKE_DATABASE_URL`).
