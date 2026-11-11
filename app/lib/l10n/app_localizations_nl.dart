@@ -6220,4 +6220,267 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get envNotSaved =>
       'Gedaan, maar de lijst met omgevingen kon niet op dit toestel worden bewaard.';
+
+  @override
+  String get purchasing => 'Inkoop';
+
+  @override
+  String get tabSupplier => 'Leverancier';
+
+  @override
+  String get purchSuppliers => 'Leveranciers';
+
+  @override
+  String get purchNewSupplier => 'Nieuwe leverancier';
+
+  @override
+  String get purchPaymentTerms => 'Betalingstermijn';
+
+  @override
+  String purchDays(int count) {
+    return '$count dagen';
+  }
+
+  @override
+  String get purchActiveOnly => 'Alleen actieve';
+
+  @override
+  String get purchNameRequired => 'De naam is verplicht.';
+
+  @override
+  String get purchCountryInvalid =>
+      'Het land moet een code van 2 letters zijn.';
+
+  @override
+  String get purchCurrencyInvalid =>
+      'De munt moet een code van 3 letters zijn.';
+
+  @override
+  String get purchTermsInvalid =>
+      'De betalingstermijn moet een geheel aantal dagen zijn.';
+
+  @override
+  String get purchInactive => 'Inactief';
+
+  @override
+  String get purchPriceList => 'Prijslijst';
+
+  @override
+  String get purchAddProduct => 'Product toevoegen';
+
+  @override
+  String get purchEditPrice => 'Prijs wijzigen';
+
+  @override
+  String get purchNoPrices => 'Nog geen producten in deze prijslijst.';
+
+  @override
+  String get purchPickProduct => 'Kies een product.';
+
+  @override
+  String get purchPriceInvalid => 'Geef een geldige eenheidsprijs in.';
+
+  @override
+  String get purchMoqInvalid =>
+      'Geef een geldige minimale bestelhoeveelheid in.';
+
+  @override
+  String get purchLeadInvalid =>
+      'De levertijd moet een geheel aantal dagen zijn.';
+
+  @override
+  String get purchSupplierArticleCode => 'Artikelcode leverancier';
+
+  @override
+  String get purchSupplierArticleName => 'Artikelnaam leverancier';
+
+  @override
+  String get purchMoq => 'Min. bestelhoeveelheid';
+
+  @override
+  String get purchLeadTimeDays => 'Levertijd (dagen)';
+
+  @override
+  String get purchPreferred => 'Voorkeursleverancier';
+
+  @override
+  String purchRemoveProductConfirm(String code) {
+    return '$code uit deze prijslijst verwijderen?';
+  }
+
+  @override
+  String purchMoqValue(String qty) {
+    return 'MBH $qty';
+  }
+
+  @override
+  String purchLeadValue(int days) {
+    return 'levertijd $days d';
+  }
+
+  @override
+  String get purchNoSuppliers => 'Geen leveranciers gevonden.';
+
+  @override
+  String get purchOrders => 'Inkooporders';
+
+  @override
+  String get purchNewOrder => 'Nieuwe inkooporder';
+
+  @override
+  String get purchNoOrders => 'Geen inkooporders gevonden.';
+
+  @override
+  String get purchOrderNumber => 'Nummer';
+
+  @override
+  String get purchSupplier => 'Leverancier';
+
+  @override
+  String get purchAllSuppliers => 'Alle leveranciers';
+
+  @override
+  String get purchOrderDate => 'Orderdatum';
+
+  @override
+  String get purchExpectedDate => 'Verwachte levering';
+
+  @override
+  String get purchStatusDraft => 'concept';
+
+  @override
+  String get purchStatusApproved => 'goedgekeurd';
+
+  @override
+  String get purchStatusSent => 'verzonden';
+
+  @override
+  String get purchStatusPartial => 'gedeeltelijk ontvangen';
+
+  @override
+  String get purchStatusReceived => 'ontvangen';
+
+  @override
+  String get purchStatusCancelled => 'geannuleerd';
+
+  @override
+  String get purchLines => 'Regels';
+
+  @override
+  String get purchAddLine => 'Regel toevoegen';
+
+  @override
+  String get purchPickSupplier => 'Kies een leverancier.';
+
+  @override
+  String get purchLineQtyInvalid =>
+      'Aantal moet groter zijn dan nul, met maximaal 4 decimalen.';
+
+  @override
+  String get purchLinePriceInvalid =>
+      'Eenheidsprijs moet nul of meer zijn, met maximaal 4 decimalen.';
+
+  @override
+  String get purchNeedLine => 'Voeg minstens een regel toe.';
+
+  @override
+  String get purchApprove => 'Goedkeuren';
+
+  @override
+  String get purchCancelOrder => 'Order annuleren';
+
+  @override
+  String purchCancelOrderConfirm(String number) {
+    return 'Inkooporder $number annuleren? Dit kan niet ongedaan worden gemaakt.';
+  }
+
+  @override
+  String get purchKeepOrder => 'Order behouden';
+
+  @override
+  String get purchQtyReceived => 'Ontvangen';
+
+  @override
+  String get purchLineTotal => 'Regeltotaal';
+
+  @override
+  String get purchSubtotal => 'Subtotaal';
+
+  @override
+  String get purchTax => 'Btw';
+
+  @override
+  String get tabPurchaseOrder => 'Inkooporder';
+
+  @override
+  String get purchReceiveGoods => 'Goederen ontvangen';
+
+  @override
+  String purchReceiveTitle(String number) {
+    return 'Goederen ontvangen voor $number';
+  }
+
+  @override
+  String get purchReceiveDestination => 'Bestemmingslocatie';
+
+  @override
+  String get purchReceiveQty => 'Te ontvangen aantal';
+
+  @override
+  String purchReceiveRemaining(String qty) {
+    return 'Resterend: $qty';
+  }
+
+  @override
+  String get purchReceiveSerialsHelp => 'Eén serienummer per regel';
+
+  @override
+  String get purchDeliveryNote => 'Leveringsbon leverancier';
+
+  @override
+  String purchReceiveQtyInvalid(String product, String max) {
+    return '$product: voer een aantal in tussen 0 en $max.';
+  }
+
+  @override
+  String purchReceiveLotNeeded(String product) {
+    return '$product: voer een lotnummer in.';
+  }
+
+  @override
+  String purchReceiveSerialWhole(String product) {
+    return '$product: het aantal moet een geheel getal zijn.';
+  }
+
+  @override
+  String purchReceiveSerialCount(String product, int count) {
+    return '$product: voer precies $count verschillende serienummers in.';
+  }
+
+  @override
+  String get purchReceiveNothing =>
+      'Voer een aantal in voor minstens één regel.';
+
+  @override
+  String get purchReceiveLocationNeeded => 'Kies een bestemmingslocatie.';
+
+  @override
+  String purchReceiptBooked(String number) {
+    return 'Goederenontvangst $number geboekt.';
+  }
+
+  @override
+  String get purchOpenReceipt => 'Ontvangst openen';
+
+  @override
+  String get purchReceipts => 'Goederenontvangsten';
+
+  @override
+  String get purchReceivedDate => 'Ontvangen';
+
+  @override
+  String get purchOpenOrder => 'Inkooporder';
+
+  @override
+  String get tabGoodsReceipt => 'Goederenontvangst';
 }

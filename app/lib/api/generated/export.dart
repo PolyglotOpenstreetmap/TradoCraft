@@ -460,6 +460,7 @@ export 'models/update_delivery_input.dart';
 export 'models/update_finance_settings_input.dart';
 export 'models/update_invoice_input.dart';
 export 'models/update_production_input.dart';
+export 'models/update_purchase_order_input.dart';
 export 'models/update_supplier_input.dart';
 export 'models/user_skill.dart';
 export 'models/user_skill_input.dart';

@@ -6202,4 +6202,262 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get envNotSaved =>
       'Done, but the list of environments could not be saved on this device.';
+
+  @override
+  String get purchasing => 'Purchasing';
+
+  @override
+  String get tabSupplier => 'Supplier';
+
+  @override
+  String get purchSuppliers => 'Suppliers';
+
+  @override
+  String get purchNewSupplier => 'New supplier';
+
+  @override
+  String get purchPaymentTerms => 'Payment terms';
+
+  @override
+  String purchDays(int count) {
+    return '$count days';
+  }
+
+  @override
+  String get purchActiveOnly => 'Active only';
+
+  @override
+  String get purchNameRequired => 'The name is required.';
+
+  @override
+  String get purchCountryInvalid => 'The country must be a 2-letter code.';
+
+  @override
+  String get purchCurrencyInvalid => 'The currency must be a 3-letter code.';
+
+  @override
+  String get purchTermsInvalid =>
+      'Payment terms must be a whole number of days.';
+
+  @override
+  String get purchInactive => 'Inactive';
+
+  @override
+  String get purchPriceList => 'Price list';
+
+  @override
+  String get purchAddProduct => 'Add product';
+
+  @override
+  String get purchEditPrice => 'Edit price';
+
+  @override
+  String get purchNoPrices => 'No products on this price list yet.';
+
+  @override
+  String get purchPickProduct => 'Choose a product.';
+
+  @override
+  String get purchPriceInvalid => 'Enter a valid unit price.';
+
+  @override
+  String get purchMoqInvalid => 'Enter a valid minimum order quantity.';
+
+  @override
+  String get purchLeadInvalid => 'Lead time must be a whole number of days.';
+
+  @override
+  String get purchSupplierArticleCode => 'Supplier article code';
+
+  @override
+  String get purchSupplierArticleName => 'Supplier article name';
+
+  @override
+  String get purchMoq => 'Min. order qty';
+
+  @override
+  String get purchLeadTimeDays => 'Lead time (days)';
+
+  @override
+  String get purchPreferred => 'Preferred supplier';
+
+  @override
+  String purchRemoveProductConfirm(String code) {
+    return 'Remove $code from this price list?';
+  }
+
+  @override
+  String purchMoqValue(String qty) {
+    return 'MOQ $qty';
+  }
+
+  @override
+  String purchLeadValue(int days) {
+    return 'lead time $days d';
+  }
+
+  @override
+  String get purchNoSuppliers => 'No suppliers found.';
+
+  @override
+  String get purchOrders => 'Purchase orders';
+
+  @override
+  String get purchNewOrder => 'New purchase order';
+
+  @override
+  String get purchNoOrders => 'No purchase orders found.';
+
+  @override
+  String get purchOrderNumber => 'Number';
+
+  @override
+  String get purchSupplier => 'Supplier';
+
+  @override
+  String get purchAllSuppliers => 'All suppliers';
+
+  @override
+  String get purchOrderDate => 'Order date';
+
+  @override
+  String get purchExpectedDate => 'Expected delivery';
+
+  @override
+  String get purchStatusDraft => 'draft';
+
+  @override
+  String get purchStatusApproved => 'approved';
+
+  @override
+  String get purchStatusSent => 'sent';
+
+  @override
+  String get purchStatusPartial => 'partially received';
+
+  @override
+  String get purchStatusReceived => 'received';
+
+  @override
+  String get purchStatusCancelled => 'cancelled';
+
+  @override
+  String get purchLines => 'Lines';
+
+  @override
+  String get purchAddLine => 'Add line';
+
+  @override
+  String get purchPickSupplier => 'Choose a supplier.';
+
+  @override
+  String get purchLineQtyInvalid =>
+      'Quantity must be greater than zero, with at most 4 decimals.';
+
+  @override
+  String get purchLinePriceInvalid =>
+      'Unit price must be zero or more, with at most 4 decimals.';
+
+  @override
+  String get purchNeedLine => 'Add at least one line.';
+
+  @override
+  String get purchApprove => 'Approve';
+
+  @override
+  String get purchCancelOrder => 'Cancel order';
+
+  @override
+  String purchCancelOrderConfirm(String number) {
+    return 'Cancel purchase order $number? This cannot be undone.';
+  }
+
+  @override
+  String get purchKeepOrder => 'Keep order';
+
+  @override
+  String get purchQtyReceived => 'Received';
+
+  @override
+  String get purchLineTotal => 'Line total';
+
+  @override
+  String get purchSubtotal => 'Subtotal';
+
+  @override
+  String get purchTax => 'Tax';
+
+  @override
+  String get tabPurchaseOrder => 'Purchase order';
+
+  @override
+  String get purchReceiveGoods => 'Receive goods';
+
+  @override
+  String purchReceiveTitle(String number) {
+    return 'Receive goods for $number';
+  }
+
+  @override
+  String get purchReceiveDestination => 'Destination location';
+
+  @override
+  String get purchReceiveQty => 'Quantity to receive';
+
+  @override
+  String purchReceiveRemaining(String qty) {
+    return 'Remaining: $qty';
+  }
+
+  @override
+  String get purchReceiveSerialsHelp => 'One serial number per line';
+
+  @override
+  String get purchDeliveryNote => 'Supplier delivery note';
+
+  @override
+  String purchReceiveQtyInvalid(String product, String max) {
+    return '$product: enter a quantity between 0 and $max.';
+  }
+
+  @override
+  String purchReceiveLotNeeded(String product) {
+    return '$product: enter a lot number.';
+  }
+
+  @override
+  String purchReceiveSerialWhole(String product) {
+    return '$product: the quantity must be a whole number.';
+  }
+
+  @override
+  String purchReceiveSerialCount(String product, int count) {
+    return '$product: enter exactly $count different serial numbers.';
+  }
+
+  @override
+  String get purchReceiveNothing => 'Enter a quantity for at least one line.';
+
+  @override
+  String get purchReceiveLocationNeeded => 'Choose a destination location.';
+
+  @override
+  String purchReceiptBooked(String number) {
+    return 'Goods receipt $number booked.';
+  }
+
+  @override
+  String get purchOpenReceipt => 'Open receipt';
+
+  @override
+  String get purchReceipts => 'Goods receipts';
+
+  @override
+  String get purchReceivedDate => 'Received';
+
+  @override
+  String get purchOpenOrder => 'Purchase order';
+
+  @override
+  String get tabGoodsReceipt => 'Goods receipt';
 }
