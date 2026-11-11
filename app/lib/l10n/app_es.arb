@@ -2218,5 +2218,12 @@
   "finSettingsHelp": "Diferencia máxima aceptada entre el pedido y la factura antes de que una línea cuente como diferencia.",
   "finCreateInvoice": "Crear factura de proveedor",
   "userRoleFinance": "Finanzas",
-  "moduleFinance": "Finanzas"
+  "moduleFinance": "Finanzas",
+  "productionDivisionMembers": "Miembros",
+  "productionDivisionNoMembers": "Sin miembros",
+  "productionScopeMine": "Mis divisiones",
+  "productionScopeAll": "Todas las divisiones",
+  "productionScopeEmpty": "No hay órdenes en sus divisiones. Se incluyen las órdenes sin división.",
+  "productionShowAllDivisions": "Mostrar todas las divisiones",
+  "productionYourDivisions": "Sus divisiones"
 }

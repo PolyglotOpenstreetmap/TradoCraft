@@ -6909,4 +6909,26 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get moduleFinance => 'Finance';
+
+  @override
+  String get productionDivisionMembers => 'Membres';
+
+  @override
+  String get productionDivisionNoMembers => 'Aucun membre';
+
+  @override
+  String get productionScopeMine => 'Mes divisions';
+
+  @override
+  String get productionScopeAll => 'Toutes les divisions';
+
+  @override
+  String get productionScopeEmpty =>
+      'Aucun ordre dans vos divisions. Les ordres sans division sont inclus.';
+
+  @override
+  String get productionShowAllDivisions => 'Afficher toutes les divisions';
+
+  @override
+  String get productionYourDivisions => 'Vos divisions';
 }

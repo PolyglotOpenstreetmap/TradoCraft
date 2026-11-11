@@ -6916,4 +6916,26 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get moduleFinance => 'Finanzen';
+
+  @override
+  String get productionDivisionMembers => 'Mitglieder';
+
+  @override
+  String get productionDivisionNoMembers => 'Keine Mitglieder';
+
+  @override
+  String get productionScopeMine => 'Meine Bereiche';
+
+  @override
+  String get productionScopeAll => 'Alle Bereiche';
+
+  @override
+  String get productionScopeEmpty =>
+      'Keine Aufträge in Ihren Bereichen. Aufträge ohne Bereich sind eingeschlossen.';
+
+  @override
+  String get productionShowAllDivisions => 'Alle Bereiche anzeigen';
+
+  @override
+  String get productionYourDivisions => 'Ihre Bereiche';
 }

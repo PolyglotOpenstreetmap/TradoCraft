@@ -12455,6 +12455,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finance'**
   String get moduleFinance;
+
+  /// No description provided for @productionDivisionMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get productionDivisionMembers;
+
+  /// No description provided for @productionDivisionNoMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'No members'**
+  String get productionDivisionNoMembers;
+
+  /// No description provided for @productionScopeMine.
+  ///
+  /// In en, this message translates to:
+  /// **'My divisions'**
+  String get productionScopeMine;
+
+  /// No description provided for @productionScopeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All divisions'**
+  String get productionScopeAll;
+
+  /// No description provided for @productionScopeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders in your divisions. Orders without a division are included.'**
+  String get productionScopeEmpty;
+
+  /// No description provided for @productionShowAllDivisions.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all divisions'**
+  String get productionShowAllDivisions;
+
+  /// No description provided for @productionYourDivisions.
+  ///
+  /// In en, this message translates to:
+  /// **'Your divisions'**
+  String get productionYourDivisions;
 }
 
 class _AppLocalizationsDelegate

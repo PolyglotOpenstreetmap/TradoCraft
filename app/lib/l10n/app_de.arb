@@ -2218,5 +2218,12 @@
   "finSettingsHelp": "Größte akzeptierte Abweichung zwischen Bestellung und Rechnung, bevor eine Position als Abweichung gilt.",
   "finCreateInvoice": "Eingangsrechnung anlegen",
   "userRoleFinance": "Finanzen",
-  "moduleFinance": "Finanzen"
+  "moduleFinance": "Finanzen",
+  "productionDivisionMembers": "Mitglieder",
+  "productionDivisionNoMembers": "Keine Mitglieder",
+  "productionScopeMine": "Meine Bereiche",
+  "productionScopeAll": "Alle Bereiche",
+  "productionScopeEmpty": "Keine Aufträge in Ihren Bereichen. Aufträge ohne Bereich sind eingeschlossen.",
+  "productionShowAllDivisions": "Alle Bereiche anzeigen",
+  "productionYourDivisions": "Ihre Bereiche"
 }

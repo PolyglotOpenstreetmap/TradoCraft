@@ -2218,5 +2218,12 @@
   "finSettingsHelp": "Grootste toegestane verschil tussen order en factuur voordat een regel als afwijking telt.",
   "finCreateInvoice": "Inkoopfactuur aanmaken",
   "userRoleFinance": "Financiën",
-  "moduleFinance": "Financiën"
+  "moduleFinance": "Financiën",
+  "productionDivisionMembers": "Leden",
+  "productionDivisionNoMembers": "Geen leden",
+  "productionScopeMine": "Mijn afdelingen",
+  "productionScopeAll": "Alle afdelingen",
+  "productionScopeEmpty": "Geen orders in uw afdelingen. Orders zonder afdeling zijn inbegrepen.",
+  "productionShowAllDivisions": "Alle afdelingen tonen",
+  "productionYourDivisions": "Uw afdelingen"
 }

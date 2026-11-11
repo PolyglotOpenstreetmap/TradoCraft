@@ -6901,4 +6901,26 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get moduleFinance => 'Financiën';
+
+  @override
+  String get productionDivisionMembers => 'Leden';
+
+  @override
+  String get productionDivisionNoMembers => 'Geen leden';
+
+  @override
+  String get productionScopeMine => 'Mijn afdelingen';
+
+  @override
+  String get productionScopeAll => 'Alle afdelingen';
+
+  @override
+  String get productionScopeEmpty =>
+      'Geen orders in uw afdelingen. Orders zonder afdeling zijn inbegrepen.';
+
+  @override
+  String get productionShowAllDivisions => 'Alle afdelingen tonen';
+
+  @override
+  String get productionYourDivisions => 'Uw afdelingen';
 }

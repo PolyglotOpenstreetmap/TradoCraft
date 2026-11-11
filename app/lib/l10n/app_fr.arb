@@ -2218,5 +2218,12 @@
   "finSettingsHelp": "Écart maximal accepté entre la commande et la facture avant qu'une ligne soit comptée comme écart.",
   "finCreateInvoice": "Créer une facture fournisseur",
   "userRoleFinance": "Finance",
-  "moduleFinance": "Finance"
+  "moduleFinance": "Finance",
+  "productionDivisionMembers": "Membres",
+  "productionDivisionNoMembers": "Aucun membre",
+  "productionScopeMine": "Mes divisions",
+  "productionScopeAll": "Toutes les divisions",
+  "productionScopeEmpty": "Aucun ordre dans vos divisions. Les ordres sans division sont inclus.",
+  "productionShowAllDivisions": "Afficher toutes les divisions",
+  "productionYourDivisions": "Vos divisions"
 }

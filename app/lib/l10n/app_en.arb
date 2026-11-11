@@ -3480,5 +3480,12 @@
   "finSettingsHelp": "Largest accepted difference between the order and the invoice before a line counts as a mismatch.",
   "finCreateInvoice": "Create supplier invoice",
   "userRoleFinance": "Finance",
-  "moduleFinance": "Finance"
+  "moduleFinance": "Finance",
+  "productionDivisionMembers": "Members",
+  "productionDivisionNoMembers": "No members",
+  "productionScopeMine": "My divisions",
+  "productionScopeAll": "All divisions",
+  "productionScopeEmpty": "No orders in your divisions. Orders without a division are included.",
+  "productionShowAllDivisions": "Show all divisions",
+  "productionYourDivisions": "Your divisions"
 }
