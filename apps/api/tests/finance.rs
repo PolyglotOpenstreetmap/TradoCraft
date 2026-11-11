@@ -865,3 +865,53 @@ async fn invoices_are_listed_with_filters_and_paging(db: PgPool) {
     let (status, _) = get(&e.app, FIN, "/supplier-invoices?status=bogus").await;
     assert_eq!(status, StatusCode::UNPROCESSABLE_ENTITY);
 }
+
+/// The app sends dates as `DateTime.toIso8601String()` (`2027-02-01T00:00:00.000`); the invoice
+/// inputs must accept that like the purchasing ones do (create, update and mark paid).
+#[sqlx::test(migrator = "tradocraft_api::MIGRATOR")]
+async fn dates_accept_the_date_time_format_the_app_sends(db: PgPool) {
+    let e = env(db).await;
+    let s1 = e.supplier("S1").await;
+    let (status, inv) = post(
+        &e.app,
+        FIN,
+        "/supplier-invoices",
+        json!({ "supplier_id": s1, "invoice_number": "INV-D",
+                "invoice_date": "2027-02-01T00:00:00.000", "due_date": "2027-03-01T00:00:00.000",
+                "lines": [{ "description": "Freight", "quantity": "1", "unit_price": "50", "vat_rate": "21" }] }),
+    )
+    .await;
+    assert_eq!(status, StatusCode::CREATED, "{inv}");
+    assert_eq!(inv["invoice_date"], "2027-02-01");
+    assert_eq!(inv["due_date"], "2027-03-01");
+    let id = inv["id"].as_str().unwrap().to_string();
+
+    let (status, updated) = put(
+        &e.app,
+        FIN,
+        &format!("/supplier-invoices/{id}"),
+        json!({ "invoice_date": "2027-02-02T00:00:00.000", "due_date": "2027-03-02T00:00:00.000" }),
+    )
+    .await;
+    assert_eq!(status, StatusCode::OK, "{updated}");
+    assert_eq!(updated["invoice_date"], "2027-02-02");
+    assert_eq!(updated["due_date"], "2027-03-02");
+
+    let (status, approved) = post(
+        &e.app,
+        FIN,
+        &format!("/supplier-invoices/{id}/approve"),
+        json!({ "override_reason": "free text freight line" }),
+    )
+    .await;
+    assert_eq!(status, StatusCode::OK, "{approved}");
+    let (status, paid) = post(
+        &e.app,
+        FIN,
+        &format!("/supplier-invoices/{id}/mark-paid"),
+        json!({ "paid_at": "2027-03-05T00:00:00.000", "payment_reference": "BANK-1" }),
+    )
+    .await;
+    assert_eq!(status, StatusCode::OK, "{paid}");
+    assert_eq!(paid["status"], "paid");
+}

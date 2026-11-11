@@ -165,8 +165,10 @@ pub struct NewInvoiceInput {
     /// The supplier's invoice number.
     pub invoice_number: String,
     /// Date on the invoice.
+    #[serde(deserialize_with = "tradocraft_core::serde_util::date")]
     pub invoice_date: NaiveDate,
     /// Due date; default invoice date plus the supplier's payment terms.
+    #[serde(default, deserialize_with = "tradocraft_core::serde_util::opt_date")]
     pub due_date: Option<NaiveDate>,
     /// Currency; defaults to the order's (or the supplier's) and must equal the order's.
     pub currency: Option<String>,
@@ -182,8 +184,10 @@ pub struct UpdateInvoiceInput {
     /// New supplier invoice number.
     pub invoice_number: Option<String>,
     /// New invoice date.
+    #[serde(default, deserialize_with = "tradocraft_core::serde_util::opt_date")]
     pub invoice_date: Option<NaiveDate>,
     /// New due date.
+    #[serde(default, deserialize_with = "tradocraft_core::serde_util::opt_date")]
     pub due_date: Option<NaiveDate>,
     /// New notes.
     pub notes: Option<String>,
@@ -209,6 +213,7 @@ pub struct DisputeInvoiceInput {
 #[derive(Debug, Clone, Default, Deserialize, ToSchema)]
 pub struct MarkPaidInput {
     /// Payment date, default today.
+    #[serde(default, deserialize_with = "tradocraft_core::serde_util::opt_date")]
     pub paid_at: Option<NaiveDate>,
     /// Bank or payment reference.
     pub payment_reference: Option<String>,
