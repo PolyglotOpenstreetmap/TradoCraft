@@ -26,10 +26,14 @@ UPDATE crm.contact_emails
    SET email = 'contact-' || left(md5(contact_id::text), 10) || '-' || left(md5(id::text), 10)
                || '@example.test';
 
--- Contact phone numbers; `normalized` must stay unique per contact and 6-15 digits.
-UPDATE crm.contact_phones
-   SET number = '+32 000 00 00 00',
-       normalized = '32' || lpad(((('x' || left(md5(id::text), 7))::bit(28)::int) % 1000000000)::text, 9, '0');
+-- Contact phone numbers: a synthetic international number per row ("+32 470 000001"), unique in
+-- the table. `normalized` is the same number as crm normalises it (digits with country code, here
+-- 32470000001), which is what find_by_phone looks up.
+UPDATE crm.contact_phones p
+   SET number = '+32 470 ' || lpad(r.rn::text, 6, '0'),
+       normalized = '32470' || lpad(r.rn::text, 6, '0')
+  FROM (SELECT id, row_number() OVER (ORDER BY id) AS rn FROM crm.contact_phones) r
+ WHERE r.id = p.id;
 
 -- Users other than admins (the unique lower-case index stays satisfied: ids differ).
 UPDATE core.users u

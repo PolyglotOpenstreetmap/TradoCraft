@@ -140,6 +140,11 @@ q smoke_clone "INSERT INTO crm.customers (id, code, name) VALUES (gen_random_uui
 
 echo "== safety refusals =="
 check "refuses an existing target" bash -c "! '$ENVCTL' clone smoke_src smoke_clone --no-start"
+check "refuses to clone without a usable migration binary" bash -c "! ENVCTL_API_BIN=/nonexistent '$ENVCTL' clone smoke_src smoke_nobin --no-start"
+[[ "$(q postgres "SELECT count(*) FROM pg_database WHERE datname = 'smoke_nobin'")" == 0 ]] && pass "failed clone left no database" || fail "database left behind"
+printf '#!/bin/sh\nexit 1\n' >"$WORK/failbin" && chmod +x "$WORK/failbin"
+check "a clone whose migration step fails is refused" bash -c "! ENVCTL_API_BIN='$WORK/failbin' '$ENVCTL' clone smoke_src smoke_nobin --no-start"
+[[ "$(q postgres "SELECT count(*) FROM pg_database WHERE datname = 'smoke_nobin'")" == 0 ]] && pass "failed migration removed the restored target" || fail "restored target left behind"
 check "refuses an unsafe name" bash -c "! '$ENVCTL' clone smoke_src 'x; drop database postgres' --no-start"
 check "refuses cloning onto the source" bash -c "! '$ENVCTL' clone smoke_src smoke_src --no-start"
 check "refuses kind live" bash -c "! '$ENVCTL' create-empty smoke_live --kind live --no-start"
@@ -152,7 +157,7 @@ echo "== anonymize =="
 "$ENVCTL" clone smoke_src smoke_anon --kind tutorial --anonymize --no-start
 [[ "$(q smoke_anon "SELECT count(*) FROM crm.customers WHERE email LIKE '%@customer.com'")" == 0 ]] && pass "customer e-mail anonymized" || fail "anon customers"
 [[ "$(q smoke_anon "SELECT count(*) FROM crm.contact_emails WHERE email NOT LIKE '%@example.test'")" == 0 ]] && pass "contact e-mail anonymized" || fail "anon contacts"
-[[ "$(q smoke_anon "SELECT count(*) FROM crm.contact_phones WHERE number <> '+32 000 00 00 00' OR normalized = '32475112233'")" == 0 ]] && pass "contact phones anonymized" || fail "anon phones"
+[[ "$(q smoke_anon "SELECT count(*) FROM crm.contact_phones WHERE normalized = '32475112233' OR number NOT LIKE '+32 470 %' OR normalized <> regexp_replace(number, '[^0-9]', '', 'g')")" == 0 ]] && pass "contact phones anonymized" || fail "anon phones"
 [[ "$(q smoke_anon "SELECT count(*) FROM core.users WHERE email = 'admin@example.com'")" == 1 ]] && pass "admin user kept for sign-in" || fail "admin kept"
 [[ "$(q smoke_src "SELECT count(*) FROM crm.customers WHERE email = 'real.person@customer.com'")" == 1 ]] && pass "source not anonymized" || fail "source anon"
 

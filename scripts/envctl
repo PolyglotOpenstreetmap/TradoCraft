@@ -457,9 +457,30 @@ migrate_target() {
   if [[ -n "$bin" ]]; then
     DATABASE_URL="$(url_for_db "$1")" "$bin" migrate >/dev/null
   else
-    command -v cargo >/dev/null || die "no built tradocraft-api binary and no cargo to run the migrations"
     DATABASE_URL="$(url_for_db "$1")" nice cargo run --quiet --manifest-path "$REPO_ROOT/Cargo.toml" -p tradocraft-api -- migrate >/dev/null
   fi
+}
+
+# Fails before anything is created when the migration step cannot run.
+check_migrate_available() {
+  if [[ -n "${ENVCTL_API_BIN:-}" ]]; then
+    [[ -x "$ENVCTL_API_BIN" ]] || die "ENVCTL_API_BIN '$ENVCTL_API_BIN' is not an executable file"
+    return 0
+  fi
+  [[ -n "$(find_bin tradocraft-api "")" ]] || command -v cargo >/dev/null \
+    || die "no built tradocraft-api binary and no cargo: build it (cargo build --release -p tradocraft-api) or set ENVCTL_API_BIN"
+}
+
+CLONE_TARGET=""
+# EXIT trap while a clone is in progress: covers failures of any step, die() and signals, until the
+# target is registered. A failed clone leaves no database behind, so it can simply be retried.
+clone_cleanup() {
+  local rc=$?
+  if [[ -n "$CLONE_TARGET" ]]; then
+    dropdb --if-exists --force -- "$CLONE_TARGET" >/dev/null 2>&1 || true
+    echo "envctl: clone failed, target database '$CLONE_TARGET' removed" >&2
+  fi
+  return "$rc"
 }
 
 cmd_clone() {
@@ -473,11 +494,13 @@ cmd_clone() {
   [[ "$src_db" != "$name" ]] || die "refusing to clone a database onto itself"
   db_exists "$src_db" || die "source database '$src_db' does not exist"
   [[ -r "$SQL_DIR/scrub_credentials.sql" ]] || die "missing $SQL_DIR/scrub_credentials.sql"
+  check_migrate_available
   info "cloning '$src_db' (read only) into new database '$name' ..."
+  trap clone_cleanup EXIT
+  trap 'exit 130' INT
+  trap 'exit 143' TERM
   createdb -- "$name"
-  # The clone is removed again if anything below fails, so a half-restored copy never lingers.
-  # shellcheck disable=SC2064
-  trap "dropdb --if-exists --force -- '$name' >/dev/null 2>&1 || true; echo 'envctl: clone failed, target database removed' >&2" ERR
+  CLONE_TARGET="$name"
   PGOPTIONS='-c default_transaction_read_only=on' pg_dump --format=custom --no-owner --no-acl -d "$src_db" \
     | pg_restore --no-owner --no-acl --exit-on-error -d "$name"
   migrate_target "$name"
@@ -487,10 +510,11 @@ cmd_clone() {
     info "anonymizing personal data (admin users keep their e-mail address)"
     sql "$name" -f "$SQL_DIR/anonymize.sql"
   fi
-  trap - ERR
   register_new "$name" "$KIND" "$name"
   reg_set "$name" cloned_from "$src_db"
   reg_set "$name" anonymized "$ANON"
+  CLONE_TARGET=""
+  trap - EXIT INT TERM
   info "clone '$name' registered (kind $KIND)"
   if [[ "$NOSTART" == no ]]; then cmd_start_instance "$name" "$WORKER"; fi
 }
