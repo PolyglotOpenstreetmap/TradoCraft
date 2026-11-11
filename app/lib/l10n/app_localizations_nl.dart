@@ -6700,4 +6700,205 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tabGoodsReceipt => 'Goederenontvangst';
+
+  @override
+  String get finMatchColumn => 'Match';
+
+  @override
+  String get finance => 'Financiën';
+
+  @override
+  String get finSupplierInvoices => 'Inkoopfacturen';
+
+  @override
+  String get finSettings => 'Instellingen';
+
+  @override
+  String get tabSupplierInvoice => 'Inkoopfactuur';
+
+  @override
+  String get finNewInvoice => 'Nieuwe inkoopfactuur';
+
+  @override
+  String get finNoInvoices => 'Geen inkoopfacturen gevonden.';
+
+  @override
+  String get finInvoiceNumber => 'Factuurnummer';
+
+  @override
+  String get finInternalNumber => 'Intern nummer';
+
+  @override
+  String get finInvoiceDate => 'Factuurdatum';
+
+  @override
+  String get finDueDate => 'Vervaldatum';
+
+  @override
+  String get finStatusDraft => 'concept';
+
+  @override
+  String get finStatusMatched => 'gematcht';
+
+  @override
+  String get finStatusDisputed => 'betwist';
+
+  @override
+  String get finStatusApproved => 'goedgekeurd';
+
+  @override
+  String get finStatusPaid => 'betaald';
+
+  @override
+  String get finMatchOk => 'in orde';
+
+  @override
+  String get finMatchNotReceived => 'niet ontvangen';
+
+  @override
+  String get finMatchOverInvoiced => 'te veel gefactureerd';
+
+  @override
+  String get finMatchPriceVariance => 'prijsafwijking';
+
+  @override
+  String get finMatchNoPoLine => 'geen orderregel';
+
+  @override
+  String get finOrderOptional => 'Inkooporder (optioneel)';
+
+  @override
+  String get finNoOrder => 'Geen inkooporder';
+
+  @override
+  String get finOrderPrefillHint =>
+      'De regels worden ingevuld met de ontvangen, nog niet gefactureerde goederen.';
+
+  @override
+  String get finNumberRequired =>
+      'Het factuurnummer is verplicht (maximaal 64 tekens).';
+
+  @override
+  String get finLineDescriptionRequired =>
+      'Een vrije regel heeft een omschrijving nodig.';
+
+  @override
+  String get finVatInvalid =>
+      'Het btw-tarief moet tussen 0 en 100 liggen, met maximaal 2 decimalen.';
+
+  @override
+  String get finOrdered => 'Besteld';
+
+  @override
+  String get finInvoiced => 'Gefactureerd';
+
+  @override
+  String get finOrderPrice => 'Orderprijs';
+
+  @override
+  String get finInvoicePrice => 'Factuurprijs';
+
+  @override
+  String get finVariance => 'Afwijking';
+
+  @override
+  String get finMatches =>
+      'De factuur komt overeen met de order en de ontvangsten.';
+
+  @override
+  String get finNotMatches =>
+      'De factuur komt niet overeen met de order en de ontvangsten.';
+
+  @override
+  String finTolerances(String qty, String price) {
+    return 'Toleranties: hoeveelheid $qty %, prijs $price %';
+  }
+
+  @override
+  String get finSubmitMatch => 'Match controleren';
+
+  @override
+  String get finApprove => 'Goedkeuren';
+
+  @override
+  String get finOverrideTitle => 'Goedkeuren ondanks afwijking';
+
+  @override
+  String get finOverrideHelp =>
+      'De factuur komt niet overeen. Geef de reden om toch goed te keuren; die wordt bij de goedkeuring bewaard.';
+
+  @override
+  String get finOverrideReason => 'Reden voor afwijking';
+
+  @override
+  String get finReasonRequired => 'Een reden is verplicht.';
+
+  @override
+  String get finDispute => 'Betwisten';
+
+  @override
+  String get finDisputeReason => 'Reden van betwisting';
+
+  @override
+  String get finReopen => 'Heropenen';
+
+  @override
+  String get finMarkPaid => 'Markeren als betaald';
+
+  @override
+  String get finPaymentDate => 'Betaaldatum';
+
+  @override
+  String get finPaymentReference => 'Betalingskenmerk';
+
+  @override
+  String get finDeleteDraft => 'Concept verwijderen';
+
+  @override
+  String finDeleteConfirm(String number) {
+    return 'Factuur $number verwijderen? Dit kan niet ongedaan worden gemaakt.';
+  }
+
+  @override
+  String get finNetTotal => 'Netto';
+
+  @override
+  String get finGrossTotal => 'Totaal incl. btw';
+
+  @override
+  String get finDisputeReasonShown => 'Reden van betwisting';
+
+  @override
+  String get finOverrideShown => 'Reden voor afwijking';
+
+  @override
+  String get finPaidOn => 'Betaald op';
+
+  @override
+  String get finPurchaseOrder => 'Inkooporder';
+
+  @override
+  String get finQuantityTolerance => 'Hoeveelheidstolerantie (%)';
+
+  @override
+  String get finPriceTolerance => 'Prijstolerantie (%)';
+
+  @override
+  String get finToleranceInvalid => 'Geef een percentage tussen 0 en 100 op.';
+
+  @override
+  String get finSettingsSaved => 'Instellingen opgeslagen.';
+
+  @override
+  String get finSettingsHelp =>
+      'Grootste toegestane verschil tussen order en factuur voordat een regel als afwijking telt.';
+
+  @override
+  String get finCreateInvoice => 'Inkoopfactuur aanmaken';
+
+  @override
+  String get userRoleFinance => 'Financiën';
+
+  @override
+  String get moduleFinance => 'Financiën';
 }
