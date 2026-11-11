@@ -29,6 +29,10 @@ services:
       # acknowledged. This is safe solely because the port above is published on loopback.
       ALLOW_INSECURE_DEV_AUTH: "true"
       SEED_DEV_DATA: "true"
+      # Environment shown in the app's banner (ADR 0043): kind is live, test or tutorial (an
+      # unknown value stops the API); the name defaults to the database name.
+      APP_ENV_KIND: live
+      # APP_ENV_NAME: Acme production
       RUST_LOG: info
     ports:
       - "127.0.0.1:8080:8080"   # loopback only: dev auth trusts X-Dev-User

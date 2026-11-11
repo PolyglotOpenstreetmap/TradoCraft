@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=tradocraft
+Name=TradoCraft
 Comment=Integrated business platform
 Exec=@EXEC@
 Icon=be.tradocraft.tradocraft_app

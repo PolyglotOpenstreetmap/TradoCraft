@@ -17,6 +17,7 @@ Module overview: [ARCHITECTURE.md](ARCHITECTURE.md).
 | A4 Helpdesk collaboration (manual escalation, hand-over, watchers, unread, timeline, soft presence) | Done, [ADR 0023](adr/0023-helpdesk-collaboration.md) |
 | Helpdesk follow-up: business hours, automation rules, split, reporting | Done, ADR 0021 |
 | User-defined reports (customers, quotations, orders; joins, grouping, charts, CSV and PDF) | Done, [ADR 0042](adr/0042-report-builder.md) |
+| Environment awareness (`/meta/environment`, environment list, banner and switcher in the app) | Done, [ADR 0043](adr/0043-environments.md); clone script, bootstrap wizard and outbound-side-effect switch-off follow |
 | B1 Inventory foundation | Done, [ADR 0019](adr/0019-inventory-stock-ledger.md) |
 | B2 Purchasing | In progress, [ADR 0031](adr/0031-purchasing.md) |
 | B3 Delivery | Done, [ADR 0035](adr/0035-delivery.md) |

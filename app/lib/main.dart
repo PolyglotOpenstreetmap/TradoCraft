@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/router.dart';
 import 'l10n/l10n.dart';
+import 'app/brand.dart';
+import 'app/environments.dart';
 import 'app/profile.dart';
 import 'app/session.dart';
 import 'app/zoom.dart';
@@ -25,12 +27,18 @@ Future<void> main(List<String> args) async {
   // A profile keeps everything in a file of its own; without one the platform preferences are used.
   final KvStore store = await _openStore(profile);
   final session = await SessionStore.load(store);
+  // The stored list of environments; an installation from before them gets its one session as
+  // the first environment.
+  final environments = await EnvironmentStore.load(store, session);
+  // The active environment's sign-in is the session that is used.
+  final active = environments.active.session;
   runApp(
     ProviderScope(
       overrides: [
+        initialEnvironmentsProvider.overrideWithValue(environments),
         profileProvider.overrideWithValue(profile),
         kvStoreProvider.overrideWithValue(store),
-        initialSessionProvider.overrideWithValue(session),
+        initialSessionProvider.overrideWithValue(active),
       ],
       child: const TradocraftApp(),
     ),
@@ -42,8 +50,10 @@ class TradocraftApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Keeps the list of environments following the session for as long as the app runs.
+    ref.read(environmentsProvider);
     return MaterialApp.router(
-      title: 'tradocraft',
+      title: brandName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: const Color(0xFF2F5D62),
@@ -60,7 +70,7 @@ class TradocraftApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       onGenerateTitle: (context) {
         final profile = ref.read(profileProvider);
-        return profile == null ? 'tradocraft' : 'tradocraft - $profile';
+        return appWindowTitle(profile);
       },
     );
   }

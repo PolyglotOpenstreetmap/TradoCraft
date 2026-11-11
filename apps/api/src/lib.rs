@@ -3,6 +3,7 @@
 use axum::Router;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;
+use tradocraft_core::environment::EnvironmentConfig;
 use tradocraft_core::AppState;
 use utoipa::openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme};
 use utoipa::openapi::OpenApi as OpenApiDoc;
@@ -62,6 +63,7 @@ impl Modify for Security {
 fn api() -> (Router<AppState>, OpenApiDoc) {
     let v1 = OpenApiRouter::new()
         .merge(tradocraft_core::company::router())
+        .merge(tradocraft_core::environment::router())
         .merge(tradocraft_crm::router())
         .merge(tradocraft_products::router())
         .merge(tradocraft_sales::router())
@@ -87,7 +89,13 @@ pub fn openapi() -> OpenApiDoc {
     api().1
 }
 
+/// The application as a live environment (what tests use).
 pub fn app(state: AppState) -> Router {
+    app_with_environment(state, EnvironmentConfig::default())
+}
+
+/// The application, reporting itself as `environment` on `GET /api/v1/meta/environment`.
+pub fn app_with_environment(state: AppState, environment: EnvironmentConfig) -> Router {
     let (router, doc) = api();
     router
         .route("/health", axum::routing::get(|| async { "ok" }))
@@ -96,6 +104,7 @@ pub fn app(state: AppState) -> Router {
             "/api-docs/openapi.json",
             axum::routing::get(move || async move { axum::Json(doc) }),
         )
+        .layer(axum::Extension(environment))
         .layer(TraceLayer::new_for_http())
         .layer(
             CorsLayer::new()

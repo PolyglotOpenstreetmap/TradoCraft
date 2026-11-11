@@ -169,7 +169,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appLanguage => 'Idioma';
 
   @override
-  String get appTitle => 'tradocraft';
+  String get appTitle => 'TradoCraft';
 
   @override
   String get apply => 'Aplicar';
@@ -6103,6 +6103,91 @@ class AppLocalizationsEs extends AppLocalizations {
   String get crRelNextNDays => 'Próximos N días';
 
   @override
+  String get envLive => 'Producción';
+
+  @override
+  String get envTest => 'Prueba';
+
+  @override
+  String get envTutorial => 'Tutorial';
+
+  @override
+  String envBannerSemantics(String name, String kind) {
+    return 'Entorno $name, $kind';
+  }
+
+  @override
+  String get envSwitcherTitle => 'Entornos';
+
+  @override
+  String envSwitchMenu(String name) {
+    return 'Entorno: $name';
+  }
+
+  @override
+  String get envSwitchTooltip => 'Cambiar de entorno';
+
+  @override
+  String get envActive => 'Activo';
+
+  @override
+  String get envAdd => 'Añadir entorno';
+
+  @override
+  String get envName => 'Nombre';
+
+  @override
+  String get envServerUrl => 'Dirección del servidor';
+
+  @override
+  String get envCheck => 'Comprobar servidor';
+
+  @override
+  String envDetected(String kind, String db) {
+    return 'El servidor indica: entorno $kind, base de datos $db';
+  }
+
+  @override
+  String get envInvalidUrl =>
+      'Introduzca una dirección completa, por ejemplo https://erp.example.com';
+
+  @override
+  String get envAlreadyListed => 'Este servidor ya está en la lista.';
+
+  @override
+  String envUnreachable(String error) {
+    return 'No se pudo leer el entorno de este servidor: $error';
+  }
+
+  @override
+  String get envRemove => 'Quitar';
+
+  @override
+  String get envRemoveTitle => '¿Quitar el entorno?';
+
+  @override
+  String envRemoveBody(String name) {
+    return '$name se quita de este dispositivo, con su inicio de sesión guardado. No cambia nada en el servidor.';
+  }
+
+  @override
+  String get envCannotRemoveActive => 'Cambie primero a otro entorno';
+
+  @override
+  String envUnsavedBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pestañas abiertas tienen cambios sin guardar',
+      one: '1 pestaña abierta tiene cambios sin guardar',
+    );
+    return '$_temp0. Al cambiar de entorno se cierran todas las pestañas y se descartan esos cambios.';
+  }
+
+  @override
+  String get envDiscardAndSwitch => 'Descartar y cambiar';
+
+  @override
   String get adminPriceZones => 'Zonas de precio';
 
   @override
@@ -6130,4 +6215,8 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sortOrderInvalid => 'El orden debe ser un número entero.';
+
+  @override
+  String get envNotSaved =>
+      'Hecho, pero la lista de entornos no se pudo guardar en este dispositivo.';
 }

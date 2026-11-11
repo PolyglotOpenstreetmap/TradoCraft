@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/api.dart';
+import '../../app/brand.dart';
+import '../../app/environment_ui.dart';
 import '../../app/profile.dart';
 import '../../app/session.dart';
 import '../field/offline/kv_store.dart';
@@ -81,102 +83,120 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Another environment chosen in the switcher: show its address.
+    ref.listen(sessionProvider, (_, s) => _server.text = s.serverUrl);
     return Scaffold(
-      body: Center(
-        // Scrolls in short windows, so the sign-in button stays reachable.
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 420),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'tradocraft',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    const SizedBox(height: 24),
+      body: Column(
+        children: [
+          const EnvironmentBanner(),
+          Expanded(child: _form(context)),
+        ],
+      ),
+    );
+  }
+
+  Widget _form(BuildContext context) {
+    return Center(
+      // Scrolls in short windows, so the sign-in button stays reachable.
+      child: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    brandName,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  const SizedBox(height: 24),
+                  TextField(
+                    controller: _server,
+                    decoration: InputDecoration(labelText: context.l10n.server),
+                  ),
+                  SizedBox(height: 12),
+                  SegmentedButton<bool>(
+                    segments: [
+                      ButtonSegment(
+                        value: false,
+                        label: Text(context.l10n.developmentUser),
+                      ),
+                      ButtonSegment(
+                        value: true,
+                        label: Text(context.l10n.accessToken),
+                      ),
+                    ],
+                    selected: {_useToken},
+                    onSelectionChanged: (s) =>
+                        setState(() => _useToken = s.first),
+                  ),
+                  const SizedBox(height: 12),
+                  if (_useToken)
                     TextField(
-                      controller: _server,
+                      controller: _token,
+                      obscureText: true,
                       decoration: InputDecoration(
-                        labelText: context.l10n.server,
+                        labelText: context.l10n.oidcAccessToken,
                       ),
+                    )
+                  else
+                    TextField(
+                      controller: _user,
+                      onChanged: (_) => _userEdited = true,
+                      decoration: InputDecoration(
+                        labelText: context.l10n.email,
+                        helperText: context.l10n.devModeHelp,
+                      ),
+                      onSubmitted: (_) => _signIn(),
                     ),
-                    SizedBox(height: 12),
-                    SegmentedButton<bool>(
-                      segments: [
-                        ButtonSegment(
-                          value: false,
-                          label: Text(context.l10n.developmentUser),
-                        ),
-                        ButtonSegment(
-                          value: true,
-                          label: Text(context.l10n.accessToken),
-                        ),
-                      ],
-                      selected: {_useToken},
-                      onSelectionChanged: (s) =>
-                          setState(() => _useToken = s.first),
-                    ),
+                  if (!_useToken) ...[
                     const SizedBox(height: 12),
-                    if (_useToken)
-                      TextField(
-                        controller: _token,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: context.l10n.oidcAccessToken,
-                        ),
-                      )
-                    else
-                      TextField(
-                        controller: _user,
-                        onChanged: (_) => _userEdited = true,
-                        decoration: InputDecoration(
-                          labelText: context.l10n.email,
-                          helperText: context.l10n.devModeHelp,
-                        ),
-                        onSubmitted: (_) => _signIn(),
-                      ),
-                    if (!_useToken) ...[
-                      const SizedBox(height: 12),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        children: [
-                          for (final u in _demoUsers)
-                            ActionChip(
-                              label: Text(u),
-                              onPressed: _busy
-                                  ? null
-                                  : () {
-                                      // Keeps a remembered user from replacing this choice.
-                                      _userEdited = true;
-                                      _user.text = '$u@example.com';
-                                      _signIn();
-                                    },
-                            ),
-                        ],
-                      ),
-                    ],
-                    if (_error != null) ...[
-                      const SizedBox(height: 12),
-                      Text(
-                        _error!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.error,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 20),
-                    FilledButton(
-                      onPressed: _busy ? null : _signIn,
-                      child: Text(context.l10n.signIn),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      children: [
+                        for (final u in _demoUsers)
+                          ActionChip(
+                            label: Text(u),
+                            onPressed: _busy
+                                ? null
+                                : () {
+                                    // Keeps a remembered user from replacing this choice.
+                                    _userEdited = true;
+                                    _user.text = '$u@example.com';
+                                    _signIn();
+                                  },
+                          ),
+                      ],
                     ),
                   ],
-                ),
+                  if (_error != null) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      _error!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 20),
+                  FilledButton(
+                    onPressed: _busy ? null : _signIn,
+                    child: Text(context.l10n.signIn),
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton.icon(
+                    key: const ValueKey('login-environments'),
+                    icon: const Icon(Icons.swap_horiz),
+                    label: Text(context.l10n.envSwitcherTitle),
+                    onPressed: _busy
+                        ? null
+                        : () => showEnvironmentSwitcher(context),
+                  ),
+                ],
               ),
             ),
           ),

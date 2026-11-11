@@ -128,6 +128,8 @@ export 'models/entry_input.dart';
 export 'models/entry_summary.dart';
 export 'models/entry_text.dart';
 export 'models/entry_version.dart';
+export 'models/env_kind.dart';
+export 'models/environment_info.dart';
 export 'models/equipment_input.dart';
 export 'models/equipment_job.dart';
 export 'models/error_body.dart';

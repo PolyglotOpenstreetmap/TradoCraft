@@ -169,7 +169,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appLanguage => 'Sprache';
 
   @override
-  String get appTitle => 'tradocraft';
+  String get appTitle => 'TradoCraft';
 
   @override
   String get apply => 'Anwenden';
@@ -6117,6 +6117,92 @@ class AppLocalizationsDe extends AppLocalizations {
   String get crRelNextNDays => 'Nächste N Tage';
 
   @override
+  String get envLive => 'Live';
+
+  @override
+  String get envTest => 'Test';
+
+  @override
+  String get envTutorial => 'Tutorial';
+
+  @override
+  String envBannerSemantics(String name, String kind) {
+    return 'Umgebung $name, $kind';
+  }
+
+  @override
+  String get envSwitcherTitle => 'Umgebungen';
+
+  @override
+  String envSwitchMenu(String name) {
+    return 'Umgebung: $name';
+  }
+
+  @override
+  String get envSwitchTooltip => 'Umgebung wechseln';
+
+  @override
+  String get envActive => 'Aktiv';
+
+  @override
+  String get envAdd => 'Umgebung hinzufügen';
+
+  @override
+  String get envName => 'Name';
+
+  @override
+  String get envServerUrl => 'Serveradresse';
+
+  @override
+  String get envCheck => 'Server prüfen';
+
+  @override
+  String envDetected(String kind, String db) {
+    return 'Der Server meldet: $kind-Umgebung, Datenbank $db';
+  }
+
+  @override
+  String get envInvalidUrl =>
+      'Geben Sie eine vollständige Adresse ein, z. B. https://erp.example.com';
+
+  @override
+  String get envAlreadyListed => 'Dieser Server ist bereits in der Liste.';
+
+  @override
+  String envUnreachable(String error) {
+    return 'Die Umgebung dieses Servers konnte nicht gelesen werden: $error';
+  }
+
+  @override
+  String get envRemove => 'Entfernen';
+
+  @override
+  String get envRemoveTitle => 'Umgebung entfernen?';
+
+  @override
+  String envRemoveBody(String name) {
+    return '$name wird von diesem Gerät entfernt, samt gespeicherter Anmeldung. Auf dem Server ändert sich nichts.';
+  }
+
+  @override
+  String get envCannotRemoveActive =>
+      'Wechseln Sie zuerst zu einer anderen Umgebung';
+
+  @override
+  String envUnsavedBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count offene Tabs haben nicht gespeicherte Änderungen',
+      one: '1 offener Tab hat nicht gespeicherte Änderungen',
+    );
+    return '$_temp0. Beim Wechsel der Umgebung werden alle Tabs geschlossen und diese Änderungen verworfen.';
+  }
+
+  @override
+  String get envDiscardAndSwitch => 'Verwerfen und wechseln';
+
+  @override
   String get adminPriceZones => 'Preiszonen';
 
   @override
@@ -6145,4 +6231,8 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get sortOrderInvalid =>
       'Die Sortierreihenfolge muss eine ganze Zahl sein.';
+
+  @override
+  String get envNotSaved =>
+      'Erledigt, aber die Liste der Umgebungen konnte auf diesem Gerät nicht gespeichert werden.';
 }

@@ -29,6 +29,10 @@ async fn main() -> anyhow::Result<()> {
         )
         .init();
 
+    // Fail fast on a bad APP_ENV_KIND, before touching the database.
+    let environment = tradocraft_core::environment::EnvironmentConfig::from_env()
+        .map_err(|e| anyhow::anyhow!(e))?;
+
     let database_url = env("DATABASE_URL").context("DATABASE_URL is required")?;
     let db = PgPoolOptions::new()
         .max_connections(20)
@@ -100,11 +104,19 @@ async fn main() -> anyhow::Result<()> {
         documents: Arc::new(documents),
     };
     let listener = tokio::net::TcpListener::bind(addr).await?;
+    tracing::info!(
+        kind = environment.kind.as_str(),
+        name = environment.name.as_deref().unwrap_or("(database name)"),
+        "environment"
+    );
     tracing::info!("listening on http://{addr} (API docs at /docs)");
-    axum::serve(listener, tradocraft_api::app(state))
-        .with_graceful_shutdown(async {
-            let _ = tokio::signal::ctrl_c().await;
-        })
-        .await?;
+    axum::serve(
+        listener,
+        tradocraft_api::app_with_environment(state, environment),
+    )
+    .with_graceful_shutdown(async {
+        let _ = tokio::signal::ctrl_c().await;
+    })
+    .await?;
     Ok(())
 }

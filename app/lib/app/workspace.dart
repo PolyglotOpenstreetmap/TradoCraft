@@ -78,15 +78,26 @@ class WorkspaceNotifier extends Notifier<WorkspaceState> {
   WorkspaceState build() {
     final store = ref.watch(userKvStoreProvider);
     ref.onDispose(() => _backgroundTimer?.cancel());
-    _restore(store);
+    // A new store (another user or environment): a restore still running for the old one is void.
+    _restore(store, ++_generation);
     return const WorkspaceState();
   }
 
-  /// Reopens the tabs saved in [store]; unreadable data is ignored.
-  Future<void> _restore(KvStore store) async {
+  /// Bumped whenever the workspace is reset or changes store, so that a restore that was started
+  /// earlier and finishes later cannot reopen tabs of the previous session.
+  int _generation = 0;
+
+  /// Reopens the tabs saved in [store]; unreadable data is ignored. [generation] is the value of
+  /// [_generation] when the restore began; if it has moved on, the result is dropped.
+  Future<void> _restore(KvStore store, int generation) async {
     try {
       final raw = await store.get(storageKey);
-      if (raw == null || !ref.mounted || state.tabs.isNotEmpty) return;
+      if (raw == null ||
+          !ref.mounted ||
+          generation != _generation ||
+          state.tabs.isNotEmpty) {
+        return;
+      }
       final json = jsonDecode(raw) as Map<String, dynamic>;
       final tabs = <WorkTab>[
         for (final t in (json['tabs'] as List? ?? const []))
@@ -180,6 +191,13 @@ class WorkspaceNotifier extends Notifier<WorkspaceState> {
     _set(WorkspaceState(tabs: tabs, active: active));
   }
 
+  /// Closes every tab without asking (switching environment: the tabs belong to the old one).
+  void closeAll() {
+    _generation++; // a restore still reading the old store must not bring tabs back
+    _dirty.clear();
+    _set(const WorkspaceState());
+  }
+
   /// Sets the label title the screen of tab [id] reported.
   void setTitle(int id, String title) {
     final i = state.tabs.indexWhere((t) => t.id == id);
@@ -204,6 +222,10 @@ class WorkspaceNotifier extends Notifier<WorkspaceState> {
 
   /// Whether tab [id] currently holds unsaved edits.
   bool isDirty(int id) => _dirty[id]?.value ?? false;
+
+  /// How many open tabs hold unsaved edits.
+  int get dirtyCount =>
+      state.tabs.where((t) => _dirty[t.id]?.value ?? false).length;
 
   /// A ctrl-click on a list row is about to open that row: open it in the background.
   void backgroundNextOpen() {
