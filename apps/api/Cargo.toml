@@ -24,6 +24,7 @@ tradocraft-inventory.workspace = true
 tradocraft-planning.workspace = true
 tradocraft-products.workspace = true
 tradocraft-purchasing.workspace = true
+tradocraft-finance.workspace = true
 tradocraft-delivery.workspace = true
 tradocraft-production.workspace = true
 tradocraft-sales.workspace = true

@@ -274,3 +274,20 @@ pub async fn update(
 
     Ok(s)
 }
+
+/// Looks up supplier names by id (for modules that only hold the id, such as finance). Unknown
+/// or foreign ids are simply absent from the result.
+pub async fn names_by_id(
+    conn: &mut PgConnection,
+    company_id: Uuid,
+    ids: &[Uuid],
+) -> AppResult<Vec<(Uuid, String)>> {
+    sqlx::query_as::<_, (Uuid, String)>(
+        "SELECT id, name FROM purchasing.suppliers WHERE company_id = $1 AND id = ANY($2)",
+    )
+    .bind(company_id)
+    .bind(ids)
+    .fetch_all(conn)
+    .await
+    .map_err(Into::into)
+}

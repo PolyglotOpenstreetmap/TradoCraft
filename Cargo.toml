@@ -25,6 +25,7 @@ tradocraft-inventory = { path = "crates/inventory" }
 tradocraft-planning = { path = "crates/planning" }
 tradocraft-configurator = { path = "crates/configurator" }
 tradocraft-purchasing = { path = "crates/purchasing" }
+tradocraft-finance = { path = "crates/finance" }
 tradocraft-delivery = { path = "crates/delivery" }
 tradocraft-production = { path = "crates/production" }
 tradocraft-reports = { path = "crates/reports" }
