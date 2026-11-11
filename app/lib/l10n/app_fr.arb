@@ -2009,5 +2009,6 @@
   "priceZoneDeleted": "Zone de prix supprimée",
   "delete": "Supprimer",
   "deletePriceZoneConfirm": "Supprimer la zone de prix {code} ? Refusé si des prix ou des clients l'utilisent.",
-  "sortOrderInvalid": "L'ordre de tri doit être un nombre entier."
+  "sortOrderInvalid": "L'ordre de tri doit être un nombre entier.",
+  "envNotSaved": "Fait, mais la liste des environnements n'a pas pu être enregistrée sur cet appareil."
 }

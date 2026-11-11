@@ -9637,6 +9637,7 @@
         "tags": [
           "core"
         ],
+        "summary": "Describes this instance: the configured name and kind, plus the database it is connected to.",
         "operationId": "get_environment",
         "responses": {
           "200": {

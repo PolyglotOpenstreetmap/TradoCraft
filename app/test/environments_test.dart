@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -304,7 +306,7 @@ void main() {
       final ok = await c
           .read(environmentsProvider.notifier)
           .add(name: 'Again', serverUrl: _testUrl, kind: EnvironmentKind.test);
-      expect(ok, isFalse);
+      expect(ok, EnvChange.rejected);
       expect(c.read(environmentsProvider).items, hasLength(2));
     });
   });
@@ -629,4 +631,218 @@ void main() {
       expect(c.read(workspaceProvider).tabs, isEmpty);
     });
   });
+
+  group('review fixes', () {
+    test('a duplicate is found in canonical form, sign-in untouched', () async {
+      final envs = EnvironmentsState(
+        items: [
+          _env('env-1', 'A', EnvironmentKind.live, _liveUrl, dev: 'a@x.y'),
+          _env('env-2', 'B', EnvironmentKind.test, '$_testUrl/'),
+        ],
+        activeId: 'env-1',
+      );
+      final c = _container(environments: envs);
+      c.read(environmentsProvider);
+      final r = await c
+          .read(environmentsProvider.notifier)
+          .add(name: 'Again', serverUrl: _testUrl, kind: EnvironmentKind.test);
+      expect(r, EnvChange.rejected);
+      expect(c.read(environmentsProvider).items, hasLength(2));
+      expect(c.read(sessionProvider).devUser, 'a@x.y');
+    });
+
+    test('signing in to another server makes a new environment', () async {
+      final c = _container();
+      c.read(environmentsProvider);
+      await c.read(environmentsProvider.notifier).switchTo('env-2');
+      await Future<void>.delayed(Duration.zero);
+      await c
+          .read(sessionProvider.notifier)
+          .signIn(
+            const Session(
+              serverUrl: 'http://other.invalid:9',
+              devUser: 'z@x.y',
+              companyId: 'co-z',
+            ),
+          );
+      final s = c.read(environmentsProvider);
+      expect(s.items, hasLength(3));
+      // The environment that was active keeps its name, kind and sign-in.
+      final old = s.items.firstWhere((e) => e.id == 'env-2');
+      expect(old.name, 'Acme test');
+      expect(old.kind, EnvironmentKind.test);
+      expect(old.serverUrl, _testUrl);
+      expect(old.devUser, 'sales@example.com');
+      // The new one is not labelled with the old kind (the probe fails here).
+      await Future<void>.delayed(Duration.zero);
+      expect(s.active.serverUrl, 'http://other.invalid:9');
+      expect(c.read(environmentsProvider).active.kind, EnvironmentKind.live);
+      expect(c.read(environmentsProvider).active.devUser, 'z@x.y');
+    });
+
+    test(
+      'a list that cannot be stored is reported, the switch still happens',
+      () async {
+        final kv = _FailingStore();
+        final c = _container(kv: kv);
+        c.read(environmentsProvider);
+        kv.failing = true;
+        final n = c.read(environmentsProvider.notifier);
+        expect(await n.switchTo('env-2'), EnvChange.notSaved);
+        expect(c.read(sessionProvider).serverUrl, _testUrl);
+        expect(c.read(environmentsProvider).activeId, 'env-2');
+        expect(await n.remove('env-1'), EnvChange.notSaved);
+        expect(c.read(environmentsProvider).items, hasLength(1));
+        kv.failing = false;
+        expect(await n.remove('nope'), EnvChange.rejected);
+      },
+    );
+
+    test(
+      'a restore of the previous store cannot reopen tabs after closeAll',
+      () async {
+        final kv = _SlowStore()
+          ..data['http://localhost:1|dev:a:workspace.tabs'] = jsonEncode({
+            'tabs': [
+              {'l': '/orders/o1', 't': null},
+            ],
+            'active': 0,
+          });
+        final c = ProviderContainer(
+          overrides: [
+            kvStoreProvider.overrideWithValue(kv),
+            initialSessionProvider.overrideWithValue(
+              const Session(serverUrl: 'http://localhost:1', devUser: 'a'),
+            ),
+          ],
+        );
+        addTearDown(c.dispose);
+        c.read(workspaceProvider);
+        c.read(workspaceProvider.notifier).closeAll();
+        kv.release();
+        await Future<void>.delayed(Duration.zero);
+        await Future<void>.delayed(Duration.zero);
+        expect(c.read(workspaceProvider).tabs, isEmpty);
+      },
+    );
+
+    testWidgets('the banner offers the switcher to screen readers', (
+      tester,
+    ) async {
+      final handle = tester.ensureSemantics();
+      final c = _container();
+      await tester.pumpWidget(
+        _app(c, const Scaffold(body: EnvironmentBanner())),
+      );
+      final node = tester.getSemantics(find.byType(EnvironmentBanner));
+      expect(node.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
+      tester.semantics.tap(find.semantics.byLabel(RegExp('Environment')));
+      await tester.pumpAndSettle();
+      expect(find.text('Environments'), findsOneWidget);
+      handle.dispose();
+    });
+
+    testWidgets('a stale server answer is dropped when the address changed', (
+      tester,
+    ) async {
+      final gate = Completer<EnvironmentProbe>();
+      final c = _container(probe: (url) => gate.future);
+      await tester.pumpWidget(
+        _app(c, const Scaffold(body: EnvironmentBanner())),
+      );
+      await tester.tap(find.byType(EnvironmentBanner));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('env-add')));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(const ValueKey('env-url')),
+        'http://first.example',
+      );
+      await tester.tap(find.byKey(const ValueKey('env-check')));
+      await tester.pump();
+      await tester.enterText(
+        find.byKey(const ValueKey('env-url')),
+        'http://second.example',
+      );
+      gate.complete(_servers[_liveUrl]!);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('env-detected-kind')), findsNothing);
+      expect(
+        tester
+            .widget<FilledButton>(find.byKey(const ValueKey('env-add-confirm')))
+            .onPressed,
+        isNull,
+      );
+    });
+
+    testWidgets('without access the environment can still be switched', (
+      tester,
+    ) async {
+      final http = FakeHttp({'GET /api/v1/me': (_) => meJson([])});
+      final c = ProviderContainer(
+        overrides: [
+          dioProvider.overrideWithValue(fakeDio(http)),
+          kvStoreProvider.overrideWithValue(MemoryKvStore()),
+          environmentProbeProvider.overrideWithValue(_probe),
+          initialEnvironmentsProvider.overrideWithValue(_two()),
+        ],
+      );
+      addTearDown(c.dispose);
+      final router = GoRouter(
+        initialLocation: '/orders',
+        routes: [
+          ShellRoute(
+            builder: (_, s, child) =>
+                AppShell(location: s.matchedLocation, child: child),
+            routes: [
+              GoRoute(path: '/orders', builder: (_, _) => const Text('LIST')),
+            ],
+          ),
+        ],
+      );
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: c,
+          child: MaterialApp.router(
+            routerConfig: router,
+            locale: const Locale('en'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('LIST'), findsNothing);
+      expect(find.byType(EnvironmentBanner), findsOneWidget);
+      await tester.tap(find.byType(EnvironmentBanner));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('env-tile-env-2')), findsOneWidget);
+    });
+  });
+}
+
+/// A store whose writes fail while [failing] is set.
+class _FailingStore extends MemoryKvStore {
+  bool failing = false;
+
+  @override
+  Future<void> set(String key, String value) async {
+    if (failing) throw StateError('disk full');
+    await super.set(key, value);
+  }
+}
+
+/// A store that answers reads only after [release].
+class _SlowStore extends MemoryKvStore {
+  final _gate = Completer<void>();
+
+  /// Lets the waiting reads answer.
+  void release() => _gate.complete();
+
+  @override
+  Future<String?> get(String key) async {
+    final v = await super.get(key);
+    await _gate.future;
+    return v;
+  }
 }

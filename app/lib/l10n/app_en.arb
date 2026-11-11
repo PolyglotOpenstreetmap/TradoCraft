@@ -3260,5 +3260,6 @@
       }
     }
   },
-  "sortOrderInvalid": "Sort order must be a whole number."
+  "sortOrderInvalid": "Sort order must be a whole number.",
+  "envNotSaved": "Done, but the list of environments could not be saved on this device."
 }

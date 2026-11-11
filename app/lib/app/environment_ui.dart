@@ -54,6 +54,8 @@ class EnvironmentBanner extends ConsumerWidget {
       button: true,
       label: l.envBannerSemantics(env.name, kind),
       onTapHint: l.envSwitchTooltip,
+      // The same action as tapping the strip, for screen readers.
+      onTap: () => showEnvironmentSwitcher(context),
       child: ExcludeSemantics(
         child: Material(
           key: ValueKey('env-banner-${env.kind.name}'),
@@ -118,6 +120,7 @@ Future<bool> confirmLeavingTabs(BuildContext context, WidgetRef ref) async {
 Future<void> showEnvironmentSwitcher(BuildContext context) =>
     showDialog<void>(context: context, builder: (_) => const _SwitcherDialog());
 
+/// The dialog behind [showEnvironmentSwitcher]: one tile per environment plus "add".
 class _SwitcherDialog extends ConsumerWidget {
   const _SwitcherDialog();
 
@@ -141,8 +144,13 @@ class _SwitcherDialog extends ConsumerWidget {
                 onSwitch: () async {
                   if (!await confirmLeavingTabs(context, ref)) return;
                   if (!context.mounted) return;
+                  final messenger = ScaffoldMessenger.of(context);
+                  final note = l.envNotSaved;
                   Navigator.pop(context);
-                  await notifier.switchTo(e.id);
+                  final r = await notifier.switchTo(e.id);
+                  if (r == EnvChange.notSaved) {
+                    messenger.showSnackBar(SnackBar(content: Text(note)));
+                  }
                 },
                 onRemove: () async {
                   final ok = await showDialog<bool>(
@@ -163,7 +171,12 @@ class _SwitcherDialog extends ConsumerWidget {
                       ],
                     ),
                   );
-                  if (ok == true) await notifier.remove(e.id);
+                  if (ok != true) return;
+                  final r = await notifier.remove(e.id);
+                  if (r == EnvChange.notSaved && context.mounted) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(l.envNotSaved)));
+                  }
                 },
               ),
             const Divider(),
@@ -196,6 +209,7 @@ class _SwitcherDialog extends ConsumerWidget {
   }
 }
 
+/// One environment in the switcher: kind, name, address, and switch or remove.
 class _EnvTile extends StatelessWidget {
   const _EnvTile({
     required this.env,
@@ -251,6 +265,7 @@ class _EnvTile extends StatelessWidget {
   }
 }
 
+/// Asks for an address, checks it with the server and adds the environment it reports.
 class _AddDialog extends ConsumerStatefulWidget {
   const _AddDialog();
 
@@ -258,6 +273,7 @@ class _AddDialog extends ConsumerStatefulWidget {
   ConsumerState<_AddDialog> createState() => _AddDialogState();
 }
 
+/// State of [_AddDialog]: the fields and the server's answer for the address that was checked.
 class _AddDialogState extends ConsumerState<_AddDialog> {
   final _name = TextEditingController();
   final _url = TextEditingController();
@@ -283,7 +299,10 @@ class _AddDialogState extends ConsumerState<_AddDialog> {
       });
       return;
     }
-    if (ref.read(environmentsProvider).items.any((e) => e.serverUrl == url)) {
+    if (ref
+        .read(environmentsProvider)
+        .items
+        .any((e) => (normalizeServerUrl(e.serverUrl) ?? e.serverUrl) == url)) {
       setState(() {
         _probe = null;
         _error = l.envAlreadyListed;
@@ -297,14 +316,17 @@ class _AddDialogState extends ConsumerState<_AddDialog> {
     });
     try {
       final info = await ref.read(environmentProbeProvider)(url);
-      if (!mounted) return;
+      // The address was edited while the server was answering: that answer is for another one.
+      if (!mounted || normalizeServerUrl(_url.text) != url) return;
       setState(() {
         _probe = info;
         _checkedUrl = url;
         if (_name.text.trim().isEmpty) _name.text = info.name;
       });
     } catch (e) {
-      if (mounted) setState(() => _error = l.envUnreachable(errorMessage(e)));
+      if (mounted && normalizeServerUrl(_url.text) == url) {
+        setState(() => _error = l.envUnreachable(errorMessage(e)));
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -318,15 +340,21 @@ class _AddDialogState extends ConsumerState<_AddDialog> {
     // Adding switches at once, so it asks about unsaved tabs like a switch does.
     if (!await confirmLeavingTabs(context, ref)) return;
     // The kind is the server's word, never the user's.
-    final ok = await ref
+    if (!mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final note = context.l10n.envNotSaved;
+    final r = await ref
         .read(environmentsProvider.notifier)
         .add(name: name, serverUrl: url, kind: probe.kind);
     if (!mounted) return;
-    if (ok) {
-      Navigator.pop(context, true);
-    } else {
+    if (r == EnvChange.rejected) {
       setState(() => _error = context.l10n.envAlreadyListed);
+      return;
     }
+    if (r == EnvChange.notSaved) {
+      messenger.showSnackBar(SnackBar(content: Text(note)));
+    }
+    Navigator.pop(context, true);
   }
 
   @override

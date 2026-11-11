@@ -6215,4 +6215,8 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sortOrderInvalid => 'El orden debe ser un número entero.';
+
+  @override
+  String get envNotSaved =>
+      'Hecho, pero la lista de entornos no se pudo guardar en este dispositivo.';
 }

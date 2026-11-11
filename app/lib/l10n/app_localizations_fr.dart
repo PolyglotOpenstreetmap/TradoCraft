@@ -6224,4 +6224,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sortOrderInvalid => 'L\'ordre de tri doit être un nombre entier.';
+
+  @override
+  String get envNotSaved =>
+      'Fait, mais la liste des environnements n\'a pas pu être enregistrée sur cet appareil.';
 }

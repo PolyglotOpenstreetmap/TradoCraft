@@ -63,6 +63,7 @@ abstract class CoreClient {
   @GET('/api/v1/me')
   Future<Me> me();
 
+  /// Describes this instance: the configured name and kind, plus the database it is connected to.
   @GET('/api/v1/meta/environment')
   Future<EnvironmentInfo> getEnvironment();
 

@@ -2009,5 +2009,6 @@
   "priceZoneDeleted": "Prijszone verwijderd",
   "delete": "Verwijderen",
   "deletePriceZoneConfirm": "Prijszone {code} verwijderen? Dit wordt geweigerd als prijzen of klanten ze gebruiken.",
-  "sortOrderInvalid": "De sorteervolgorde moet een geheel getal zijn."
+  "sortOrderInvalid": "De sorteervolgorde moet een geheel getal zijn.",
+  "envNotSaved": "Gedaan, maar de lijst met omgevingen kon niet op dit toestel worden bewaard."
 }

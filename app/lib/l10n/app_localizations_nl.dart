@@ -6216,4 +6216,8 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get sortOrderInvalid =>
       'De sorteervolgorde moet een geheel getal zijn.';
+
+  @override
+  String get envNotSaved =>
+      'Gedaan, maar de lijst met omgevingen kon niet op dit toestel worden bewaard.';
 }

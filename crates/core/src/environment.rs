@@ -29,6 +29,7 @@ pub enum EnvKind {
 }
 
 impl EnvKind {
+    /// The word used in the API and in `APP_ENV_KIND`.
     pub fn as_str(self) -> &'static str {
         match self {
             EnvKind::Live => "live",
@@ -41,6 +42,7 @@ impl EnvKind {
 impl std::str::FromStr for EnvKind {
     type Err = String;
 
+    /// Parses `live`, `test` or `tutorial` (any case, surrounding spaces allowed).
     fn from_str(s: &str) -> Result<Self, String> {
         match s.trim().to_ascii_lowercase().as_str() {
             "live" => Ok(EnvKind::Live),
@@ -77,12 +79,32 @@ impl EnvironmentConfig {
         })
     }
 
-    /// Reads `APP_ENV_NAME` and `APP_ENV_KIND` from the process environment.
+    /// Reads `APP_ENV_NAME` and `APP_ENV_KIND` from the process environment. A variable that is
+    /// absent counts as unset (kind `live`); one that is present but not valid Unicode is an
+    /// error, never silently the default.
     pub fn from_env() -> Result<Self, String> {
-        Self::from_values(
-            std::env::var("APP_ENV_NAME").ok().as_deref(),
-            std::env::var("APP_ENV_KIND").ok().as_deref(),
+        Self::from_os_values(
+            std::env::var_os("APP_ENV_NAME").as_deref(),
+            std::env::var_os("APP_ENV_KIND").as_deref(),
         )
+    }
+
+    /// Like [`Self::from_values`] for raw environment values: `None` is an absent variable, a
+    /// value that is not valid Unicode is an error naming the variable.
+    pub fn from_os_values(
+        name: Option<&std::ffi::OsStr>,
+        kind: Option<&std::ffi::OsStr>,
+    ) -> Result<Self, String> {
+        fn text<'a>(var: &str, v: Option<&'a std::ffi::OsStr>) -> Result<Option<&'a str>, String> {
+            match v {
+                None => Ok(None),
+                Some(os) => os
+                    .to_str()
+                    .map(Some)
+                    .ok_or_else(|| format!("{var} is not valid UTF-8")),
+            }
+        }
+        Self::from_values(text("APP_ENV_NAME", name)?, text("APP_ENV_KIND", kind)?)
     }
 }
 
@@ -100,6 +122,7 @@ pub struct EnvironmentInfo {
 
 #[utoipa::path(get, path = "/meta/environment", tag = "core", security(()),
     responses((status = 200, body = EnvironmentInfo)))]
+/// Describes this instance: the configured name and kind, plus the database it is connected to.
 async fn get_environment(
     State(state): State<AppState>,
     Extension(config): Extension<EnvironmentConfig>,
@@ -149,6 +172,25 @@ mod tests {
             assert_eq!(c.kind, k);
             assert_eq!(c.name.as_deref(), Some("Acme"));
         }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn a_value_that_is_not_unicode_is_an_error() {
+        use std::os::unix::ffi::OsStrExt;
+        let bad = std::ffi::OsStr::from_bytes(&[0x74, 0xff, 0x73]);
+        let e = EnvironmentConfig::from_os_values(None, Some(bad)).unwrap_err();
+        assert!(e.contains("APP_ENV_KIND") && e.contains("UTF-8"), "{e}");
+        let e = EnvironmentConfig::from_os_values(Some(bad), None).unwrap_err();
+        assert!(e.contains("APP_ENV_NAME"), "{e}");
+    }
+
+    #[test]
+    fn absent_os_values_are_the_defaults() {
+        assert_eq!(
+            EnvironmentConfig::from_os_values(None, None).unwrap(),
+            EnvironmentConfig::default()
+        );
     }
 
     #[test]

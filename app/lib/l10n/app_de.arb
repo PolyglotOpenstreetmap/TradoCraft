@@ -2009,5 +2009,6 @@
   "priceZoneDeleted": "Preiszone gelöscht",
   "delete": "Löschen",
   "deletePriceZoneConfirm": "Preiszone {code} löschen? Abgelehnt, wenn Preise oder Kunden sie verwenden.",
-  "sortOrderInvalid": "Die Sortierreihenfolge muss eine ganze Zahl sein."
+  "sortOrderInvalid": "Die Sortierreihenfolge muss eine ganze Zahl sein.",
+  "envNotSaved": "Erledigt, aber die Liste der Umgebungen konnte auf diesem Gerät nicht gespeichert werden."
 }

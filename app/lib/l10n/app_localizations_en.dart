@@ -6198,4 +6198,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sortOrderInvalid => 'Sort order must be a whole number.';
+
+  @override
+  String get envNotSaved =>
+      'Done, but the list of environments could not be saved on this device.';
 }

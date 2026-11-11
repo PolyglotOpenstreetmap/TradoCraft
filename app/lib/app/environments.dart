@@ -74,6 +74,7 @@ class AppEnvironment {
         companyId: companyId,
       );
 
+  /// The stored form of this environment.
   Map<String, Object?> toJson() => {
     'id': id,
     'name': name,
@@ -84,6 +85,7 @@ class AppEnvironment {
     'company': companyId,
   };
 
+  /// Reads one stored environment; null when the entry is unusable.
   static AppEnvironment? fromJson(Object? j) {
     if (j is! Map || j['id'] is! String || j['url'] is! String) return null;
     String? s(String k) => j[k] is String ? j[k] as String : null;
@@ -103,12 +105,17 @@ class AppEnvironment {
 class EnvironmentsState {
   const EnvironmentsState({required this.items, required this.activeId});
 
+  /// Every environment known on this device, in the order they were added.
   final List<AppEnvironment> items;
+
+  /// The id of the environment in use.
   final String activeId;
 
+  /// The environment in use (the first one if the id is unknown).
   AppEnvironment get active =>
       items.firstWhere((e) => e.id == activeId, orElse: () => items.first);
 
+  /// A copy with the given list and/or active id replaced.
   EnvironmentsState copyWith({List<AppEnvironment>? items, String? activeId}) =>
       EnvironmentsState(
         items: items ?? this.items,
@@ -180,6 +187,7 @@ class EnvironmentStore {
     return EnvironmentsState(items: [first], activeId: first.id);
   }
 
+  /// Writes the list and the active id to [store].
   static Future<void> save(EnvironmentsState s, KvStore store) => store.set(
     key,
     jsonEncode({
@@ -239,6 +247,20 @@ final initialEnvironmentsProvider = Provider<EnvironmentsState>(
   (ref) => EnvironmentStore.fromSession(ref.read(initialSessionProvider)),
 );
 
+/// What a change to the list of environments came to.
+enum EnvChange {
+  /// Applied and stored.
+  done,
+
+  /// Applied for this run (the session and the list in memory), but the list could not be stored,
+  /// so the next start may not remember it.
+  notSaved,
+
+  /// Nothing changed: an address already in the list, an unknown id, or the active environment.
+  rejected,
+}
+
+/// Owns the list of environments and keeps it in step with [sessionProvider].
 class EnvironmentsNotifier extends Notifier<EnvironmentsState> {
   @override
   EnvironmentsState build() {
@@ -249,21 +271,61 @@ class EnvironmentsNotifier extends Notifier<EnvironmentsState> {
     return initial;
   }
 
+  /// Takes over a session change. The same server: the sign-in is stored on the active
+  /// environment. Another server (a sign-in to a different address from the login page): the
+  /// active environment keeps its name, kind and sign-in, and the other address becomes an
+  /// environment of its own (an existing one for that address, or a new one that counts as live
+  /// until the server says otherwise), which then becomes the active one.
   void _followSession(Session s) {
     final a = state.active;
-    final changedUrl = a.serverUrl != s.serverUrl;
-    state = state.copyWith(
-      items: [for (final e in state.items) e.id == a.id ? e.withSession(s) : e],
-    );
+    if (a.serverUrl == s.serverUrl) {
+      state = state.copyWith(
+        items: [
+          for (final e in state.items) e.id == a.id ? e.withSession(s) : e,
+        ],
+      );
+      _persist();
+      return;
+    }
+    final known = state.items
+        .where((e) => _sameServer(e.serverUrl, s.serverUrl))
+        .firstOrNull;
+    if (known != null) {
+      state = EnvironmentsState(
+        items: [
+          for (final e in state.items) e.id == known.id ? e.withSession(s) : e,
+        ],
+        activeId: known.id,
+      );
+      _persist();
+      return;
+    }
+    final env = AppEnvironment(
+      id: _freshId(),
+      name: hostOf(s.serverUrl),
+      kind: EnvironmentKind.live,
+      serverUrl: s.serverUrl,
+    ).withSession(s);
+    state = EnvironmentsState(items: [...state.items, env], activeId: env.id);
     _persist();
-    if (changedUrl) refreshActive();
+    refreshActive();
   }
 
-  Future<void> _persist() async {
+  String _freshId() {
+    var n = state.items.length + 1;
+    while (state.items.any((e) => e.id == 'env-$n')) {
+      n++;
+    }
+    return 'env-$n';
+  }
+
+  /// Stores the list; false when that failed (the in-memory list stays as it is).
+  Future<bool> _persist() async {
     try {
       await EnvironmentStore.save(state, ref.read(kvStoreProvider));
+      return true;
     } catch (_) {
-      // Not being able to remember the list must not break the session.
+      return false;
     }
   }
 
@@ -287,60 +349,78 @@ class EnvironmentsNotifier extends Notifier<EnvironmentsState> {
       );
       await _persist();
     } catch (_) {
-      // Unreachable or not a tradocraft server: keep the stored kind.
+      // Unreachable or not a TradoCraft server: keep the stored kind.
     }
   }
 
   /// Adds the environment at [serverUrl] (already checked with the server) and makes it active.
-  /// Returns false when that address is already in the list.
-  Future<bool> add({
+  /// [EnvChange.rejected] when that address is already in the list (compared in canonical form);
+  /// the active sign-in is then left alone.
+  Future<EnvChange> add({
     required String name,
     required String serverUrl,
     required EnvironmentKind kind,
   }) async {
-    if (state.items.any((e) => e.serverUrl == serverUrl)) return false;
-    var n = state.items.length + 1;
-    while (state.items.any((e) => e.id == 'env-$n')) {
-      n++;
+    final url = normalizeServerUrl(serverUrl) ?? serverUrl;
+    if (state.items.any((e) => _sameServer(e.serverUrl, url))) {
+      return EnvChange.rejected;
     }
     final env = AppEnvironment(
-      id: 'env-$n',
+      id: _freshId(),
       name: name,
       kind: kind,
-      serverUrl: serverUrl,
+      serverUrl: url,
     );
     state = state.copyWith(items: [...state.items, env]);
-    await _persist();
-    await switchTo(env.id);
-    return true;
+    final saved = await _persist();
+    final switched = await switchTo(env.id);
+    return saved && switched == EnvChange.done
+        ? EnvChange.done
+        : EnvChange.notSaved;
   }
 
   /// Makes [id] the active environment: the open tabs are closed and the session is replaced by
   /// the one of that environment, so the HTTP client, the company and the storage of the user
-  /// all change together and nothing of the previous environment stays on screen.
-  Future<void> switchTo(String id) async {
+  /// all change together and nothing of the previous environment stays on screen. When storing
+  /// fails the switch still happens in memory and [EnvChange.notSaved] is returned.
+  Future<EnvChange> switchTo(String id) async {
     final target = state.items.where((e) => e.id == id).firstOrNull;
-    if (target == null || target.id == state.activeId) return;
+    if (target == null || target.id == state.activeId) {
+      return EnvChange.rejected;
+    }
     ref.read(workspaceProvider.notifier).closeAll();
     state = state.copyWith(activeId: id);
-    await _persist();
-    await ref.read(sessionProvider.notifier).signIn(target.session);
+    var saved = await _persist();
+    try {
+      await ref.read(sessionProvider.notifier).signIn(target.session);
+    } catch (_) {
+      // The session is set in memory before it is stored; only the storing failed.
+      saved = false;
+    }
     refreshActive();
+    return saved ? EnvChange.done : EnvChange.notSaved;
   }
 
   /// Removes [id] from this device; the active environment cannot be removed.
-  Future<void> remove(String id) async {
-    if (id == state.activeId) return;
+  Future<EnvChange> remove(String id) async {
+    if (id == state.activeId || !state.items.any((e) => e.id == id)) {
+      return EnvChange.rejected;
+    }
     state = state.copyWith(
       items: [
         for (final e in state.items)
           if (e.id != id) e,
       ],
     );
-    await _persist();
+    return await _persist() ? EnvChange.done : EnvChange.notSaved;
   }
 }
 
+/// Whether two server addresses are the same once written in canonical form.
+bool _sameServer(String a, String b) =>
+    (normalizeServerUrl(a) ?? a) == (normalizeServerUrl(b) ?? b);
+
+/// The list of environments and the one in use; follows the session.
 final environmentsProvider =
     NotifierProvider<EnvironmentsNotifier, EnvironmentsState>(
       EnvironmentsNotifier.new,

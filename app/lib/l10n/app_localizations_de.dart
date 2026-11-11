@@ -6231,4 +6231,8 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get sortOrderInvalid =>
       'Die Sortierreihenfolge muss eine ganze Zahl sein.';
+
+  @override
+  String get envNotSaved =>
+      'Erledigt, aber die Liste der Umgebungen konnte auf diesem Gerät nicht gespeichert werden.';
 }

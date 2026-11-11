@@ -11225,6 +11225,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sort order must be a whole number.'**
   String get sortOrderInvalid;
+
+  /// No description provided for @envNotSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Done, but the list of environments could not be saved on this device.'**
+  String get envNotSaved;
 }
 
 class _AppLocalizationsDelegate

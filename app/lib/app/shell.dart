@@ -182,7 +182,16 @@ class AppShell extends ConsumerWidget {
       });
     }
     if (destinations.isEmpty) {
-      return Scaffold(body: Center(child: Text(context.l10n.noAccess)));
+      // Still shows the environment (and its switcher): a user without access here may have it
+      // in another environment.
+      return Scaffold(
+        body: Column(
+          children: [
+            const EnvironmentBanner(),
+            Expanded(child: Center(child: Text(context.l10n.noAccess))),
+          ],
+        ),
+      );
     }
     final index = found < 0 ? 0 : found;
     void go(int i) {
