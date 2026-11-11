@@ -26,6 +26,13 @@ Module overview: [ARCHITECTURE.md](ARCHITECTURE.md).
 | C2 MRP | Open (needs B1, B2, C1) |
 | C3 Planning board, field-jobs half (calendars, absences, skills, conflicts, suggestions, drag-and-drop board) | Done, [ADR 0024](adr/0024-planning-board.md) |
 | C3 Planning board, work-centre half (capacity, finite loading) | Open (needs C1; reuses the resource calendar and `ResourceBoard`) |
+| D1 Worker heartbeat and "worker was down" alert | Open |
+| D2 Backup and restore runbook | Open |
+| D3 Concurrent-edit protection on records | Open |
+| D4 VAT number validation, registry lookup and duplicate warning | Open |
+| D5 Accent-insensitive search | Open |
+| D6 Audit log viewer | Open |
+| D7 Restrict CORS to configured origins | Open |
 
 ## Sequencing
 
@@ -97,9 +104,52 @@ Remaining knowledge base gaps (ADR 0018): non-image attachments, analytics, sema
 - Field-jobs half: Done ([ADR 0024](adr/0024-planning-board.md)). Work-centre half: Open; reuse
   `planning.working_hours`/`absences`, the pure conflict/suggestion functions and `ResourceBoard`.
 
+## Track D - Platform and operations (independent of A, B and C)
+
+Each item gets its own ADR when it is picked up. D1 and D2 come first: both are small and protect
+production.
+
+**D1 Worker heartbeat and "worker was down" alert** (small)
+- `apps/worker` is one polling loop (IMAP, SLA escalation, contract visits, outbox). When it stops,
+  nothing reports it.
+- The loop writes a heartbeat row each pass; the API exposes its age, the app shows a warning to
+  administrators, and a system mail goes out when the worker resumes after a gap.
+
+**D2 Backup and restore runbook** (small)
+- A scripted backup that copes with the files stored in `bytea` (a physical backup rather than
+  `pg_dump` while those live in the database), a retention rule, and a restore that is tested
+  against a clone ([ADR 0043](adr/0043-environments.md)).
+- A runbook in `docs/runbooks/`.
+
+**D3 Concurrent-edit protection on records** (medium)
+- Updates carry no version check today, so two people who edit the same customer, quotation or
+  order overwrite each other without a warning.
+- Decide in the ADR between optimistic concurrency (a row version checked on update, a 409 and a
+  reload prompt in the app) and a short-lived edit lock that shows who has the record open.
+
+**D4 VAT number validation, registry lookup and duplicate warning** (small-medium)
+- `vat_number` on customers is stored unchecked; suppliers have no VAT number field yet.
+- Format and check-digit validation, a VIES lookup that pre-fills name and address on create (with
+  a fallback when the service is down), and a warning when the number already exists in the company.
+
+**D5 Accent-insensitive search** (small)
+- List and lookup searches use `ILIKE`, so "Liege" does not find "Liège". Customers, contacts,
+  suppliers and products in five languages need accent folding (`unaccent` with a matching index).
+
+**D6 Audit log viewer** (medium)
+- `audit.events` is written in every transaction but cannot be read: no endpoint and no screen.
+- A permission-gated history per record (who changed what and when) and a company-wide view with
+  filters for administrators.
+
+**D7 Restrict CORS to configured origins** (small)
+- The API answers any origin (`CorsLayer` with `allow_origin(Any)` in `apps/api/src/lib.rs`).
+- Read the allowed origins (the web app and the customer portal) from configuration, per
+  environment; keep the permissive setting for local development only.
+
 ## Working in parallel
 
-Items that can run at the same time on separate branches: A3, B1, and the field-jobs half of C3.
+Items that can run at the same time on separate branches: A3, B1, the field-jobs half of C3, and the
+Track D items.
 
 Shared files that will conflict between branches:
 - `crates/core/src/auth.rs` (permissions)
