@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -353,5 +355,81 @@ void main() {
     ]) {
       expect(SetupValidation.email(bad), isFalse, reason: bad);
     }
+  });
+
+  testWidgets('a redirect is not followed and the token is not re-sent', (
+    tester,
+  ) async {
+    final http = FakeHttp({
+      'GET /api/v1/setup/status': (_) => _status(token: true),
+      'POST /api/v1/setup/bootstrap': (_) => FakeStatus(307, {
+        'location': 'http://evil.example/api/v1/setup/bootstrap',
+      }),
+    });
+    final c = await _pump(tester, http);
+    await _fillAll(tester);
+    await _type(tester, 'token', 's3cret');
+    await _tap(tester, 'setup-next-button');
+    await _tap(tester, 'setup-create');
+    expect(
+      http.requests.where((r) => r == 'POST /api/v1/setup/bootstrap'),
+      hasLength(1),
+    );
+    expect(
+      tester.widget<Text>(find.byKey(const ValueKey('setup-error'))).data,
+      contains('redirected'),
+    );
+    expect(c.read(sessionProvider).isSignedIn, isFalse);
+  });
+
+  testWidgets('a slow setup answer for an older address is dropped', (
+    tester,
+  ) async {
+    final slow = Completer<SetupStatusInfo>();
+    final c = ProviderContainer(
+      overrides: [
+        kvStoreProvider.overrideWithValue(MemoryKvStore()),
+        environmentProbeProvider.overrideWithValue(_probe),
+        setupStatusProvider.overrideWithValue(
+          (url) => url == 'http://a.example'
+              ? slow.future
+              : Future.value(
+                  const SetupStatusInfo(
+                    needsSetup: false,
+                    tokenRequired: false,
+                    authMode: 'dev',
+                  ),
+                ),
+        ),
+      ],
+    );
+    addTearDown(c.dispose);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: c,
+        child: const MaterialApp(
+          locale: Locale('en'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: LoginPage(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final field = find.widgetWithText(TextField, 'Server');
+    await tester.enterText(field, 'http://a.example');
+    await tester.pump(const Duration(seconds: 1));
+    await tester.enterText(field, 'http://b.example');
+    await tester.pump(const Duration(seconds: 1));
+    // The answer for the first address arrives after the address changed.
+    slow.complete(
+      const SetupStatusInfo(
+        needsSetup: true,
+        tokenRequired: false,
+        authMode: 'dev',
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('login-setup')), findsNothing);
   });
 }

@@ -7091,4 +7091,8 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get setupUnavailable =>
       'La configuration n\'est pas disponible sur ce serveur : il a déjà une société, ou la configuration est désactivée.';
+
+  @override
+  String get setupErrRedirect =>
+      'Le serveur a redirigé la requête, le jeton d\'installation n\'a donc pas été transmis. Vérifiez l\'adresse du serveur (utilisez l\'adresse https:// définitive).';
 }

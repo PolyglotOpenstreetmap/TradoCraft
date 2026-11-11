@@ -7056,4 +7056,8 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupUnavailable =>
       'Setting up is not available on this server: it already has a company, or setting up is disabled.';
+
+  @override
+  String get setupErrRedirect =>
+      'The server redirected the request, so the setup token was not sent on. Check the server address (use the final https:// address).';
 }

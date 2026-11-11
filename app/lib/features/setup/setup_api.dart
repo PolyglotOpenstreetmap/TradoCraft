@@ -114,6 +114,17 @@ class InsecureServerException implements Exception {
       'Refusing to send the setup token over plain HTTP to $serverUrl';
 }
 
+/// Thrown when the server answered the bootstrap request with a redirect (or the request ended
+/// on another origin): the setup token is never re-sent to a redirect target.
+class RedirectRefusedException implements Exception {
+  /// Creates the exception.
+  const RedirectRefusedException();
+
+  @override
+  String toString() =>
+      'The server redirected the setup request; it was not followed';
+}
+
 /// Whether secrets may be sent to [serverUrl]: https, or http only to this machine (localhost,
 /// 127.0.0.0/8 or ::1).
 bool isSecureServerUrl(String serverUrl) {
@@ -175,10 +186,28 @@ final setupBootstrapProvider =
         if (!isSecureServerUrl(url)) throw InsecureServerException(url);
         final dio = make(url);
         try {
-          final res = await dio.post<Object?>(
-            '/api/v1/setup/bootstrap',
-            data: req.toJson(),
-          );
+          final Response<Object?> res;
+          try {
+            // Redirects are never followed (on the IO adapter this stops them): the body carries
+            // the BOOTSTRAP_TOKEN and a redirect target could be insecure.
+            res = await dio.post<Object?>(
+              '/api/v1/setup/bootstrap',
+              data: req.toJson(),
+              options: Options(followRedirects: false, maxRedirects: 0),
+            );
+          } on DioException catch (e) {
+            final code = e.response?.statusCode ?? 0;
+            if (code >= 300 && code < 400) {
+              throw const RedirectRefusedException();
+            }
+            rethrow;
+          }
+          // The browser follows redirects inside XHR/fetch and Dart cannot stop that; the best
+          // that can be done there is to notice afterwards that the request ended on another
+          // origin (https-only targets and mixed-content blocking do the preventing).
+          if (res.realUri.origin != res.requestOptions.uri.origin) {
+            throw const RedirectRefusedException();
+          }
           final d = res.data as Map;
           return SetupResult(
             companyName: '${(d['company'] as Map)['name']}',

@@ -46,13 +46,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   /// The address [_needsSetup] was asked for, so a late answer for another address is ignored.
   String? _setupAskedFor;
 
+  /// Pending timer of the debounced setup check.
   Timer? _setupDebounce;
+
+  /// Counts address edits and setup checks; an answer counts only while its number is current,
+  /// so a slow answer for an earlier address (even one typed again later) is dropped.
+  int _setupGeneration = 0;
 
   /// The address was edited: the earlier answer no longer applies, so the offer goes away and the
   /// new address is asked after a short pause. A late answer for an older address is ignored.
   void _serverEdited(String _) {
     _setupDebounce?.cancel();
     _setupAskedFor = null;
+    _setupGeneration++;
     if (_needsSetup) setState(() => _needsSetup = false);
     _setupDebounce = Timer(const Duration(milliseconds: 500), _checkSetup);
   }
@@ -68,13 +74,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Future<void> _checkSetup() async {
     final url = _server.text.trim();
     _setupAskedFor = url;
+    final generation = ++_setupGeneration;
     var needs = false;
     if (url.isNotEmpty) {
       try {
         needs = (await ref.read(setupStatusProvider)(url)).needsSetup;
       } catch (_) {}
     }
-    if (mounted && _setupAskedFor == url) setState(() => _needsSetup = needs);
+    if (mounted && generation == _setupGeneration && _setupAskedFor == url) {
+      setState(() => _needsSetup = needs);
+    }
   }
 
   @override

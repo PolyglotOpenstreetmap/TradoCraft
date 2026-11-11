@@ -2274,5 +2274,6 @@
   "userRoleFinance": "Financiën",
   "moduleFinance": "Financiën",
   "setupErrInsecure": "Het installatietoken wordt niet via een onversleutelde verbinding naar een andere computer gestuurd. Gebruik een https://-adres (gewone http mag alleen voor localhost).",
-  "setupUnavailable": "Instellen is niet beschikbaar op deze server: er is al een bedrijf, of instellen is uitgeschakeld."
+  "setupUnavailable": "Instellen is niet beschikbaar op deze server: er is al een bedrijf, of instellen is uitgeschakeld.",
+  "setupErrRedirect": "De server stuurde de aanvraag door, dus het installatietoken is niet verder gestuurd. Controleer het serveradres (gebruik het definitieve https://-adres)."
 }

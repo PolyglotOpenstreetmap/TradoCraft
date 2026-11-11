@@ -76,6 +76,10 @@ and 409 clearly.
   rule then keeps the endpoint closed anyway). The token is sent in a request body, so serve the
   API over TLS; there is no built-in rate limit on guesses, so put a high-entropy token and, if the
   server is public, a proxy rate limit in front.
+* The app sends the token only to https addresses or loopback http, and never follows a redirect
+  of the bootstrap request (a 3xx is an error). A browser build follows redirects inside
+  XHR/fetch where Dart cannot stop it, so there it can only detect afterwards that the request
+  ended on another origin; https-only targets and mixed-content blocking do the preventing.
 * `GET /setup/status` reveals whether a server is empty (not sensitive).
 * The legal name is stored (`core.companies.legal_name`) but not yet shown or used on documents.
 * Only the first company can be bootstrapped; further companies need a later, authenticated flow

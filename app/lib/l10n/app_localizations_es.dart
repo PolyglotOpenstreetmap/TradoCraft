@@ -7080,4 +7080,8 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupUnavailable =>
       'La configuración no está disponible en este servidor: ya tiene una empresa o la configuración está desactivada.';
+
+  @override
+  String get setupErrRedirect =>
+      'El servidor redirigió la solicitud, por lo que el token de configuración no se reenvió. Compruebe la dirección del servidor (use la dirección https:// definitiva).';
 }

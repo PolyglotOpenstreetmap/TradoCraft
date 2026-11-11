@@ -7098,4 +7098,8 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupUnavailable =>
       'Die Einrichtung ist auf diesem Server nicht verfügbar: Er hat bereits ein Unternehmen, oder die Einrichtung ist deaktiviert.';
+
+  @override
+  String get setupErrRedirect =>
+      'Der Server hat die Anfrage umgeleitet, daher wurde das Einrichtungstoken nicht weitergesendet. Prüfen Sie die Serveradresse (verwenden Sie die endgültige https://-Adresse).';
 }

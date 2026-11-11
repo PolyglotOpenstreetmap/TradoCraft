@@ -135,6 +135,7 @@ class _SetupPageState extends ConsumerState<SetupPage> {
   String _failure(Object e) {
     final l = context.l10n;
     if (e is InsecureServerException) return l.setupErrInsecure;
+    if (e is RedirectRefusedException) return l.setupErrRedirect;
     if (e is DioException) {
       switch (e.response?.statusCode) {
         case 403:
