@@ -542,7 +542,8 @@ mod tests {
 
     #[test]
     fn rejects_bad_fields() {
-        let cases: Vec<Box<dyn Fn(&mut ProvisionSpec)>> = vec![
+        type Mutation = Box<dyn Fn(&mut ProvisionSpec)>;
+        let cases: Vec<Mutation> = vec![
             Box::new(|s| s.name = "  ".into()),
             Box::new(|s| s.country_code = "BEL".into()),
             Box::new(|s| s.country_code = "B1".into()),
