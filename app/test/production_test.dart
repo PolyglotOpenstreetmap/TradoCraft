@@ -215,18 +215,15 @@ FakeHttp _screenHttp(
 });
 
 /// A queue server: [divisions], the caller's [perms], and the orders it returns per `mine` flag.
-FakeHttp _queueHttp(
-  List<String> perms,
-  List<Map<String, Object?>> divisions, {
-  int mineTotal = 1,
-}) => FakeHttp({
-  'GET /api/v1/me': (_) => meJson(perms),
-  'GET /api/v1/production/divisions': (_) => divisions,
-  'GET /api/v1/production-orders': (_) => {
-    'items': [_summary()],
-    'total': 1,
-  },
-});
+FakeHttp _queueHttp(List<String> perms, List<Map<String, Object?>> divisions) =>
+    FakeHttp({
+      'GET /api/v1/me': (_) => meJson(perms),
+      'GET /api/v1/production/divisions': (_) => divisions,
+      'GET /api/v1/production-orders': (_) => {
+        'items': [_summary()],
+        'total': 1,
+      },
+    });
 
 void main() {
   testWidgets('the queue shows the urgent orders and flags what is short', (
