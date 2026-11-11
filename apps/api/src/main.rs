@@ -112,7 +112,11 @@ async fn main() -> anyhow::Result<()> {
     tracing::info!("listening on http://{addr} (API docs at /docs)");
     axum::serve(
         listener,
-        tradocraft_api::app_with_environment(state, environment),
+        tradocraft_api::app_with_options(
+            state,
+            environment,
+            tradocraft_core::companies::BootstrapConfig::from_env(),
+        ),
     )
     .with_graceful_shutdown(async {
         let _ = tokio::signal::ctrl_c().await;

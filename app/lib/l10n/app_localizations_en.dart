@@ -6678,6 +6678,142 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabGoodsReceipt => 'Goods receipt';
 
   @override
+  String get setupTitle => 'Set up a new company';
+
+  @override
+  String get setupOffer => 'Set up a new company';
+
+  @override
+  String get setupOfferHint => 'This server has no company yet.';
+
+  @override
+  String setupServer(String url) {
+    return 'Server: $url';
+  }
+
+  @override
+  String setupStepOf(int n, int total) {
+    return 'Step $n of $total';
+  }
+
+  @override
+  String get setupStepCompany => 'Company';
+
+  @override
+  String get setupStepRegion => 'Country, currency and language';
+
+  @override
+  String get setupStepAdmin => 'Administrator';
+
+  @override
+  String get setupStepToken => 'Setup token';
+
+  @override
+  String get setupStepReview => 'Review';
+
+  @override
+  String get setupCompanyName => 'Company name';
+
+  @override
+  String get setupLegalName => 'Legal name (optional)';
+
+  @override
+  String get setupVatNumber => 'VAT number (optional)';
+
+  @override
+  String get setupCountry => 'Country code (2 letters, e.g. BE)';
+
+  @override
+  String get setupCurrency => 'Currency (3 letters, e.g. EUR)';
+
+  @override
+  String get setupLanguage => 'Default language';
+
+  @override
+  String get setupAdminEmail => 'Administrator e-mail';
+
+  @override
+  String get setupAdminName => 'Administrator name';
+
+  @override
+  String get setupToken => 'Setup token';
+
+  @override
+  String get setupTokenHelp => 'The value of BOOTSTRAP_TOKEN on the server.';
+
+  @override
+  String get setupErrName => 'Enter the company name.';
+
+  @override
+  String get setupErrVat => 'A VAT number has 4 to 20 letters and digits.';
+
+  @override
+  String get setupErrCountry => 'Enter a two-letter country code.';
+
+  @override
+  String get setupErrCurrency => 'Enter a three-letter currency code.';
+
+  @override
+  String get setupErrEmail => 'Enter a valid e-mail address.';
+
+  @override
+  String get setupErrAdminName => 'Enter the administrator\'s name.';
+
+  @override
+  String get setupErrToken => 'Enter the setup token.';
+
+  @override
+  String get setupNext => 'Next';
+
+  @override
+  String get setupBack => 'Back';
+
+  @override
+  String get setupCreate => 'Create company';
+
+  @override
+  String get setupReviewHint =>
+      'Check the details. A company can be created only once on this server.';
+
+  @override
+  String get setupErr403 => 'The setup token is missing or wrong.';
+
+  @override
+  String get setupErr404 =>
+      'Setting up is disabled on this server. Set BOOTSTRAP_TOKEN on the server and restart it.';
+
+  @override
+  String get setupErr409 => 'This server already has a company.';
+
+  @override
+  String setupDone(String name) {
+    return 'Company $name created.';
+  }
+
+  @override
+  String setupDoneDev(String email) {
+    return 'Signing in as $email.';
+  }
+
+  @override
+  String setupDoneOidc(String email) {
+    return 'Sign in through your identity provider with $email: that account is the administrator.';
+  }
+
+  @override
+  String get setupToLogin => 'Go to sign in';
+
+  @override
+  String get setupAddOfferTitle => 'Set up this server?';
+
+  @override
+  String get setupAddOfferBody =>
+      'This server has no company yet. Set one up now?';
+
+  @override
+  String get setupLater => 'Later';
+
+  @override
   String get finMatchColumn => 'Match';
 
   @override

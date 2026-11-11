@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../features/setup/setup_api.dart';
 import '../l10n/l10n.dart';
 import 'api.dart' show errorMessage;
 import 'environments.dart';
@@ -362,7 +364,42 @@ class _AddDialogState extends ConsumerState<_AddDialog> {
     if (r == EnvChange.notSaved) {
       messenger.showSnackBar(SnackBar(content: Text(note)));
     }
+    // A server without a company: offer the setup wizard (ADR 0047). Best effort.
+    var needsSetup = false;
+    try {
+      needsSetup = (await ref.read(setupStatusProvider)(url)).needsSetup;
+    } catch (_) {}
+    if (!mounted) return;
+    final router = GoRouter.maybeOf(context);
+    var openWizard = false;
+    if (needsSetup && router != null) {
+      openWizard =
+          await showDialog<bool>(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: Text(ctx.l10n.setupAddOfferTitle),
+              content: Text(ctx.l10n.setupAddOfferBody),
+              actions: [
+                TextButton(
+                  key: const ValueKey('setup-offer-later'),
+                  onPressed: () => Navigator.pop(ctx, false),
+                  child: Text(ctx.l10n.setupLater),
+                ),
+                FilledButton(
+                  key: const ValueKey('setup-offer-open'),
+                  onPressed: () => Navigator.pop(ctx, true),
+                  child: Text(ctx.l10n.setupOffer),
+                ),
+              ],
+            ),
+          ) ??
+          false;
+      if (!mounted) return;
+    }
     Navigator.pop(context, true);
+    if (openWizard) {
+      router!.go('/setup?server=${Uri.encodeQueryComponent(url)}');
+    }
   }
 
   @override
