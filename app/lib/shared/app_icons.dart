@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Single source of icons for the app: one name per concept, outlined style throughout.
 /// Swap the icon set here and nowhere else.
