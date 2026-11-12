@@ -2324,7 +2324,7 @@
   "tutBuyingSendTitle": "Envoyez-la au fournisseur",
   "tutBuyingSendBody": "Appuyez sur Envoyer. La commande est marquée comme envoyée et le fournisseur la reçoit. Dans les environnements de test et de tutoriel, le courrier sortant n'est écrit que dans des fichiers sur le serveur : rien ne sort.",
   "tutBuyingReceivePartTitle": "La première livraison arrive",
-  "tutBuyingReceivePartBody": "Mettez la casquette de réception. Appuyez sur Réceptionner, choisissez l'emplacement MAIN de l'entrepôt et enregistrez 10 pièces de chaque composant, moins que commandé. La commande devient partiellement reçue.",
+  "tutBuyingReceivePartBody": "Mettez la casquette de réception. Appuyez sur Réceptionner les marchandises, choisissez l'emplacement MAIN de l'entrepôt et enregistrez 10 pièces de chaque composant, moins que commandé. La commande devient partiellement reçue.",
   "tutBuyingReceivePartHint": "Modifiez la quantité de chaque ligne dans le dialogue ; la quantité restante est indiquée à côté. Le numéro de bon de livraison est facultatif.",
   "tutBuyingReceiveRestTitle": "Le reste arrive",
   "tutBuyingReceiveRestBody": "Réceptionnez de la même façon les 20 pièces restantes de chaque composant. Quand tout est arrivé, la commande est entièrement reçue ; chaque livraison garde son propre bon de réception.",
@@ -2349,13 +2349,13 @@
   "tutInvoicesSecondBody": "Une seconde facture arrive de Voltaic Drives Ltd, cette fois sans commande d'achat : dans Finance, créez une facture fournisseur pour ce fournisseur, numéro TUT-INV-002, laissez la commande vide et ajoutez une ligne avec la description Moteurs, quantité 10, prix unitaire 150.",
   "tutInvoicesSecondHint": "Le vrai prix du moteur est 120 et cette ligne n'a aucune ligne de commande à comparer. L'app ne permet pas de changer les prix d'une facture liée à une commande : une facture en texte libre sert donc ici à voir un écart.",
   "tutInvoicesMismatchTitle": "Le rapprochement échoue",
-  "tutInvoicesMismatchBody": "Le bandeau est orange : une ligne en texte libre ne peut être rapprochée de rien et le prix diffère du prix convenu. La ligne indique pourquoi. Appuyez sur Suivant après avoir regardé.",
+  "tutInvoicesMismatchBody": "Le bandeau est orange : une ligne en texte libre ne peut être rapprochée de rien, elle ne peut donc être vérifiée ni avec une commande ni avec une réception. La ligne indique pourquoi. Appuyez sur Suivant après avoir regardé.",
   "tutInvoicesDisputeTitle": "Contestez la facture",
   "tutInvoicesDisputeBody": "Appuyez sur Contester et donnez un motif, par exemple le prix ne correspond pas à l'accord. Une facture contestée ne peut pas être payée avant d'être rouverte. (Un approbateur peut aussi approuver un rapprochement échoué avec un motif de dérogation, conservé sur la facture.)",
   "tutInvoicesTolerancesTitle": "Les tolérances",
   "tutInvoicesTolerancesBody": "L'écart permis d'une facture est un réglage : ouvrez le segment Réglages de Finance pour voir les tolérances de quantité et de prix en pourcentage. Regardez puis appuyez sur Suivant ; les modifier est votre choix.",
   "tutInvoicesPayTitle": "Payez la bonne facture",
-  "tutInvoicesPayBody": "Ouvrez la première facture, TUT-INV-001, et appuyez sur Marquer payée. Saisissez une référence de paiement comme TUT-PAY-001. L'app enregistre le paiement ; le virement se fait ailleurs.",
+  "tutInvoicesPayBody": "Ouvrez la première facture fournisseur que vous avez enregistrée (celle qui concordait et a été approuvée) et appuyez sur Marquer comme payée. Saisissez une référence de paiement comme TUT-PAY-001. L'app enregistre le paiement ; le virement se fait ailleurs.",
   "tutInvoicesDoneTitle": "Ce que vous avez appris",
   "tutInvoicesDoneBody": "Le rapprochement à trois compare commande, réception et facture avant tout paiement. Les factures conformes sont approuvées et payées, les douteuses contestées. Ensuite : fabriquer les chariots.",
   "tutManufacturingTitle": "Fabrication",
@@ -2400,5 +2400,7 @@
   "tutPricesPriceHomeTitle": "Un prix dans une autre zone",
   "tutPricesPriceHomeBody": "Ajoutez un second prix pour le chariot dans l'une des zones existantes, par exemple Z1 à 1200. Le même produit peut maintenant coûter différemment selon la zone du client.",
   "tutPricesDoneTitle": "Ce que vous avez appris",
-  "tutPricesDoneBody": "Une zone de prix regroupe les clients qui ont le même tarif et un produit a un prix par zone et par date. Les devis prennent le prix de la zone du client. Ensuite : un nouveau client écrit."
+  "tutPricesDoneBody": "Une zone de prix regroupe les clients qui ont le même tarif et un produit a un prix par zone et par date. Les devis prennent le prix de la zone du client. Ensuite : un nouveau client écrit.",
+  "tutInvoicesOpenSecondTitle": "Ouvrez la facture suspecte",
+  "tutInvoicesOpenSecondBody": "Ouvrez la facture TUT-INV-002, celle que vous venez d'enregistrer, depuis la liste de Finance."
 }

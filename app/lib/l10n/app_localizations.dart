@@ -13209,7 +13209,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutInvoicesMismatchBody.
   ///
   /// In en, this message translates to:
-  /// **'The banner is orange: a free-text line has nothing it can be matched against, and the price differs from the agreed one. The line shows why. Press Next when you have looked.'**
+  /// **'The banner is orange: a free-text line has nothing it can be matched against, so it cannot be checked against an order or a receipt. The line shows why. Press Next when you have looked.'**
   String get tutInvoicesMismatchBody;
 
   /// No description provided for @tutInvoicesDisputeTitle.
@@ -13245,7 +13245,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutInvoicesPayBody.
   ///
   /// In en, this message translates to:
-  /// **'Open the first invoice, TUT-INV-001, and press Mark paid. Enter a payment reference such as TUT-PAY-001. The app records the payment; the bank transfer itself happens elsewhere.'**
+  /// **'Open the first supplier invoice you registered (the one that matched and was approved) and press Mark as paid. Enter a payment reference such as TUT-PAY-001. The app records the payment; the bank transfer itself happens elsewhere.'**
   String get tutInvoicesPayBody;
 
   /// No description provided for @tutInvoicesDoneTitle.
@@ -13517,6 +13517,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A price zone groups customers that get the same price list, and a product has one price per zone and date. Quotations pick the price of the customer\'s zone. Next: a new customer writes in.'**
   String get tutPricesDoneBody;
+
+  /// No description provided for @tutInvoicesOpenSecondTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the suspicious invoice'**
+  String get tutInvoicesOpenSecondTitle;
+
+  /// No description provided for @tutInvoicesOpenSecondBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open invoice TUT-INV-002, the one you just registered, from the list in Finance.'**
+  String get tutInvoicesOpenSecondBody;
 }
 
 class _AppLocalizationsDelegate

@@ -7247,7 +7247,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutBuyingSendBody =>
-      'Druk op Versturen. De order wordt als verstuurd gemarkeerd en de leverancier krijgt hem. In test- en tutorialomgevingen wordt uitgaande e-mail alleen naar bestanden op de server geschreven; er verlaat niets het gebouw.';
+      'Druk op Verzenden. De order wordt als verstuurd gemarkeerd en de leverancier krijgt hem. In test- en tutorialomgevingen wordt uitgaande e-mail alleen naar bestanden op de server geschreven; er verlaat niets het gebouw.';
 
   @override
   String get tutBuyingReceivePartTitle => 'De eerste levering komt aan';
@@ -7307,7 +7307,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutInvoicesCreateBody =>
-      'Druk op Leveranciersfactuur maken. Typ het eigen factuurnummer van de leverancier, bijvoorbeeld TUT-INV-001, en bewaar. De regels worden ingevuld vanuit wat besteld en ontvangen is, er valt niets te typen.';
+      'Druk op Inkoopfactuur aanmaken. Typ het eigen factuurnummer van de leverancier, bijvoorbeeld TUT-INV-001, en bewaar. De regels worden ingevuld vanuit wat besteld en ontvangen is, er valt niets te typen.';
 
   @override
   String get tutInvoicesCreateHint =>
@@ -7343,7 +7343,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutInvoicesMismatchBody =>
-      'De banner is oranje: een vrije-tekstregel kan nergens mee vergeleken worden en de prijs wijkt af van de afgesproken prijs. De regel toont waarom. Druk op Volgende als je gekeken hebt.';
+      'De banner is oranje: een vrije-tekstregel heeft niets om mee te vergelijken en kan dus niet tegen een order of ontvangst gecontroleerd worden. De regel toont waarom. Druk op Volgende als je gekeken hebt.';
 
   @override
   String get tutInvoicesDisputeTitle => 'Betwist de factuur';
@@ -7364,7 +7364,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutInvoicesPayBody =>
-      'Open de eerste factuur, TUT-INV-001, en druk op Markeer als betaald. Voer een betalingsreferentie in zoals TUT-PAY-001. De app legt de betaling vast; de overschrijving zelf gebeurt elders.';
+      'Open de eerste leveranciersfactuur die je registreerde (die gematcht en goedgekeurd werd) en druk op Markeren als betaald. Voer een betalingsreferentie in zoals TUT-PAY-001. De app legt de betaling vast; de overschrijving zelf gebeurt elders.';
 
   @override
   String get tutInvoicesDoneTitle => 'Wat je geleerd hebt';
@@ -7525,4 +7525,11 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get tutPricesDoneBody =>
       'Een prijszone groepeert klanten met dezelfde prijslijst en een product heeft één prijs per zone en datum. Offertes nemen de prijs van de zone van de klant. Volgende stap: een nieuwe klant neemt contact op.';
+
+  @override
+  String get tutInvoicesOpenSecondTitle => 'Open de verdachte factuur';
+
+  @override
+  String get tutInvoicesOpenSecondBody =>
+      'Open factuur TUT-INV-002, die je net registreerde, vanuit de lijst in Financiën.';
 }

@@ -255,6 +255,27 @@ void main() {
       expect(c.read(tutorialProvider).stepIndex, 2, reason: 'one line only');
     });
 
+    test('a probe with a missing placeholder sends no request', () async {
+      final http = _withProducts({
+        'GET /api/v1/purchase-orders': (_) => [
+          {'id': 'po2', 'status': 'received'},
+        ],
+      });
+      final c = _boot(
+        http,
+        completed: ['welcome', 'product', 'suppliers'],
+        active: 'buying',
+      ); // no supplierAId captured
+      final t = c.read(tutorialProvider.notifier);
+      await t.ready;
+      await t.resume();
+      await pumpEventQueue(times: 100);
+      t.routeChanged('/purchasing');
+      await pumpEventQueue(times: 100);
+      expect(http.requests, isNot(contains('GET /api/v1/purchase-orders')));
+      expect(c.read(tutorialProvider).stepIndex, 2);
+    });
+
     test('probes fast-forward over a received order', () async {
       final http = _withProducts({
         'GET /api/v1/purchase-orders': (_) => [
@@ -276,6 +297,11 @@ void main() {
       t.routeChanged('/purchasing');
       await pumpEventQueue(times: 100);
       expect(c.read(tutorialProvider).values['poId'], 'po2');
+      expect(
+        http.queries.any((q) => q['supplier_id'] == 'sa'),
+        isTrue,
+        reason: '{supplierAId} is resolved in the probe query',
+      );
       expect(c.read(tutorialProvider).stepIndex, 3);
       t.routeChanged('/purchase-orders/po2');
       await pumpEventQueue(times: 200);
@@ -288,8 +314,18 @@ void main() {
       final http = FakeHttp({
         'POST /api/v1/supplier-invoices': (b) =>
             (b as Map)['purchase_order_id'] == null
-            ? {'id': 'i2', 'purchase_order_id': null, 'supplier_id': 'sa'}
-            : {'id': 'i1', 'purchase_order_id': 'po1', 'supplier_id': 'sa'},
+            ? {
+                'id': 'i2',
+                'invoice_number': (b)['invoice_number'],
+                'purchase_order_id': null,
+                'supplier_id': 'sa',
+              }
+            : {
+                'id': 'i1',
+                'invoice_number': 'ACME-1',
+                'purchase_order_id': 'po1',
+                'supplier_id': 'sa',
+              },
         'POST /api/v1/supplier-invoices/i1/approve': (_) => {'id': 'i1'},
         'POST /api/v1/supplier-invoices/i2/dispute': (_) => {'id': 'i2'},
         'POST /api/v1/supplier-invoices/i1/mark-paid': (_) => {'id': 'i1'},
@@ -316,7 +352,7 @@ void main() {
       t.next(); // match
       await dio.post<Object?>('/api/v1/supplier-invoices/i1/approve');
       expect(step(), 5);
-      // The first kind of invoice (with an order) does not count as the second one.
+      // Only the invoice numbered TUT-INV-002 counts as the second one.
       await dio.post<Object?>(
         '/api/v1/supplier-invoices',
         data: {'purchase_order_id': 'po1'},
@@ -324,16 +360,25 @@ void main() {
       expect(step(), 5);
       await dio.post<Object?>(
         '/api/v1/supplier-invoices',
-        data: {'purchase_order_id': null},
+        data: {'purchase_order_id': null, 'invoice_number': 'OTHER-9'},
+      );
+      expect(step(), 5);
+      await dio.post<Object?>(
+        '/api/v1/supplier-invoices',
+        data: {'purchase_order_id': null, 'invoice_number': 'TUT-INV-002'},
       );
       expect(step(), 6);
       expect(c.read(tutorialProvider).values['invoice2Id'], 'i2');
+      t.routeChanged('/supplier-invoices/i1');
+      expect(step(), 6, reason: 'the second invoice must be opened, not the first');
+      t.routeChanged('/supplier-invoices/i2');
+      expect(step(), 7);
       t.next(); // mismatch
       await dio.post<Object?>('/api/v1/supplier-invoices/i2/dispute');
-      expect(step(), 8);
+      expect(step(), 9);
       t.next(); // tolerances
       await dio.post<Object?>('/api/v1/supplier-invoices/i1/mark-paid');
-      expect(step(), 10);
+      expect(step(), 11);
       t.next();
       expect(c.read(tutorialProvider).completed, contains('invoices'));
     });
@@ -343,8 +388,9 @@ void main() {
         'GET /api/v1/purchase-orders/po1': (_) => {'status': 'received'},
         'GET /api/v1/supplier-invoices': (_) => {
           'items': [
-            {'id': 'i1', 'purchase_order_id': 'po1', 'supplier_id': 'sa'},
-            {'id': 'i2', 'purchase_order_id': null, 'supplier_id': 'sa'},
+            {'id': 'i1', 'invoice_number': 'ACME-1', 'purchase_order_id': 'po1'},
+            {'id': 'x', 'invoice_number': 'OTHER-9', 'purchase_order_id': null},
+            {'id': 'i2', 'invoice_number': 'TUT-INV-002', 'purchase_order_id': null},
           ],
         },
         'GET /api/v1/supplier-invoices/i1': (_) => {'status': 'paid'},
@@ -366,15 +412,36 @@ void main() {
       // create, approve (paid counts), second and dispute are done; the match explanations
       // and the tolerances wait for Next.
       expect(c.read(tutorialProvider).stepIndex, 3);
+      t.next(); // match
+      await pumpEventQueue(times: 200);
+      expect(c.read(tutorialProvider).stepIndex, 6, reason: 'approve and second are done');
       t.next();
       await pumpEventQueue(times: 200);
-      expect(c.read(tutorialProvider).stepIndex, 6);
-      t.next();
+      expect(c.read(tutorialProvider).values['invoice2Id'], 'i2');
+      t.routeChanged('/supplier-invoices/i2');
       await pumpEventQueue(times: 200);
-      expect(c.read(tutorialProvider).stepIndex, 8, reason: 'dispute is done');
+      expect(c.read(tutorialProvider).stepIndex, 7);
+      t.next(); // mismatch -> dispute done -> tolerances
+      await pumpEventQueue(times: 200);
+      expect(c.read(tutorialProvider).stepIndex, 9, reason: 'dispute is done');
       t.next(); // tolerances
       await pumpEventQueue(times: 200);
-      expect(c.read(tutorialProvider).stepIndex, 10, reason: 'paid is done');
+      expect(c.read(tutorialProvider).stepIndex, 11, reason: 'paid is done');
+      expect(
+        http.queries.any((q) => q['purchase_order_id'] == 'po1'),
+        isTrue,
+        reason: '{poId} is resolved in the probe query',
+      );
+      expect(
+        http.queries.any((q) => q['supplier_id'] == 'sa'),
+        isTrue,
+        reason: '{supplierAId} is resolved in the probe query',
+      );
+      expect(
+        http.queries.any((q) => q.values.any((v) => '$v'.contains('{'))),
+        isFalse,
+        reason: 'no unresolved placeholder is sent',
+      );
     });
   });
 }

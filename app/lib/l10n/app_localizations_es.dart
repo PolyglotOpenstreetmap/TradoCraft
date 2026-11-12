@@ -7343,7 +7343,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutInvoicesMismatchBody =>
-      'El banner está en naranja: una línea de texto libre no tiene nada con qué conciliarse y el precio difiere del acordado. La línea muestra el motivo. Pulse Siguiente cuando lo haya mirado.';
+      'El banner está en naranja: una línea de texto libre no tiene nada con qué conciliarse, así que no se puede comprobar con un pedido ni con una recepción. La línea muestra el motivo. Pulse Siguiente cuando lo haya mirado.';
 
   @override
   String get tutInvoicesDisputeTitle => 'Dispute la factura';
@@ -7364,7 +7364,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutInvoicesPayBody =>
-      'Abra la primera factura, TUT-INV-001, y pulse Marcar como pagada. Introduzca una referencia de pago como TUT-PAY-001. La app registra el pago; la transferencia se hace en otro sitio.';
+      'Abra la primera factura de proveedor que registró (la que coincidió y se aprobó) y pulse Marcar como pagada. Introduzca una referencia de pago como TUT-PAY-001. La app registra el pago; la transferencia se hace en otro sitio.';
 
   @override
   String get tutInvoicesDoneTitle => 'Lo que ha aprendido';
@@ -7525,4 +7525,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tutPricesDoneBody =>
       'Una zona de precios agrupa clientes con la misma lista y un producto tiene un precio por zona y fecha. Los presupuestos toman el precio de la zona del cliente. Siguiente: escribe un cliente nuevo.';
+
+  @override
+  String get tutInvoicesOpenSecondTitle => 'Abra la factura sospechosa';
+
+  @override
+  String get tutInvoicesOpenSecondBody =>
+      'Abra la factura TUT-INV-002, la que acaba de registrar, desde la lista de Finanzas.';
 }

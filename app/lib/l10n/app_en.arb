@@ -3653,13 +3653,13 @@
   "tutInvoicesSecondBody": "Now a second invoice arrives from Voltaic Drives Ltd, this time without a purchase order: in Finance, create a supplier invoice for that supplier, number TUT-INV-002, leave the order empty and add one line with description Motors, quantity 10, unit price 150.",
   "tutInvoicesSecondHint": "The real motor price is 120 and this line has no order line to compare with. The app cannot change prices of an order-based invoice, so a free-text invoice is how a mismatch shows up here.",
   "tutInvoicesMismatchTitle": "The match fails",
-  "tutInvoicesMismatchBody": "The banner is orange: a free-text line has nothing it can be matched against, and the price differs from the agreed one. The line shows why. Press Next when you have looked.",
+  "tutInvoicesMismatchBody": "The banner is orange: a free-text line has nothing it can be matched against, so it cannot be checked against an order or a receipt. The line shows why. Press Next when you have looked.",
   "tutInvoicesDisputeTitle": "Dispute the invoice",
   "tutInvoicesDisputeBody": "Press Dispute and give a reason, for example price does not match the agreement. A disputed invoice cannot be paid until it is reopened. (An approver can also approve a failed match with an override reason, which is kept on the invoice.)",
   "tutInvoicesTolerancesTitle": "The tolerances",
   "tutInvoicesTolerancesBody": "How far an invoice may differ is a setting: open the Settings segment of Finance to see the quantity and price tolerances in percent. Look, then press Next; changing them is up to you.",
   "tutInvoicesPayTitle": "Pay the good invoice",
-  "tutInvoicesPayBody": "Open the first invoice, TUT-INV-001, and press Mark paid. Enter a payment reference such as TUT-PAY-001. The app records the payment; the bank transfer itself happens elsewhere.",
+  "tutInvoicesPayBody": "Open the first supplier invoice you registered (the one that matched and was approved) and press Mark as paid. Enter a payment reference such as TUT-PAY-001. The app records the payment; the bank transfer itself happens elsewhere.",
   "tutInvoicesDoneTitle": "What you learned",
   "tutInvoicesDoneBody": "The three-way match compares order, receipt and invoice before money moves. Matching invoices are approved and paid, doubtful ones are disputed. Next: building the carts yourself.",
   "tutManufacturingTitle": "Manufacturing",
@@ -3704,5 +3704,7 @@
   "tutPricesPriceHomeTitle": "A price in another zone",
   "tutPricesPriceHomeBody": "Add a second price for the cart in one of the existing zones, for example Z1 at 1200. The same product can now cost different amounts depending on the customer's zone.",
   "tutPricesDoneTitle": "What you learned",
-  "tutPricesDoneBody": "A price zone groups customers that get the same price list, and a product has one price per zone and date. Quotations pick the price of the customer's zone. Next: a new customer writes in."
+  "tutPricesDoneBody": "A price zone groups customers that get the same price list, and a product has one price per zone and date. Quotations pick the price of the customer's zone. Next: a new customer writes in.",
+  "tutInvoicesOpenSecondTitle": "Open the suspicious invoice",
+  "tutInvoicesOpenSecondBody": "Open invoice TUT-INV-002, the one you just registered, from the list in Finance."
 }

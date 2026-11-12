@@ -201,6 +201,7 @@ final buyingMission = Mission(
     ),
     MissionStep(
       id: 'approve',
+      route: '/purchase-orders/{poId}',
       targets: const ['po-approve'],
       completion: const OnApi('POST', '/purchase-orders/{poId}/approve'),
       probe: Probe(
@@ -210,6 +211,7 @@ final buyingMission = Mission(
     ),
     MissionStep(
       id: 'send',
+      route: '/purchase-orders/{poId}',
       targets: const ['po-send'],
       completion: const OnApi('POST', '/purchase-orders/{poId}/send'),
       probe: Probe(
@@ -220,6 +222,7 @@ final buyingMission = Mission(
     MissionStep(
       id: 'receivePart',
       hasHint: true,
+      route: '/purchase-orders/{poId}',
       targets: const ['po-receive-submit', 'po-receive'],
       completion: const OnApi('POST', '/purchase-orders/{poId}/receipts'),
       probe: Probe(
@@ -230,6 +233,7 @@ final buyingMission = Mission(
     ),
     MissionStep(
       id: 'receiveRest',
+      route: '/purchase-orders/{poId}',
       targets: const ['po-receive-submit', 'po-receive'],
       completion: const OnApi('POST', '/purchase-orders/{poId}/receipts'),
       probe: Probe(
@@ -257,6 +261,12 @@ Map? _invoiceWhere(Object? page, bool Function(Map) test) {
 
 bool _invStatus(Object? json, Set<String> statuses) =>
     json is Map && statuses.contains(json['status']);
+
+/// The number the story gives the second (suspicious) supplier invoice.
+const tutorialInvoice2Number = 'TUT-INV-002';
+
+Map? _secondInvoice(Object? page) =>
+    _invoiceWhere(page, (i) => i['invoice_number'] == tutorialInvoice2Number);
 
 /// Chapter 4: two supplier invoices, the three-way match, approve, dispute, pay.
 final invoicesMission = Mission(
@@ -295,9 +305,14 @@ final invoicesMission = Mission(
         },
       ),
     ),
-    const MissionStep(id: 'match', targets: ['inv-match-banner']),
+    MissionStep(
+      id: 'match',
+      route: '/supplier-invoices/{invoiceId}',
+      targets: const ['inv-match-banner'],
+    ),
     MissionStep(
       id: 'approve',
+      route: '/supplier-invoices/{invoiceId}',
       targets: const ['inv-approve'],
       completion: const OnApi('POST', '/supplier-invoices/{invoiceId}/approve'),
       probe: Probe(
@@ -313,37 +328,33 @@ final invoicesMission = Mission(
       completion: OnApi(
         'POST',
         '/supplier-invoices',
-        predicate: (json, ctx) =>
-            json is Map &&
-            json['purchase_order_id'] == null &&
-            json['supplier_id'] == ctx.values[tutorialSupplierA.idKey],
+        predicate: (json, _) =>
+            json is Map && json['invoice_number'] == tutorialInvoice2Number,
       ),
       capture: (json) => _idOf(json, 'invoice2Id'),
       probe: Probe(
         '/api/v1/supplier-invoices',
         query: {'supplier_id': '{supplierAId}'},
-        done: (json, ctx) =>
-            _invoiceWhere(
-              json,
-              (i) =>
-                  i['purchase_order_id'] == null &&
-                  i['id'] != ctx.values['invoiceId'],
-            ) !=
-            null,
-        capture: (json, ctx) {
-          final i = _invoiceWhere(
-            json,
-            (i) =>
-                i['purchase_order_id'] == null &&
-                i['id'] != ctx.values['invoiceId'],
-          );
+        done: (json, _) => _secondInvoice(json) != null,
+        capture: (json, _) {
+          final i = _secondInvoice(json);
           return i == null ? const {} : {'invoice2Id': '${i['id']}'};
         },
       ),
     ),
-    const MissionStep(id: 'mismatch', targets: ['inv-match-banner']),
+    MissionStep(
+      id: 'openSecond',
+      route: '/supplier-invoices/{invoice2Id}',
+      completion: const OnRoute('/supplier-invoices/{invoice2Id}'),
+    ),
+    MissionStep(
+      id: 'mismatch',
+      route: '/supplier-invoices/{invoice2Id}',
+      targets: const ['inv-match-banner'],
+    ),
     MissionStep(
       id: 'dispute',
+      route: '/supplier-invoices/{invoice2Id}',
       targets: const ['inv-dispute'],
       completion: const OnApi('POST', '/supplier-invoices/{invoice2Id}/dispute'),
       probe: Probe(
