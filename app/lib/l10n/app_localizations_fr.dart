@@ -7264,7 +7264,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutBuyingReceivePartBody =>
-      'Mettez la casquette de réception. Appuyez sur Réceptionner, choisissez l\'emplacement MAIN de l\'entrepôt et enregistrez 10 pièces de chaque composant, moins que commandé. La commande devient partiellement reçue.';
+      'Mettez la casquette de réception. Appuyez sur Réceptionner les marchandises, choisissez l\'emplacement MAIN de l\'entrepôt et enregistrez 10 pièces de chaque composant, moins que commandé. La commande devient partiellement reçue.';
 
   @override
   String get tutBuyingReceivePartHint =>
@@ -7353,7 +7353,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutInvoicesMismatchBody =>
-      'Le bandeau est orange : une ligne en texte libre ne peut être rapprochée de rien et le prix diffère du prix convenu. La ligne indique pourquoi. Appuyez sur Suivant après avoir regardé.';
+      'Le bandeau est orange : une ligne en texte libre ne peut être rapprochée de rien, elle ne peut donc être vérifiée ni avec une commande ni avec une réception. La ligne indique pourquoi. Appuyez sur Suivant après avoir regardé.';
 
   @override
   String get tutInvoicesDisputeTitle => 'Contestez la facture';
@@ -7374,7 +7374,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutInvoicesPayBody =>
-      'Ouvrez la première facture, TUT-INV-001, et appuyez sur Marquer payée. Saisissez une référence de paiement comme TUT-PAY-001. L\'app enregistre le paiement ; le virement se fait ailleurs.';
+      'Ouvrez la première facture fournisseur que vous avez enregistrée (celle qui concordait et a été approuvée) et appuyez sur Marquer comme payée. Saisissez une référence de paiement comme TUT-PAY-001. L\'app enregistre le paiement ; le virement se fait ailleurs.';
 
   @override
   String get tutInvoicesDoneTitle => 'Ce que vous avez appris';
@@ -7382,4 +7382,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tutInvoicesDoneBody =>
       'Le rapprochement à trois compare commande, réception et facture avant tout paiement. Les factures conformes sont approuvées et payées, les douteuses contestées. Ensuite : fabriquer les chariots.';
+
+  @override
+  String get tutInvoicesOpenSecondTitle => 'Ouvrez la facture suspecte';
+
+  @override
+  String get tutInvoicesOpenSecondBody =>
+      'Ouvrez la facture TUT-INV-002, celle que vous venez d\'enregistrer, depuis la liste de Finance.';
 }

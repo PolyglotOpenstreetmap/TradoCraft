@@ -2349,13 +2349,15 @@
   "tutInvoicesSecondBody": "Llega una segunda factura de Voltaic Drives Ltd, esta vez sin pedido de compra: en Finanzas cree una factura de proveedor para ese proveedor, número TUT-INV-002, deje el pedido vacío y añada una línea con descripción Motores, cantidad 10, precio unitario 150.",
   "tutInvoicesSecondHint": "El precio real del motor es 120 y esta línea no tiene línea de pedido con la que comparar. La app no permite cambiar precios de una factura con pedido, así que una factura de texto libre sirve aquí para ver una discrepancia.",
   "tutInvoicesMismatchTitle": "La conciliación falla",
-  "tutInvoicesMismatchBody": "El banner está en naranja: una línea de texto libre no tiene nada con qué conciliarse y el precio difiere del acordado. La línea muestra el motivo. Pulse Siguiente cuando lo haya mirado.",
+  "tutInvoicesMismatchBody": "El banner está en naranja: una línea de texto libre no tiene nada con qué conciliarse, así que no se puede comprobar con un pedido ni con una recepción. La línea muestra el motivo. Pulse Siguiente cuando lo haya mirado.",
   "tutInvoicesDisputeTitle": "Dispute la factura",
   "tutInvoicesDisputeBody": "Pulse Disputar e indique un motivo, por ejemplo el precio no coincide con el acuerdo. Una factura disputada no se puede pagar hasta reabrirla. (Un aprobador también puede aprobar una conciliación fallida con un motivo de excepción, que queda en la factura.)",
   "tutInvoicesTolerancesTitle": "Las tolerancias",
   "tutInvoicesTolerancesBody": "Cuánto puede diferir una factura es un ajuste: abra el segmento Ajustes de Finanzas para ver las tolerancias de cantidad y precio en porcentaje. Mire y pulse Siguiente; cambiarlas queda a su criterio.",
   "tutInvoicesPayTitle": "Pague la factura correcta",
-  "tutInvoicesPayBody": "Abra la primera factura, TUT-INV-001, y pulse Marcar como pagada. Introduzca una referencia de pago como TUT-PAY-001. La app registra el pago; la transferencia se hace en otro sitio.",
+  "tutInvoicesPayBody": "Abra la primera factura de proveedor que registró (la que coincidió y se aprobó) y pulse Marcar como pagada. Introduzca una referencia de pago como TUT-PAY-001. La app registra el pago; la transferencia se hace en otro sitio.",
   "tutInvoicesDoneTitle": "Lo que ha aprendido",
-  "tutInvoicesDoneBody": "La conciliación a tres bandas compara pedido, recepción y factura antes de mover dinero. Las facturas correctas se aprueban y pagan, las dudosas se disputan. Siguiente: fabricar los carritos."
+  "tutInvoicesDoneBody": "La conciliación a tres bandas compara pedido, recepción y factura antes de mover dinero. Las facturas correctas se aprueban y pagan, las dudosas se disputan. Siguiente: fabricar los carritos.",
+  "tutInvoicesOpenSecondTitle": "Abra la factura sospechosa",
+  "tutInvoicesOpenSecondBody": "Abra la factura TUT-INV-002, la que acaba de registrar, desde la lista de Finanzas."
 }
