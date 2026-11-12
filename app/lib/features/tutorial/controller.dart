@@ -1,16 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
+import 'dart:ui' show Locale, PlatformDispatcher;
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../app/api.dart' show dioProvider;
+import '../../app/api.dart' show dioProvider, errorMessage;
 import '../../app/environments.dart';
 import '../../app/session.dart';
+import '../../l10n/app_localizations.dart';
 import '../field/offline/kv_store.dart';
 import 'api_events.dart';
 import 'missions.dart';
 import 'model.dart';
+import 'simulated_mail.dart' show newMessageId;
 
 /// Where the tutorial's progress lives: one environment and one user.
 class TutorialScope {
@@ -95,6 +99,34 @@ enum StartResult {
 }
 
 /// Everything the tutorial remembers and shows.
+/// Why a step's action failed: the HTTP status when there was one, and a readable reason.
+class TutorialActionError {
+  /// Creates the error.
+  const TutorialActionError(this.status, this.reason);
+
+  /// The HTTP status, or null.
+  final int? status;
+
+  /// The reason in words.
+  final String reason;
+}
+
+/// The language the app shows, as one of the supported ones: the user's choice when there is
+/// one, else the first language of the device's list that the app has (so an unsupported first
+/// device language falls through to the next one), else English.
+String resolveTutorialLanguage(Locale? chosen, List<Locale> device) {
+  final supported = {
+    for (final l in AppLocalizations.supportedLocales) l.languageCode,
+  };
+  if (chosen != null) {
+    return supported.contains(chosen.languageCode) ? chosen.languageCode : 'en';
+  }
+  for (final l in device) {
+    if (supported.contains(l.languageCode)) return l.languageCode;
+  }
+  return 'en';
+}
+
 class TutorialState {
   /// Creates a state.
   const TutorialState({
@@ -108,6 +140,8 @@ class TutorialState {
     this.paused = false,
     this.offered = false,
     this.location = '',
+    this.actionBusy = false,
+    this.actionError,
   });
 
   /// Whether the stored progress has been read.
@@ -140,6 +174,12 @@ class TutorialState {
   /// The location the app shows (not stored).
   final String location;
 
+  /// Whether the step's action button is running (it is disabled meanwhile; not stored).
+  final bool actionBusy;
+
+  /// Why the last run of the action button failed (not stored); null when it did not.
+  final TutorialActionError? actionError;
+
   /// A chapter is on and not paused.
   bool get running => activeId != null && !paused;
 
@@ -161,6 +201,8 @@ class TutorialState {
     bool? paused,
     bool? offered,
     String? location,
+    bool? actionBusy,
+    Object? actionError = _keep,
   }) => TutorialState(
     loaded: loaded ?? this.loaded,
     completed: completed ?? this.completed,
@@ -172,6 +214,10 @@ class TutorialState {
     paused: paused ?? this.paused,
     offered: offered ?? this.offered,
     location: location ?? this.location,
+    actionBusy: actionBusy ?? this.actionBusy,
+    actionError: identical(actionError, _keep)
+        ? this.actionError
+        : actionError as TutorialActionError?,
   );
 
   static const Object _keep = Object();
@@ -344,7 +390,16 @@ class TutorialController extends Notifier<TutorialState> {
 
   void _begin(String id, int at, {bool probe = true}) {
     _gen++;
-    _set(state.copyWith(activeId: id, stepIndex: at, paused: false));
+    _retained.clear();
+    _set(
+      state.copyWith(
+        activeId: id,
+        stepIndex: at,
+        paused: false,
+        actionBusy: false,
+        actionError: null,
+      ),
+    );
     _enterStep(probe: probe);
   }
 
@@ -387,8 +442,23 @@ class TutorialController extends Notifier<TutorialState> {
           );
       if (!ref.mounted || gen != _gen || step != s || !state.running) return;
       final ctx = state.context;
-      if (p.done(res.data, ctx)) {
-        _complete(p.capture?.call(res.data, ctx) ?? const {});
+      Object? data = res.data;
+      if (p.expand != null) {
+        final details = <Object?>[];
+        for (final path in p.expand!(data, ctx).take(5)) {
+          final d = await ref
+              .read(dioProvider)
+              .get<Object?>(
+                path,
+                options: Options(extra: {tutorialProbeExtra: true}),
+              );
+          details.add(d.data);
+        }
+        if (!ref.mounted || gen != _gen || step != s || !state.running) return;
+        data = details;
+      }
+      if (p.done(data, ctx)) {
+        _complete(p.capture?.call(data, ctx) ?? const {});
       }
     } catch (_) {
       // A failed probe only means "not known to be done".
@@ -499,16 +569,55 @@ class TutorialController extends Notifier<TutorialState> {
     _set(state.copyWith(offered: true));
   }
 
-  /// Runs the current step's action button.
+  /// Message ids of the simulated e-mails of the running step, kept so that a retry after an
+  /// uncertain answer sends the same Message-ID (the server then drops the duplicate).
+  final _retained = <String, String>{};
+  final _random = Random();
+
+  String _retainedId(String kind) => _retained.putIfAbsent(
+    kind,
+    () => newMessageId(DateTime.now(), kind, _random.nextInt(1 << 30)),
+  );
+
+  /// Runs the current step's action button. Ignored while a run is in progress; a failure is
+  /// shown in the narrator card and the step stays available for another attempt.
   Future<void> runAction() async {
     final s = step;
     final c = s?.completion;
     if (s == null || c is! ActionCompletion || !state.running) return;
+    if (state.actionBusy) return;
     final gen = _gen;
-    final captured = await c.run(
-      ActionHost(dio: ref.read(dioProvider), context: state.context),
-    );
+    _set(state.copyWith(actionBusy: true, actionError: null));
+    Map<String, String>? captured;
+    try {
+      captured = await c.run(
+        ActionHost(
+          dio: ref.read(dioProvider),
+          context: state.context,
+          languageCode: resolveTutorialLanguage(
+            ref.read(localeProvider),
+            PlatformDispatcher.instance.locales,
+          ),
+          messageId: _retainedId,
+        ),
+      );
+    } catch (e) {
+      if (ref.mounted && gen == _gen && step == s) {
+        _set(
+          state.copyWith(
+            actionBusy: false,
+            actionError: TutorialActionError(
+              e is DioException ? e.response?.statusCode : null,
+              errorMessage(e),
+            ),
+          ),
+        );
+      }
+      return;
+    }
     if (!ref.mounted || gen != _gen || step != s) return;
+    _retained.clear();
+    _set(state.copyWith(actionBusy: false, actionError: null));
     _complete({...?captured});
   }
 }
