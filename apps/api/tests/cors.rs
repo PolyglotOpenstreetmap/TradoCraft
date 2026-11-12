@@ -69,6 +69,49 @@ async fn only_listed_origins_are_answered(db: PgPool) {
     assert_eq!(allowed(&app, "http://app.example.com").await, None);
 }
 
+/// The headers a preflight from `origin` is told it may send.
+async fn preflight_headers(app: &axum::Router, origin: &str) -> Option<String> {
+    let res = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .method("OPTIONS")
+                .uri("/api/v1/customers")
+                .header("origin", origin)
+                .header("access-control-request-method", "PUT")
+                .header(
+                    "access-control-request-headers",
+                    "authorization, content-type, x-company-id",
+                )
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    assert_eq!(res.status(), StatusCode::OK);
+    res.headers()
+        .get("access-control-allow-headers")
+        .map(|v| v.to_str().unwrap().to_ascii_lowercase())
+}
+
+/// `Access-Control-Allow-Headers: *` does not cover Authorization, so the headers are named.
+#[sqlx::test(migrator = "tradocraft_api::MIGRATOR")]
+async fn a_preflight_allows_authorization_and_content_type_by_name(db: PgPool) {
+    for cors in [
+        CorsConfig::parse("https://app.example.com").unwrap(),
+        CorsConfig::Any,
+    ] {
+        let app = app(db.clone(), &cors);
+        let allowed = preflight_headers(&app, "https://app.example.com")
+            .await
+            .expect("allowed headers");
+        for name in ["authorization", "content-type", "x-company-id"] {
+            assert!(allowed.contains(name), "{name} in {allowed}");
+        }
+        assert!(!allowed.contains('*'), "{allowed}");
+    }
+}
+
 #[sqlx::test(migrator = "tradocraft_api::MIGRATOR")]
 async fn an_empty_list_answers_no_origin_and_any_answers_all(db: PgPool) {
     let none = app(db.clone(), &CorsConfig::Origins(Vec::new()));

@@ -122,7 +122,8 @@ async fn protect(State(guard): State<Arc<Guard>>, request: Request, next: Next) 
     }
     let mut response = match refused {
         Some(wait) => {
-            tracing::warn!(client = %ip, path = request.uri().path(), "rate limit reached");
+            // No path here: survey links carry their secret in it.
+            tracing::warn!(client = %ip, "rate limit reached");
             too_many_requests(wait)
         }
         None => match tokio::time::timeout(guard.request_timeout, next.run(request)).await {

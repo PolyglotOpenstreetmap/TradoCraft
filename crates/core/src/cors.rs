@@ -5,7 +5,8 @@
 //! headers when its origin is on the list.
 
 use axum::http::HeaderValue;
-use tower_http::cors::{AllowOrigin, Any, CorsLayer};
+use reqwest::Url;
+use tower_http::cors::{AllowHeaders, AllowOrigin, Any, CorsLayer};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum CorsConfig {
@@ -30,9 +31,8 @@ impl CorsConfig {
         for item in items {
             // An origin has no path, query or fragment; one trailing slash is forgiven.
             let bare = item.strip_suffix('/').unwrap_or(item);
-            let has_path = bare
-                .split_once("://")
-                .is_some_and(|(_, rest)| rest.contains(['/', '?', '#']));
+            let has_path = Url::parse(bare)
+                .is_ok_and(|u| u.path() != "/" || u.query().is_some() || u.fragment().is_some());
             let origin = origin_of(bare).filter(|_| !has_path).ok_or_else(|| {
                 format!("{item} is not an origin (expected e.g. https://portal.example.com)")
             })?;
@@ -44,7 +44,11 @@ impl CorsConfig {
     }
 
     pub fn layer(&self) -> CorsLayer {
-        let layer = CorsLayer::new().allow_methods(Any).allow_headers(Any);
+        // The headers a preflight asks for are allowed by name: the wildcard `*` does not cover
+        // `Authorization` (Fetch standard), which every signed-in request sends.
+        let layer = CorsLayer::new()
+            .allow_methods(Any)
+            .allow_headers(AllowHeaders::mirror_request());
         match self {
             CorsConfig::Any => layer.allow_origin(Any),
             CorsConfig::Origins(origins) => layer.allow_origin(AllowOrigin::list(
@@ -54,32 +58,20 @@ impl CorsConfig {
     }
 }
 
-/// The origin (`scheme://host[:port]`, lower case) of an http(s) URL, as a browser sends it in
-/// the `Origin` header. `None` when the text is not such a URL.
+/// The origin (`scheme://host[:port]`) of an http(s) URL, as a browser sends it in the `Origin`
+/// header: lower case, an internationalised host name in its ASCII form, the default port left
+/// out. `None` when the text is not such a URL.
 pub fn origin_of(url: &str) -> Option<String> {
-    let url = url.trim();
-    let (scheme, rest) = url.split_once("://")?;
-    let scheme = scheme.to_ascii_lowercase();
-    if scheme != "http" && scheme != "https" {
+    let url = Url::parse(url.trim()).ok()?;
+    if !matches!(url.scheme(), "http" | "https") {
         return None;
     }
-    let authority = rest.split(['/', '?', '#']).next()?;
-    let valid = !authority.is_empty()
-        && authority
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | ':' | '[' | ']'));
-    if !valid {
+    // An address with a user name or password is not where a portal lives.
+    if !url.username().is_empty() || url.password().is_some() {
         return None;
     }
-    let mut authority = authority.to_ascii_lowercase();
-    // Browsers leave the default port out of the Origin header.
-    let default_port = if scheme == "https" { ":443" } else { ":80" };
-    if let Some(stripped) = authority.strip_suffix(default_port) {
-        if !stripped.ends_with(':') && !stripped.is_empty() {
-            authority = stripped.to_string();
-        }
-    }
-    Some(format!("{scheme}://{authority}"))
+    url.host_str().filter(|h| !h.is_empty())?;
+    Some(url.origin().ascii_serialization())
 }
 
 #[cfg(test)]
@@ -100,6 +92,15 @@ mod tests {
             origin_of("https://portal.example.com:443").as_deref(),
             Some("https://portal.example.com")
         );
+        // An internationalised host name, as the browser sends it.
+        assert_eq!(
+            origin_of("https://Bücher.example/login").as_deref(),
+            Some("https://xn--bcher-kva.example")
+        );
+        assert_eq!(
+            origin_of("http://[::1]:8081/").as_deref(),
+            Some("http://[::1]:8081")
+        );
         assert_eq!(origin_of("portal.example.com"), None);
         assert_eq!(origin_of("ftp://example.com"), None);
         assert_eq!(origin_of("https://user@example.com"), None);
@@ -117,7 +118,15 @@ mod tests {
                 "http://localhost:8081".into()
             ]))
         );
+        assert_eq!(
+            CorsConfig::parse("https://bücher.example"),
+            Ok(CorsConfig::Origins(vec![
+                "https://xn--bcher-kva.example".into()
+            ]))
+        );
         assert!(CorsConfig::parse("https://a.example/portal").is_err());
+        assert!(CorsConfig::parse("https://a.example?x=1").is_err());
+        assert!(CorsConfig::parse("https://a.example/#top").is_err());
         assert!(CorsConfig::parse("a.example").is_err());
         assert!(CorsConfig::parse("*, https://a.example").is_err());
     }

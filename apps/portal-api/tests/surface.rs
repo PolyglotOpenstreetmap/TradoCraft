@@ -259,6 +259,27 @@ async fn only_the_portal_origin_is_answered(db: PgPool) {
     assert_eq!(status, StatusCode::OK);
     assert!(!headers.contains_key("access-control-allow-origin"));
 
+    // The portal's preflight: the headers it will send are allowed by name (`*` would not cover
+    // Authorization).
+    let (status, headers, _) = Call::new(Method::OPTIONS, "/api/v1/portal/tickets")
+        .header("origin", PORTAL_ORIGIN)
+        .header("access-control-request-method", "POST")
+        .header(
+            "access-control-request-headers",
+            "authorization, content-type",
+        )
+        .send(&app)
+        .await;
+    assert_eq!(status, StatusCode::OK);
+    assert_eq!(headers["access-control-allow-origin"], PORTAL_ORIGIN);
+    let allowed = headers["access-control-allow-headers"]
+        .to_str()
+        .unwrap()
+        .to_ascii_lowercase();
+    assert!(allowed.contains("authorization"), "{allowed}");
+    assert!(allowed.contains("content-type"), "{allowed}");
+    assert!(!allowed.contains('*'), "{allowed}");
+
     let (_, headers, _) = Call::new(Method::OPTIONS, "/api/v1/portal/tickets")
         .header("origin", "https://evil.example")
         .header("access-control-request-method", "GET")

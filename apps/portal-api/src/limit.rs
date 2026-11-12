@@ -8,11 +8,39 @@ use std::time::{Duration, Instant};
 
 /// Above this many tracked addresses, idle ones are dropped.
 const PRUNE_ABOVE: usize = 10_000;
+/// At most one scan of the map per this long, however many requests arrive: during a flood from
+/// many addresses a scan frees little, and it runs while every other request waits.
+const PRUNE_EVERY: Duration = Duration::from_secs(10);
+/// A bucket that was not touched for this long is full again: forgetting it changes nothing.
+const IDLE_AFTER: Duration = Duration::from_secs(60);
 
 /// At most `per_minute` requests a minute per address, with bursts up to that number.
 pub struct Limiter {
     per_minute: u32,
-    buckets: Mutex<HashMap<IpAddr, Bucket>>,
+    state: Mutex<State>,
+}
+
+#[derive(Default)]
+struct State {
+    buckets: HashMap<IpAddr, Bucket>,
+    /// When the map was last scanned for idle buckets.
+    pruned: Option<Instant>,
+}
+
+impl State {
+    fn prune(&mut self, now: Instant) {
+        if self.buckets.len() <= PRUNE_ABOVE {
+            return;
+        }
+        let due = self
+            .pruned
+            .is_none_or(|at| now.saturating_duration_since(at) >= PRUNE_EVERY);
+        if due {
+            self.buckets
+                .retain(|_, b| now.saturating_duration_since(b.seen) < IDLE_AFTER);
+            self.pruned = Some(now);
+        }
+    }
 }
 
 struct Bucket {
@@ -25,7 +53,7 @@ impl Limiter {
     pub fn new(per_minute: u32) -> Self {
         Limiter {
             per_minute,
-            buckets: Mutex::new(HashMap::new()),
+            state: Mutex::new(State::default()),
         }
     }
 
@@ -36,12 +64,9 @@ impl Limiter {
         }
         let capacity = f64::from(self.per_minute);
         let per_second = capacity / 60.0;
-        let mut buckets = self.buckets.lock().unwrap_or_else(|e| e.into_inner());
-        if buckets.len() > PRUNE_ABOVE {
-            // A bucket that was not touched for a minute is full again: forgetting it changes nothing.
-            buckets.retain(|_, b| now.saturating_duration_since(b.seen) < Duration::from_secs(60));
-        }
-        let bucket = buckets.entry(rate_key(ip)).or_insert(Bucket {
+        let mut state = self.state.lock().unwrap_or_else(|e| e.into_inner());
+        state.prune(now);
+        let bucket = state.buckets.entry(rate_key(ip)).or_insert(Bucket {
             tokens: capacity,
             seen: now,
         });
@@ -168,6 +193,33 @@ mod tests {
         let later = start + Duration::from_secs(10);
         assert!(limiter.check(ip("203.0.113.7"), later).is_ok());
         assert!(limiter.check(ip("203.0.113.7"), later).is_err());
+    }
+
+    #[test]
+    fn idle_addresses_are_forgotten_on_an_interval_not_on_every_request() {
+        let limiter = Limiter::new(60);
+        let tracked = || limiter.state.lock().unwrap().buckets.len();
+        let start = Instant::now();
+        // More addresses than are kept, all seen at the start.
+        for n in 0..=(PRUNE_ABOVE as u32) {
+            let addr = IpAddr::V4(std::net::Ipv4Addr::from(0x0b00_0000 + n));
+            limiter.check(addr, start).unwrap();
+        }
+        assert_eq!(tracked(), PRUNE_ABOVE + 1);
+        // Over the threshold: this request scans (nothing is idle yet) and starts the clock.
+        let scan = start + Duration::from_secs(55);
+        limiter.check(ip("203.0.113.7"), scan).unwrap();
+        assert_eq!(tracked(), PRUNE_ABOVE + 2);
+        // Six seconds on the first addresses are idle, but the map is not scanned again yet.
+        limiter
+            .check(ip("203.0.113.7"), scan + Duration::from_secs(6))
+            .unwrap();
+        assert_eq!(tracked(), PRUNE_ABOVE + 2);
+        // Once the interval has passed, the 60-second rule is applied again.
+        limiter
+            .check(ip("203.0.113.8"), scan + PRUNE_EVERY)
+            .unwrap();
+        assert_eq!(tracked(), 2, "the two addresses seen in the last minute");
     }
 
     #[test]
