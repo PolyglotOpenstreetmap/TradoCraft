@@ -52,3 +52,4 @@ accepted one; mark superseded records as such.
 | [0047](0047-company-bootstrap.md) | Company bootstrap: setup wizard and `POST /setup/bootstrap` create the first company in an empty database | Accepted |
 | [0048](0048-environment-clones-and-outbound-safety.md) | Environment clones (pg_dump/pg_restore), envctl, outbound safety policy and clone scrub | Accepted |
 | [0049](0049-production-division-membership.md) | Production division membership: members per division, default queue scope (`mine`), unassigned orders always shown | Accepted |
+| [0050](0050-portal-surface.md) | Portal surface: a separate customer-facing server with only the portal routes, rate limits, and CORS from configuration | Accepted |
