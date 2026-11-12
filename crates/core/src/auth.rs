@@ -25,8 +25,13 @@ pub const DEV_USER_HEADER: &str = "x-dev-user";
 pub const COMPANY_HEADER: &str = "x-company-id";
 
 pub enum AuthConfig {
-    Dev { default_email: Option<String> },
+    Dev {
+        default_email: Option<String>,
+    },
     Oidc(OidcVerifier),
+    /// No staff sign-in at all: every staff route answers 401. Used by the customer-facing
+    /// portal server, which serves no staff routes (ADR 0050).
+    Disabled,
 }
 
 /// Permissions are checked in code; roles are granted per company and map to permissions.
@@ -694,6 +699,7 @@ impl FromRequestParts<AppState> for CurrentUser {
                 let claims = verifier.verify(token).await?;
                 resolve_oidc_user(state, &claims).await?
             }
+            AuthConfig::Disabled => return Err(AppError::Unauthorized),
         };
 
         let requested_company = match header(parts, COMPANY_HEADER) {

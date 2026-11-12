@@ -1,9 +1,9 @@
 //! HTTP application: wires the business modules into one API.
 
 use axum::Router;
-use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;
 use tradocraft_core::companies::BootstrapConfig;
+use tradocraft_core::cors::CorsConfig;
 use tradocraft_core::environment::EnvironmentConfig;
 use tradocraft_core::AppState;
 use utoipa::openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme};
@@ -109,6 +109,17 @@ pub fn app_with_options(
     environment: EnvironmentConfig,
     bootstrap: BootstrapConfig,
 ) -> Router {
+    app_with_cors(state, environment, bootstrap, &CorsConfig::Any)
+}
+
+/// The application answering only the browser origins of `cors` (`CORS_ALLOWED_ORIGINS`,
+/// ADR 0050).
+pub fn app_with_cors(
+    state: AppState,
+    environment: EnvironmentConfig,
+    bootstrap: BootstrapConfig,
+    cors: &CorsConfig,
+) -> Router {
     let (router, doc) = api();
     router
         .route("/health", axum::routing::get(|| async { "ok" }))
@@ -120,12 +131,7 @@ pub fn app_with_options(
         .layer(axum::Extension(environment))
         .layer(axum::Extension(bootstrap))
         .layer(TraceLayer::new_for_http())
-        .layer(
-            CorsLayer::new()
-                .allow_origin(Any)
-                .allow_methods(Any)
-                .allow_headers(Any),
-        )
+        .layer(cors.layer())
         .with_state(state)
 }
 
