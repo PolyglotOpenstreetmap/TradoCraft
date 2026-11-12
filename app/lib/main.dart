@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/router.dart';
@@ -72,7 +72,7 @@ class TradocraftApp extends ConsumerWidget {
       routerConfig: router,
       locale: ref.watch(localeProvider),
       supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
       onGenerateTitle: (context) {
         final profile = ref.read(profileProvider);
         return appWindowTitle(profile);
