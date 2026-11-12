@@ -7092,6 +7092,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moduleFinance => 'Finanzen';
 
   @override
+  String get productionDivisionMembers => 'Mitglieder';
+
+  @override
+  String get productionDivisionNoMembers => 'Keine Mitglieder';
+
+  @override
+  String get productionScopeMine => 'Meine Bereiche';
+
+  @override
+  String get productionScopeAll => 'Alle Bereiche';
+
+  @override
+  String get productionScopeEmpty =>
+      'Keine Aufträge in Ihren Bereichen. Aufträge ohne Bereich sind eingeschlossen.';
+
+  @override
+  String get productionShowAllDivisions => 'Alle Bereiche anzeigen';
+
+  @override
+  String get productionYourDivisions => 'Ihre Bereiche';
+
+  @override
   String get setupErrInsecure =>
       'Das Einrichtungstoken wird nicht über eine unverschlüsselte Verbindung an einen anderen Rechner gesendet. Verwenden Sie eine https://-Adresse (reines http ist nur für localhost erlaubt).';
 

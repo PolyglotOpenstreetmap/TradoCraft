@@ -27,11 +27,15 @@ abstract class ProductionClient {
   ///
   /// [status] - released | in_progress | completed | cancelled.
   ///
+  /// [mine] - When true, only orders of the caller's own divisions and orders without a division.
+  /// (unassigned work is never hidden). Default false: everything.
+  ///
   /// [q] - Searches the number, the product, the sales order and the customer.
   @GET('/api/v1/production-orders')
   Future<ProductionPage> listOrders({
     @Query('status') String? status,
     @Query('division_id') String? divisionId,
+    @Query('mine') bool? mine,
     @Query('order_id') String? orderId,
     @Query('q') String? q,
     @Query('limit') int? limit,

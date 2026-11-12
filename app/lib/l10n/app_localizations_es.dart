@@ -7074,6 +7074,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moduleFinance => 'Finanzas';
 
   @override
+  String get productionDivisionMembers => 'Miembros';
+
+  @override
+  String get productionDivisionNoMembers => 'Sin miembros';
+
+  @override
+  String get productionScopeMine => 'Mis divisiones';
+
+  @override
+  String get productionScopeAll => 'Todas las divisiones';
+
+  @override
+  String get productionScopeEmpty =>
+      'No hay órdenes en sus divisiones. Se incluyen las órdenes sin división.';
+
+  @override
+  String get productionShowAllDivisions => 'Mostrar todas las divisiones';
+
+  @override
+  String get productionYourDivisions => 'Sus divisiones';
+
+  @override
   String get setupErrInsecure =>
       'El token de configuración no se envía por una conexión sin cifrar a otro equipo. Use una dirección https:// (http simple solo se permite para localhost).';
 

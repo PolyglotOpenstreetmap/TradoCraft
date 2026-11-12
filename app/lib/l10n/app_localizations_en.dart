@@ -7050,6 +7050,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moduleFinance => 'Finance';
 
   @override
+  String get productionDivisionMembers => 'Members';
+
+  @override
+  String get productionDivisionNoMembers => 'No members';
+
+  @override
+  String get productionScopeMine => 'My divisions';
+
+  @override
+  String get productionScopeAll => 'All divisions';
+
+  @override
+  String get productionScopeEmpty =>
+      'No orders in your divisions. Orders without a division are included.';
+
+  @override
+  String get productionShowAllDivisions => 'Show all divisions';
+
+  @override
+  String get productionYourDivisions => 'Your divisions';
+
+  @override
   String get setupErrInsecure =>
       'The setup token is not sent over an unencrypted connection to another computer. Use an https:// address (plain http is only allowed for localhost).';
 

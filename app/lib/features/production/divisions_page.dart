@@ -5,6 +5,7 @@ import '../../app/api.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/actions.dart';
 import '../../shared/app_icons.dart';
+import '../helpdesk/ticket_screen.dart' show usersProvider;
 import 'production_page.dart';
 
 /// The production divisions, kept by the administrator (`production.admin`).
@@ -49,10 +50,14 @@ class DivisionsPage extends ConsumerWidget {
                       key: ValueKey('division-${d.id}'),
                       title: Text('${d.code} · ${d.name}'),
                       subtitle: Text(
-                        d.active
-                            ? '${d.openOrders}'
-                            : '${l.inactive} · ${d.openOrders}',
+                        [
+                          d.active
+                              ? '${d.openOrders}'
+                              : '${l.inactive} · ${d.openOrders}',
+                          '${l.productionDivisionMembers}: ${d.members.isEmpty ? l.productionDivisionNoMembers : d.members.map((m) => m.displayName).join(', ')}',
+                        ].join('\n'),
                       ),
+                      isThreeLine: true,
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -98,6 +103,9 @@ class _DivisionDialogState extends ConsumerState<_DivisionDialog> {
   late final _code = TextEditingController(text: widget.existing?.code);
   late final _name = TextEditingController(text: widget.existing?.name);
   late bool _active = widget.existing?.active ?? true;
+  late final Set<String> _members = {
+    ...?widget.existing?.members.map((m) => m.userId),
+  };
   String? _error;
 
   @override
@@ -113,6 +121,7 @@ class _DivisionDialogState extends ConsumerState<_DivisionDialog> {
       name: _name.text.trim(),
       sortOrder: widget.existing?.sortOrder ?? 0,
       active: _active,
+      memberUserIds: _members.toList(),
     );
     final api = ref.read(apiProvider).production;
     try {
@@ -131,6 +140,7 @@ class _DivisionDialogState extends ConsumerState<_DivisionDialog> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final users = ref.watch(usersProvider).value ?? const [];
     return AlertDialog(
       title: Text(
         widget.existing == null
@@ -139,31 +149,52 @@ class _DivisionDialogState extends ConsumerState<_DivisionDialog> {
       ),
       content: SizedBox(
         width: 380,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              key: const ValueKey('division-code'),
-              controller: _code,
-              decoration: InputDecoration(labelText: l.code),
-            ),
-            TextField(
-              key: const ValueKey('division-name'),
-              controller: _name,
-              decoration: InputDecoration(labelText: l.name),
-            ),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l.active),
-              value: _active,
-              onChanged: (v) => setState(() => _active = v),
-            ),
-            if (_error != null)
-              Text(
-                _error!,
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                key: const ValueKey('division-code'),
+                controller: _code,
+                decoration: InputDecoration(labelText: l.code),
               ),
-          ],
+              TextField(
+                key: const ValueKey('division-name'),
+                controller: _name,
+                decoration: InputDecoration(labelText: l.name),
+              ),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l.active),
+                value: _active,
+                onChanged: (v) => setState(() => _active = v),
+              ),
+              Text(
+                l.productionDivisionMembers,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              Wrap(
+                spacing: 8,
+                children: [
+                  for (final u in users)
+                    FilterChip(
+                      key: ValueKey('member-${u.id}'),
+                      label: Text(u.displayName),
+                      selected: _members.contains(u.id),
+                      onSelected: (on) => setState(
+                        () => on ? _members.add(u.id) : _members.remove(u.id),
+                      ),
+                    ),
+                ],
+              ),
+              if (_error != null)
+                Text(
+                  _error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
+            ],
+          ),
         ),
       ),
       actions: [

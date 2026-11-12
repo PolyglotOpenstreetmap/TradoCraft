@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tradocraft_app/app/api.dart';
+import 'package:tradocraft_app/features/field/offline/kv_store.dart';
 import 'package:tradocraft_app/features/production/divisions_page.dart';
 import 'package:tradocraft_app/features/production/order_production.dart';
 import 'package:tradocraft_app/features/production/production_page.dart';
@@ -90,13 +91,28 @@ Map<String, Object?> _order({
   'outputs': <Object?>[],
 };
 
-Map<String, Object?> _division({String id = 'd1', String code = 'WELD'}) => {
+Map<String, Object?> _division({
+  String id = 'd1',
+  String code = 'WELD',
+  String name = 'Welding',
+  bool isMember = false,
+  List<Map<String, Object?>> members = const [],
+}) => {
   'id': id,
   'code': code,
-  'name': 'Welding',
+  'name': name,
   'sort_order': 1,
   'active': true,
   'open_orders': 2,
+  'members': members,
+  'is_member': isMember,
+};
+
+Map<String, Object?> _companyUser(String id, String name) => {
+  'id': id,
+  'display_name': name,
+  'email': '$id@example.com',
+  'roles': ['workshop'],
 };
 
 Map<String, Object?> _warehouse() => {
@@ -132,7 +148,12 @@ Map<String, Object?> _toRelease() => {
   'to_build': '2',
 };
 
-Future<void> _pump(WidgetTester tester, FakeHttp http, Widget home) async {
+Future<void> _pump(
+  WidgetTester tester,
+  FakeHttp http,
+  Widget home, {
+  KvStore? store,
+}) async {
   tester.view.physicalSize = const Size(1400, 2000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
@@ -164,7 +185,10 @@ Future<void> _pump(WidgetTester tester, FakeHttp http, Widget home) async {
   );
   await tester.pumpWidget(
     ProviderScope(
-      overrides: [dioProvider.overrideWithValue(fakeDio(http))],
+      overrides: [
+        dioProvider.overrideWithValue(fakeDio(http)),
+        kvStoreProvider.overrideWithValue(store ?? MemoryKvStore()),
+      ],
       child: MaterialApp.router(
         locale: const Locale('en'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -189,6 +213,17 @@ FakeHttp _screenHttp(
   'GET /api/v1/inventory/warehouses': (_) => [_warehouse()],
   ...extra,
 });
+
+/// A queue server: [divisions], the caller's [perms], and the orders it returns per `mine` flag.
+FakeHttp _queueHttp(List<String> perms, List<Map<String, Object?>> divisions) =>
+    FakeHttp({
+      'GET /api/v1/me': (_) => meJson(perms),
+      'GET /api/v1/production/divisions': (_) => divisions,
+      'GET /api/v1/production-orders': (_) => {
+        'items': [_summary()],
+        'total': 1,
+      },
+    });
 
 void main() {
   testWidgets('the queue shows the urgent orders and flags what is short', (
@@ -741,5 +776,144 @@ void main() {
       findsOneWidget,
       reason: 'not replaced by "no division"',
     );
+  });
+
+  group('division scope of the queue', () {
+    final mineDivision = _division(isMember: true, name: 'Electronics');
+    final otherDivision = _division(id: 'd2', code: 'MECH', name: 'Mechanics');
+    bool lastMine(FakeHttp http) => http.queries.last['mine'] == true;
+    bool anyMine(FakeHttp http) => http.queries.any((q) => q['mine'] == true);
+    const worker = ['production.read', 'production.run'];
+
+    testWidgets('a worker with divisions starts on their own divisions', (
+      tester,
+    ) async {
+      final http = _queueHttp(worker, [mineDivision, otherDivision]);
+      await _pump(tester, http, const ProductionQueuePage());
+      expect(find.byKey(const ValueKey('queue-scope')), findsOneWidget);
+      expect(find.text('My divisions'), findsOneWidget);
+      expect(find.byKey(const ValueKey('my-divisions')), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('my-divisions')),
+          matching: find.text('Electronics'),
+        ),
+        findsOneWidget,
+      );
+      expect(http.queries.where((q) => q.containsKey('mine')), isNotEmpty);
+      expect(lastMine(http), isTrue);
+    });
+
+    testWidgets('planners and admins start on all divisions', (tester) async {
+      for (final perms in [
+        _planner,
+        ['production.read', 'production.admin'],
+      ]) {
+        final http = _queueHttp(perms, [mineDivision, otherDivision]);
+        await _pump(tester, http, const ProductionQueuePage());
+        expect(find.byKey(const ValueKey('queue-scope')), findsOneWidget);
+        expect(anyMine(http), isFalse, reason: '$perms');
+      }
+    });
+
+    testWidgets('without a division the control is hidden', (tester) async {
+      final http = _queueHttp(worker, [otherDivision]);
+      await _pump(tester, http, const ProductionQueuePage());
+      expect(find.byKey(const ValueKey('queue-scope')), findsNothing);
+      expect(find.byKey(const ValueKey('my-divisions')), findsNothing);
+      expect(anyMine(http), isFalse);
+    });
+
+    testWidgets('the toggle changes the request and is remembered', (
+      tester,
+    ) async {
+      final store = MemoryKvStore();
+      final http = _queueHttp(worker, [mineDivision]);
+      await _pump(tester, http, const ProductionQueuePage(), store: store);
+      expect(lastMine(http), isTrue);
+      await tester.tap(find.text('All divisions'));
+      await tester.pumpAndSettle();
+      expect(http.queries.last['mine'], isNot(true));
+      // A new queue page for the same user opens on the remembered choice.
+      final again = _queueHttp(worker, [mineDivision]);
+      await _pump(tester, again, const ProductionQueuePage(), store: store);
+      expect(anyMine(again), isFalse);
+      await tester.tap(find.text('My divisions'));
+      await tester.pumpAndSettle();
+      expect(lastMine(again), isTrue);
+    });
+
+    testWidgets('an empty view explains and offers to show all', (
+      tester,
+    ) async {
+      final http = FakeHttp({
+        'GET /api/v1/me': (_) => meJson(worker),
+        'GET /api/v1/production/divisions': (_) => [mineDivision],
+        'GET /api/v1/production-orders': (_) => {
+          'items': <Object?>[],
+          'total': 0,
+        },
+      });
+      await _pump(tester, http, const ProductionQueuePage());
+      expect(
+        find.text(
+          'No orders in your divisions. Orders without a division are included.',
+        ),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const ValueKey('scope-show-all')));
+      await tester.pumpAndSettle();
+      expect(http.queries.last['mine'], isNot(true));
+      expect(find.byKey(const ValueKey('scope-show-all')), findsNothing);
+    });
+  });
+
+  testWidgets('the administrator picks the members of a division', (
+    tester,
+  ) async {
+    final http = FakeHttp({
+      'GET /api/v1/me': (_) => meJson(['production.read', 'production.admin']),
+      'GET /api/v1/users': (_) => [
+        _companyUser('u1', 'Els Electronics'),
+        _companyUser('u2', 'Max Mechanic'),
+      ],
+      'GET /api/v1/production/divisions': (_) => [
+        _division(
+          members: [
+            {'user_id': 'u1', 'display_name': 'Els Electronics'},
+          ],
+        ),
+      ],
+      'POST /api/v1/production/divisions': (_) => _division(id: 'd2'),
+      'PUT /api/v1/production/divisions/d1': (_) => _division(),
+    });
+    await _pump(tester, http, const DivisionsPage());
+    // The list shows the members.
+    expect(find.textContaining('Els Electronics'), findsOneWidget);
+    // Editing starts from the current members; the selection replaces them.
+    await tester.tap(find.byTooltip('Edit'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('member-u1')));
+    await tester.tap(find.byKey(const ValueKey('member-u2')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('division-save')));
+    await tester.pumpAndSettle();
+    final put = http.bodies['PUT /api/v1/production/divisions/d1']! as Map;
+    expect(put['member_user_ids'], ['u2']);
+    // A new division with two members.
+    await tester.tap(find.byKey(const ValueKey('add-division')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('division-code')), 'MECH');
+    await tester.enterText(
+      find.byKey(const ValueKey('division-name')),
+      'Mechanics',
+    );
+    await tester.tap(find.byKey(const ValueKey('member-u1')));
+    await tester.tap(find.byKey(const ValueKey('member-u2')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('division-save')));
+    await tester.pumpAndSettle();
+    final post = http.bodies['POST /api/v1/production/divisions']! as Map;
+    expect(post['member_user_ids'], unorderedEquals(['u1', 'u2']));
   });
 }

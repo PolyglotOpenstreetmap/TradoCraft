@@ -15206,6 +15206,15 @@
             }
           },
           {
+            "name": "mine",
+            "in": "query",
+            "description": "When true, only orders of the caller's own divisions and orders without a division\n(unassigned work is never hidden). Default false: everything.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "order_id",
             "in": "query",
             "required": false,
@@ -27988,13 +27997,16 @@
       },
       "Division": {
         "type": "object",
+        "description": "A production division with its members.",
         "required": [
           "id",
           "code",
           "name",
           "sort_order",
           "active",
-          "open_orders"
+          "open_orders",
+          "members",
+          "is_member"
         ],
         "properties": {
           "active": {
@@ -28006,6 +28018,17 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "is_member": {
+            "type": "boolean",
+            "description": "Whether the calling user is a member of this division."
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DivisionMember"
+            },
+            "description": "The users who work in this division, by name."
           },
           "name": {
             "type": "string"
@@ -28023,6 +28046,7 @@
       },
       "DivisionInput": {
         "type": "object",
+        "description": "Input to create or change a division.",
         "required": [
           "code",
           "name"
@@ -28034,12 +28058,42 @@
           "code": {
             "type": "string"
           },
+          "member_user_ids": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "When present, replaces all members of the division (active users of the company only);\nwhen absent, the members stay as they are."
+          },
           "name": {
             "type": "string"
           },
           "sort_order": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "DivisionMember": {
+        "type": "object",
+        "description": "A user who works in a division.",
+        "required": [
+          "user_id",
+          "display_name"
+        ],
+        "properties": {
+          "display_name": {
+            "type": "string",
+            "description": "The name shown for the user."
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The user."
           }
         }
       },
@@ -34367,6 +34421,7 @@
       },
       "ProductDivision": {
         "type": "object",
+        "description": "The division that normally builds a product.",
         "properties": {
           "division_id": {
             "type": [

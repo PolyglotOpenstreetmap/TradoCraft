@@ -24,6 +24,7 @@ class _ProductionClient implements ProductionClient {
   Future<ProductionPage> listOrders({
     String? status,
     String? divisionId,
+    bool? mine,
     String? orderId,
     String? q,
     int? limit,
@@ -33,6 +34,7 @@ class _ProductionClient implements ProductionClient {
     final queryParameters = <String, dynamic>{
       r'status': status,
       r'division_id': divisionId,
+      r'mine': mine,
       r'order_id': orderId,
       r'q': q,
       r'limit': limit,

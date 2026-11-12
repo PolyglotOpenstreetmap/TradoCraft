@@ -2273,6 +2273,13 @@
   "finCreateInvoice": "Créer une facture fournisseur",
   "userRoleFinance": "Finance",
   "moduleFinance": "Finance",
+  "productionDivisionMembers": "Membres",
+  "productionDivisionNoMembers": "Aucun membre",
+  "productionScopeMine": "Mes divisions",
+  "productionScopeAll": "Toutes les divisions",
+  "productionScopeEmpty": "Aucun ordre dans vos divisions. Les ordres sans division sont inclus.",
+  "productionShowAllDivisions": "Afficher toutes les divisions",
+  "productionYourDivisions": "Vos divisions",
   "setupErrInsecure": "Le jeton d'installation n'est pas envoyé par une connexion non chiffrée vers un autre ordinateur. Utilisez une adresse https:// (http simple n'est autorisé que pour localhost).",
   "setupUnavailable": "La configuration n'est pas disponible sur ce serveur : il a déjà une société, ou la configuration est désactivée.",
   "setupErrRedirect": "Le serveur a redirigé la requête, le jeton d'installation n'a donc pas été transmis. Vérifiez l'adresse du serveur (utilisez l'adresse https:// définitive)."

@@ -7085,6 +7085,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moduleFinance => 'Finance';
 
   @override
+  String get productionDivisionMembers => 'Membres';
+
+  @override
+  String get productionDivisionNoMembers => 'Aucun membre';
+
+  @override
+  String get productionScopeMine => 'Mes divisions';
+
+  @override
+  String get productionScopeAll => 'Toutes les divisions';
+
+  @override
+  String get productionScopeEmpty =>
+      'Aucun ordre dans vos divisions. Les ordres sans division sont inclus.';
+
+  @override
+  String get productionShowAllDivisions => 'Afficher toutes les divisions';
+
+  @override
+  String get productionYourDivisions => 'Vos divisions';
+
+  @override
   String get setupErrInsecure =>
       'Le jeton d\'installation n\'est pas envoyé par une connexion non chiffrée vers un autre ordinateur. Utilisez une adresse https:// (http simple n\'est autorisé que pour localhost).';
 
