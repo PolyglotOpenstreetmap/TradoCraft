@@ -3672,7 +3672,7 @@
   "tutManufacturingDivisionBody": "Add a division with code TUT-ASM and name Tutorial assembly, and tick yourself in the member list: members are the workers of the division.",
   "tutManufacturingDivisionHint": "The dialog lists the users of the company; tick the chip with your own name.",
   "tutManufacturingQueueTitle": "The production queue",
-  "tutManufacturingQueueBody": "Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions' orders plus orders without a division, so nothing unassigned is hidden. Switch to All to see everything.",
+  "tutManufacturingQueueBody": "Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions' orders plus orders without a division, so nothing unassigned is hidden. Switch to All divisions to see everything.",
   "tutManufacturingReleaseTitle": "Release a production order",
   "tutManufacturingReleaseBody": "Press Build for stock, choose TUT-CART and quantity 5, and release. The bill of materials is frozen and the components are reserved. Normally production starts from a sales order line; you will see that in chapter 9.",
   "tutManufacturingReleaseHint": "Only manufactured products with an active bill of materials can be released.",

@@ -7410,14 +7410,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Ga terug naar Productie. Omdat je lid van een afdeling bent, staat de wachtrij nu standaard op Mijn afdelingen: de orders van je afdelingen plus orders zonder afdeling, zodat niets onbeheerds verborgen blijft. Schakel naar Alle om alles te zien.';
+      'Ga terug naar Productie. Omdat je lid van een afdeling bent, staat de wachtrij nu standaard op Mijn afdelingen: de orders van je afdelingen plus orders zonder afdeling, zodat niets onbeheerds verborgen blijft. Schakel naar Alle afdelingen om alles te zien.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Geef een productieorder vrij';
 
   @override
   String get tutManufacturingReleaseBody =>
-      'Druk op Voor voorraad bouwen, kies TUT-CART met hoeveelheid 5 en geef vrij. De stuklijst wordt bevroren en de componenten worden gereserveerd. Normaal start productie vanuit een verkooporderregel; dat zie je in hoofdstuk 9.';
+      'Druk op Voor voorraad maken, kies TUT-CART met hoeveelheid 5 en geef vrij. De stuklijst wordt bevroren en de componenten worden gereserveerd. Normaal start productie vanuit een verkooporderregel; dat zie je in hoofdstuk 9.';
 
   @override
   String get tutManufacturingReleaseHint =>
@@ -7442,7 +7442,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutManufacturingCompleteBody =>
-      'Druk op Voltooien. Het dialoogvenster toont de uitvoerhoeveelheid (5) en de verbruikte componenten. Bevestig: de componenten verdwijnen uit de voorraad en vijf afgewerkte karretjes komen erin.';
+      'Druk op Afronden. Het dialoogvenster toont de uitvoerhoeveelheid (5) en de verbruikte componenten. Bevestig: de componenten verdwijnen uit de voorraad en vijf afgewerkte karretjes komen erin.';
 
   @override
   String get tutManufacturingCompleteHint =>

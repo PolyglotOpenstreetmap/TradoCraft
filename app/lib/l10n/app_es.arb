@@ -2368,7 +2368,7 @@
   "tutManufacturingDivisionBody": "Añada una división con código TUT-ASM y nombre Tutorial assembly, y márquese en la lista de miembros: los miembros son los operarios de la división.",
   "tutManufacturingDivisionHint": "El diálogo lista los usuarios de la empresa; marque la etiqueta con su nombre.",
   "tutManufacturingQueueTitle": "La cola de producción",
-  "tutManufacturingQueueBody": "Vuelva a Producción. Como es miembro de una división, la cola muestra por defecto Mis divisiones: las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Cambie a Todas para verlo todo.",
+  "tutManufacturingQueueBody": "Vuelva a Producción. Como es miembro de una división, la cola muestra por defecto Mis divisiones: las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Cambie a Todas las divisiones para verlo todo.",
   "tutManufacturingReleaseTitle": "Libere una orden de producción",
   "tutManufacturingReleaseBody": "Pulse Fabricar para stock, elija TUT-CART con cantidad 5 y libere. La lista de materiales se congela y los componentes se reservan. Normalmente la producción parte de una línea de pedido de venta; lo verá en el capítulo 9.",
   "tutManufacturingReleaseHint": "Solo los productos fabricados con lista de materiales activa se pueden liberar.",

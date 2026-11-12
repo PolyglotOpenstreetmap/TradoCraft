@@ -7410,7 +7410,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Vuelva a Producción. Como es miembro de una división, la cola muestra por defecto Mis divisiones: las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Cambie a Todas para verlo todo.';
+      'Vuelva a Producción. Como es miembro de una división, la cola muestra por defecto Mis divisiones: las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Cambie a Todas las divisiones para verlo todo.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Libere una orden de producción';

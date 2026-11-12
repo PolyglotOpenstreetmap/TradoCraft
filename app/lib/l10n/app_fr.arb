@@ -2368,7 +2368,7 @@
   "tutManufacturingDivisionBody": "Ajoutez une division avec le code TUT-ASM et le nom Tutorial assembly, et cochez-vous dans la liste des membres : les membres sont les opérateurs de la division.",
   "tutManufacturingDivisionHint": "Le dialogue liste les utilisateurs de la société ; cochez la pastille à votre nom.",
   "tutManufacturingQueueTitle": "La file de production",
-  "tutManufacturingQueueBody": "Retournez à Production. Comme vous êtes membre d'une division, la file affiche par défaut Mes divisions : les ordres de vos divisions plus ceux sans division, rien de non attribué n'est caché. Passez à Toutes pour tout voir.",
+  "tutManufacturingQueueBody": "Retournez à Production. Comme vous êtes membre d'une division, la file affiche par défaut Mes divisions : les ordres de vos divisions plus ceux sans division, rien de non attribué n'est caché. Passez à Toutes les divisions pour tout voir.",
   "tutManufacturingReleaseTitle": "Lancez un ordre de production",
   "tutManufacturingReleaseBody": "Appuyez sur Fabriquer pour le stock, choisissez TUT-CART et la quantité 5, puis lancez. La nomenclature est figée et les composants sont réservés. Normalement la production part d'une ligne de commande client ; vous le verrez au chapitre 9.",
   "tutManufacturingReleaseHint": "Seuls les produits fabriqués avec une nomenclature active peuvent être lancés.",

@@ -185,6 +185,11 @@ void main() {
       t.routeChanged('/production');
       await pumpEventQueue(times: 200);
       expect(c.read(tutorialProvider).values['productionId'], 'po2');
+      expect(
+        http.queries.any((q) => q['q'] == 'TUT-CART'),
+        isTrue,
+        reason: 'the production probe asks for the cart',
+      );
       expect(c.read(tutorialProvider).stepIndex, 8, reason: 'only the stock is left');
     });
   });

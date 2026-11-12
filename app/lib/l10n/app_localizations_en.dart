@@ -7385,7 +7385,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All to see everything.';
+      'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All divisions to see everything.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Release a production order';

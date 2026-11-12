@@ -13323,7 +13323,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutManufacturingQueueBody.
   ///
   /// In en, this message translates to:
-  /// **'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All to see everything.'**
+  /// **'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All divisions to see everything.'**
   String get tutManufacturingQueueBody;
 
   /// No description provided for @tutManufacturingReleaseTitle.

@@ -7420,7 +7420,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Retournez à Production. Comme vous êtes membre d\'une division, la file affiche par défaut Mes divisions : les ordres de vos divisions plus ceux sans division, rien de non attribué n\'est caché. Passez à Toutes pour tout voir.';
+      'Retournez à Production. Comme vous êtes membre d\'une division, la file affiche par défaut Mes divisions : les ordres de vos divisions plus ceux sans division, rien de non attribué n\'est caché. Passez à Toutes les divisions pour tout voir.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Lancez un ordre de production';

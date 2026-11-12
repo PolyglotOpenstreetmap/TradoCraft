@@ -7427,7 +7427,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Gehen Sie zurück zu Fertigung. Da Sie Mitglied einer Abteilung sind, zeigt die Warteschlange jetzt standardmäßig Meine Abteilungen: die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Wechseln Sie zu Alle, um alles zu sehen.';
+      'Gehen Sie zurück zu Fertigung. Da Sie Mitglied einer Abteilung sind, zeigt die Warteschlange jetzt standardmäßig Meine Bereiche: die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Wechseln Sie zu Alle Bereiche, um alles zu sehen.';
 
   @override
   String get tutManufacturingReleaseTitle =>
@@ -7446,7 +7446,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutManufacturingAssignBody =>
-      'Der neue Auftrag ist offen. Wählen Sie im Feld Abteilung die Abteilung Tutorial assembly und drücken Sie Speichern, damit er in der Warteschlange dieser Abteilung erscheint.';
+      'Der neue Auftrag ist offen. Wählen Sie im Feld Bereich die Abteilung Tutorial assembly und drücken Sie Speichern, damit er in der Warteschlange dieser Abteilung erscheint.';
 
   @override
   String get tutManufacturingStartTitle => 'Starten Sie die Arbeit';
