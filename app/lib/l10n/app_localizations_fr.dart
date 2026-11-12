@@ -7264,7 +7264,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutBuyingReceivePartBody =>
-      'Mettez la casquette de réception. Appuyez sur Réceptionner, choisissez l\'emplacement MAIN de l\'entrepôt et enregistrez 10 pièces de chaque composant, moins que commandé. La commande devient partiellement reçue.';
+      'Mettez la casquette de réception. Appuyez sur Réceptionner les marchandises, choisissez l\'emplacement MAIN de l\'entrepôt et enregistrez 10 pièces de chaque composant, moins que commandé. La commande devient partiellement reçue.';
 
   @override
   String get tutBuyingReceivePartHint =>
@@ -7353,7 +7353,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutInvoicesMismatchBody =>
-      'Le bandeau est orange : une ligne en texte libre ne peut être rapprochée de rien et le prix diffère du prix convenu. La ligne indique pourquoi. Appuyez sur Suivant après avoir regardé.';
+      'Le bandeau est orange : une ligne en texte libre ne peut être rapprochée de rien, elle ne peut donc être vérifiée ni avec une commande ni avec une réception. La ligne indique pourquoi. Appuyez sur Suivant après avoir regardé.';
 
   @override
   String get tutInvoicesDisputeTitle => 'Contestez la facture';
@@ -7374,7 +7374,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutInvoicesPayBody =>
-      'Ouvrez la première facture, TUT-INV-001, et appuyez sur Marquer payée. Saisissez une référence de paiement comme TUT-PAY-001. L\'app enregistre le paiement ; le virement se fait ailleurs.';
+      'Ouvrez la première facture fournisseur que vous avez enregistrée (celle qui concordait et a été approuvée) et appuyez sur Marquer comme payée. Saisissez une référence de paiement comme TUT-PAY-001. L\'app enregistre le paiement ; le virement se fait ailleurs.';
 
   @override
   String get tutInvoicesDoneTitle => 'Ce que vous avez appris';
@@ -7420,7 +7420,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Retournez à Production. Comme vous êtes membre d\'une division, la file affiche par défaut Mes divisions : les ordres de vos divisions plus ceux sans division, rien de non attribué n\'est caché. Passez à Toutes pour tout voir.';
+      'Retournez à Production. Comme vous êtes membre d\'une division, la file affiche par défaut Mes divisions : les ordres de vos divisions plus ceux sans division, rien de non attribué n\'est caché. Passez à Toutes les divisions pour tout voir.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Lancez un ordre de production';
@@ -7653,7 +7653,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutQuotationCreateBody =>
-      'Appuyez sur Nouveau devis, choisissez Brightwheel Logistics BV, ajoutez TUT-CART en quantité 8 et enregistrez le brouillon. Le prix unitaire vient de la zone de prix du client, TUT-EXPORT : ce sont les 1450 saisis au chapitre 6.';
+      'Appuyez sur Nouvelle offre, choisissez Brightwheel Logistics BV, ajoutez TUT-CART en quantité 8 et enregistrez le brouillon. Le prix unitaire vient de la zone de prix du client, TUT-EXPORT : ce sont les 1450 saisis au chapitre 6.';
 
   @override
   String get tutQuotationCreateHint =>
@@ -7731,7 +7731,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutChangeReviseBody =>
-      'Appuyez sur Nouvelle révision et choisissez Conserver les prix convenus. L\'ancienne révision est marquée remplacée et un nouveau brouillon avec le même numéro s\'ouvre.';
+      'Appuyez sur Nouvelle révision et choisissez Garder les prix convenus. L\'ancienne révision est marquée remplacée et un nouveau brouillon avec le même numéro s\'ouvre.';
 
   @override
   String get tutChangeReviseHint =>
@@ -7760,7 +7760,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutChangeAcceptBody =>
-      'Maya est d\'accord avec la nouvelle révision : appuyez sur Accepté pour l\'enregistrer.';
+      'Maya est d\'accord avec la nouvelle révision : appuyez sur Acceptée pour l\'enregistrer.';
 
   @override
   String get tutChangeConvertTitle => 'Transformez-le en commande client';
@@ -7803,7 +7803,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutChangeReleaseBody =>
-      'Mettez la casquette de production. Ouvrez Production > À lancer : la ligne de commande confirmée avec 10 chariots attend. Appuyez sur Lancer pour créer l\'ordre de production de cette ligne.';
+      'Mettez la casquette de production. Ouvrez Production > À lancer : la ligne de commande confirmée avec 10 chariots attend. Appuyez sur Lancer en production pour créer l\'ordre de production de cette ligne.';
 
   @override
   String get tutChangeStartTitle => 'Démarrez la production';
@@ -7843,4 +7843,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tutChangeDoneBody =>
       'Vous êtes passé des fournisseurs aux achats, factures, production, prix, un ticket, un nouveau client, un devis révisé, une commande et la production pour la commande et pour le stock. Et ensuite : livraisons et expéditions, réparations, service terrain et rapports ont chacun leur entrée de menu. Tout chapitre peut être rejoué depuis la carte des chapitres ; les étapes déjà faites sont sautées.';
+
+  @override
+  String get tutInvoicesOpenSecondTitle => 'Ouvrez la facture suspecte';
+
+  @override
+  String get tutInvoicesOpenSecondBody =>
+      'Ouvrez la facture TUT-INV-002, celle que vous venez d\'enregistrer, depuis la liste de Finance.';
 }

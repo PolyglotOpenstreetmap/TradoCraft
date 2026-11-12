@@ -13209,7 +13209,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutInvoicesMismatchBody.
   ///
   /// In en, this message translates to:
-  /// **'The banner is orange: a free-text line has nothing it can be matched against, and the price differs from the agreed one. The line shows why. Press Next when you have looked.'**
+  /// **'The banner is orange: a free-text line has nothing it can be matched against, so it cannot be checked against an order or a receipt. The line shows why. Press Next when you have looked.'**
   String get tutInvoicesMismatchBody;
 
   /// No description provided for @tutInvoicesDisputeTitle.
@@ -13245,7 +13245,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutInvoicesPayBody.
   ///
   /// In en, this message translates to:
-  /// **'Open the first invoice, TUT-INV-001, and press Mark paid. Enter a payment reference such as TUT-PAY-001. The app records the payment; the bank transfer itself happens elsewhere.'**
+  /// **'Open the first supplier invoice you registered (the one that matched and was approved) and press Mark as paid. Enter a payment reference such as TUT-PAY-001. The app records the payment; the bank transfer itself happens elsewhere.'**
   String get tutInvoicesPayBody;
 
   /// No description provided for @tutInvoicesDoneTitle.
@@ -13323,7 +13323,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutManufacturingQueueBody.
   ///
   /// In en, this message translates to:
-  /// **'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All to see everything.'**
+  /// **'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All divisions to see everything.'**
   String get tutManufacturingQueueBody;
 
   /// No description provided for @tutManufacturingReleaseTitle.
@@ -13971,7 +13971,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutChangeReleaseBody.
   ///
   /// In en, this message translates to:
-  /// **'Put on the production hat. Open Production > To release: the confirmed order line with 10 carts is waiting. Press Release to create the production order for exactly that line.'**
+  /// **'Put on the production hat. Open Production > To release: the confirmed order line with 10 carts is waiting. Press Release to production to create the production order for exactly that line.'**
   String get tutChangeReleaseBody;
 
   /// No description provided for @tutChangeStartTitle.
@@ -14039,6 +14039,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You went from suppliers to purchasing, invoices, production, prices, a ticket, a new customer, a revised quotation, an order and production for the order and for stock. Where next: deliveries and shipping, repairs, field service and the reports each have their own menu entry. Any chapter can be replayed from the chapter map; steps that are already done are skipped.'**
   String get tutChangeDoneBody;
+
+  /// No description provided for @tutInvoicesOpenSecondTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the suspicious invoice'**
+  String get tutInvoicesOpenSecondTitle;
+
+  /// No description provided for @tutInvoicesOpenSecondBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open invoice TUT-INV-002, the one you just registered, from the list in Finance.'**
+  String get tutInvoicesOpenSecondBody;
 }
 
 class _AppLocalizationsDelegate

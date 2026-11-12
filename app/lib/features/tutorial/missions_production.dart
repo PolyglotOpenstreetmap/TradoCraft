@@ -118,6 +118,7 @@ final manufacturingMission = Mission(
     ),
     MissionStep(
       id: 'start',
+      route: '/production/{productionId}',
       targets: const ['production-start'],
       completion: const OnApi('POST', '/production-orders/{productionId}/start'),
       probe: Probe(
@@ -128,6 +129,7 @@ final manufacturingMission = Mission(
     MissionStep(
       id: 'complete',
       hasHint: true,
+      route: '/production/{productionId}',
       targets: const ['production-complete-save', 'production-complete'],
       completion: const OnApi(
         'POST',
@@ -204,6 +206,7 @@ final pricesMission = Mission(
     MissionStep(
       id: 'priceExport',
       hasHint: true,
+      route: '/products/{cartId}',
       targets: const ['price-form-save', 'price-new'],
       completion: OnApi(
         'POST',
@@ -220,6 +223,7 @@ final pricesMission = Mission(
     ),
     MissionStep(
       id: 'priceHome',
+      route: '/products/{cartId}',
       targets: const ['price-form-save', 'price-new'],
       completion: OnApi(
         'POST',

@@ -7271,7 +7271,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutBuyingReceivePartBody =>
-      'Setzen Sie den Wareneingangs-Hut auf. Drücken Sie Ware empfangen, wählen Sie den Lagerplatz MAIN und buchen Sie je 10 Stück jeder Komponente, weniger als bestellt. Die Bestellung ist dann teilweise empfangen.';
+      'Setzen Sie den Wareneingangs-Hut auf. Drücken Sie Ware annehmen, wählen Sie den Lagerplatz MAIN und buchen Sie je 10 Stück jeder Komponente, weniger als bestellt. Die Bestellung ist dann teilweise empfangen.';
 
   @override
   String get tutBuyingReceivePartHint =>
@@ -7324,7 +7324,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutInvoicesCreateBody =>
-      'Drücken Sie Lieferantenrechnung anlegen. Tippen Sie die Rechnungsnummer des Lieferanten, zum Beispiel TUT-INV-001, und speichern Sie. Die Positionen werden aus Bestellung und Wareneingang vorausgefüllt.';
+      'Drücken Sie Eingangsrechnung anlegen. Tippen Sie die Rechnungsnummer des Lieferanten, zum Beispiel TUT-INV-001, und speichern Sie. Die Positionen werden aus Bestellung und Wareneingang vorausgefüllt.';
 
   @override
   String get tutInvoicesCreateHint =>
@@ -7342,7 +7342,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutInvoicesApproveBody =>
-      'Der Abgleich ist grün, also drücken Sie Genehmigen. Eine genehmigte Rechnung ist zahlungsbereit.';
+      'Der Abgleich ist grün, also drücken Sie Freigeben. Eine genehmigte Rechnung ist zahlungsbereit.';
 
   @override
   String get tutInvoicesSecondTitle => 'Eine verdächtige Rechnung';
@@ -7360,7 +7360,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutInvoicesMismatchBody =>
-      'Das Banner ist orange: Eine Freitext-Position hat nichts zum Abgleichen und der Preis weicht vom vereinbarten ab. Die Position zeigt den Grund. Drücken Sie Weiter, wenn Sie hingesehen haben.';
+      'Das Banner ist orange: Eine Freitext-Position hat nichts zum Abgleichen und kann daher weder mit einer Bestellung noch mit einem Wareneingang geprüft werden. Die Position zeigt den Grund. Drücken Sie Weiter, wenn Sie hingesehen haben.';
 
   @override
   String get tutInvoicesDisputeTitle => 'Beanstanden Sie die Rechnung';
@@ -7381,7 +7381,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutInvoicesPayBody =>
-      'Öffnen Sie die erste Rechnung, TUT-INV-001, und drücken Sie Als bezahlt markieren. Geben Sie eine Zahlungsreferenz wie TUT-PAY-001 ein. Die App erfasst die Zahlung; die Überweisung selbst geschieht anderswo.';
+      'Öffnen Sie die erste Eingangsrechnung, die Sie erfasst haben (die, die gepasst hat und freigegeben wurde), und drücken Sie Als bezahlt markieren. Geben Sie eine Zahlungsreferenz wie TUT-PAY-001 ein. Die App erfasst die Zahlung; die Überweisung selbst geschieht anderswo.';
 
   @override
   String get tutInvoicesDoneTitle => 'Was Sie gelernt haben';
@@ -7427,7 +7427,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Gehen Sie zurück zu Fertigung. Da Sie Mitglied einer Abteilung sind, zeigt die Warteschlange jetzt standardmäßig Meine Abteilungen: die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Wechseln Sie zu Alle, um alles zu sehen.';
+      'Gehen Sie zurück zu Fertigung. Da Sie Mitglied einer Abteilung sind, zeigt die Warteschlange jetzt standardmäßig Meine Bereiche: die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Wechseln Sie zu Alle Bereiche, um alles zu sehen.';
 
   @override
   String get tutManufacturingReleaseTitle =>
@@ -7446,7 +7446,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutManufacturingAssignBody =>
-      'Der neue Auftrag ist offen. Wählen Sie im Feld Abteilung die Abteilung Tutorial assembly und drücken Sie Speichern, damit er in der Warteschlange dieser Abteilung erscheint.';
+      'Der neue Auftrag ist offen. Wählen Sie im Feld Bereich die Abteilung Tutorial assembly und drücken Sie Speichern, damit er in der Warteschlange dieser Abteilung erscheint.';
 
   @override
   String get tutManufacturingStartTitle => 'Starten Sie die Arbeit';
@@ -7683,7 +7683,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutQuotationSendBody =>
-      'Drücken Sie Als gesendet markieren. Ab jetzt ist das Angebot eingefroren: Es kann nur noch angenommen, abgelehnt oder überarbeitet werden. (Diese Schaltfläche versendet keine Mail; Sie schicken das PDF selbst oder antworten im Ticket.)';
+      'Drücken Sie Als versendet markieren. Ab jetzt ist das Angebot eingefroren: Es kann nur noch angenommen, abgelehnt oder überarbeitet werden. (Diese Schaltfläche versendet keine Mail; Sie schicken das PDF selbst oder antworten im Ticket.)';
 
   @override
   String get tutQuotationPdfTitle => 'Das PDF';
@@ -7739,7 +7739,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutChangeReviseBody =>
-      'Drücken Sie Neue Revision und wählen Sie Vereinbarte Preise behalten. Die alte Revision gilt als ersetzt und ein neuer Entwurf mit derselben Nummer öffnet sich.';
+      'Drücken Sie Neue Revision und wählen Sie Vereinbarte Preise beibehalten. Die alte Revision gilt als ersetzt und ein neuer Entwurf mit derselben Nummer öffnet sich.';
 
   @override
   String get tutChangeReviseHint =>
@@ -7811,7 +7811,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutChangeReleaseBody =>
-      'Setzen Sie den Fertigungs-Hut auf. Öffnen Sie Fertigung > Freizugeben: Die bestätigte Auftragsposition mit 10 Karren wartet. Drücken Sie Freigeben, um den Fertigungsauftrag genau für diese Position zu erzeugen.';
+      'Setzen Sie den Fertigungs-Hut auf. Öffnen Sie Fertigung > Freizugeben: Die bestätigte Auftragsposition mit 10 Karren wartet. Drücken Sie Für die Produktion freigeben, um den Fertigungsauftrag genau für diese Position zu erzeugen.';
 
   @override
   String get tutChangeStartTitle => 'Starten Sie die Fertigung';
@@ -7851,4 +7851,12 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get tutChangeDoneBody =>
       'Sie sind von Lieferanten über Einkauf, Rechnungen, Fertigung und Preise zu einem Ticket, einem neuen Kunden, einem überarbeiteten Angebot, einem Auftrag und der Fertigung für Auftrag und Bestand gekommen. Wie weiter: Lieferungen und Versand, Reparaturen, Außendienst und Berichte haben je einen eigenen Menüpunkt. Jedes Kapitel lässt sich aus der Kapitelübersicht wiederholen; bereits erledigte Schritte werden übersprungen.';
+
+  @override
+  String get tutInvoicesOpenSecondTitle =>
+      'Öffnen Sie die verdächtige Rechnung';
+
+  @override
+  String get tutInvoicesOpenSecondBody =>
+      'Öffnen Sie die Rechnung TUT-INV-002, die Sie gerade erfasst haben, aus der Liste in Finanzen.';
 }

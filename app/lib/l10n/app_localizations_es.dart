@@ -7343,7 +7343,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutInvoicesMismatchBody =>
-      'El banner está en naranja: una línea de texto libre no tiene nada con qué conciliarse y el precio difiere del acordado. La línea muestra el motivo. Pulse Siguiente cuando lo haya mirado.';
+      'El banner está en naranja: una línea de texto libre no tiene nada con qué conciliarse, así que no se puede comprobar con un pedido ni con una recepción. La línea muestra el motivo. Pulse Siguiente cuando lo haya mirado.';
 
   @override
   String get tutInvoicesDisputeTitle => 'Dispute la factura';
@@ -7364,7 +7364,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutInvoicesPayBody =>
-      'Abra la primera factura, TUT-INV-001, y pulse Marcar como pagada. Introduzca una referencia de pago como TUT-PAY-001. La app registra el pago; la transferencia se hace en otro sitio.';
+      'Abra la primera factura de proveedor que registró (la que coincidió y se aprobó) y pulse Marcar como pagada. Introduzca una referencia de pago como TUT-PAY-001. La app registra el pago; la transferencia se hace en otro sitio.';
 
   @override
   String get tutInvoicesDoneTitle => 'Lo que ha aprendido';
@@ -7410,7 +7410,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Vuelva a Producción. Como es miembro de una división, la cola muestra por defecto Mis divisiones: las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Cambie a Todas para verlo todo.';
+      'Vuelva a Producción. Como es miembro de una división, la cola muestra por defecto Mis divisiones: las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Cambie a Todas las divisiones para verlo todo.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Libere una orden de producción';
@@ -7721,7 +7721,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutChangeReviseBody =>
-      'Pulse Nueva revisión y elija Mantener los precios acordados. La revisión anterior queda sustituida y se abre un nuevo borrador con el mismo número.';
+      'Pulse Nueva revisión y elija Mantener precios acordados. La revisión anterior queda sustituida y se abre un nuevo borrador con el mismo número.';
 
   @override
   String get tutChangeReviseHint =>
@@ -7775,7 +7775,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutChangeSendOrderBody =>
-      'Pulse Enviar confirmación del pedido. El pedido pasa a enviado: el cliente ya puede confirmarlo.';
+      'Pulse Enviar confirmación de pedido. El pedido pasa a enviado: el cliente ya puede confirmarlo.';
 
   @override
   String get tutChangeSendOrderHint =>
@@ -7793,7 +7793,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutChangeReleaseBody =>
-      'Póngase el sombrero de producción. Abra Producción > Por liberar: la línea de pedido confirmada con 10 carritos espera. Pulse Liberar para crear la orden de producción de esa línea.';
+      'Póngase el sombrero de producción. Abra Producción > Por liberar: la línea de pedido confirmada con 10 carritos espera. Pulse Liberar a producción para crear la orden de producción de esa línea.';
 
   @override
   String get tutChangeStartTitle => 'Inicie la producción';
@@ -7833,4 +7833,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tutChangeDoneBody =>
       'Ha pasado de proveedores a compras, facturas, producción, precios, un ticket, un cliente nuevo, un presupuesto revisado, un pedido y la producción para el pedido y para stock. Y ahora: entregas y envíos, reparaciones, servicio de campo e informes tienen cada uno su entrada de menú. Cualquier capítulo se puede repetir desde el mapa de capítulos; los pasos ya hechos se omiten.';
+
+  @override
+  String get tutInvoicesOpenSecondTitle => 'Abra la factura sospechosa';
+
+  @override
+  String get tutInvoicesOpenSecondBody =>
+      'Abra la factura TUT-INV-002, la que acaba de registrar, desde la lista de Finanzas.';
 }

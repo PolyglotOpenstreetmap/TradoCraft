@@ -330,6 +330,11 @@ void main() {
       await pumpEventQueue(times: 100);
       t.routeChanged('/quotations');
       await pumpEventQueue(times: 200);
+      expect(
+        http.queries.any((q) => q['customer_id'] == 'cu1'),
+        isTrue,
+        reason: '{customerId} is resolved in the probe query',
+      );
       expect(c.read(tutorialProvider).values['quotationId'], 'q1');
       expect(c.read(tutorialProvider).stepIndex, 5, reason: 'only the PDF look is left');
     });

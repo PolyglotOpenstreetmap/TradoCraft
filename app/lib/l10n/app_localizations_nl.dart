@@ -7247,7 +7247,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutBuyingSendBody =>
-      'Druk op Versturen. De order wordt als verstuurd gemarkeerd en de leverancier krijgt hem. In test- en tutorialomgevingen wordt uitgaande e-mail alleen naar bestanden op de server geschreven; er verlaat niets het gebouw.';
+      'Druk op Verzenden. De order wordt als verstuurd gemarkeerd en de leverancier krijgt hem. In test- en tutorialomgevingen wordt uitgaande e-mail alleen naar bestanden op de server geschreven; er verlaat niets het gebouw.';
 
   @override
   String get tutBuyingReceivePartTitle => 'De eerste levering komt aan';
@@ -7307,7 +7307,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutInvoicesCreateBody =>
-      'Druk op Leveranciersfactuur maken. Typ het eigen factuurnummer van de leverancier, bijvoorbeeld TUT-INV-001, en bewaar. De regels worden ingevuld vanuit wat besteld en ontvangen is, er valt niets te typen.';
+      'Druk op Inkoopfactuur aanmaken. Typ het eigen factuurnummer van de leverancier, bijvoorbeeld TUT-INV-001, en bewaar. De regels worden ingevuld vanuit wat besteld en ontvangen is, er valt niets te typen.';
 
   @override
   String get tutInvoicesCreateHint =>
@@ -7343,7 +7343,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutInvoicesMismatchBody =>
-      'De banner is oranje: een vrije-tekstregel kan nergens mee vergeleken worden en de prijs wijkt af van de afgesproken prijs. De regel toont waarom. Druk op Volgende als je gekeken hebt.';
+      'De banner is oranje: een vrije-tekstregel heeft niets om mee te vergelijken en kan dus niet tegen een order of ontvangst gecontroleerd worden. De regel toont waarom. Druk op Volgende als je gekeken hebt.';
 
   @override
   String get tutInvoicesDisputeTitle => 'Betwist de factuur';
@@ -7364,7 +7364,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutInvoicesPayBody =>
-      'Open de eerste factuur, TUT-INV-001, en druk op Markeer als betaald. Voer een betalingsreferentie in zoals TUT-PAY-001. De app legt de betaling vast; de overschrijving zelf gebeurt elders.';
+      'Open de eerste leveranciersfactuur die je registreerde (die gematcht en goedgekeurd werd) en druk op Markeren als betaald. Voer een betalingsreferentie in zoals TUT-PAY-001. De app legt de betaling vast; de overschrijving zelf gebeurt elders.';
 
   @override
   String get tutInvoicesDoneTitle => 'Wat je geleerd hebt';
@@ -7410,14 +7410,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Ga terug naar Productie. Omdat je lid van een afdeling bent, staat de wachtrij nu standaard op Mijn afdelingen: de orders van je afdelingen plus orders zonder afdeling, zodat niets onbeheerds verborgen blijft. Schakel naar Alle om alles te zien.';
+      'Ga terug naar Productie. Omdat je lid van een afdeling bent, staat de wachtrij nu standaard op Mijn afdelingen: de orders van je afdelingen plus orders zonder afdeling, zodat niets onbeheerds verborgen blijft. Schakel naar Alle afdelingen om alles te zien.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Geef een productieorder vrij';
 
   @override
   String get tutManufacturingReleaseBody =>
-      'Druk op Voor voorraad bouwen, kies TUT-CART met hoeveelheid 5 en geef vrij. De stuklijst wordt bevroren en de componenten worden gereserveerd. Normaal start productie vanuit een verkooporderregel; dat zie je in hoofdstuk 9.';
+      'Druk op Voor voorraad maken, kies TUT-CART met hoeveelheid 5 en geef vrij. De stuklijst wordt bevroren en de componenten worden gereserveerd. Normaal start productie vanuit een verkooporderregel; dat zie je in hoofdstuk 9.';
 
   @override
   String get tutManufacturingReleaseHint =>
@@ -7442,7 +7442,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutManufacturingCompleteBody =>
-      'Druk op Voltooien. Het dialoogvenster toont de uitvoerhoeveelheid (5) en de verbruikte componenten. Bevestig: de componenten verdwijnen uit de voorraad en vijf afgewerkte karretjes komen erin.';
+      'Druk op Afronden. Het dialoogvenster toont de uitvoerhoeveelheid (5) en de verbruikte componenten. Bevestig: de componenten verdwijnen uit de voorraad en vijf afgewerkte karretjes komen erin.';
 
   @override
   String get tutManufacturingCompleteHint =>
@@ -7665,7 +7665,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutQuotationSendBody =>
-      'Druk op Markeer als verstuurd. Vanaf nu ligt de offerte vast: ze kan alleen nog aanvaard, afgewezen of herzien worden. (Deze knop verstuurt geen mail; je stuurt de pdf zelf of antwoordt in het ticket.)';
+      'Druk op Markeren als verzonden. Vanaf nu ligt de offerte vast: ze kan alleen nog aanvaard, afgewezen of herzien worden. (Deze knop verstuurt geen mail; je stuurt de pdf zelf of antwoordt in het ticket.)';
 
   @override
   String get tutQuotationPdfTitle => 'De pdf';
@@ -7743,7 +7743,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutChangeSendBody =>
-      'Markeer de nieuwe revisie als verstuurd, zoals eerder.';
+      'Markeer de nieuwe revisie als verzonden, zoals eerder.';
 
   @override
   String get tutChangeAcceptTitle => 'De klant gaat akkoord';
@@ -7775,7 +7775,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutChangeSendOrderBody =>
-      'Druk op Orderbevestiging versturen. De order wordt verstuurd: de klant kan hem nu bevestigen.';
+      'Druk op Orderbevestiging verzenden. De order wordt verstuurd: de klant kan hem nu bevestigen.';
 
   @override
   String get tutChangeSendOrderHint =>
@@ -7786,14 +7786,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutChangeConfirmBody =>
-      'Maya zei al ja per e-mail, dus druk op Bevestigen namens klant en voeg een notitie toe zoals per e-mail bevestigd. De order is nu bevestigd en kan naar productie.';
+      'Maya zei al ja per e-mail, dus druk op Bevestigen namens de klant en voeg een notitie toe zoals per e-mail bevestigd. De order is nu bevestigd en kan naar productie.';
 
   @override
   String get tutChangeReleaseTitle => 'Vrij te geven';
 
   @override
   String get tutChangeReleaseBody =>
-      'Zet de productiehoed op. Open Productie > Vrij te geven: de bevestigde orderregel met 10 karretjes wacht. Druk op Vrijgeven om de productieorder voor precies die regel te maken.';
+      'Zet de productiehoed op. Open Productie > Vrij te geven: de bevestigde orderregel met 10 karretjes wacht. Druk op Vrijgeven aan productie om de productieorder voor precies die regel te maken.';
 
   @override
   String get tutChangeStartTitle => 'Start de productie';
@@ -7833,4 +7833,11 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get tutChangeDoneBody =>
       'Je ging van leveranciers naar inkoop, facturen, productie, prijzen, een ticket, een nieuwe klant, een herziene offerte, een order en productie voor de order en voor voorraad. Wat nu: leveringen en verzending, herstellingen, buitendienst en rapporten hebben elk hun eigen menu-item. Elk hoofdstuk kan opnieuw gespeeld worden vanuit de hoofdstukkaart; stappen die al klaar zijn worden overgeslagen.';
+
+  @override
+  String get tutInvoicesOpenSecondTitle => 'Open de verdachte factuur';
+
+  @override
+  String get tutInvoicesOpenSecondBody =>
+      'Open factuur TUT-INV-002, die je net registreerde, vanuit de lijst in Financiën.';
 }

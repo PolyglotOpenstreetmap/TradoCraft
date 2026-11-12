@@ -90,6 +90,7 @@ final customerMission = Mission(
     MissionStep(
       id: 'reply',
       hasHint: true,
+      route: '/helpdesk/{ticketId}',
       targets: const ['ticket-send'],
       completion: const OnApi('POST', '/tickets/{ticketId}/replies'),
     ),
@@ -107,10 +108,11 @@ final customerMission = Mission(
         return _mailCapture(r, idKey: 'mailId2');
       }),
     ),
-    const MissionStep(id: 'readDetails', route: '/helpdesk'),
+    MissionStep(id: 'readDetails', route: '/helpdesk/{ticketId}'),
     MissionStep(
       id: 'createCustomer',
       hasHint: true,
+      route: '/helpdesk/{ticketId}',
       targets: const ['customer-form-save', 'ticket-new-customer'],
       completion: OnApi(
         'POST',
@@ -120,7 +122,11 @@ final customerMission = Mission(
       capture: (json) => json is Map ? {'customerId': '${json['id']}'} : const {},
       probe: customerProbe,
     ),
-    const MissionStep(id: 'linked', targets: ['ticket-new-quotation']),
+    MissionStep(
+      id: 'linked',
+      route: '/helpdesk/{ticketId}',
+      targets: const ['ticket-new-quotation'],
+    ),
     const MissionStep(id: 'done'),
   ],
 );
@@ -178,6 +184,7 @@ final quotationMission = Mission(
     MissionStep(
       id: 'lead',
       hasHint: true,
+      route: '/quotations/{quotationId}',
       targets: const ['quotation-save'],
       completion: OnApi(
         'PUT',
@@ -193,6 +200,7 @@ final quotationMission = Mission(
     ),
     MissionStep(
       id: 'send',
+      route: '/quotations/{quotationId}',
       targets: const ['quotation-send'],
       completion: const OnApi('POST', '/quotations/{quotationId}/send'),
       probe: Probe(
@@ -200,7 +208,12 @@ final quotationMission = Mission(
         done: (json, _) => _qStatus(json, {'sent', 'accepted', 'superseded'}),
       ),
     ),
-    const MissionStep(id: 'pdf', hasHint: true, targets: ['quotation-pdf']),
+    MissionStep(
+      id: 'pdf',
+      hasHint: true,
+      route: '/quotations/{quotationId}',
+      targets: const ['quotation-pdf'],
+    ),
     const MissionStep(id: 'done'),
   ],
 );
@@ -246,6 +259,7 @@ final changeMission = Mission(
     MissionStep(
       id: 'revise',
       hasHint: true,
+      route: '/quotations/{quotationId}',
       targets: const ['quotation-revise-keep', 'quotation-revise'],
       completion: const OnApi('POST', '/quotations/{quotationId}/revise'),
       capture: (json) => json is Map ? {'quotation2Id': '${json['id']}'} : const {},
@@ -263,6 +277,7 @@ final changeMission = Mission(
     MissionStep(
       id: 'edit',
       hasHint: true,
+      route: '/quotations/{quotation2Id}',
       targets: const ['quotation-save'],
       completion: OnApi(
         'PUT',
@@ -276,6 +291,7 @@ final changeMission = Mission(
     ),
     MissionStep(
       id: 'send',
+      route: '/quotations/{quotation2Id}',
       targets: const ['quotation-send'],
       completion: const OnApi('POST', '/quotations/{quotation2Id}/send'),
       probe: Probe(
@@ -285,6 +301,7 @@ final changeMission = Mission(
     ),
     MissionStep(
       id: 'accept',
+      route: '/quotations/{quotation2Id}',
       targets: const ['quotation-accept'],
       completion: const OnApi('POST', '/quotations/{quotation2Id}/accept'),
       probe: Probe(
@@ -295,6 +312,7 @@ final changeMission = Mission(
     MissionStep(
       id: 'convert',
       hasHint: true,
+      route: '/quotations/{quotation2Id}',
       targets: const ['quotation-convert'],
       completion: const OnApi('POST', '/quotations/{quotation2Id}/convert'),
       capture: (json) {
@@ -310,6 +328,7 @@ final changeMission = Mission(
     MissionStep(
       id: 'sendOrder',
       hasHint: true,
+      route: '/orders/{orderId}',
       targets: const ['order-send'],
       completion: const OnApi('POST', '/orders/{orderId}/send'),
       probe: Probe(
@@ -319,6 +338,7 @@ final changeMission = Mission(
     ),
     MissionStep(
       id: 'confirm',
+      route: '/orders/{orderId}',
       targets: const ['order-confirm'],
       completion: const OnApi('POST', '/orders/{orderId}/confirm'),
       probe: Probe(
@@ -350,6 +370,7 @@ final changeMission = Mission(
     ),
     MissionStep(
       id: 'start',
+      route: '/production/{orderProductionId}',
       targets: const ['production-start'],
       completion: const OnApi(
         'POST',
@@ -362,6 +383,7 @@ final changeMission = Mission(
     ),
     MissionStep(
       id: 'complete',
+      route: '/production/{orderProductionId}',
       targets: const ['production-complete-save', 'production-complete'],
       completion: const OnApi(
         'POST',
