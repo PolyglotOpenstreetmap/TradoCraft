@@ -2368,7 +2368,7 @@
   "tutManufacturingDivisionBody": "Añada una división con código TUT-ASM y nombre Tutorial assembly, y márquese en la lista de miembros: los miembros son los operarios de la división.",
   "tutManufacturingDivisionHint": "El diálogo lista los usuarios de la empresa; marque la etiqueta con su nombre.",
   "tutManufacturingQueueTitle": "La cola de producción",
-  "tutManufacturingQueueBody": "Vuelva a Producción. Como es miembro de una división, la cola muestra por defecto Mis divisiones: las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Cambie a Todas las divisiones para verlo todo.",
+  "tutManufacturingQueueBody": "Vuelva a Producción. En la cabecera de la cola elija Mis divisiones: muestra las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Es miembro de una división, así que es la opción por defecto; elija Todas las divisiones para verlo todo.",
   "tutManufacturingReleaseTitle": "Libere una orden de producción",
   "tutManufacturingReleaseBody": "Pulse Fabricar para stock, elija TUT-CART con cantidad 5 y libere. La lista de materiales se congela y los componentes se reservan. Normalmente la producción parte de una línea de pedido de venta; lo verá en el capítulo 9.",
   "tutManufacturingReleaseHint": "Solo los productos fabricados con lista de materiales activa se pueden liberar.",
@@ -2421,7 +2421,7 @@
   "tutCustomerReadDetailsTitle": "Lea los datos",
   "tutCustomerReadDetailsBody": "Vuelva al ticket (ábralo de nuevo si aún no muestra el mensaje) y lea la respuesta de Maya: empresa Brightwheel Logistics BV, NIF-IVA BE0123456749, Voorbeeldlaan 12, 9000 Gante, Bélgica. Pulse Siguiente cuando los tenga.",
   "tutCustomerCreateCustomerTitle": "Cree el cliente",
-  "tutCustomerCreateCustomerBody": "En las propiedades del ticket pulse Nuevo cliente (o use Clientes > Nuevo cliente). Rellene el nombre Brightwheel Logistics BV, un código como TUT-CUST, el NIF-IVA, la dirección, y elija la zona de precios TUT-EXPORT. El ticket se vincula al nuevo cliente al guardar.",
+  "tutCustomerCreateCustomerBody": "En las propiedades del ticket pulse Nuevo cliente. Rellene el nombre Brightwheel Logistics BV, un código como TUT-CUST, el NIF-IVA, la dirección, y elija la zona de precios TUT-EXPORT. El ticket se vincula al nuevo cliente al guardar.",
   "tutCustomerCreateCustomerHint": "Calle Voorbeeldlaan 12, código postal 9000, ciudad Gante, país BE. El idioma y las condiciones de pago pueden quedar como están.",
   "tutCustomerLinkedTitle": "El ticket conoce a su cliente",
   "tutCustomerLinkedBody": "El ticket muestra ya al cliente y aparecen botones nuevos: crear un lead o empezar un presupuesto directamente desde el ticket. El siguiente capítulo hace el presupuesto. Pulse Siguiente.",
@@ -2489,5 +2489,7 @@
   "tutChangeDoneTitle": "Bien hecho: toda la historia",
   "tutChangeDoneBody": "Ha pasado de proveedores a compras, facturas, producción, precios, un ticket, un cliente nuevo, un presupuesto revisado, un pedido y la producción para el pedido y para stock. Y ahora: entregas y envíos, reparaciones, servicio de campo e informes tienen cada uno su entrada de menú. Cualquier capítulo se puede repetir desde el mapa de capítulos; los pasos ya hechos se omiten.",
   "tutInvoicesOpenSecondTitle": "Abra la factura sospechosa",
-  "tutInvoicesOpenSecondBody": "Abra la factura TUT-INV-002, la que acaba de registrar, desde la lista de Finanzas."
+  "tutInvoicesOpenSecondBody": "Abra la factura TUT-INV-002, la que acaba de registrar, desde la lista de Finanzas.",
+  "tutActionFailed": "No se pudo enviar el correo simulado: {reason}. Inténtelo de nuevo.",
+  "tutActionForbidden": "No tiene permiso para importar correo al helpdesk (hace falta el permiso de escritura del helpdesk). Pídalo a un administrador o inicie sesión como tal e inténtelo de nuevo."
 }

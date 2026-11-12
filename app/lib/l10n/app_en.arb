@@ -3672,7 +3672,7 @@
   "tutManufacturingDivisionBody": "Add a division with code TUT-ASM and name Tutorial assembly, and tick yourself in the member list: members are the workers of the division.",
   "tutManufacturingDivisionHint": "The dialog lists the users of the company; tick the chip with your own name.",
   "tutManufacturingQueueTitle": "The production queue",
-  "tutManufacturingQueueBody": "Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions' orders plus orders without a division, so nothing unassigned is hidden. Switch to All divisions to see everything.",
+  "tutManufacturingQueueBody": "Go back to Production. In the queue header choose My divisions: it shows the orders of your divisions plus orders without a division, so nothing unassigned is hidden. You are a member of a division, so this is the default for you; choose All divisions to see everything.",
   "tutManufacturingReleaseTitle": "Release a production order",
   "tutManufacturingReleaseBody": "Press Build for stock, choose TUT-CART and quantity 5, and release. The bill of materials is frozen and the components are reserved. Normally production starts from a sales order line; you will see that in chapter 9.",
   "tutManufacturingReleaseHint": "Only manufactured products with an active bill of materials can be released.",
@@ -3725,7 +3725,7 @@
   "tutCustomerReadDetailsTitle": "Read the details",
   "tutCustomerReadDetailsBody": "Go back to the ticket (reopen it if it does not show the new message yet) and read Maya's answer: company Brightwheel Logistics BV, VAT number BE0123456749, Voorbeeldlaan 12, 9000 Gent, Belgium. Press Next when you have it.",
   "tutCustomerCreateCustomerTitle": "Create the customer",
-  "tutCustomerCreateCustomerBody": "In the ticket properties press New customer (or use Customers > New customer). Fill in name Brightwheel Logistics BV, a code such as TUT-CUST, VAT number, the address, and choose the price zone TUT-EXPORT. The ticket is linked to the new customer when you save.",
+  "tutCustomerCreateCustomerBody": "In the ticket properties press New customer. Fill in name Brightwheel Logistics BV, a code such as TUT-CUST, VAT number, the address, and choose the price zone TUT-EXPORT. The ticket is linked to the new customer when you save.",
   "tutCustomerCreateCustomerHint": "Street Voorbeeldlaan 12, postal code 9000, city Gent, country BE. Language and payment terms can stay as they are.",
   "tutCustomerLinkedTitle": "The ticket knows its customer",
   "tutCustomerLinkedBody": "The ticket now shows the customer, and new buttons appear: create a lead or start a quotation straight from the ticket. The next chapter makes the quotation. Press Next.",
@@ -3793,5 +3793,14 @@
   "tutChangeDoneTitle": "Well done: the whole story",
   "tutChangeDoneBody": "You went from suppliers to purchasing, invoices, production, prices, a ticket, a new customer, a revised quotation, an order and production for the order and for stock. Where next: deliveries and shipping, repairs, field service and the reports each have their own menu entry. Any chapter can be replayed from the chapter map; steps that are already done are skipped.",
   "tutInvoicesOpenSecondTitle": "Open the suspicious invoice",
-  "tutInvoicesOpenSecondBody": "Open invoice TUT-INV-002, the one you just registered, from the list in Finance."
+  "tutInvoicesOpenSecondBody": "Open invoice TUT-INV-002, the one you just registered, from the list in Finance.",
+  "tutActionFailed": "Could not send the simulated e-mail: {reason}. Try again.",
+  "@tutActionFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "tutActionForbidden": "You are not allowed to import e-mail into the helpdesk (it needs the helpdesk write permission). Ask an administrator, or sign in as one, and try again."
 }

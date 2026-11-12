@@ -7410,7 +7410,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Ga terug naar Productie. Omdat je lid van een afdeling bent, staat de wachtrij nu standaard op Mijn afdelingen: de orders van je afdelingen plus orders zonder afdeling, zodat niets onbeheerds verborgen blijft. Schakel naar Alle afdelingen om alles te zien.';
+      'Ga terug naar Productie. Kies bovenaan de wachtrij Mijn afdelingen: dat toont de orders van je afdelingen plus orders zonder afdeling, zodat niets onbeheerds verborgen blijft. Je bent lid van een afdeling, dus dit is voor jou de standaard; kies Alle afdelingen om alles te zien.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Geef een productieorder vrij';
@@ -7597,7 +7597,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutCustomerCreateCustomerBody =>
-      'Druk in de ticketeigenschappen op Nieuwe klant (of gebruik Klanten > Nieuwe klant). Vul naam Brightwheel Logistics BV in, een code zoals TUT-CUST, btw-nummer, het adres, en kies de prijszone TUT-EXPORT. Het ticket wordt aan de nieuwe klant gekoppeld als je bewaart.';
+      'Druk in de ticketeigenschappen op Nieuwe klant. Vul naam Brightwheel Logistics BV in, een code zoals TUT-CUST, btw-nummer, het adres, en kies de prijszone TUT-EXPORT. Het ticket wordt aan de nieuwe klant gekoppeld als je bewaart.';
 
   @override
   String get tutCustomerCreateCustomerHint =>
@@ -7807,7 +7807,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutChangeCompleteBody =>
-      'Druk op Voltooien en bevestig de 10 karretjes. De componenten worden verbruikt en de karretjes gaan naar de order.';
+      'Druk op Afronden en bevestig de 10 karretjes. De componenten worden verbruikt en de karretjes gaan naar de order.';
 
   @override
   String get tutChangeReadyTitle => 'Klaar voor verzending';
@@ -7821,7 +7821,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tutChangeStockBody =>
-      'Productie loopt vaak vooruit op orders. Open Productie, druk op Voor voorraad bouwen en geef nog 4 karretjes TUT-CART vrij. Zonder order komen ze bij voltooiing gewoon op voorraad.';
+      'Productie loopt vaak vooruit op orders. Open Productie, druk op Voor voorraad maken en geef nog 4 karretjes TUT-CART vrij. Zonder order komen ze bij voltooiing gewoon op voorraad.';
 
   @override
   String get tutChangeStockHint =>
@@ -7840,4 +7840,13 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get tutInvoicesOpenSecondBody =>
       'Open factuur TUT-INV-002, die je net registreerde, vanuit de lijst in Financiën.';
+
+  @override
+  String tutActionFailed(String reason) {
+    return 'Het gesimuleerde e-mailbericht kon niet verstuurd worden: $reason. Probeer het opnieuw.';
+  }
+
+  @override
+  String get tutActionForbidden =>
+      'Je mag geen e-mail in de helpdesk importeren (daarvoor is het schrijfrecht voor de helpdesk nodig). Vraag het aan een beheerder of meld je als beheerder aan en probeer opnieuw.';
 }

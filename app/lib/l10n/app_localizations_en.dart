@@ -7385,7 +7385,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All divisions to see everything.';
+      'Go back to Production. In the queue header choose My divisions: it shows the orders of your divisions plus orders without a division, so nothing unassigned is hidden. You are a member of a division, so this is the default for you; choose All divisions to see everything.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Release a production order';
@@ -7572,7 +7572,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutCustomerCreateCustomerBody =>
-      'In the ticket properties press New customer (or use Customers > New customer). Fill in name Brightwheel Logistics BV, a code such as TUT-CUST, VAT number, the address, and choose the price zone TUT-EXPORT. The ticket is linked to the new customer when you save.';
+      'In the ticket properties press New customer. Fill in name Brightwheel Logistics BV, a code such as TUT-CUST, VAT number, the address, and choose the price zone TUT-EXPORT. The ticket is linked to the new customer when you save.';
 
   @override
   String get tutCustomerCreateCustomerHint =>
@@ -7813,4 +7813,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tutInvoicesOpenSecondBody =>
       'Open invoice TUT-INV-002, the one you just registered, from the list in Finance.';
+
+  @override
+  String tutActionFailed(String reason) {
+    return 'Could not send the simulated e-mail: $reason. Try again.';
+  }
+
+  @override
+  String get tutActionForbidden =>
+      'You are not allowed to import e-mail into the helpdesk (it needs the helpdesk write permission). Ask an administrator, or sign in as one, and try again.';
 }

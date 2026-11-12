@@ -7420,7 +7420,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Retournez à Production. Comme vous êtes membre d\'une division, la file affiche par défaut Mes divisions : les ordres de vos divisions plus ceux sans division, rien de non attribué n\'est caché. Passez à Toutes les divisions pour tout voir.';
+      'Retournez à Production. Dans l\'en-tête de la file, choisissez Mes divisions : cela montre les ordres de vos divisions plus ceux sans division, rien de non attribué n\'est caché. Vous êtes membre d\'une division, c\'est donc le réglage par défaut ; choisissez Toutes les divisions pour tout voir.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Lancez un ordre de production';
@@ -7607,7 +7607,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutCustomerCreateCustomerBody =>
-      'Dans les propriétés du ticket, appuyez sur Nouveau client (ou utilisez Clients > Nouveau client). Saisissez le nom Brightwheel Logistics BV, un code comme TUT-CUST, le numéro de TVA, l\'adresse, et choisissez la zone de prix TUT-EXPORT. Le ticket est lié au nouveau client à l\'enregistrement.';
+      'Dans les propriétés du ticket, appuyez sur Nouveau client. Saisissez le nom Brightwheel Logistics BV, un code comme TUT-CUST, le numéro de TVA, l\'adresse, et choisissez la zone de prix TUT-EXPORT. Le ticket est lié au nouveau client à l\'enregistrement.';
 
   @override
   String get tutCustomerCreateCustomerHint =>
@@ -7850,4 +7850,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tutInvoicesOpenSecondBody =>
       'Ouvrez la facture TUT-INV-002, celle que vous venez d\'enregistrer, depuis la liste de Finance.';
+
+  @override
+  String tutActionFailed(String reason) {
+    return 'Impossible d\'envoyer l\'e-mail simulé : $reason. Réessayez.';
+  }
+
+  @override
+  String get tutActionForbidden =>
+      'Vous n\'avez pas le droit d\'importer des e-mails dans le helpdesk (il faut le droit d\'écriture du helpdesk). Demandez à un administrateur ou connectez-vous comme tel, puis réessayez.';
 }

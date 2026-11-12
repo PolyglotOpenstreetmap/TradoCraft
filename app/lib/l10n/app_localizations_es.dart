@@ -7410,7 +7410,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Vuelva a Producción. Como es miembro de una división, la cola muestra por defecto Mis divisiones: las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Cambie a Todas las divisiones para verlo todo.';
+      'Vuelva a Producción. En la cabecera de la cola elija Mis divisiones: muestra las órdenes de sus divisiones más las que no tienen división, así no se oculta nada sin asignar. Es miembro de una división, así que es la opción por defecto; elija Todas las divisiones para verlo todo.';
 
   @override
   String get tutManufacturingReleaseTitle => 'Libere una orden de producción';
@@ -7597,7 +7597,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutCustomerCreateCustomerBody =>
-      'En las propiedades del ticket pulse Nuevo cliente (o use Clientes > Nuevo cliente). Rellene el nombre Brightwheel Logistics BV, un código como TUT-CUST, el NIF-IVA, la dirección, y elija la zona de precios TUT-EXPORT. El ticket se vincula al nuevo cliente al guardar.';
+      'En las propiedades del ticket pulse Nuevo cliente. Rellene el nombre Brightwheel Logistics BV, un código como TUT-CUST, el NIF-IVA, la dirección, y elija la zona de precios TUT-EXPORT. El ticket se vincula al nuevo cliente al guardar.';
 
   @override
   String get tutCustomerCreateCustomerHint =>
@@ -7840,4 +7840,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tutInvoicesOpenSecondBody =>
       'Abra la factura TUT-INV-002, la que acaba de registrar, desde la lista de Finanzas.';
+
+  @override
+  String tutActionFailed(String reason) {
+    return 'No se pudo enviar el correo simulado: $reason. Inténtelo de nuevo.';
+  }
+
+  @override
+  String get tutActionForbidden =>
+      'No tiene permiso para importar correo al helpdesk (hace falta el permiso de escritura del helpdesk). Pídalo a un administrador o inicie sesión como tal e inténtelo de nuevo.';
 }

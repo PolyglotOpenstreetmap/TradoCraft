@@ -62,6 +62,7 @@ final customerMission = Mission(
           host.dio,
           kind: TutorialMailKind.request,
           lang: host.languageCode,
+          messageId: host.messageId('request'),
         );
         return _mailCapture(r, idKey: 'mailId1');
       }),
@@ -102,6 +103,7 @@ final customerMission = Mission(
           host.dio,
           kind: TutorialMailKind.details,
           lang: host.languageCode,
+          messageId: host.messageId('details'),
           inReplyTo: v['mailId1'],
           ticketNumber: v['ticketNumber'],
         );
@@ -134,16 +136,55 @@ final customerMission = Mission(
 bool _qStatus(Object? json, Set<String> statuses) =>
     json is Map && statuses.contains(json['status']);
 
-bool _hasCartQuantity(Object? json, MissionContext ctx, num min) {
+/// Whether the quotation [json] has a line for the cart with exactly [quantity] pieces.
+bool _hasCartQuantity(Object? json, MissionContext ctx, num quantity) {
   final lines = json is Map ? json['lines'] : null;
   if (lines is! List) return false;
   for (final l in lines) {
     if (l is Map && l['product_id'] == ctx.values['cartId']) {
-      final q = num.tryParse('${l['quantity']}') ?? 0;
-      if (q >= min) return true;
+      final q = num.tryParse('${l['quantity']}');
+      if (q != null && q == quantity) return true;
     }
   }
   return false;
+}
+
+/// The paths of the full records of the quotations in a list answer.
+List<String> _quotationPaths(Object? page, MissionContext ctx) {
+  final items = page is Map ? page['items'] : page;
+  return [
+    if (items is List)
+      for (final i in items)
+        if (i is Map && i['id'] != null) '/api/v1/quotations/${i['id']}',
+  ];
+}
+
+/// The first quotation of the tutorial customer for 8 carts (a full record from [details]).
+Map? _firstQuotation(Object? details, MissionContext ctx) {
+  if (details is! List) return null;
+  for (final q in details) {
+    if (q is Map &&
+        q['customer_id'] == ctx.values['customerId'] &&
+        q['supersedes_id'] == null &&
+        _hasCartQuantity(q, ctx, 8)) {
+      return q;
+    }
+  }
+  return null;
+}
+
+/// The revision of the quotation `quotationId`: it points back at it and has a later revision
+/// number than 1 (a full record from [details]). The creation and discovery paths pick the same one.
+Map? _revisionOf(Object? details, MissionContext ctx) {
+  if (details is! List) return null;
+  for (final q in details) {
+    if (q is Map &&
+        q['supersedes_id'] == ctx.values['quotationId'] &&
+        ((q['revision'] as num?) ?? 0) > 1) {
+      return q;
+    }
+  }
+  return null;
 }
 
 /// Chapter 8: a quotation for the new customer, a note from production, sent.
@@ -168,15 +209,16 @@ final quotationMission = Mission(
         predicate: (json, ctx) =>
             json is Map &&
             json['customer_id'] == ctx.values['customerId'] &&
-            _hasCartQuantity(json, ctx, 1),
+            _hasCartQuantity(json, ctx, 8),
       ),
       capture: (json) => json is Map ? {'quotationId': '${json['id']}'} : const {},
       probe: Probe(
         '/api/v1/quotations',
         query: {'customer_id': '{customerId}', 'limit': 20},
-        done: (json, _) => _first(json, (_) => true) != null,
-        capture: (json, _) {
-          final q = _first(json, (_) => true);
+        expand: _quotationPaths,
+        done: (details, ctx) => _firstQuotation(details, ctx) != null,
+        capture: (details, ctx) {
+          final q = _firstQuotation(details, ctx);
           return q == null ? const {} : {'quotationId': '${q['id']}'};
         },
       ),
@@ -245,6 +287,7 @@ final changeMission = Mission(
           host.dio,
           kind: TutorialMailKind.change,
           lang: host.languageCode,
+          messageId: host.messageId('change'),
           inReplyTo: v['mailId1'],
           ticketNumber: v['ticketNumber'],
         );
@@ -261,15 +304,20 @@ final changeMission = Mission(
       hasHint: true,
       route: '/quotations/{quotationId}',
       targets: const ['quotation-revise-keep', 'quotation-revise'],
-      completion: const OnApi('POST', '/quotations/{quotationId}/revise'),
+      completion: OnApi(
+        'POST',
+        '/quotations/{quotationId}/revise',
+        predicate: (json, ctx) =>
+            json is Map && json['supersedes_id'] == ctx.values['quotationId'],
+      ),
       capture: (json) => json is Map ? {'quotation2Id': '${json['id']}'} : const {},
       probe: Probe(
         '/api/v1/quotations',
         query: {'customer_id': '{customerId}', 'limit': 20},
-        done: (json, ctx) =>
-            _first(json, (q) => q['id'] != ctx.values['quotationId']) != null,
-        capture: (json, ctx) {
-          final q = _first(json, (q) => q['id'] != ctx.values['quotationId']);
+        expand: _quotationPaths,
+        done: (details, ctx) => _revisionOf(details, ctx) != null,
+        capture: (details, ctx) {
+          final q = _revisionOf(details, ctx);
           return q == null ? const {} : {'quotation2Id': '${q['id']}'};
         },
       ),

@@ -13323,7 +13323,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutManufacturingQueueBody.
   ///
   /// In en, this message translates to:
-  /// **'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All divisions to see everything.'**
+  /// **'Go back to Production. In the queue header choose My divisions: it shows the orders of your divisions plus orders without a division, so nothing unassigned is hidden. You are a member of a division, so this is the default for you; choose All divisions to see everything.'**
   String get tutManufacturingQueueBody;
 
   /// No description provided for @tutManufacturingReleaseTitle.
@@ -13641,7 +13641,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutCustomerCreateCustomerBody.
   ///
   /// In en, this message translates to:
-  /// **'In the ticket properties press New customer (or use Customers > New customer). Fill in name Brightwheel Logistics BV, a code such as TUT-CUST, VAT number, the address, and choose the price zone TUT-EXPORT. The ticket is linked to the new customer when you save.'**
+  /// **'In the ticket properties press New customer. Fill in name Brightwheel Logistics BV, a code such as TUT-CUST, VAT number, the address, and choose the price zone TUT-EXPORT. The ticket is linked to the new customer when you save.'**
   String get tutCustomerCreateCustomerBody;
 
   /// No description provided for @tutCustomerCreateCustomerHint.
@@ -14051,6 +14051,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open invoice TUT-INV-002, the one you just registered, from the list in Finance.'**
   String get tutInvoicesOpenSecondBody;
+
+  /// No description provided for @tutActionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not send the simulated e-mail: {reason}. Try again.'**
+  String tutActionFailed(String reason);
+
+  /// No description provided for @tutActionForbidden.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not allowed to import e-mail into the helpdesk (it needs the helpdesk write permission). Ask an administrator, or sign in as one, and try again.'**
+  String get tutActionForbidden;
 }
 
 class _AppLocalizationsDelegate

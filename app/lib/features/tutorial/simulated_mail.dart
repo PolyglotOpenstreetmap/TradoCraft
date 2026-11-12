@@ -172,7 +172,7 @@ class InboundMailResult {
 
 /// Builds the canned mail [kind] in [lang] and posts it to `POST /api/v1/helpdesk/inbound`.
 /// [inReplyTo] is the Message-ID of the customer's previous mail; [ticketNumber] adds the
-/// `[Ticket#...]` tag to the subject, which threads the mail when the reply headers are missing.
+/// [messageId] fixes the Message-ID (a retry reuses it); the `[Ticket#...]` tag in the subject, which threads the mail when the reply headers are missing.
 Future<InboundMailResult> sendTutorialMail(
   Dio dio, {
   required TutorialMailKind kind,
@@ -181,9 +181,10 @@ Future<InboundMailResult> sendTutorialMail(
   String? ticketNumber,
   DateTime? now,
   int? salt,
+  String? messageId,
 }) async {
   final at = now ?? DateTime.now();
-  final id = newMessageId(at, kind.name, salt ?? at.microsecond);
+  final id = messageId ?? newMessageId(at, kind.name, salt ?? at.microsecond);
   final text = tutorialMailText(kind, lang);
   final tag = ticketNumber == null ? '' : ' [Ticket#$ticketNumber]';
   final raw = buildRfc822(

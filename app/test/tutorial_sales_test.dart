@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'dart:async';
+import 'dart:ui' show Locale;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tradocraft_app/app/api.dart';
@@ -26,12 +29,13 @@ ProviderContainer _boot(
   required List<String> completed,
   required String active,
   Map<String, String> values = const {},
+  int step = 0,
 }) {
   final kv = MemoryKvStore()
     ..data['tutorial.v1.e1.dev:a@x.test'] = jsonEncode({
       'completed': completed,
       'active': active,
-      'step': 0,
+      'step': step,
       'values': {..._ids, ...values},
     });
   final c = ProviderContainer(
@@ -319,9 +323,32 @@ void main() {
           'items': [{'id': 'cu1', 'name': 'Brightwheel Logistics BV'}],
         },
         'GET /api/v1/quotations': (_) => {
-          'items': [{'id': 'q1', 'customer_id': 'cu1'}],
+          'items': [
+            {'id': 'qx', 'customer_id': 'cu1'},
+            {'id': 'qy', 'customer_id': 'cu1'},
+            {'id': 'q1', 'customer_id': 'cu1'},
+          ],
         },
-        'GET /api/v1/quotations/q1': (_) => {'status': 'sent', 'notes': 'x'},
+        // another quantity, another product: not the quotation of the story
+        'GET /api/v1/quotations/qx': (_) => {
+          'id': 'qx',
+          'customer_id': 'cu1',
+          'status': 'draft',
+          'lines': [{'product_id': 'k1', 'quantity': '3'}],
+        },
+        'GET /api/v1/quotations/qy': (_) => {
+          'id': 'qy',
+          'customer_id': 'cu1',
+          'status': 'draft',
+          'lines': [{'product_id': 'zzz', 'quantity': '8'}],
+        },
+        'GET /api/v1/quotations/q1': (_) => {
+          'id': 'q1',
+          'customer_id': 'cu1',
+          'status': 'sent',
+          'notes': 'x',
+          'lines': [{'product_id': 'k1', 'quantity': '8.0000'}],
+        },
       });
       final c = _boot(http, completed: done, active: 'quotation');
       final t = c.read(tutorialProvider.notifier);
@@ -350,7 +377,10 @@ void main() {
           'new_ticket': false,
           'duplicate': false,
         },
-        'POST /api/v1/quotations/q1/revise': (_) => {'id': 'q2'},
+        'POST /api/v1/quotations/q1/revise': (_) => {
+          'id': 'q2',
+          'supersedes_id': 'q1',
+        },
         'PUT /api/v1/quotations/q2': (b) => {
           'id': 'q2',
           'lines': (b as Map)['lines'],
@@ -429,6 +459,138 @@ void main() {
       expect(step(), 16);
       t.next();
       expect(c.read(tutorialProvider).completed, contains('change'));
+    });
+  });
+  group('probe precision of chapters 8 and 9', () {
+    final done = ['welcome', 'product', 'suppliers', 'buying', 'invoices', 'manufacturing', 'prices', 'customer', 'quotation'];
+    test('only a revision pointing back at the quotation counts, the same for done and capture', () async {
+      final http = FakeHttp({
+        'GET /api/v1/quotations': (_) => {
+          'items': [
+            {'id': 'qz'},
+            {'id': 'q2'},
+          ],
+        },
+        'GET /api/v1/quotations/qz': (_) => {
+          'id': 'qz',
+          'supersedes_id': 'other',
+          'revision': 2,
+        },
+        'GET /api/v1/quotations/q2': (_) => {
+          'id': 'q2',
+          'supersedes_id': 'q1',
+          'revision': 2,
+        },
+        'GET /api/v1/quotations/q1': (_) => {'status': 'superseded'},
+      });
+      final c = _boot(
+        http,
+        completed: done,
+        active: 'change',
+        step: 2,
+        values: {'customerId': 'cu1', 'quotationId': 'q1'},
+      );
+      final t = c.read(tutorialProvider.notifier);
+      await t.ready;
+      await t.resume();
+      await pumpEventQueue(times: 100);
+      t.routeChanged('/quotations/q1');
+      await pumpEventQueue(times: 200);
+      expect(c.read(tutorialProvider).values['quotation2Id'], 'q2');
+    });
+
+    test('an unrelated quotation is not taken as the revision', () async {
+      final http = FakeHttp({
+        'GET /api/v1/quotations': (_) => {
+          'items': [{'id': 'qz'}],
+        },
+        'GET /api/v1/quotations/qz': (_) => {
+          'id': 'qz',
+          'supersedes_id': 'other',
+          'revision': 2,
+        },
+        'GET /api/v1/quotations/q1': (_) => {'status': 'sent'},
+      });
+      final c = _boot(
+        http,
+        completed: done,
+        active: 'change',
+        step: 2,
+        values: {'customerId': 'cu1', 'quotationId': 'q1'},
+      );
+      final t = c.read(tutorialProvider.notifier);
+      await t.ready;
+      await t.resume();
+      await pumpEventQueue(times: 100);
+      t.routeChanged('/quotations/q1');
+      await pumpEventQueue(times: 200);
+      expect(c.read(tutorialProvider).values.containsKey('quotation2Id'), isFalse);
+      expect(c.read(tutorialProvider).stepIndex, 3);
+    });
+  });
+
+  group('scripted e-mail button', () {
+    final done = ['welcome', 'product', 'suppliers', 'buying', 'invoices', 'manufacturing', 'prices'];
+
+    test('language: the first supported device language wins over an unsupported first one', () {
+      expect(resolveTutorialLanguage(null, [const Locale('ja'), const Locale('fr', 'BE')]), 'fr');
+      expect(resolveTutorialLanguage(null, [const Locale('ja')]), 'en');
+      expect(resolveTutorialLanguage(null, const []), 'en');
+      expect(resolveTutorialLanguage(const Locale('de'), [const Locale('fr')]), 'de');
+    });
+
+    test('a double tap sends one request', () async {
+      final gate = Completer<void>();
+      var calls = 0;
+      final http = FakeHttp({
+        'POST /api/v1/helpdesk/inbound': (_) {
+          calls++;
+          return {'ticket_id': 't1', 'ticket_number': 'T1', 'new_ticket': true};
+        },
+      });
+      final c = _boot(http, completed: done, active: 'customer');
+      final t = c.read(tutorialProvider.notifier);
+      await t.ready;
+      await t.resume();
+      t.next();
+      final a = t.runAction();
+      final b = t.runAction();
+      expect(c.read(tutorialProvider).actionBusy, isTrue);
+      await Future.wait([a, b]);
+      gate.complete();
+      expect(calls, 1);
+      expect(c.read(tutorialProvider).actionBusy, isFalse);
+      expect(c.read(tutorialProvider).stepIndex, 2);
+    });
+
+    test('a failure is shown, the step stays, and the retry reuses the Message-ID', () async {
+      var fail = true;
+      final ids = <String>[];
+      final http = FakeHttp({
+        'POST /api/v1/helpdesk/inbound': (b) {
+          ids.add(RegExp(r'Message-ID: (.*)\r\n').firstMatch(b as String)!.group(1)!);
+          return fail
+              ? const FakeStatus(403, {'error': 'forbidden', 'message': 'no'})
+              : {'ticket_id': 't1', 'ticket_number': 'T1', 'new_ticket': true};
+        },
+      });
+      final c = _boot(http, completed: done, active: 'customer');
+      final t = c.read(tutorialProvider.notifier);
+      await t.ready;
+      await t.resume();
+      t.next();
+      await t.runAction();
+      var s = c.read(tutorialProvider);
+      expect(s.stepIndex, 1, reason: 'the step stays available');
+      expect(s.actionBusy, isFalse);
+      expect(s.actionError?.status, 403);
+      fail = false;
+      await t.runAction();
+      s = c.read(tutorialProvider);
+      expect(s.actionError, isNull);
+      expect(s.stepIndex, 2);
+      expect(ids, hasLength(2));
+      expect(ids[1], ids[0], reason: 'a retry is idempotent for the server');
     });
   });
 }

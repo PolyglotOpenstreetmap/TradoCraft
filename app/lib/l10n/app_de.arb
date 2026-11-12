@@ -2368,7 +2368,7 @@
   "tutManufacturingDivisionBody": "Fügen Sie eine Abteilung mit Code TUT-ASM und Name Tutorial assembly hinzu und haken Sie sich in der Mitgliederliste an: Mitglieder sind die Werker der Abteilung.",
   "tutManufacturingDivisionHint": "Der Dialog listet die Benutzer der Firma; haken Sie den Chip mit Ihrem Namen an.",
   "tutManufacturingQueueTitle": "Die Fertigungswarteschlange",
-  "tutManufacturingQueueBody": "Gehen Sie zurück zu Fertigung. Da Sie Mitglied einer Abteilung sind, zeigt die Warteschlange jetzt standardmäßig Meine Bereiche: die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Wechseln Sie zu Alle Bereiche, um alles zu sehen.",
+  "tutManufacturingQueueBody": "Gehen Sie zurück zu Fertigung. Wählen Sie oben in der Warteschlange Meine Bereiche: Das zeigt die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Sie sind Mitglied einer Abteilung, daher ist das für Sie die Voreinstellung; wählen Sie Alle Bereiche, um alles zu sehen.",
   "tutManufacturingReleaseTitle": "Geben Sie einen Fertigungsauftrag frei",
   "tutManufacturingReleaseBody": "Drücken Sie Auf Lager fertigen, wählen Sie TUT-CART mit Menge 5 und geben Sie frei. Die Stückliste wird eingefroren und die Komponenten werden reserviert. Normalerweise startet die Fertigung aus einer Auftragsposition; das sehen Sie in Kapitel 9.",
   "tutManufacturingReleaseHint": "Nur gefertigte Produkte mit aktiver Stückliste können freigegeben werden.",
@@ -2421,7 +2421,7 @@
   "tutCustomerReadDetailsTitle": "Lesen Sie die Angaben",
   "tutCustomerReadDetailsBody": "Gehen Sie zurück zum Ticket (öffnen Sie es neu, falls die neue Nachricht noch fehlt) und lesen Sie Mayas Antwort: Firma Brightwheel Logistics BV, USt-IdNr. BE0123456749, Voorbeeldlaan 12, 9000 Gent, Belgien. Drücken Sie Weiter, wenn Sie die Angaben haben.",
   "tutCustomerCreateCustomerTitle": "Legen Sie den Kunden an",
-  "tutCustomerCreateCustomerBody": "Drücken Sie in den Ticket-Eigenschaften auf Neuer Kunde (oder nutzen Sie Kunden > Neuer Kunde). Tragen Sie Name Brightwheel Logistics BV, einen Code wie TUT-CUST, USt-IdNr. und Adresse ein und wählen Sie die Preiszone TUT-EXPORT. Beim Speichern wird das Ticket mit dem neuen Kunden verknüpft.",
+  "tutCustomerCreateCustomerBody": "Drücken Sie in den Ticket-Eigenschaften auf Neuer Kunde. Tragen Sie Name Brightwheel Logistics BV, einen Code wie TUT-CUST, USt-IdNr. und Adresse ein und wählen Sie die Preiszone TUT-EXPORT. Beim Speichern wird das Ticket mit dem neuen Kunden verknüpft.",
   "tutCustomerCreateCustomerHint": "Straße Voorbeeldlaan 12, PLZ 9000, Ort Gent, Land BE. Sprache und Zahlungsbedingungen können bleiben, wie sie sind.",
   "tutCustomerLinkedTitle": "Das Ticket kennt seinen Kunden",
   "tutCustomerLinkedBody": "Das Ticket zeigt nun den Kunden, und neue Schaltflächen erscheinen: einen Lead anlegen oder direkt aus dem Ticket ein Angebot beginnen. Das nächste Kapitel erstellt das Angebot. Drücken Sie Weiter.",
@@ -2489,5 +2489,7 @@
   "tutChangeDoneTitle": "Gut gemacht: die ganze Geschichte",
   "tutChangeDoneBody": "Sie sind von Lieferanten über Einkauf, Rechnungen, Fertigung und Preise zu einem Ticket, einem neuen Kunden, einem überarbeiteten Angebot, einem Auftrag und der Fertigung für Auftrag und Bestand gekommen. Wie weiter: Lieferungen und Versand, Reparaturen, Außendienst und Berichte haben je einen eigenen Menüpunkt. Jedes Kapitel lässt sich aus der Kapitelübersicht wiederholen; bereits erledigte Schritte werden übersprungen.",
   "tutInvoicesOpenSecondTitle": "Öffnen Sie die verdächtige Rechnung",
-  "tutInvoicesOpenSecondBody": "Öffnen Sie die Rechnung TUT-INV-002, die Sie gerade erfasst haben, aus der Liste in Finanzen."
+  "tutInvoicesOpenSecondBody": "Öffnen Sie die Rechnung TUT-INV-002, die Sie gerade erfasst haben, aus der Liste in Finanzen.",
+  "tutActionFailed": "Die simulierte E-Mail konnte nicht gesendet werden: {reason}. Versuchen Sie es erneut.",
+  "tutActionForbidden": "Sie dürfen keine E-Mail in das Helpdesk importieren (dafür ist das Schreibrecht für das Helpdesk nötig). Fragen Sie einen Administrator oder melden Sie sich als solcher an und versuchen Sie es erneut."
 }

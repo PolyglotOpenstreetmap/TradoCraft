@@ -7427,7 +7427,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutManufacturingQueueBody =>
-      'Gehen Sie zurück zu Fertigung. Da Sie Mitglied einer Abteilung sind, zeigt die Warteschlange jetzt standardmäßig Meine Bereiche: die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Wechseln Sie zu Alle Bereiche, um alles zu sehen.';
+      'Gehen Sie zurück zu Fertigung. Wählen Sie oben in der Warteschlange Meine Bereiche: Das zeigt die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Sie sind Mitglied einer Abteilung, daher ist das für Sie die Voreinstellung; wählen Sie Alle Bereiche, um alles zu sehen.';
 
   @override
   String get tutManufacturingReleaseTitle =>
@@ -7615,7 +7615,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get tutCustomerCreateCustomerBody =>
-      'Drücken Sie in den Ticket-Eigenschaften auf Neuer Kunde (oder nutzen Sie Kunden > Neuer Kunde). Tragen Sie Name Brightwheel Logistics BV, einen Code wie TUT-CUST, USt-IdNr. und Adresse ein und wählen Sie die Preiszone TUT-EXPORT. Beim Speichern wird das Ticket mit dem neuen Kunden verknüpft.';
+      'Drücken Sie in den Ticket-Eigenschaften auf Neuer Kunde. Tragen Sie Name Brightwheel Logistics BV, einen Code wie TUT-CUST, USt-IdNr. und Adresse ein und wählen Sie die Preiszone TUT-EXPORT. Beim Speichern wird das Ticket mit dem neuen Kunden verknüpft.';
 
   @override
   String get tutCustomerCreateCustomerHint =>
@@ -7859,4 +7859,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get tutInvoicesOpenSecondBody =>
       'Öffnen Sie die Rechnung TUT-INV-002, die Sie gerade erfasst haben, aus der Liste in Finanzen.';
+
+  @override
+  String tutActionFailed(String reason) {
+    return 'Die simulierte E-Mail konnte nicht gesendet werden: $reason. Versuchen Sie es erneut.';
+  }
+
+  @override
+  String get tutActionForbidden =>
+      'Sie dürfen keine E-Mail in das Helpdesk importieren (dafür ist das Schreibrecht für das Helpdesk nötig). Fragen Sie einen Administrator oder melden Sie sich als solcher an und versuchen Sie es erneut.';
 }
