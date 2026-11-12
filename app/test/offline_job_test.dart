@@ -109,7 +109,7 @@ Future<void> _pump(WidgetTester tester, _World w, Widget home) async {
         userKvStoreProvider.overrideWithValue(w.store),
       ],
       child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         home: home,
       ),

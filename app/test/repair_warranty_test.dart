@@ -68,7 +68,7 @@ Future<void> pump(
       overrides: [dioProvider.overrideWithValue(fakeDio(http))],
       child: MaterialApp(
         locale: Locale(locale),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         home: const RepairScreen(id: 'r1'),
       ),

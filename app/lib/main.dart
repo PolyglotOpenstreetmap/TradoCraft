@@ -72,7 +72,7 @@ class TradocraftApp extends ConsumerWidget {
       routerConfig: router,
       locale: ref.watch(localeProvider),
       supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
       onGenerateTitle: (context) {
         final profile = ref.read(profileProvider);
         return appWindowTitle(profile);

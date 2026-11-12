@@ -788,7 +788,7 @@ Widget _host(ProviderContainer c, {required bool targets}) {
     child: MaterialApp.router(
       routerConfig: router,
       locale: const Locale('en'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
       supportedLocales: AppLocalizations.supportedLocales,
       builder: (context, child) =>
           TutorialHost(router: router, child: child ?? const SizedBox()),
@@ -844,7 +844,7 @@ Widget _mapApp(ProviderContainer c) {
     child: MaterialApp.router(
       routerConfig: router,
       locale: const Locale('en'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
       supportedLocales: AppLocalizations.supportedLocales,
     ),
   );
@@ -864,7 +864,7 @@ Widget _hostApp(ProviderContainer c) {
     child: MaterialApp.router(
       routerConfig: router,
       locale: const Locale('en'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
       supportedLocales: AppLocalizations.supportedLocales,
       builder: (context, child) =>
           TutorialHost(router: router, child: child ?? const SizedBox()),

@@ -278,7 +278,7 @@ Future<FakeApi> _pump(
       overrides: [dioProvider.overrideWithValue(dio)],
       child: MaterialApp(
         locale: const Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         home: QuotationScreen(id: _quotationId),
       ),
@@ -314,7 +314,7 @@ Future<FakeApi> _pumpRouted(WidgetTester tester, String status) async {
       child: MaterialApp.router(
         routerConfig: router,
         locale: const Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
       ),
     ),

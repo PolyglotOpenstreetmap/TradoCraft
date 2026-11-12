@@ -85,7 +85,7 @@ Future<ProviderContainer> _pump(
       child: Consumer(
         builder: (context, ref, _) => MaterialApp(
           locale: ref.watch(portalLocaleProvider),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
           supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(body: home),
         ),

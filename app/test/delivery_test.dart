@@ -144,7 +144,7 @@ Future<void> _pump(WidgetTester tester, FakeHttp http, Widget home) async {
       overrides: [dioProvider.overrideWithValue(fakeDio(http))],
       child: MaterialApp.router(
         locale: const Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: router,
       ),

@@ -189,7 +189,7 @@ void main() {
           overrides: [dioProvider.overrideWithValue(dio)],
           child: MaterialApp(
             locale: const Locale('en'),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
             supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(body: BomTab(product: _product)),
           ),

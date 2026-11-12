@@ -22,7 +22,7 @@ Future<FakeHttp> _pump(
       overrides: [dioProvider.overrideWithValue(fakeDio(http))],
       child: MaterialApp(
         locale: Locale(locale),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(body: Builder(builder: (_) => home)),
       ),

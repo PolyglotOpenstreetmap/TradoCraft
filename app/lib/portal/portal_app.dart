@@ -100,7 +100,7 @@ class PortalApp extends ConsumerWidget {
       routerConfig: ref.watch(portalRouterProvider),
       locale: ref.watch(portalLocaleProvider),
       supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
       onGenerateTitle: (context) => context.l10n.portalTitle,
     );
   }

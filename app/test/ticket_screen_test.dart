@@ -169,7 +169,7 @@ Future<_Fake> _pump(
       overrides: [dioProvider.overrideWithValue(dio)],
       child: MaterialApp(
         locale: Locale(locale),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         home: const TicketScreen(id: 't1'),
       ),

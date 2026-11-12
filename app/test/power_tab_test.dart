@@ -87,7 +87,7 @@ Future<void> pumpTab(WidgetTester tester, FakeHttp h) async {
       overrides: [dioProvider.overrideWithValue(fakeDio(h))],
       child: MaterialApp(
         locale: const Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
           body: PowerTab(product: Product.fromJson(productJson())),

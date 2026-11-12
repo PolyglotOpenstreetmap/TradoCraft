@@ -23,7 +23,7 @@ Future<void> _pump(WidgetTester tester, FakeHttp http, Widget home) async {
         kvStoreProvider.overrideWithValue(MemoryKvStore()),
       ],
       child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         home: home,
       ),
