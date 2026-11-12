@@ -7382,4 +7382,157 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tutInvoicesDoneBody =>
       'Le rapprochement à trois compare commande, réception et facture avant tout paiement. Les factures conformes sont approuvées et payées, les douteuses contestées. Ensuite : fabriquer les chariots.';
+
+  @override
+  String get tutManufacturingTitle => 'Fabrication';
+
+  @override
+  String get tutManufacturingSummary =>
+      'Casquettes : responsable de production et opérateur. Créez une division puis fabriquez cinq chariots avec les composants.';
+
+  @override
+  String get tutManufacturingNeedsTitle => 'D\'abord les chapitres 1 à 3';
+
+  @override
+  String get tutManufacturingNeedsBody =>
+      'Ce chapitre a besoin du chariot avec sa nomenclature (chapitre 1) et de composants en stock (chapitre 3), et n\'a pas trouvé les produits. Terminez d\'abord ces chapitres.';
+
+  @override
+  String get tutManufacturingOpenDivisionsTitle => 'Divisions';
+
+  @override
+  String get tutManufacturingOpenDivisionsBody =>
+      'Le travail de production est organisé en divisions, par exemple une ligne d\'assemblage. Seul un administrateur les définit. Ouvrez Production et utilisez le bouton roue dentée en haut à droite pour atteindre les divisions.';
+
+  @override
+  String get tutManufacturingDivisionTitle => 'Créez une division';
+
+  @override
+  String get tutManufacturingDivisionBody =>
+      'Ajoutez une division avec le code TUT-ASM et le nom Tutorial assembly, et cochez-vous dans la liste des membres : les membres sont les opérateurs de la division.';
+
+  @override
+  String get tutManufacturingDivisionHint =>
+      'Le dialogue liste les utilisateurs de la société ; cochez la pastille à votre nom.';
+
+  @override
+  String get tutManufacturingQueueTitle => 'La file de production';
+
+  @override
+  String get tutManufacturingQueueBody =>
+      'Retournez à Production. Comme vous êtes membre d\'une division, la file affiche par défaut Mes divisions : les ordres de vos divisions plus ceux sans division, rien de non attribué n\'est caché. Passez à Toutes pour tout voir.';
+
+  @override
+  String get tutManufacturingReleaseTitle => 'Lancez un ordre de production';
+
+  @override
+  String get tutManufacturingReleaseBody =>
+      'Appuyez sur Fabriquer pour le stock, choisissez TUT-CART et la quantité 5, puis lancez. La nomenclature est figée et les composants sont réservés. Normalement la production part d\'une ligne de commande client ; vous le verrez au chapitre 9.';
+
+  @override
+  String get tutManufacturingReleaseHint =>
+      'Seuls les produits fabriqués avec une nomenclature active peuvent être lancés.';
+
+  @override
+  String get tutManufacturingAssignTitle => 'Attribuez-le à la division';
+
+  @override
+  String get tutManufacturingAssignBody =>
+      'Le nouvel ordre est ouvert. Choisissez la division Tutorial assembly dans le champ Division et appuyez sur Enregistrer, pour qu\'il apparaisse dans la file de cette division.';
+
+  @override
+  String get tutManufacturingStartTitle => 'Démarrez le travail';
+
+  @override
+  String get tutManufacturingStartBody =>
+      'Mettez la casquette d\'opérateur et appuyez sur Démarrer. L\'ordre passe de lancé à en cours.';
+
+  @override
+  String get tutManufacturingCompleteTitle => 'Terminez l\'ordre';
+
+  @override
+  String get tutManufacturingCompleteBody =>
+      'Appuyez sur Terminer. Le dialogue montre la quantité produite (5) et les composants consommés. Confirmez : les composants sortent du stock et cinq chariots finis y entrent.';
+
+  @override
+  String get tutManufacturingCompleteHint =>
+      'Laissez les valeurs prévues ; le dialogue permet d\'enregistrer rebuts ou surconsommation si la réalité diffère.';
+
+  @override
+  String get tutManufacturingStockTitle => 'Vérifiez le stock';
+
+  @override
+  String get tutManufacturingStockBody =>
+      'Ouvrez Stock : TUT-CART en a maintenant 5 et chaque composant a baissé de 5 (25 restants de chacun). La production relie les achats à la vente.';
+
+  @override
+  String get tutManufacturingDoneTitle => 'Ce que vous avez appris';
+
+  @override
+  String get tutManufacturingDoneBody =>
+      'Les divisions regroupent les opérateurs ; un ordre de production fige la nomenclature, réserve les composants, est démarré puis terminé et transforme les composants en produits finis. Ensuite : les prix.';
+
+  @override
+  String get tutPricesTitle => 'Prix et zones';
+
+  @override
+  String get tutPricesSummary =>
+      'Casquette : responsable des ventes. Créez une zone de prix et donnez au chariot un prix dans deux zones.';
+
+  @override
+  String get tutPricesNeedsTitle => 'D\'abord le chapitre 1';
+
+  @override
+  String get tutPricesNeedsBody =>
+      'Ce chapitre a besoin du chariot du chapitre 1 et ne l\'a pas trouvé. Terminez d\'abord le chapitre 1.';
+
+  @override
+  String get tutPricesOpenAdminTitle => 'Ouvrez l\'administration';
+
+  @override
+  String get tutPricesOpenAdminBody =>
+      'Un prix dépend de la zone du client : un pays ou marché avec son propre tarif. Les zones se gèrent sous Administration. Ouvrez Administration et choisissez le segment Zones de prix ; la société a déjà les zones Z1 à Z5.';
+
+  @override
+  String get tutPricesZoneTitle => 'Créez une zone';
+
+  @override
+  String get tutPricesZoneBody =>
+      'Ajoutez une zone de prix avec le code TUT-EXPORT et le nom Zone export. Les clients reçoivent une zone plus tard, à leur création.';
+
+  @override
+  String get tutPricesZoneHint =>
+      'Choisissez d\'abord le segment Zones de prix en haut de la page Administration.';
+
+  @override
+  String get tutPricesOpenCartTitle => 'Ouvrez le chariot';
+
+  @override
+  String get tutPricesOpenCartBody =>
+      'Ouvrez le produit TUT-CART depuis la liste Produits. Son premier onglet, Prix, contient les prix par zone.';
+
+  @override
+  String get tutPricesPriceExportTitle => 'Un prix dans la nouvelle zone';
+
+  @override
+  String get tutPricesPriceExportBody =>
+      'Appuyez sur Nouveau prix, choisissez la zone TUT-EXPORT, saisissez le prix unitaire 1450 (hors TVA) et enregistrez.';
+
+  @override
+  String get tutPricesPriceExportHint =>
+      'La date de début de validité est aujourd\'hui par défaut ; une date ultérieure programme un changement de prix.';
+
+  @override
+  String get tutPricesPriceHomeTitle => 'Un prix dans une autre zone';
+
+  @override
+  String get tutPricesPriceHomeBody =>
+      'Ajoutez un second prix pour le chariot dans l\'une des zones existantes, par exemple Z1 à 1200. Le même produit peut maintenant coûter différemment selon la zone du client.';
+
+  @override
+  String get tutPricesDoneTitle => 'Ce que vous avez appris';
+
+  @override
+  String get tutPricesDoneBody =>
+      'Une zone de prix regroupe les clients qui ont le même tarif et un produit a un prix par zone et par date. Les devis prennent le prix de la zone du client. Ensuite : un nouveau client écrit.';
 }

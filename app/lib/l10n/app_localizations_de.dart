@@ -7389,4 +7389,158 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get tutInvoicesDoneBody =>
       'Der Drei-Wege-Abgleich vergleicht Bestellung, Wareneingang und Rechnung, bevor Geld fließt. Stimmige Rechnungen werden genehmigt und bezahlt, zweifelhafte beanstandet. Als Nächstes: die Karren selbst bauen.';
+
+  @override
+  String get tutManufacturingTitle => 'Fertigung';
+
+  @override
+  String get tutManufacturingSummary =>
+      'Hüte: Fertigungsleiter und Werker. Richten Sie eine Abteilung ein und bauen Sie fünf Karren aus den Komponenten.';
+
+  @override
+  String get tutManufacturingNeedsTitle => 'Zuerst Kapitel 1 bis 3';
+
+  @override
+  String get tutManufacturingNeedsBody =>
+      'Dieses Kapitel braucht den Karren mit Stückliste (Kapitel 1) und Komponenten auf Lager (Kapitel 3) und hat die Produkte nicht gefunden. Schließen Sie diese Kapitel zuerst ab.';
+
+  @override
+  String get tutManufacturingOpenDivisionsTitle => 'Abteilungen';
+
+  @override
+  String get tutManufacturingOpenDivisionsBody =>
+      'Fertigungsarbeit ist in Abteilungen organisiert, zum Beispiel eine Montagelinie. Nur ein Administrator legt sie fest. Öffnen Sie Fertigung und erreichen Sie die Abteilungen über das Zahnrad oben rechts.';
+
+  @override
+  String get tutManufacturingDivisionTitle => 'Legen Sie eine Abteilung an';
+
+  @override
+  String get tutManufacturingDivisionBody =>
+      'Fügen Sie eine Abteilung mit Code TUT-ASM und Name Tutorial assembly hinzu und haken Sie sich in der Mitgliederliste an: Mitglieder sind die Werker der Abteilung.';
+
+  @override
+  String get tutManufacturingDivisionHint =>
+      'Der Dialog listet die Benutzer der Firma; haken Sie den Chip mit Ihrem Namen an.';
+
+  @override
+  String get tutManufacturingQueueTitle => 'Die Fertigungswarteschlange';
+
+  @override
+  String get tutManufacturingQueueBody =>
+      'Gehen Sie zurück zu Fertigung. Da Sie Mitglied einer Abteilung sind, zeigt die Warteschlange jetzt standardmäßig Meine Abteilungen: die Aufträge Ihrer Abteilungen plus Aufträge ohne Abteilung, nichts Unzugewiesenes bleibt verborgen. Wechseln Sie zu Alle, um alles zu sehen.';
+
+  @override
+  String get tutManufacturingReleaseTitle =>
+      'Geben Sie einen Fertigungsauftrag frei';
+
+  @override
+  String get tutManufacturingReleaseBody =>
+      'Drücken Sie Auf Lager fertigen, wählen Sie TUT-CART mit Menge 5 und geben Sie frei. Die Stückliste wird eingefroren und die Komponenten werden reserviert. Normalerweise startet die Fertigung aus einer Auftragsposition; das sehen Sie in Kapitel 9.';
+
+  @override
+  String get tutManufacturingReleaseHint =>
+      'Nur gefertigte Produkte mit aktiver Stückliste können freigegeben werden.';
+
+  @override
+  String get tutManufacturingAssignTitle => 'Weisen Sie es der Abteilung zu';
+
+  @override
+  String get tutManufacturingAssignBody =>
+      'Der neue Auftrag ist offen. Wählen Sie im Feld Abteilung die Abteilung Tutorial assembly und drücken Sie Speichern, damit er in der Warteschlange dieser Abteilung erscheint.';
+
+  @override
+  String get tutManufacturingStartTitle => 'Starten Sie die Arbeit';
+
+  @override
+  String get tutManufacturingStartBody =>
+      'Setzen Sie den Werker-Hut auf und drücken Sie Starten. Der Auftrag geht von freigegeben auf in Arbeit.';
+
+  @override
+  String get tutManufacturingCompleteTitle => 'Schließen Sie den Auftrag ab';
+
+  @override
+  String get tutManufacturingCompleteBody =>
+      'Drücken Sie Abschließen. Der Dialog zeigt die Ausbringungsmenge (5) und die verbrauchten Komponenten. Bestätigen Sie: Die Komponenten verlassen den Bestand und fünf fertige Karren kommen hinein.';
+
+  @override
+  String get tutManufacturingCompleteHint =>
+      'Lassen Sie die Planwerte stehen; der Dialog erlaubt, Ausschuss oder Mehrverbrauch zu erfassen, wenn die Wirklichkeit abweicht.';
+
+  @override
+  String get tutManufacturingStockTitle => 'Prüfen Sie den Bestand';
+
+  @override
+  String get tutManufacturingStockBody =>
+      'Öffnen Sie Bestand: TUT-CART hat jetzt 5 auf Lager und jede Komponente ist um 5 gesunken (je 25 übrig). Die Fertigung verbindet Einkauf und Verkauf.';
+
+  @override
+  String get tutManufacturingDoneTitle => 'Was Sie gelernt haben';
+
+  @override
+  String get tutManufacturingDoneBody =>
+      'Abteilungen gruppieren Werker; ein Fertigungsauftrag friert die Stückliste ein, reserviert Komponenten, wird gestartet und abgeschlossen und macht aus Komponenten Fertigware. Als Nächstes: Preise.';
+
+  @override
+  String get tutPricesTitle => 'Preise und Zonen';
+
+  @override
+  String get tutPricesSummary =>
+      'Hut: Vertriebsleiter. Legen Sie eine Preiszone an und geben Sie dem Karren einen Preis in zwei Zonen.';
+
+  @override
+  String get tutPricesNeedsTitle => 'Zuerst Kapitel 1';
+
+  @override
+  String get tutPricesNeedsBody =>
+      'Dieses Kapitel braucht den Karren aus Kapitel 1 und hat ihn nicht gefunden. Schließen Sie zuerst Kapitel 1 ab.';
+
+  @override
+  String get tutPricesOpenAdminTitle => 'Öffnen Sie die Verwaltung';
+
+  @override
+  String get tutPricesOpenAdminBody =>
+      'Ein Preis hängt von der Zone des Kunden ab: ein Land oder Markt mit eigener Preisliste. Zonen verwalten Sie unter Verwaltung. Öffnen Sie Verwaltung und wählen Sie das Segment Preiszonen; die Firma hat schon die Zonen Z1 bis Z5.';
+
+  @override
+  String get tutPricesZoneTitle => 'Legen Sie eine Zone an';
+
+  @override
+  String get tutPricesZoneBody =>
+      'Fügen Sie eine Preiszone mit Code TUT-EXPORT und Name Exportzone hinzu. Kunden erhalten später eine Zone, wenn Sie einen anlegen.';
+
+  @override
+  String get tutPricesZoneHint =>
+      'Wählen Sie zuerst oben auf der Verwaltungsseite das Segment Preiszonen.';
+
+  @override
+  String get tutPricesOpenCartTitle => 'Öffnen Sie den Karren';
+
+  @override
+  String get tutPricesOpenCartBody =>
+      'Öffnen Sie das Produkt TUT-CART aus der Produktliste. Der erste Reiter, Preise, enthält die Preise je Zone.';
+
+  @override
+  String get tutPricesPriceExportTitle => 'Ein Preis in der neuen Zone';
+
+  @override
+  String get tutPricesPriceExportBody =>
+      'Drücken Sie Neuer Preis, wählen Sie die Zone TUT-EXPORT, geben Sie den Stückpreis 1450 (ohne USt.) ein und speichern Sie.';
+
+  @override
+  String get tutPricesPriceExportHint =>
+      'Das Gültig-ab-Datum steht standardmäßig auf heute; ein späteres Datum plant eine Preisänderung.';
+
+  @override
+  String get tutPricesPriceHomeTitle => 'Ein Preis in einer anderen Zone';
+
+  @override
+  String get tutPricesPriceHomeBody =>
+      'Fügen Sie einen zweiten Preis für den Karren in einer bestehenden Zone hinzu, zum Beispiel Z1 mit 1200. Dasselbe Produkt kann nun je nach Zone des Kunden unterschiedlich kosten.';
+
+  @override
+  String get tutPricesDoneTitle => 'Was Sie gelernt haben';
+
+  @override
+  String get tutPricesDoneBody =>
+      'Eine Preiszone gruppiert Kunden mit derselben Preisliste, und ein Produkt hat einen Preis je Zone und Datum. Angebote übernehmen den Preis der Kundenzone. Als Nächstes: Ein neuer Kunde schreibt.';
 }

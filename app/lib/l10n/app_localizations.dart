@@ -13259,6 +13259,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The three-way match compares order, receipt and invoice before money moves. Matching invoices are approved and paid, doubtful ones are disputed. Next: building the carts yourself.'**
   String get tutInvoicesDoneBody;
+
+  /// No description provided for @tutManufacturingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturing'**
+  String get tutManufacturingTitle;
+
+  /// No description provided for @tutManufacturingSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Hats: production manager and production worker. Set up a division, then build five carts from the components.'**
+  String get tutManufacturingSummary;
+
+  /// No description provided for @tutManufacturingNeedsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapters 1 to 3 first'**
+  String get tutManufacturingNeedsTitle;
+
+  /// No description provided for @tutManufacturingNeedsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This chapter needs the cart with its bill of materials (chapter 1) and components in stock (chapter 3), and could not find the products. Finish those chapters first.'**
+  String get tutManufacturingNeedsBody;
+
+  /// No description provided for @tutManufacturingOpenDivisionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Divisions'**
+  String get tutManufacturingOpenDivisionsTitle;
+
+  /// No description provided for @tutManufacturingOpenDivisionsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Production work is organised in divisions, for example an assembly line. Only an administrator defines them. Open Production and use the gear button at the top right to reach the divisions.'**
+  String get tutManufacturingOpenDivisionsBody;
+
+  /// No description provided for @tutManufacturingDivisionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a division'**
+  String get tutManufacturingDivisionTitle;
+
+  /// No description provided for @tutManufacturingDivisionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a division with code TUT-ASM and name Tutorial assembly, and tick yourself in the member list: members are the workers of the division.'**
+  String get tutManufacturingDivisionBody;
+
+  /// No description provided for @tutManufacturingDivisionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The dialog lists the users of the company; tick the chip with your own name.'**
+  String get tutManufacturingDivisionHint;
+
+  /// No description provided for @tutManufacturingQueueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The production queue'**
+  String get tutManufacturingQueueTitle;
+
+  /// No description provided for @tutManufacturingQueueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All to see everything.'**
+  String get tutManufacturingQueueBody;
+
+  /// No description provided for @tutManufacturingReleaseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Release a production order'**
+  String get tutManufacturingReleaseTitle;
+
+  /// No description provided for @tutManufacturingReleaseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Press Build for stock, choose TUT-CART and quantity 5, and release. The bill of materials is frozen and the components are reserved. Normally production starts from a sales order line; you will see that in chapter 9.'**
+  String get tutManufacturingReleaseBody;
+
+  /// No description provided for @tutManufacturingReleaseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only manufactured products with an active bill of materials can be released.'**
+  String get tutManufacturingReleaseHint;
+
+  /// No description provided for @tutManufacturingAssignTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give it to the division'**
+  String get tutManufacturingAssignTitle;
+
+  /// No description provided for @tutManufacturingAssignBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The new order is open. Choose the division Tutorial assembly in the Division field and press Save, so that the order shows up in the queue of that division.'**
+  String get tutManufacturingAssignBody;
+
+  /// No description provided for @tutManufacturingStartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the work'**
+  String get tutManufacturingStartTitle;
+
+  /// No description provided for @tutManufacturingStartBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Put on the worker hat and press Start. The order moves from released to in progress.'**
+  String get tutManufacturingStartBody;
+
+  /// No description provided for @tutManufacturingCompleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the order'**
+  String get tutManufacturingCompleteTitle;
+
+  /// No description provided for @tutManufacturingCompleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Press Complete. The dialog shows the output quantity (5) and the components consumed. Confirm: the components leave the stock and five finished carts enter it.'**
+  String get tutManufacturingCompleteBody;
+
+  /// No description provided for @tutManufacturingCompleteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave the planned values as they are; the dialog lets you record scrap or extra consumption when reality differs.'**
+  String get tutManufacturingCompleteHint;
+
+  /// No description provided for @tutManufacturingStockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the stock'**
+  String get tutManufacturingStockTitle;
+
+  /// No description provided for @tutManufacturingStockBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Stock: TUT-CART now has 5 on hand, and each component is down by 5 (25 left of each). Production is what links purchasing to selling.'**
+  String get tutManufacturingStockBody;
+
+  /// No description provided for @tutManufacturingDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What you learned'**
+  String get tutManufacturingDoneTitle;
+
+  /// No description provided for @tutManufacturingDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Divisions group production workers; a production order freezes the bill of materials, reserves components, is started and completed, and turns components into finished goods. Next: prices.'**
+  String get tutManufacturingDoneBody;
+
+  /// No description provided for @tutPricesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices and zones'**
+  String get tutPricesTitle;
+
+  /// No description provided for @tutPricesSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Hat: sales manager. Create a price zone and give the cart a price in two zones.'**
+  String get tutPricesSummary;
+
+  /// No description provided for @tutPricesNeedsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter 1 first'**
+  String get tutPricesNeedsTitle;
+
+  /// No description provided for @tutPricesNeedsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This chapter needs the cart from chapter 1 and could not find it. Finish chapter 1 first.'**
+  String get tutPricesNeedsBody;
+
+  /// No description provided for @tutPricesOpenAdminTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the admin area'**
+  String get tutPricesOpenAdminTitle;
+
+  /// No description provided for @tutPricesOpenAdminBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A price depends on the customer\'s zone: a country or market with its own price list. Zones are managed under Admin. Open Admin and choose the Price zones segment; the company already has zones Z1 to Z5.'**
+  String get tutPricesOpenAdminBody;
+
+  /// No description provided for @tutPricesZoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a zone'**
+  String get tutPricesZoneTitle;
+
+  /// No description provided for @tutPricesZoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a price zone with code TUT-EXPORT and name Export zone. Customers are placed in a zone later, when you create one.'**
+  String get tutPricesZoneBody;
+
+  /// No description provided for @tutPricesZoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the Price zones segment at the top of the Admin page first.'**
+  String get tutPricesZoneHint;
+
+  /// No description provided for @tutPricesOpenCartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the cart'**
+  String get tutPricesOpenCartTitle;
+
+  /// No description provided for @tutPricesOpenCartBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the product TUT-CART from the Products list. Its first tab, Prices, holds the prices per zone.'**
+  String get tutPricesOpenCartBody;
+
+  /// No description provided for @tutPricesPriceExportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A price in the new zone'**
+  String get tutPricesPriceExportTitle;
+
+  /// No description provided for @tutPricesPriceExportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Press New price, choose zone TUT-EXPORT, enter unit price 1450 (excluding VAT) and save.'**
+  String get tutPricesPriceExportBody;
+
+  /// No description provided for @tutPricesPriceExportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The valid-from date defaults to today; a later date schedules a price change.'**
+  String get tutPricesPriceExportHint;
+
+  /// No description provided for @tutPricesPriceHomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A price in another zone'**
+  String get tutPricesPriceHomeTitle;
+
+  /// No description provided for @tutPricesPriceHomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a second price for the cart in one of the existing zones, for example Z1 at 1200. The same product can now cost different amounts depending on the customer\'s zone.'**
+  String get tutPricesPriceHomeBody;
+
+  /// No description provided for @tutPricesDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What you learned'**
+  String get tutPricesDoneTitle;
+
+  /// No description provided for @tutPricesDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A price zone groups customers that get the same price list, and a product has one price per zone and date. Quotations pick the price of the customer\'s zone. Next: a new customer writes in.'**
+  String get tutPricesDoneBody;
 }
 
 class _AppLocalizationsDelegate

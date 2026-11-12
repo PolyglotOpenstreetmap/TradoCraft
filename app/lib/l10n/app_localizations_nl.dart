@@ -7372,4 +7372,157 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get tutInvoicesDoneBody =>
       'De driewegmatch vergelijkt order, ontvangst en factuur voordat er geld beweegt. Kloppende facturen worden goedgekeurd en betaald, twijfelachtige betwist. Volgende stap: de karretjes zelf bouwen.';
+
+  @override
+  String get tutManufacturingTitle => 'Produceren';
+
+  @override
+  String get tutManufacturingSummary =>
+      'Hoeden: productiebeheerder en productiemedewerker. Richt een afdeling in en bouw vijf karretjes uit de componenten.';
+
+  @override
+  String get tutManufacturingNeedsTitle => 'Eerst hoofdstuk 1 tot 3';
+
+  @override
+  String get tutManufacturingNeedsBody =>
+      'Dit hoofdstuk heeft het karretje met stuklijst (hoofdstuk 1) en componenten op voorraad (hoofdstuk 3) nodig en vond de producten niet. Rond die hoofdstukken eerst af.';
+
+  @override
+  String get tutManufacturingOpenDivisionsTitle => 'Afdelingen';
+
+  @override
+  String get tutManufacturingOpenDivisionsBody =>
+      'Productiewerk is georganiseerd in afdelingen, bijvoorbeeld een assemblagelijn. Alleen een beheerder definieert ze. Open Productie en gebruik de tandwielknop rechtsboven om bij de afdelingen te komen.';
+
+  @override
+  String get tutManufacturingDivisionTitle => 'Maak een afdeling';
+
+  @override
+  String get tutManufacturingDivisionBody =>
+      'Voeg een afdeling toe met code TUT-ASM en naam Tutorial assembly, en vink jezelf aan in de ledenlijst: leden zijn de werknemers van de afdeling.';
+
+  @override
+  String get tutManufacturingDivisionHint =>
+      'Het dialoogvenster toont de gebruikers van het bedrijf; vink het label met je eigen naam aan.';
+
+  @override
+  String get tutManufacturingQueueTitle => 'De productiewachtrij';
+
+  @override
+  String get tutManufacturingQueueBody =>
+      'Ga terug naar Productie. Omdat je lid van een afdeling bent, staat de wachtrij nu standaard op Mijn afdelingen: de orders van je afdelingen plus orders zonder afdeling, zodat niets onbeheerds verborgen blijft. Schakel naar Alle om alles te zien.';
+
+  @override
+  String get tutManufacturingReleaseTitle => 'Geef een productieorder vrij';
+
+  @override
+  String get tutManufacturingReleaseBody =>
+      'Druk op Voor voorraad bouwen, kies TUT-CART met hoeveelheid 5 en geef vrij. De stuklijst wordt bevroren en de componenten worden gereserveerd. Normaal start productie vanuit een verkooporderregel; dat zie je in hoofdstuk 9.';
+
+  @override
+  String get tutManufacturingReleaseHint =>
+      'Alleen geproduceerde producten met een actieve stuklijst kunnen vrijgegeven worden.';
+
+  @override
+  String get tutManufacturingAssignTitle => 'Wijs het toe aan de afdeling';
+
+  @override
+  String get tutManufacturingAssignBody =>
+      'De nieuwe order staat open. Kies de afdeling Tutorial assembly in het veld Afdeling en druk op Opslaan, zodat de order in de wachtrij van die afdeling verschijnt.';
+
+  @override
+  String get tutManufacturingStartTitle => 'Start het werk';
+
+  @override
+  String get tutManufacturingStartBody =>
+      'Zet de werknemershoed op en druk op Starten. De order gaat van vrijgegeven naar in uitvoering.';
+
+  @override
+  String get tutManufacturingCompleteTitle => 'Rond de order af';
+
+  @override
+  String get tutManufacturingCompleteBody =>
+      'Druk op Voltooien. Het dialoogvenster toont de uitvoerhoeveelheid (5) en de verbruikte componenten. Bevestig: de componenten verdwijnen uit de voorraad en vijf afgewerkte karretjes komen erin.';
+
+  @override
+  String get tutManufacturingCompleteHint =>
+      'Laat de geplande waarden staan; het dialoogvenster laat je uitval of extra verbruik vastleggen als de werkelijkheid afwijkt.';
+
+  @override
+  String get tutManufacturingStockTitle => 'Controleer de voorraad';
+
+  @override
+  String get tutManufacturingStockBody =>
+      'Open Voorraad: TUT-CART heeft nu 5 op voorraad en elke component is met 5 gedaald (25 over van elk). Productie is de schakel tussen inkoop en verkoop.';
+
+  @override
+  String get tutManufacturingDoneTitle => 'Wat je geleerd hebt';
+
+  @override
+  String get tutManufacturingDoneBody =>
+      'Afdelingen groeperen productiemedewerkers; een productieorder bevriest de stuklijst, reserveert componenten, wordt gestart en voltooid en maakt van componenten eindproducten. Volgende stap: prijzen.';
+
+  @override
+  String get tutPricesTitle => 'Prijzen en zones';
+
+  @override
+  String get tutPricesSummary =>
+      'Hoed: verkoopbeheerder. Maak een prijszone en geef het karretje een prijs in twee zones.';
+
+  @override
+  String get tutPricesNeedsTitle => 'Eerst hoofdstuk 1';
+
+  @override
+  String get tutPricesNeedsBody =>
+      'Dit hoofdstuk heeft het karretje uit hoofdstuk 1 nodig en vond het niet. Rond eerst hoofdstuk 1 af.';
+
+  @override
+  String get tutPricesOpenAdminTitle => 'Open het beheer';
+
+  @override
+  String get tutPricesOpenAdminBody =>
+      'Een prijs hangt af van de zone van de klant: een land of markt met een eigen prijslijst. Zones beheer je onder Beheer. Open Beheer en kies het segment Prijszones; het bedrijf heeft al zones Z1 tot Z5.';
+
+  @override
+  String get tutPricesZoneTitle => 'Maak een zone';
+
+  @override
+  String get tutPricesZoneBody =>
+      'Voeg een prijszone toe met code TUT-EXPORT en naam Exportzone. Klanten krijgen later een zone, wanneer je er een aanmaakt.';
+
+  @override
+  String get tutPricesZoneHint =>
+      'Kies eerst het segment Prijszones bovenaan de pagina Beheer.';
+
+  @override
+  String get tutPricesOpenCartTitle => 'Open het karretje';
+
+  @override
+  String get tutPricesOpenCartBody =>
+      'Open het product TUT-CART uit de lijst Producten. Het eerste tabblad, Prijzen, bevat de prijzen per zone.';
+
+  @override
+  String get tutPricesPriceExportTitle => 'Een prijs in de nieuwe zone';
+
+  @override
+  String get tutPricesPriceExportBody =>
+      'Druk op Nieuwe prijs, kies zone TUT-EXPORT, voer stukprijs 1450 (excl. btw) in en bewaar.';
+
+  @override
+  String get tutPricesPriceExportHint =>
+      'De geldig-vanafdatum staat standaard op vandaag; een latere datum plant een prijswijziging.';
+
+  @override
+  String get tutPricesPriceHomeTitle => 'Een prijs in een andere zone';
+
+  @override
+  String get tutPricesPriceHomeBody =>
+      'Voeg een tweede prijs voor het karretje toe in een van de bestaande zones, bijvoorbeeld Z1 voor 1200. Hetzelfde product kan nu verschillend kosten afhankelijk van de zone van de klant.';
+
+  @override
+  String get tutPricesDoneTitle => 'Wat je geleerd hebt';
+
+  @override
+  String get tutPricesDoneBody =>
+      'Een prijszone groepeert klanten met dezelfde prijslijst en een product heeft één prijs per zone en datum. Offertes nemen de prijs van de zone van de klant. Volgende stap: een nieuwe klant neemt contact op.';
 }

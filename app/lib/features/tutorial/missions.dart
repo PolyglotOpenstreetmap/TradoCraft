@@ -1,3 +1,4 @@
+import 'missions_production.dart';
 import 'missions_purchasing.dart';
 import 'model.dart';
 
@@ -10,6 +11,8 @@ final List<Mission> allMissions = [
   suppliersMission,
   buyingMission,
   invoicesMission,
+  manufacturingMission,
+  pricesMission,
 ];
 
 /// Chapter 0: what the banner means, how tabs and the tutorial controls work.

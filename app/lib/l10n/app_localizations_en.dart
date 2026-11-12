@@ -7347,4 +7347,157 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tutInvoicesDoneBody =>
       'The three-way match compares order, receipt and invoice before money moves. Matching invoices are approved and paid, doubtful ones are disputed. Next: building the carts yourself.';
+
+  @override
+  String get tutManufacturingTitle => 'Manufacturing';
+
+  @override
+  String get tutManufacturingSummary =>
+      'Hats: production manager and production worker. Set up a division, then build five carts from the components.';
+
+  @override
+  String get tutManufacturingNeedsTitle => 'Chapters 1 to 3 first';
+
+  @override
+  String get tutManufacturingNeedsBody =>
+      'This chapter needs the cart with its bill of materials (chapter 1) and components in stock (chapter 3), and could not find the products. Finish those chapters first.';
+
+  @override
+  String get tutManufacturingOpenDivisionsTitle => 'Divisions';
+
+  @override
+  String get tutManufacturingOpenDivisionsBody =>
+      'Production work is organised in divisions, for example an assembly line. Only an administrator defines them. Open Production and use the gear button at the top right to reach the divisions.';
+
+  @override
+  String get tutManufacturingDivisionTitle => 'Create a division';
+
+  @override
+  String get tutManufacturingDivisionBody =>
+      'Add a division with code TUT-ASM and name Tutorial assembly, and tick yourself in the member list: members are the workers of the division.';
+
+  @override
+  String get tutManufacturingDivisionHint =>
+      'The dialog lists the users of the company; tick the chip with your own name.';
+
+  @override
+  String get tutManufacturingQueueTitle => 'The production queue';
+
+  @override
+  String get tutManufacturingQueueBody =>
+      'Go back to Production. Because you are a member of a division, the queue now defaults to My divisions: your divisions\' orders plus orders without a division, so nothing unassigned is hidden. Switch to All to see everything.';
+
+  @override
+  String get tutManufacturingReleaseTitle => 'Release a production order';
+
+  @override
+  String get tutManufacturingReleaseBody =>
+      'Press Build for stock, choose TUT-CART and quantity 5, and release. The bill of materials is frozen and the components are reserved. Normally production starts from a sales order line; you will see that in chapter 9.';
+
+  @override
+  String get tutManufacturingReleaseHint =>
+      'Only manufactured products with an active bill of materials can be released.';
+
+  @override
+  String get tutManufacturingAssignTitle => 'Give it to the division';
+
+  @override
+  String get tutManufacturingAssignBody =>
+      'The new order is open. Choose the division Tutorial assembly in the Division field and press Save, so that the order shows up in the queue of that division.';
+
+  @override
+  String get tutManufacturingStartTitle => 'Start the work';
+
+  @override
+  String get tutManufacturingStartBody =>
+      'Put on the worker hat and press Start. The order moves from released to in progress.';
+
+  @override
+  String get tutManufacturingCompleteTitle => 'Complete the order';
+
+  @override
+  String get tutManufacturingCompleteBody =>
+      'Press Complete. The dialog shows the output quantity (5) and the components consumed. Confirm: the components leave the stock and five finished carts enter it.';
+
+  @override
+  String get tutManufacturingCompleteHint =>
+      'Leave the planned values as they are; the dialog lets you record scrap or extra consumption when reality differs.';
+
+  @override
+  String get tutManufacturingStockTitle => 'Check the stock';
+
+  @override
+  String get tutManufacturingStockBody =>
+      'Open Stock: TUT-CART now has 5 on hand, and each component is down by 5 (25 left of each). Production is what links purchasing to selling.';
+
+  @override
+  String get tutManufacturingDoneTitle => 'What you learned';
+
+  @override
+  String get tutManufacturingDoneBody =>
+      'Divisions group production workers; a production order freezes the bill of materials, reserves components, is started and completed, and turns components into finished goods. Next: prices.';
+
+  @override
+  String get tutPricesTitle => 'Prices and zones';
+
+  @override
+  String get tutPricesSummary =>
+      'Hat: sales manager. Create a price zone and give the cart a price in two zones.';
+
+  @override
+  String get tutPricesNeedsTitle => 'Chapter 1 first';
+
+  @override
+  String get tutPricesNeedsBody =>
+      'This chapter needs the cart from chapter 1 and could not find it. Finish chapter 1 first.';
+
+  @override
+  String get tutPricesOpenAdminTitle => 'Open the admin area';
+
+  @override
+  String get tutPricesOpenAdminBody =>
+      'A price depends on the customer\'s zone: a country or market with its own price list. Zones are managed under Admin. Open Admin and choose the Price zones segment; the company already has zones Z1 to Z5.';
+
+  @override
+  String get tutPricesZoneTitle => 'Create a zone';
+
+  @override
+  String get tutPricesZoneBody =>
+      'Add a price zone with code TUT-EXPORT and name Export zone. Customers are placed in a zone later, when you create one.';
+
+  @override
+  String get tutPricesZoneHint =>
+      'Choose the Price zones segment at the top of the Admin page first.';
+
+  @override
+  String get tutPricesOpenCartTitle => 'Open the cart';
+
+  @override
+  String get tutPricesOpenCartBody =>
+      'Open the product TUT-CART from the Products list. Its first tab, Prices, holds the prices per zone.';
+
+  @override
+  String get tutPricesPriceExportTitle => 'A price in the new zone';
+
+  @override
+  String get tutPricesPriceExportBody =>
+      'Press New price, choose zone TUT-EXPORT, enter unit price 1450 (excluding VAT) and save.';
+
+  @override
+  String get tutPricesPriceExportHint =>
+      'The valid-from date defaults to today; a later date schedules a price change.';
+
+  @override
+  String get tutPricesPriceHomeTitle => 'A price in another zone';
+
+  @override
+  String get tutPricesPriceHomeBody =>
+      'Add a second price for the cart in one of the existing zones, for example Z1 at 1200. The same product can now cost different amounts depending on the customer\'s zone.';
+
+  @override
+  String get tutPricesDoneTitle => 'What you learned';
+
+  @override
+  String get tutPricesDoneBody =>
+      'A price zone groups customers that get the same price list, and a product has one price per zone and date. Quotations pick the price of the customer\'s zone. Next: a new customer writes in.';
 }
