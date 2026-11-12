@@ -2279,5 +2279,8 @@
   "productionScopeAll": "Alle afdelingen",
   "productionScopeEmpty": "Geen orders in uw afdelingen. Orders zonder afdeling zijn inbegrepen.",
   "productionShowAllDivisions": "Alle afdelingen tonen",
-  "productionYourDivisions": "Uw afdelingen"
+  "productionYourDivisions": "Uw afdelingen",
+  "setupErrInsecure": "Het installatietoken wordt niet via een onversleutelde verbinding naar een andere computer gestuurd. Gebruik een https://-adres (gewone http mag alleen voor localhost).",
+  "setupUnavailable": "Instellen is niet beschikbaar op deze server: er is al een bedrijf, of instellen is uitgeschakeld.",
+  "setupErrRedirect": "De server stuurde de aanvraag door, dus het installatietoken is niet verder gestuurd. Controleer het serveradres (gebruik het definitieve https://-adres)."
 }

@@ -12791,6 +12791,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your divisions'**
   String get productionYourDivisions;
+
+  /// No description provided for @setupErrInsecure.
+  ///
+  /// In en, this message translates to:
+  /// **'The setup token is not sent over an unencrypted connection to another computer. Use an https:// address (plain http is only allowed for localhost).'**
+  String get setupErrInsecure;
+
+  /// No description provided for @setupUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up is not available on this server: it already has a company, or setting up is disabled.'**
+  String get setupUnavailable;
+
+  /// No description provided for @setupErrRedirect.
+  ///
+  /// In en, this message translates to:
+  /// **'The server redirected the request, so the setup token was not sent on. Check the server address (use the final https:// address).'**
+  String get setupErrRedirect;
 }
 
 class _AppLocalizationsDelegate

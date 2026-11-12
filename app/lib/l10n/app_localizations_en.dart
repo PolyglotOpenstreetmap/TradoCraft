@@ -7070,4 +7070,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get productionYourDivisions => 'Your divisions';
+
+  @override
+  String get setupErrInsecure =>
+      'The setup token is not sent over an unencrypted connection to another computer. Use an https:// address (plain http is only allowed for localhost).';
+
+  @override
+  String get setupUnavailable =>
+      'Setting up is not available on this server: it already has a company, or setting up is disabled.';
+
+  @override
+  String get setupErrRedirect =>
+      'The server redirected the request, so the setup token was not sent on. Check the server address (use the final https:// address).';
 }

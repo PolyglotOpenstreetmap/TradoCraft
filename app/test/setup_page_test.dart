@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -41,12 +43,14 @@ Future<ProviderContainer> _pump(
   WidgetTester tester,
   FakeHttp http, {
   String initial = '/setup',
+  Session? session,
 }) async {
   final c = ProviderContainer(
     overrides: [
       setupDioProvider.overrideWithValue((_) => fakeDio(http)),
       kvStoreProvider.overrideWithValue(MemoryKvStore()),
       environmentProbeProvider.overrideWithValue(_probe),
+      if (session != null) initialSessionProvider.overrideWithValue(session),
     ],
   );
   addTearDown(c.dispose);
@@ -54,7 +58,11 @@ Future<ProviderContainer> _pump(
     initialLocation: initial,
     routes: [
       GoRoute(path: '/login', builder: (_, _) => const LoginPage()),
-      GoRoute(path: '/setup', builder: (_, _) => const SetupPage()),
+      GoRoute(
+        path: '/setup',
+        builder: (_, state) =>
+            SetupPage(server: state.uri.queryParameters['server']),
+      ),
       GoRoute(path: '/quotations', builder: (_, _) => const Text('HOME')),
     ],
   );
@@ -237,8 +245,19 @@ void main() {
     });
     await _pump(tester, http, initial: '/login');
     expect(find.byKey(const ValueKey('login-setup')), findsOneWidget);
+    // Changing the address makes the wizard target that server (after the debounce).
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Server'),
+      'http://localhost:9999',
+    );
+    await tester.pump();
+    expect(find.byKey(const ValueKey('login-setup')), findsNothing);
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('login-setup')), findsOneWidget);
     await _tap(tester, 'login-setup');
     expect(find.text('Step 1 of 4'), findsOneWidget);
+    expect(find.text('Server: http://localhost:9999'), findsOneWidget);
 
     needs = false;
     await _pump(tester, http, initial: '/login');
@@ -249,6 +268,168 @@ void main() {
     tester,
   ) async {
     await _pump(tester, FakeHttp({}), initial: '/login');
+    expect(find.byKey(const ValueKey('login-setup')), findsNothing);
+  });
+
+  testWidgets('never sends the token to a remote server over plain http', (
+    tester,
+  ) async {
+    final http = FakeHttp({
+      'GET /api/v1/setup/status': (_) => _status(token: true),
+      'POST /api/v1/setup/bootstrap': (_) => _created('dev'),
+    });
+    final c = await _pump(
+      tester,
+      http,
+      session: const Session(serverUrl: 'http://erp.example.com'),
+    );
+    await _fillAll(tester);
+    await _type(tester, 'token', 's3cret');
+    await _tap(tester, 'setup-next-button');
+    await _tap(tester, 'setup-create');
+    expect(http.requests, isNot(contains('POST /api/v1/setup/bootstrap')));
+    expect(
+      tester.widget<Text>(find.byKey(const ValueKey('setup-error'))).data,
+      contains('https://'),
+    );
+    expect(c.read(sessionProvider).isSignedIn, isFalse);
+  });
+
+  test('only https or loopback http counts as secure', () {
+    for (final ok in [
+      'https://erp.example.com',
+      'http://localhost:8080',
+      'http://127.0.0.1:8080',
+      'http://127.1.2.3',
+      'http://[::1]:8080',
+    ]) {
+      expect(isSecureServerUrl(ok), isTrue, reason: ok);
+    }
+    for (final bad in [
+      'http://erp.example.com',
+      'http://10.0.0.5:8080',
+      'http://127.0.0.1.evil.com',
+      'ftp://localhost',
+      'localhost:8080',
+      '',
+    ]) {
+      expect(isSecureServerUrl(bad), isFalse, reason: bad);
+    }
+  });
+
+  testWidgets('a server that does not need setup shows no form', (
+    tester,
+  ) async {
+    final http = FakeHttp({
+      'GET /api/v1/setup/status': (_) => _status(needs: false),
+    });
+    await _pump(tester, http);
+    expect(find.byKey(const ValueKey('setup-unavailable')), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-name')), findsNothing);
+    expect(find.byKey(const ValueKey('setup-create')), findsNothing);
+    await _tap(tester, 'setup-unavailable-back');
+    expect(find.byKey(const ValueKey('login-environments')), findsOneWidget);
+  });
+
+  testWidgets('names are limited to 200 characters', (tester) async {
+    final http = FakeHttp({'GET /api/v1/setup/status': (_) => _status()});
+    await _pump(tester, http);
+    await _type(tester, 'legal', 'x' * 250);
+    final legal = tester.widget<TextField>(
+      find.byKey(const ValueKey('setup-legal')),
+    );
+    expect(legal.controller!.text.length, 200);
+  });
+
+  test('e-mail validation rejects empty domain labels', () {
+    for (final ok in ['a@b.de', 'a.b@c.example.org']) {
+      expect(SetupValidation.email(ok), isTrue, reason: ok);
+    }
+    for (final bad in [
+      'a@b..de',
+      'a@.b.de',
+      'a@b.de.',
+      'a@b',
+      'a b@c.de',
+      '@b.de',
+    ]) {
+      expect(SetupValidation.email(bad), isFalse, reason: bad);
+    }
+  });
+
+  testWidgets('a redirect is not followed and the token is not re-sent', (
+    tester,
+  ) async {
+    final http = FakeHttp({
+      'GET /api/v1/setup/status': (_) => _status(token: true),
+      'POST /api/v1/setup/bootstrap': (_) => FakeStatus(307, {
+        'location': 'http://evil.example/api/v1/setup/bootstrap',
+      }),
+    });
+    final c = await _pump(tester, http);
+    await _fillAll(tester);
+    await _type(tester, 'token', 's3cret');
+    await _tap(tester, 'setup-next-button');
+    await _tap(tester, 'setup-create');
+    expect(
+      http.requests.where((r) => r == 'POST /api/v1/setup/bootstrap'),
+      hasLength(1),
+    );
+    expect(
+      tester.widget<Text>(find.byKey(const ValueKey('setup-error'))).data,
+      contains('redirected'),
+    );
+    expect(c.read(sessionProvider).isSignedIn, isFalse);
+  });
+
+  testWidgets('a slow setup answer for an older address is dropped', (
+    tester,
+  ) async {
+    final slow = Completer<SetupStatusInfo>();
+    final c = ProviderContainer(
+      overrides: [
+        kvStoreProvider.overrideWithValue(MemoryKvStore()),
+        environmentProbeProvider.overrideWithValue(_probe),
+        setupStatusProvider.overrideWithValue(
+          (url) => url == 'http://a.example'
+              ? slow.future
+              : Future.value(
+                  const SetupStatusInfo(
+                    needsSetup: false,
+                    tokenRequired: false,
+                    authMode: 'dev',
+                  ),
+                ),
+        ),
+      ],
+    );
+    addTearDown(c.dispose);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: c,
+        child: const MaterialApp(
+          locale: Locale('en'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: LoginPage(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final field = find.widgetWithText(TextField, 'Server');
+    await tester.enterText(field, 'http://a.example');
+    await tester.pump(const Duration(seconds: 1));
+    await tester.enterText(field, 'http://b.example');
+    await tester.pump(const Duration(seconds: 1));
+    // The answer for the first address arrives after the address changed.
+    slow.complete(
+      const SetupStatusInfo(
+        needsSetup: true,
+        tokenRequired: false,
+        authMode: 'dev',
+      ),
+    );
+    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('login-setup')), findsNothing);
   });
 }
