@@ -476,10 +476,17 @@ CLONE_TARGET=""
 # EXIT trap while a clone is in progress: covers failures of any step, die() and signals, until the
 # target is registered. A failed clone leaves no database behind, so it can simply be retried.
 clone_cleanup() {
-  local rc=$?
+  local rc=$? err
   if [[ -n "$CLONE_TARGET" ]]; then
-    dropdb --if-exists --force -- "$CLONE_TARGET" >/dev/null 2>&1 || true
-    echo "envctl: clone failed, target database '$CLONE_TARGET' removed" >&2
+    # The name was unregistered when the clone began, so any registry file now belongs to this
+    # failed clone: remove it too, or a retry would say "already registered".
+    rm -f -- "$(reg_file "$CLONE_TARGET")"
+    if err="$(dropdb --if-exists --force -- "$CLONE_TARGET" 2>&1)"; then
+      echo "envctl: clone failed, target database '$CLONE_TARGET' removed" >&2
+    else
+      echo "envctl: clone failed AND removing the target database '$CLONE_TARGET' failed: $err" >&2
+      echo "envctl: remove it by hand (dropdb '$CLONE_TARGET') before retrying" >&2
+    fi
   fi
   return "$rc"
 }

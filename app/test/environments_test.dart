@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -105,7 +105,7 @@ Widget _app(ProviderContainer c, Widget home) => UncontrolledProviderScope(
   container: c,
   child: MaterialApp(
     locale: const Locale('en'),
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
     supportedLocales: AppLocalizations.supportedLocales,
     home: home,
   ),
@@ -331,7 +331,7 @@ void main() {
               child: MaterialApp(
                 theme: ThemeData(brightness: brightness),
                 locale: const Locale('en'),
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
                 supportedLocales: AppLocalizations.supportedLocales,
                 home: const Scaffold(body: EnvironmentBanner()),
               ),
@@ -416,7 +416,7 @@ void main() {
             child: MaterialApp.router(
               routerConfig: router,
               locale: const Locale('en'),
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
               supportedLocales: AppLocalizations.supportedLocales,
             ),
           ),
@@ -513,7 +513,7 @@ void main() {
           child: MaterialApp.router(
             routerConfig: router,
             locale: const Locale('en'),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
             supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
@@ -871,7 +871,7 @@ void main() {
           child: MaterialApp.router(
             routerConfig: router,
             locale: const Locale('en'),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            localizationsDelegates: [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
             supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),

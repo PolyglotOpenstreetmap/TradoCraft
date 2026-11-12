@@ -63,8 +63,9 @@ jobs:
         with:
           # Pinned to the version the app is developed with. `channel: stable` alone follows the
           # newest release, whose new deprecations (flutter analyze exits 1 on info-level issues)
-          # break CI without any change to the code. Raise it together with the code.
-          flutter-version: 3.47.9
+          # break CI without any change to the code. Raise it together with the code (3.50.0: material_ui,
+          # see ADR 0050).
+          flutter-version: 3.50.0
           channel: stable
           cache: true
       - run: flutter pub get
