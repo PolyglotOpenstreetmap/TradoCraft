@@ -7535,4 +7535,312 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tutPricesDoneBody =>
       'Une zone de prix regroupe les clients qui ont le même tarif et un produit a un prix par zone et par date. Les devis prennent le prix de la zone du client. Ensuite : un nouveau client écrit.';
+
+  @override
+  String get tutCustomerTitle => 'Un nouveau client écrit';
+
+  @override
+  String get tutCustomerSummary =>
+      'Casquettes : ventes et helpdesk. Un e-mail client devient un ticket ; l\'expéditeur est nouveau : vous demandez les coordonnées de la société et créez le client.';
+
+  @override
+  String get tutCustomerNeedsTitle => 'D\'abord le chapitre 6';
+
+  @override
+  String get tutCustomerNeedsBody =>
+      'Ce chapitre a besoin de la zone de prix TUT-EXPORT du chapitre 6 (le nouveau client la reçoit) et ne l\'a pas trouvée. Terminez d\'abord les chapitres précédents.';
+
+  @override
+  String get tutCustomerMail1Title => 'Un e-mail arrive';
+
+  @override
+  String get tutCustomerMail1Body =>
+      'Quelqu\'un que vous ne connaissez pas demande un devis pour votre chariot. Une vraie boîte aux lettres livrerait le message elle-même ; ici le bouton ci-dessous joue le client et remet un e-mail tout prêt (de Maya Okafor, example.test) au helpdesk, exactement comme l\'importateur de courrier.';
+
+  @override
+  String get tutCustomerMail1Action => 'Simuler l\'e-mail du client';
+
+  @override
+  String get tutCustomerOpenHelpdeskTitle => 'Le ticket';
+
+  @override
+  String get tutCustomerOpenHelpdeskBody =>
+      'Chaque message entrant devient un ticket. Ouvrez Helpdesk : le ticket de Maya Okafor est dans la liste.';
+
+  @override
+  String get tutCustomerOpenTicketTitle => 'Ouvrez le ticket';
+
+  @override
+  String get tutCustomerOpenTicketBody =>
+      'Ouvrez le ticket. La conversation est à gauche, ses propriétés à droite. Aucun client n\'est encore lié, car personne avec cette adresse n\'existe dans le système.';
+
+  @override
+  String get tutCustomerReplyTitle => 'Demandez les coordonnées';
+
+  @override
+  String get tutCustomerReplyBody =>
+      'Répondez à Maya : remerciez-la et demandez la raison sociale, le numéro de TVA et l\'adresse, puis appuyez sur Envoyer. La réponse est mise en file pour le worker de courrier. Dans les environnements de test et de tutoriel, le courrier sortant n\'est écrit que dans des fichiers du serveur : Maya ne reçoit rien.';
+
+  @override
+  String get tutCustomerReplyHint =>
+      'Vérifiez que l\'onglet Réponse (pas Note interne) est sélectionné au-dessus de la zone de message.';
+
+  @override
+  String get tutCustomerMail2Title => 'Le client répond';
+
+  @override
+  String get tutCustomerMail2Body =>
+      'Utilisez le bouton pour jouer la réponse de Maya. C\'est une réponse à son premier message : elle arrive dans le même ticket comme nouveau message, avec raison sociale, numéro de TVA et adresse.';
+
+  @override
+  String get tutCustomerMail2Action => 'Simuler l\'e-mail du client';
+
+  @override
+  String get tutCustomerReadDetailsTitle => 'Lisez les coordonnées';
+
+  @override
+  String get tutCustomerReadDetailsBody =>
+      'Retournez au ticket (rouvrez-le s\'il n\'affiche pas encore le nouveau message) et lisez la réponse de Maya : société Brightwheel Logistics BV, numéro de TVA BE0123456749, Voorbeeldlaan 12, 9000 Gand, Belgique. Appuyez sur Suivant quand vous les avez.';
+
+  @override
+  String get tutCustomerCreateCustomerTitle => 'Créez le client';
+
+  @override
+  String get tutCustomerCreateCustomerBody =>
+      'Dans les propriétés du ticket, appuyez sur Nouveau client (ou utilisez Clients > Nouveau client). Saisissez le nom Brightwheel Logistics BV, un code comme TUT-CUST, le numéro de TVA, l\'adresse, et choisissez la zone de prix TUT-EXPORT. Le ticket est lié au nouveau client à l\'enregistrement.';
+
+  @override
+  String get tutCustomerCreateCustomerHint =>
+      'Rue Voorbeeldlaan 12, code postal 9000, ville Gand, pays BE. La langue et les conditions de paiement peuvent rester telles quelles.';
+
+  @override
+  String get tutCustomerLinkedTitle => 'Le ticket connaît son client';
+
+  @override
+  String get tutCustomerLinkedBody =>
+      'Le ticket affiche maintenant le client et de nouveaux boutons apparaissent : créer une piste ou démarrer un devis directement depuis le ticket. Le chapitre suivant fait le devis. Appuyez sur Suivant.';
+
+  @override
+  String get tutCustomerDoneTitle => 'Ce que vous avez appris';
+
+  @override
+  String get tutCustomerDoneBody =>
+      'Le courrier entrant devient des tickets, une réponse demande au client ce qui manque, et un client peut être créé depuis le ticket pour que tout reste lié. Ensuite : le devis.';
+
+  @override
+  String get tutQuotationTitle => 'Le devis';
+
+  @override
+  String get tutQuotationSummary =>
+      'Casquette : commercial. Proposez 8 chariots au nouveau client, obtenez l\'avis de la production sur le délai et envoyez.';
+
+  @override
+  String get tutQuotationNeedsTitle => 'D\'abord le chapitre 7';
+
+  @override
+  String get tutQuotationNeedsBody =>
+      'Ce chapitre a besoin du client Brightwheel Logistics BV du chapitre 7 et ne l\'a pas trouvé. Terminez d\'abord le chapitre 7.';
+
+  @override
+  String get tutQuotationOpenQuotationsTitle => 'Devis';
+
+  @override
+  String get tutQuotationOpenQuotationsBody =>
+      'Ouvrez Devis dans le menu. Cette liste contient chaque devis avec son numéro, son client et son statut.';
+
+  @override
+  String get tutQuotationCreateTitle => 'Rédigez le devis';
+
+  @override
+  String get tutQuotationCreateBody =>
+      'Appuyez sur Nouveau devis, choisissez Brightwheel Logistics BV, ajoutez TUT-CART en quantité 8 et enregistrez le brouillon. Le prix unitaire vient de la zone de prix du client, TUT-EXPORT : ce sont les 1450 saisis au chapitre 6.';
+
+  @override
+  String get tutQuotationCreateHint =>
+      'Utilisez la recherche de produit dans les lignes ; tapez TUT-CART. Si le client n\'est pas présélectionné, cherchez Brightwheel.';
+
+  @override
+  String get tutQuotationLeadTitle => 'Combien de temps cela prendra-t-il ?';
+
+  @override
+  String get tutQuotationLeadBody =>
+      'La client a demandé un délai de livraison. Franchement : l\'app ne calcule pas encore automatiquement les délais et un devis n\'a pas de champ date de livraison. Demandez donc à la production (mettez cette casquette, regardez la file de production et les composants en stock) et écrivez la réponse dans les notes du devis, par exemple : livraison environ 3 semaines après commande. Enregistrez le brouillon.';
+
+  @override
+  String get tutQuotationLeadHint =>
+      'Sur une commande vous pouvez poser une question à la production sous forme de ticket (vu au chapitre 9) ; les devis n\'ont pas encore ce bouton.';
+
+  @override
+  String get tutQuotationSendTitle => 'Envoyez le devis';
+
+  @override
+  String get tutQuotationSendBody =>
+      'Appuyez sur Marquer comme envoyé. Dès lors le devis est figé : il ne peut plus qu\'être accepté, refusé ou révisé. (Ce bouton n\'envoie pas de courrier ; vous envoyez le PDF vous-même ou répondez dans le ticket.)';
+
+  @override
+  String get tutQuotationPdfTitle => 'Le PDF';
+
+  @override
+  String get tutQuotationPdfBody =>
+      'Le bouton PDF montre le devis tel que le client le verrait. Il est produit sur le serveur avec un outil de composition ; sans cet outil sur le serveur vous obtenez un message d\'erreur, sans autre conséquence. Regardez si vous voulez, puis appuyez sur Suivant.';
+
+  @override
+  String get tutQuotationPdfHint =>
+      'Rien ne casse si le PDF échoue : le devis est déjà envoyé.';
+
+  @override
+  String get tutQuotationDoneTitle => 'Ce que vous avez appris';
+
+  @override
+  String get tutQuotationDoneBody =>
+      'Un devis prend le prix de la zone du client, porte des notes et se fige à l\'envoi. Les délais restent votre appréciation, avec la production. Ensuite : le client veut une modification.';
+
+  @override
+  String get tutChangeTitle => 'Modification, commande, production';
+
+  @override
+  String get tutChangeSummary =>
+      'Casquettes : ventes et production. Révisez le devis, transformez-le en commande, fabriquez les chariots et quelques-uns de plus pour le stock.';
+
+  @override
+  String get tutChangeNeedsTitle => 'D\'abord le chapitre 8';
+
+  @override
+  String get tutChangeNeedsBody =>
+      'Ce chapitre a besoin du devis envoyé au chapitre 8 et ne l\'a pas trouvé. Terminez d\'abord le chapitre 8.';
+
+  @override
+  String get tutChangeMail3Title => 'Le client répond de nouveau';
+
+  @override
+  String get tutChangeMail3Body =>
+      'Maya est satisfaite du devis mais veut 10 chariots au lieu de 8. Utilisez le bouton pour jouer son e-mail ; il rejoint le même ticket.';
+
+  @override
+  String get tutChangeMail3Action => 'Simuler l\'e-mail du client';
+
+  @override
+  String get tutChangeOpenQuoteTitle => 'Ouvrez le devis envoyé';
+
+  @override
+  String get tutChangeOpenQuoteBody =>
+      'Un devis envoyé est figé : une modification passe par une nouvelle révision. Ouvrez le devis du chapitre 8.';
+
+  @override
+  String get tutChangeReviseTitle => 'Créez une révision';
+
+  @override
+  String get tutChangeReviseBody =>
+      'Appuyez sur Nouvelle révision et choisissez Conserver les prix convenus. L\'ancienne révision est marquée remplacée et un nouveau brouillon avec le même numéro s\'ouvre.';
+
+  @override
+  String get tutChangeReviseHint =>
+      'Mettre à jour les prix recalculerait avec le tarif du jour ; ici le client garde le prix convenu.';
+
+  @override
+  String get tutChangeEditTitle => 'Modifiez la quantité';
+
+  @override
+  String get tutChangeEditBody =>
+      'Mettez la quantité de TUT-CART à 10 et enregistrez le brouillon.';
+
+  @override
+  String get tutChangeEditHint =>
+      'Les notes de la première révision ont été copiées ; adaptez-les si le délai change.';
+
+  @override
+  String get tutChangeSendTitle => 'Envoyez la révision';
+
+  @override
+  String get tutChangeSendBody =>
+      'Marquez la nouvelle révision comme envoyée, comme avant.';
+
+  @override
+  String get tutChangeAcceptTitle => 'Le client accepte';
+
+  @override
+  String get tutChangeAcceptBody =>
+      'Maya est d\'accord avec la nouvelle révision : appuyez sur Accepté pour l\'enregistrer.';
+
+  @override
+  String get tutChangeConvertTitle => 'Transformez-le en commande client';
+
+  @override
+  String get tutChangeConvertBody =>
+      'Appuyez sur Convertir en commande. Une commande client brouillon est créée à partir de la révision acceptée et s\'ouvre.';
+
+  @override
+  String get tutChangeConvertHint =>
+      'Le dialogue demande la référence propre du client ; saisissez par exemple TUT-PO-1 ou laissez vide.';
+
+  @override
+  String get tutChangeOpenOrderTitle => 'La commande client';
+
+  @override
+  String get tutChangeOpenOrderBody =>
+      'Si la commande ne s\'est pas ouverte seule, ouvrez-la depuis Commandes. Elle contient les 10 chariots, le prix et la référence client. Les commandes passent de brouillon à envoyée puis confirmée.';
+
+  @override
+  String get tutChangeSendOrderTitle => 'Envoyez la confirmation de commande';
+
+  @override
+  String get tutChangeSendOrderBody =>
+      'Appuyez sur Envoyer la confirmation de commande. La commande passe à envoyée : le client peut maintenant la confirmer.';
+
+  @override
+  String get tutChangeSendOrderHint =>
+      'Produire le document de confirmation demande l\'outil de composition du serveur ; s\'il manque, le serveur refuse cette étape et il faut un serveur qui l\'a pour continuer.';
+
+  @override
+  String get tutChangeConfirmTitle => 'Confirmez au nom du client';
+
+  @override
+  String get tutChangeConfirmBody =>
+      'Maya a déjà dit oui par e-mail : appuyez sur Confirmer au nom du client et ajoutez une note comme confirmé par e-mail. La commande est confirmée et peut aller en production.';
+
+  @override
+  String get tutChangeReleaseTitle => 'À lancer';
+
+  @override
+  String get tutChangeReleaseBody =>
+      'Mettez la casquette de production. Ouvrez Production > À lancer : la ligne de commande confirmée avec 10 chariots attend. Appuyez sur Lancer pour créer l\'ordre de production de cette ligne.';
+
+  @override
+  String get tutChangeStartTitle => 'Démarrez la production';
+
+  @override
+  String get tutChangeStartBody =>
+      'Appuyez sur Démarrer sur le nouvel ordre de production.';
+
+  @override
+  String get tutChangeCompleteTitle => 'Terminez la production';
+
+  @override
+  String get tutChangeCompleteBody =>
+      'Appuyez sur Terminer et confirmez les 10 chariots. Les composants sont consommés et les chariots vont à la commande.';
+
+  @override
+  String get tutChangeReadyTitle => 'Prêt à expédier';
+
+  @override
+  String get tutChangeReadyBody =>
+      'Rouvrez la commande : toutes ses lignes produites, elle est prête à expédier. La livraison (préparation, expédition, facturation du client) sort de ce tutoriel. Appuyez sur Suivant.';
+
+  @override
+  String get tutChangeStockTitle => 'Quelques-uns de plus pour le stock';
+
+  @override
+  String get tutChangeStockBody =>
+      'La production devance souvent les commandes. Ouvrez Production, appuyez sur Fabriquer pour le stock et lancez encore 4 chariots TUT-CART. Sans commande ils arrivent simplement en stock à la fin.';
+
+  @override
+  String get tutChangeStockHint =>
+      'Vous pouvez démarrer et terminer cet ordre comme au chapitre 5, ou le laisser lancé.';
+
+  @override
+  String get tutChangeDoneTitle => 'Bravo : toute l\'histoire';
+
+  @override
+  String get tutChangeDoneBody =>
+      'Vous êtes passé des fournisseurs aux achats, factures, production, prix, un ticket, un nouveau client, un devis révisé, une commande et la production pour la commande et pour le stock. Et ensuite : livraisons et expéditions, réparations, service terrain et rapports ont chacun leur entrée de menu. Tout chapitre peut être rejoué depuis la carte des chapitres ; les étapes déjà faites sont sautées.';
 }

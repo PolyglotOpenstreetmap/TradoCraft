@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui' show PlatformDispatcher;
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -500,13 +501,25 @@ class TutorialController extends Notifier<TutorialState> {
   }
 
   /// Runs the current step's action button.
+  /// The app language, or English when it is not one of the five supported ones.
+  String _languageCode() {
+    final code =
+        ref.read(localeProvider)?.languageCode ??
+        PlatformDispatcher.instance.locale.languageCode;
+    return const ['en', 'nl', 'fr', 'de', 'es'].contains(code) ? code : 'en';
+  }
+
   Future<void> runAction() async {
     final s = step;
     final c = s?.completion;
     if (s == null || c is! ActionCompletion || !state.running) return;
     final gen = _gen;
     final captured = await c.run(
-      ActionHost(dio: ref.read(dioProvider), context: state.context),
+      ActionHost(
+        dio: ref.read(dioProvider),
+        context: state.context,
+        languageCode: _languageCode(),
+      ),
     );
     if (!ref.mounted || gen != _gen || step != s) return;
     _complete({...?captured});

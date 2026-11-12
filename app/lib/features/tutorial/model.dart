@@ -104,7 +104,14 @@ class ManualNext extends Completion {
 /// What an [ActionCompletion] may use.
 class ActionHost {
   /// Creates the host.
-  const ActionHost({required this.dio, required this.context});
+  const ActionHost({
+    required this.dio,
+    required this.context,
+    this.languageCode = 'en',
+  });
+
+  /// The language of the app (for scripted texts such as simulated e-mails).
+  final String languageCode;
 
   /// The HTTP client of the active environment.
   final Dio dio;

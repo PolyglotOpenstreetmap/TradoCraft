@@ -1,5 +1,6 @@
 import 'missions_production.dart';
 import 'missions_purchasing.dart';
+import 'missions_sales.dart';
 import 'model.dart';
 
 /// The chapters of the tutorial, in order. To add a chapter: append a [Mission] here, add its
@@ -13,6 +14,9 @@ final List<Mission> allMissions = [
   invoicesMission,
   manufacturingMission,
   pricesMission,
+  customerMission,
+  quotationMission,
+  changeMission,
 ];
 
 /// Chapter 0: what the banner means, how tabs and the tutorial controls work.

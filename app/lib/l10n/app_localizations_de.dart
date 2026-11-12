@@ -7543,4 +7543,312 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get tutPricesDoneBody =>
       'Eine Preiszone gruppiert Kunden mit derselben Preisliste, und ein Produkt hat einen Preis je Zone und Datum. Angebote übernehmen den Preis der Kundenzone. Als Nächstes: Ein neuer Kunde schreibt.';
+
+  @override
+  String get tutCustomerTitle => 'Ein neuer Kunde schreibt';
+
+  @override
+  String get tutCustomerSummary =>
+      'Hüte: Vertrieb und Helpdesk. Eine Kunden-E-Mail wird zum Ticket; der Absender ist neu, also fragen Sie Firmendaten ab und legen den Kunden an.';
+
+  @override
+  String get tutCustomerNeedsTitle => 'Zuerst Kapitel 6';
+
+  @override
+  String get tutCustomerNeedsBody =>
+      'Dieses Kapitel braucht die Preiszone TUT-EXPORT aus Kapitel 6 (der neue Kunde bekommt sie) und hat sie nicht gefunden. Schließen Sie zuerst die früheren Kapitel ab.';
+
+  @override
+  String get tutCustomerMail1Title => 'Eine E-Mail kommt an';
+
+  @override
+  String get tutCustomerMail1Body =>
+      'Jemand Unbekanntes bittet um ein Angebot für Ihren Karren. Ein echtes Postfach würde die Nachricht selbst liefern; hier spielt die Schaltfläche unten den Kunden und übergibt eine fertige E-Mail (von Maya Okafor, example.test) an das Helpdesk, genau wie der Mail-Import.';
+
+  @override
+  String get tutCustomerMail1Action => 'Kunden-E-Mail simulieren';
+
+  @override
+  String get tutCustomerOpenHelpdeskTitle => 'Das Ticket';
+
+  @override
+  String get tutCustomerOpenHelpdeskBody =>
+      'Jede eingehende Nachricht wird ein Ticket. Öffnen Sie Helpdesk: Das Ticket von Maya Okafor steht in der Liste.';
+
+  @override
+  String get tutCustomerOpenTicketTitle => 'Öffnen Sie das Ticket';
+
+  @override
+  String get tutCustomerOpenTicketBody =>
+      'Öffnen Sie das Ticket. Links steht die Konversation, rechts die Eigenschaften. Noch ist kein Kunde verknüpft, weil niemand mit dieser Adresse im System existiert.';
+
+  @override
+  String get tutCustomerReplyTitle => 'Fragen Sie Firmendaten ab';
+
+  @override
+  String get tutCustomerReplyBody =>
+      'Antworten Sie Maya: Bedanken Sie sich und fragen Sie nach Firmenname, USt-IdNr. und Adresse, dann drücken Sie Senden. Die Antwort kommt in die Warteschlange des Mail-Workers. In Test- und Tutorial-Umgebungen wird ausgehende Post nur in Dateien auf dem Server geschrieben, Maya erhält also nichts.';
+
+  @override
+  String get tutCustomerReplyHint =>
+      'Achten Sie darauf, dass über dem Nachrichtenfeld der Reiter Antwort (nicht Interne Notiz) gewählt ist.';
+
+  @override
+  String get tutCustomerMail2Title => 'Der Kunde antwortet';
+
+  @override
+  String get tutCustomerMail2Body =>
+      'Spielen Sie mit der Schaltfläche Mayas Antwort ab. Sie ist die Antwort auf ihre erste Nachricht und landet als neue Nachricht im selben Ticket, mit Firmenname, USt-IdNr. und Adresse.';
+
+  @override
+  String get tutCustomerMail2Action => 'Kunden-E-Mail simulieren';
+
+  @override
+  String get tutCustomerReadDetailsTitle => 'Lesen Sie die Angaben';
+
+  @override
+  String get tutCustomerReadDetailsBody =>
+      'Gehen Sie zurück zum Ticket (öffnen Sie es neu, falls die neue Nachricht noch fehlt) und lesen Sie Mayas Antwort: Firma Brightwheel Logistics BV, USt-IdNr. BE0123456749, Voorbeeldlaan 12, 9000 Gent, Belgien. Drücken Sie Weiter, wenn Sie die Angaben haben.';
+
+  @override
+  String get tutCustomerCreateCustomerTitle => 'Legen Sie den Kunden an';
+
+  @override
+  String get tutCustomerCreateCustomerBody =>
+      'Drücken Sie in den Ticket-Eigenschaften auf Neuer Kunde (oder nutzen Sie Kunden > Neuer Kunde). Tragen Sie Name Brightwheel Logistics BV, einen Code wie TUT-CUST, USt-IdNr. und Adresse ein und wählen Sie die Preiszone TUT-EXPORT. Beim Speichern wird das Ticket mit dem neuen Kunden verknüpft.';
+
+  @override
+  String get tutCustomerCreateCustomerHint =>
+      'Straße Voorbeeldlaan 12, PLZ 9000, Ort Gent, Land BE. Sprache und Zahlungsbedingungen können bleiben, wie sie sind.';
+
+  @override
+  String get tutCustomerLinkedTitle => 'Das Ticket kennt seinen Kunden';
+
+  @override
+  String get tutCustomerLinkedBody =>
+      'Das Ticket zeigt nun den Kunden, und neue Schaltflächen erscheinen: einen Lead anlegen oder direkt aus dem Ticket ein Angebot beginnen. Das nächste Kapitel erstellt das Angebot. Drücken Sie Weiter.';
+
+  @override
+  String get tutCustomerDoneTitle => 'Was Sie gelernt haben';
+
+  @override
+  String get tutCustomerDoneBody =>
+      'Eingehende Post wird zu Tickets, eine Antwort fragt beim Kunden nach dem Fehlenden, und aus dem Ticket lässt sich ein Kunde anlegen, damit alles verknüpft bleibt. Als Nächstes: das Angebot.';
+
+  @override
+  String get tutQuotationTitle => 'Das Angebot';
+
+  @override
+  String get tutQuotationSummary =>
+      'Hut: Vertriebsmitarbeiter. Bieten Sie dem neuen Kunden 8 Karren an, holen Sie die Zeitangabe der Fertigung ein und senden Sie das Angebot.';
+
+  @override
+  String get tutQuotationNeedsTitle => 'Zuerst Kapitel 7';
+
+  @override
+  String get tutQuotationNeedsBody =>
+      'Dieses Kapitel braucht den Kunden Brightwheel Logistics BV aus Kapitel 7 und hat ihn nicht gefunden. Schließen Sie zuerst Kapitel 7 ab.';
+
+  @override
+  String get tutQuotationOpenQuotationsTitle => 'Angebote';
+
+  @override
+  String get tutQuotationOpenQuotationsBody =>
+      'Öffnen Sie Angebote im Menü. Diese Liste enthält jedes Angebot mit Nummer, Kunde und Status.';
+
+  @override
+  String get tutQuotationCreateTitle => 'Erstellen Sie das Angebot';
+
+  @override
+  String get tutQuotationCreateBody =>
+      'Drücken Sie Neues Angebot, wählen Sie Brightwheel Logistics BV, fügen Sie TUT-CART mit Menge 8 hinzu und speichern Sie den Entwurf. Der Stückpreis stammt aus der Preiszone des Kunden, TUT-EXPORT, also die 1450 aus Kapitel 6.';
+
+  @override
+  String get tutQuotationCreateHint =>
+      'Nutzen Sie die Produktsuche bei den Positionen; tippen Sie TUT-CART. Ist der Kunde nicht vorausgewählt, suchen Sie nach Brightwheel.';
+
+  @override
+  String get tutQuotationLeadTitle => 'Wie lange dauert es?';
+
+  @override
+  String get tutQuotationLeadBody =>
+      'Der Kunde wollte eine Lieferzeit. Ehrlich gesagt: Die App berechnet Lieferzeiten noch nicht automatisch, und ein Angebot hat kein Lieferdatumsfeld. Fragen Sie also die Fertigung (Hut wechseln, Fertigungswarteschlange und Komponentenbestand ansehen) und schreiben Sie die Antwort in die Notizen des Angebots, zum Beispiel: Lieferung etwa 3 Wochen nach Bestellung. Speichern Sie den Entwurf.';
+
+  @override
+  String get tutQuotationLeadHint =>
+      'Bei einem Auftrag können Sie der Fertigung eine Frage als Ticket schicken (siehe Kapitel 9); Angebote haben diese Schaltfläche noch nicht.';
+
+  @override
+  String get tutQuotationSendTitle => 'Senden Sie das Angebot';
+
+  @override
+  String get tutQuotationSendBody =>
+      'Drücken Sie Als gesendet markieren. Ab jetzt ist das Angebot eingefroren: Es kann nur noch angenommen, abgelehnt oder überarbeitet werden. (Diese Schaltfläche versendet keine Mail; Sie schicken das PDF selbst oder antworten im Ticket.)';
+
+  @override
+  String get tutQuotationPdfTitle => 'Das PDF';
+
+  @override
+  String get tutQuotationPdfBody =>
+      'Die PDF-Schaltfläche zeigt das Angebot, wie der Kunde es sähe. Es wird auf dem Server mit einem Satzprogramm erzeugt; ohne dieses gibt es eine Fehlermeldung, die sonst nichts beeinflusst. Sehen Sie gern hinein und drücken Sie dann Weiter.';
+
+  @override
+  String get tutQuotationPdfHint =>
+      'Es geht nichts kaputt, wenn das PDF fehlschlägt: Das Angebot ist bereits gesendet.';
+
+  @override
+  String get tutQuotationDoneTitle => 'Was Sie gelernt haben';
+
+  @override
+  String get tutQuotationDoneBody =>
+      'Ein Angebot übernimmt den Preis der Kundenzone, trägt Notizen und friert beim Senden ein. Lieferzeiten bleiben Ihre Einschätzung, gemeinsam mit der Fertigung. Als Nächstes: Der Kunde wünscht eine Änderung.';
+
+  @override
+  String get tutChangeTitle => 'Änderung, Auftrag, Fertigung';
+
+  @override
+  String get tutChangeSummary =>
+      'Hüte: Vertrieb und Fertigung. Überarbeiten Sie das Angebot, machen Sie einen Auftrag daraus, bauen Sie die Karren und ein paar zusätzliche für den Bestand.';
+
+  @override
+  String get tutChangeNeedsTitle => 'Zuerst Kapitel 8';
+
+  @override
+  String get tutChangeNeedsBody =>
+      'Dieses Kapitel braucht das gesendete Angebot aus Kapitel 8 und hat es nicht gefunden. Schließen Sie zuerst Kapitel 8 ab.';
+
+  @override
+  String get tutChangeMail3Title => 'Der Kunde antwortet wieder';
+
+  @override
+  String get tutChangeMail3Body =>
+      'Maya ist mit dem Angebot zufrieden, will aber 10 Karren statt 8. Spielen Sie ihre E-Mail mit der Schaltfläche ab; sie landet im selben Ticket.';
+
+  @override
+  String get tutChangeMail3Action => 'Kunden-E-Mail simulieren';
+
+  @override
+  String get tutChangeOpenQuoteTitle => 'Öffnen Sie das gesendete Angebot';
+
+  @override
+  String get tutChangeOpenQuoteBody =>
+      'Ein gesendetes Angebot ist eingefroren, eine Änderung bedeutet also eine neue Revision. Öffnen Sie das Angebot aus Kapitel 8.';
+
+  @override
+  String get tutChangeReviseTitle => 'Erstellen Sie eine Revision';
+
+  @override
+  String get tutChangeReviseBody =>
+      'Drücken Sie Neue Revision und wählen Sie Vereinbarte Preise behalten. Die alte Revision gilt als ersetzt und ein neuer Entwurf mit derselben Nummer öffnet sich.';
+
+  @override
+  String get tutChangeReviseHint =>
+      'Auf aktuelle Preise aktualisieren würde mit der heutigen Preisliste neu bewerten; hier behält der Kunde den vereinbarten Preis.';
+
+  @override
+  String get tutChangeEditTitle => 'Ändern Sie die Menge';
+
+  @override
+  String get tutChangeEditBody =>
+      'Setzen Sie die Menge von TUT-CART auf 10 und speichern Sie den Entwurf.';
+
+  @override
+  String get tutChangeEditHint =>
+      'Die Notizen der ersten Revision wurden kopiert; passen Sie sie an, wenn sich die Lieferzeit ändert.';
+
+  @override
+  String get tutChangeSendTitle => 'Senden Sie die Revision';
+
+  @override
+  String get tutChangeSendBody =>
+      'Markieren Sie die neue Revision als gesendet, wie zuvor.';
+
+  @override
+  String get tutChangeAcceptTitle => 'Der Kunde nimmt an';
+
+  @override
+  String get tutChangeAcceptBody =>
+      'Maya stimmt der neuen Revision zu: Drücken Sie Angenommen, um das festzuhalten.';
+
+  @override
+  String get tutChangeConvertTitle => 'Machen Sie einen Verkaufsauftrag daraus';
+
+  @override
+  String get tutChangeConvertBody =>
+      'Drücken Sie In Auftrag umwandeln. Aus der angenommenen Revision entsteht ein Verkaufsauftrag im Entwurf, der sich öffnet.';
+
+  @override
+  String get tutChangeConvertHint =>
+      'Der Dialog fragt nach der Referenz des Kunden; tippen Sie zum Beispiel TUT-PO-1 oder lassen Sie es leer.';
+
+  @override
+  String get tutChangeOpenOrderTitle => 'Der Verkaufsauftrag';
+
+  @override
+  String get tutChangeOpenOrderBody =>
+      'Hat sich der Auftrag nicht von selbst geöffnet, öffnen Sie ihn unter Aufträge. Er enthält die 10 Karren, den Preis und die Kundenreferenz. Aufträge gehen von Entwurf über gesendet zu bestätigt.';
+
+  @override
+  String get tutChangeSendOrderTitle => 'Senden Sie die Auftragsbestätigung';
+
+  @override
+  String get tutChangeSendOrderBody =>
+      'Drücken Sie Auftragsbestätigung senden. Der Auftrag wird gesendet: Der Kunde kann ihn nun bestätigen.';
+
+  @override
+  String get tutChangeSendOrderHint =>
+      'Das Bestätigungsdokument braucht das Satzprogramm des Servers; fehlt es, verweigert der Server diesen Schritt und zum Weitermachen wird ein Server mit dem Programm gebraucht.';
+
+  @override
+  String get tutChangeConfirmTitle => 'Bestätigen Sie im Namen des Kunden';
+
+  @override
+  String get tutChangeConfirmBody =>
+      'Maya hat per E-Mail schon zugesagt, also drücken Sie Im Namen des Kunden bestätigen und notieren etwa per E-Mail bestätigt. Der Auftrag ist nun bestätigt und kann in die Fertigung.';
+
+  @override
+  String get tutChangeReleaseTitle => 'Freizugeben';
+
+  @override
+  String get tutChangeReleaseBody =>
+      'Setzen Sie den Fertigungs-Hut auf. Öffnen Sie Fertigung > Freizugeben: Die bestätigte Auftragsposition mit 10 Karren wartet. Drücken Sie Freigeben, um den Fertigungsauftrag genau für diese Position zu erzeugen.';
+
+  @override
+  String get tutChangeStartTitle => 'Starten Sie die Fertigung';
+
+  @override
+  String get tutChangeStartBody =>
+      'Drücken Sie Starten beim neuen Fertigungsauftrag.';
+
+  @override
+  String get tutChangeCompleteTitle => 'Schließen Sie die Fertigung ab';
+
+  @override
+  String get tutChangeCompleteBody =>
+      'Drücken Sie Abschließen und bestätigen Sie die 10 Karren. Die Komponenten werden verbraucht und die Karren gehen an den Auftrag.';
+
+  @override
+  String get tutChangeReadyTitle => 'Versandbereit';
+
+  @override
+  String get tutChangeReadyBody =>
+      'Öffnen Sie den Auftrag erneut: Mit allen produzierten Positionen ist er versandbereit. Lieferung (Kommissionieren, Versand, Kunden fakturieren) liegt außerhalb dieses Tutorials. Drücken Sie Weiter.';
+
+  @override
+  String get tutChangeStockTitle => 'Ein paar extra für den Bestand';
+
+  @override
+  String get tutChangeStockBody =>
+      'Die Fertigung läuft oft den Aufträgen voraus. Öffnen Sie Fertigung, drücken Sie Auf Lager fertigen und geben Sie 4 weitere Karren TUT-CART frei. Ohne Auftrag landen sie nach Abschluss einfach im Bestand.';
+
+  @override
+  String get tutChangeStockHint =>
+      'Sie können diesen Auftrag wie in Kapitel 5 starten und abschließen oder ihn freigegeben lassen.';
+
+  @override
+  String get tutChangeDoneTitle => 'Gut gemacht: die ganze Geschichte';
+
+  @override
+  String get tutChangeDoneBody =>
+      'Sie sind von Lieferanten über Einkauf, Rechnungen, Fertigung und Preise zu einem Ticket, einem neuen Kunden, einem überarbeiteten Angebot, einem Auftrag und der Fertigung für Auftrag und Bestand gekommen. Wie weiter: Lieferungen und Versand, Reparaturen, Außendienst und Berichte haben je einen eigenen Menüpunkt. Jedes Kapitel lässt sich aus der Kapitelübersicht wiederholen; bereits erledigte Schritte werden übersprungen.';
 }
