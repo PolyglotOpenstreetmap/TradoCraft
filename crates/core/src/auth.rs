@@ -766,11 +766,12 @@ async fn resolve_oidc_user(state: &AppState, claims: &Claims) -> Result<UserRow,
     if let Some(u) = by_subject {
         return Ok(u);
     }
-    let email = claims
-        .email
-        .as_deref()
-        .or(claims.preferred_username.as_deref())
-        .ok_or(AppError::Unauthorized)?;
+    // The first sign-in binds the account by e-mail, so only an address the identity provider
+    // has verified counts (ADR 0047: the bootstrap admin is pre-provisioned by e-mail).
+    if claims.email_verified != Some(true) {
+        return Err(AppError::Unauthorized);
+    }
+    let email = claims.email.as_deref().ok_or(AppError::Unauthorized)?;
     let user = find_user_by_email(state, email)
         .await?
         .ok_or(AppError::Unauthorized)?;
@@ -786,11 +787,23 @@ async fn resolve_oidc_user(state: &AppState, claims: &Claims) -> Result<UserRow,
     Ok(user)
 }
 
+/// The claims of an access token that the API reads.
 #[derive(Debug, Deserialize)]
 pub struct Claims {
+    /// The identity provider's stable subject id.
     pub sub: String,
+    /// The user's e-mail address; only trusted for binding when [`Claims::email_verified`].
     pub email: Option<String>,
-    pub preferred_username: Option<String>,
+    /// Whether the identity provider verified `email`; a missing claim counts as not verified.
+    #[serde(default)]
+    pub email_verified: Option<bool>,
+}
+
+/// Resolves (and on first sign-in binds) the user a verified OIDC identity belongs to; returns
+/// the user id. Used by the access-token extractor; public so the binding can be tested without
+/// minting a signed token.
+pub async fn bind_oidc_user(state: &AppState, claims: &Claims) -> Result<Uuid, AppError> {
+    Ok(resolve_oidc_user(state, claims).await?.id)
 }
 
 /// Verifies OIDC access tokens against the issuer's published signing keys.

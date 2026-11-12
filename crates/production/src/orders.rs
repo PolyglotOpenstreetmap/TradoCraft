@@ -152,6 +152,10 @@ pub struct ListParams {
     /// released | in_progress | completed | cancelled
     pub status: Option<String>,
     pub division_id: Option<Uuid>,
+    /// When true, only orders of the caller's own divisions and orders without a division
+    /// (unassigned work is never hidden). Default false: everything.
+    #[serde(default)]
+    pub mine: bool,
     pub order_id: Option<Uuid>,
     /// Searches the number, the product, the sales order and the customer.
     pub q: Option<String>,
@@ -827,6 +831,8 @@ async fn list_orders(
          AND ($2::text IS NULL OR po.status = $2)
          AND ($3::uuid IS NULL OR po.division_id = $3)
          AND ($4::uuid IS NULL OR po.order_id = $4)
+         AND (NOT $6::bool OR po.division_id IS NULL OR po.division_id IN
+              (SELECT m.division_id FROM production.division_members m WHERE m.user_id = $7))
          AND ($5::text IS NULL OR po.number ILIKE $5 OR p.code ILIKE $5 OR p.name ILIKE $5
               OR o.number ILIKE $5 OR o.customer_name ILIKE $5)";
     let q =
@@ -839,13 +845,15 @@ async fn list_orders(
          ORDER BY (po.status IN ('completed', 'cancelled')),
                   CASE COALESCE(o.priority, 'normal') WHEN 'expedite' THEN 0 WHEN 'normal' THEN 1 ELSE 2 END,
                   po.planned_ready_date NULLS LAST, po.number
-         LIMIT $6 OFFSET $7"
+         LIMIT $8 OFFSET $9"
     ))
     .bind(user.company_id)
     .bind(&p.status)
     .bind(p.division_id)
     .bind(p.order_id)
     .bind(&q)
+    .bind(p.mine)
+    .bind(user.user_id)
     .bind(p.limit.unwrap_or(50).clamp(1, 200))
     .bind(p.offset.unwrap_or(0).max(0))
     .fetch_all(&state.db)
@@ -861,6 +869,8 @@ async fn list_orders(
     .bind(p.division_id)
     .bind(p.order_id)
     .bind(&q)
+    .bind(p.mine)
+    .bind(user.user_id)
     .fetch_one(&state.db)
     .await?;
     Ok(Json(ProductionPage { items, total }))

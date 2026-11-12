@@ -3576,5 +3576,15 @@
   "finSettingsHelp": "Largest accepted difference between the order and the invoice before a line counts as a mismatch.",
   "finCreateInvoice": "Create supplier invoice",
   "userRoleFinance": "Finance",
-  "moduleFinance": "Finance"
+  "moduleFinance": "Finance",
+  "productionDivisionMembers": "Members",
+  "productionDivisionNoMembers": "No members",
+  "productionScopeMine": "My divisions",
+  "productionScopeAll": "All divisions",
+  "productionScopeEmpty": "No orders in your divisions. Orders without a division are included.",
+  "productionShowAllDivisions": "Show all divisions",
+  "productionYourDivisions": "Your divisions",
+  "setupErrInsecure": "The setup token is not sent over an unencrypted connection to another computer. Use an https:// address (plain http is only allowed for localhost).",
+  "setupUnavailable": "Setting up is not available on this server: it already has a company, or setting up is disabled.",
+  "setupErrRedirect": "The server redirected the request, so the setup token was not sent on. Check the server address (use the final https:// address)."
 }

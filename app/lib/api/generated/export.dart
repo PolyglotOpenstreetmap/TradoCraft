@@ -125,6 +125,7 @@ export 'models/dismiss_request_input.dart';
 export 'models/dispute_invoice_input.dart';
 export 'models/division.dart';
 export 'models/division_input.dart';
+export 'models/division_member.dart';
 export 'models/done_input.dart';
 export 'models/dry_run.dart';
 export 'models/dry_run_input.dart';

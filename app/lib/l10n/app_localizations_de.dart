@@ -7090,4 +7090,38 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get moduleFinance => 'Finanzen';
+
+  @override
+  String get productionDivisionMembers => 'Mitglieder';
+
+  @override
+  String get productionDivisionNoMembers => 'Keine Mitglieder';
+
+  @override
+  String get productionScopeMine => 'Meine Bereiche';
+
+  @override
+  String get productionScopeAll => 'Alle Bereiche';
+
+  @override
+  String get productionScopeEmpty =>
+      'Keine Aufträge in Ihren Bereichen. Aufträge ohne Bereich sind eingeschlossen.';
+
+  @override
+  String get productionShowAllDivisions => 'Alle Bereiche anzeigen';
+
+  @override
+  String get productionYourDivisions => 'Ihre Bereiche';
+
+  @override
+  String get setupErrInsecure =>
+      'Das Einrichtungstoken wird nicht über eine unverschlüsselte Verbindung an einen anderen Rechner gesendet. Verwenden Sie eine https://-Adresse (reines http ist nur für localhost erlaubt).';
+
+  @override
+  String get setupUnavailable =>
+      'Die Einrichtung ist auf diesem Server nicht verfügbar: Er hat bereits ein Unternehmen, oder die Einrichtung ist deaktiviert.';
+
+  @override
+  String get setupErrRedirect =>
+      'Der Server hat die Anfrage umgeleitet, daher wurde das Einrichtungstoken nicht weitergesendet. Prüfen Sie die Serveradresse (verwenden Sie die endgültige https://-Adresse).';
 }

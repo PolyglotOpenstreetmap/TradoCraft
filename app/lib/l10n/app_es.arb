@@ -2272,5 +2272,15 @@
   "finSettingsHelp": "Diferencia máxima aceptada entre el pedido y la factura antes de que una línea cuente como diferencia.",
   "finCreateInvoice": "Crear factura de proveedor",
   "userRoleFinance": "Finanzas",
-  "moduleFinance": "Finanzas"
+  "moduleFinance": "Finanzas",
+  "productionDivisionMembers": "Miembros",
+  "productionDivisionNoMembers": "Sin miembros",
+  "productionScopeMine": "Mis divisiones",
+  "productionScopeAll": "Todas las divisiones",
+  "productionScopeEmpty": "No hay órdenes en sus divisiones. Se incluyen las órdenes sin división.",
+  "productionShowAllDivisions": "Mostrar todas las divisiones",
+  "productionYourDivisions": "Sus divisiones",
+  "setupErrInsecure": "El token de configuración no se envía por una conexión sin cifrar a otro equipo. Use una dirección https:// (http simple solo se permite para localhost).",
+  "setupUnavailable": "La configuración no está disponible en este servidor: ya tiene una empresa o la configuración está desactivada.",
+  "setupErrRedirect": "El servidor redirigió la solicitud, por lo que el token de configuración no se reenvió. Compruebe la dirección del servidor (use la dirección https:// definitiva)."
 }

@@ -8,6 +8,7 @@ import '../../shared/app_icons.dart';
 import '../../shared/entity_list.dart';
 import '../../shared/format.dart';
 import '../../shared/search_picker.dart';
+import '../field/offline/kv_store.dart';
 
 /// The states a production order can be filtered on.
 const productionStatuses = [
@@ -21,6 +22,13 @@ const productionStatuses = [
 final divisionsProvider = FutureProvider.autoDispose<List<Division>>(
   (ref) => ref.watch(apiProvider).production.listDivisions(),
 );
+
+/// Storage key (per user) of the remembered queue scope: `mine` or `all`.
+const productionScopeKey = 'production.queue_scope';
+
+/// The divisions the signed-in user is a member of.
+List<Division> myDivisions(List<Division> all) =>
+    all.where((d) => d.isMember).toList();
 
 /// The production queue: most urgent first, with what is short of stock flagged.
 class ProductionQueuePage extends ConsumerStatefulWidget {
@@ -36,6 +44,34 @@ class _ProductionQueuePageState extends ConsumerState<ProductionQueuePage> {
   String? _status;
   String? _division;
 
+  /// The user's own choice of scope (`true`: my divisions); null until chosen or restored.
+  bool? _mineChoice;
+  bool _scopeRestored = false;
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(userKvStoreProvider).get(productionScopeKey).then((v) {
+      if (!mounted) return;
+      setState(() {
+        _scopeRestored = true;
+        if (v == 'mine') _mineChoice = true;
+        if (v == 'all') _mineChoice = false;
+      });
+    });
+  }
+
+  void _setScope(bool mine) {
+    setState(() => _mineChoice = mine);
+    ref
+        .read(userKvStoreProvider)
+        .set(productionScopeKey, mine ? 'mine' : 'all');
+    // The loader is rebuilt with the new scope first; then the list reloads.
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _list.currentState?.reload(),
+    );
+  }
+
   Future<bool?> _buildForStock() => showDialog<bool>(
     context: context,
     builder: (_) => const _StockOrderDialog(),
@@ -48,6 +84,19 @@ class _ProductionQueuePageState extends ConsumerState<ProductionQueuePage> {
     final perms = ref.watch(meProvider).value?.permissions ?? const [];
     final divisionsAsync = ref.watch(divisionsProvider);
     final divisions = divisionsAsync.value ?? const <Division>[];
+    final mine = myDivisions(divisions);
+    // Workers default to their own divisions; planners, sales and admins (who can write or
+    // administer production) to everything. Without a division there is no scope at all.
+    final defaultMine =
+        mine.isNotEmpty &&
+        !perms.contains('production.write') &&
+        !perms.contains('production.admin');
+    final scopeMine = mine.isNotEmpty && (_mineChoice ?? defaultMine);
+    if (!_scopeRestored ||
+        ref.watch(meProvider).isLoading ||
+        divisionsAsync.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
     // A division that no longer exists is not a valid filter: drop it, so it is not sent either.
     if (_division != null &&
         divisionsAsync.hasValue &&
@@ -65,14 +114,51 @@ class _ProductionQueuePageState extends ConsumerState<ProductionQueuePage> {
           q: q,
           status: _status,
           divisionId: _division,
+          mine: scopeMine ? true : null,
           offset: offset,
           limit: limit,
         );
         return (page.items, page.total);
       },
+      emptyText: scopeMine ? l.productionScopeEmpty : null,
+      emptyAction: scopeMine
+          ? TextButton(
+              key: const ValueKey('scope-show-all'),
+              onPressed: () => _setScope(false),
+              child: Text(l.productionShowAllDivisions),
+            )
+          : null,
       filters: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          if (mine.isNotEmpty) ...[
+            SegmentedButton<bool>(
+              key: const ValueKey('queue-scope'),
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(value: true, label: Text(l.productionScopeMine)),
+                ButtonSegment(value: false, label: Text(l.productionScopeAll)),
+              ],
+              selected: {scopeMine},
+              onSelectionChanged: (s) => _setScope(s.first),
+            ),
+            const SizedBox(width: 12),
+            Tooltip(
+              message: l.productionYourDivisions,
+              child: Wrap(
+                key: const ValueKey('my-divisions'),
+                spacing: 4,
+                children: [
+                  for (final d in mine)
+                    Chip(
+                      visualDensity: VisualDensity.compact,
+                      label: Text(d.name),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+          ],
           DropdownButton<String?>(
             value: _status,
             hint: Text(l.allStatuses),

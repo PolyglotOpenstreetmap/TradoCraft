@@ -51,6 +51,7 @@ class EntityList<T> extends StatefulWidget {
     this.moreFilters,
     this.actions = const [],
     this.emptyText,
+    this.emptyAction,
   });
 
   final String title;
@@ -76,6 +77,9 @@ class EntityList<T> extends StatefulWidget {
 
   /// Shown instead of the rows when a finished load found nothing.
   final String? emptyText;
+
+  /// Shown under [emptyText], for example a button that widens the view.
+  final Widget? emptyAction;
 
   @override
   State<EntityList<T>> createState() => EntityListState<T>();
@@ -214,7 +218,15 @@ class EntityListState<T> extends State<EntityList<T>> {
               _items.isEmpty)
             Padding(
               padding: const EdgeInsets.all(24),
-              child: Center(child: Text(widget.emptyText!)),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(widget.emptyText!, textAlign: TextAlign.center),
+                    if (widget.emptyAction != null) widget.emptyAction!,
+                  ],
+                ),
+              ),
             ),
           Expanded(
             child: ListView.separated(

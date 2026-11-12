@@ -120,6 +120,7 @@ fn blank(v: &Option<String>) -> Option<String> {
         .map(str::to_string)
 }
 
+/// A plausible e-mail address: one `@`, no spaces, and a domain of non-empty dot-separated labels.
 fn valid_email(e: &str) -> bool {
     let Some((local, domain)) = e.split_once('@') else {
         return false;
@@ -129,8 +130,7 @@ fn valid_email(e: &str) -> bool {
         && !local.is_empty()
         && !domain.contains('@')
         && domain.contains('.')
-        && !domain.starts_with('.')
-        && !domain.ends_with('.')
+        && domain.split('.').all(|label| !label.is_empty())
 }
 
 impl ProvisionSpec {
@@ -553,6 +553,9 @@ mod tests {
             Box::new(|s| s.admin_email = "nobody".into()),
             Box::new(|s| s.admin_email = "a@b".into()),
             Box::new(|s| s.admin_email = "a b@c.de".into()),
+            Box::new(|s| s.admin_email = "a@b..de".into()),
+            Box::new(|s| s.admin_email = "a@.b.de".into()),
+            Box::new(|s| s.admin_email = "a@b.de.".into()),
             Box::new(|s| s.admin_display_name = "".into()),
         ];
         for (i, f) in cases.iter().enumerate() {
